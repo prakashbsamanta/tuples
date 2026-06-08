@@ -9,6 +9,7 @@ import { SuccessToast } from './components/SuccessToast';
 import { ReviewPanel } from './components/ReviewPanel';
 import { useSqlEngine } from './hooks/useSqlEngine';
 import { useProgressStore } from './store/useProgressStore';
+import { extractSchema } from './lib/schema';
 import { domains } from './domains';
 import {
   DatabaseZap, CheckCircle2, LogOut, ChevronRight,
@@ -31,6 +32,13 @@ const phaseColors: Record<string, string> = {
 function App() {
   const { activeDomainId, progressByDomain, setActiveDomain, resetDomain } = useProgressStore();
   const { isReady, db, error, results, isSuccess, executeQuery, runRawQuery } = useSqlEngine();
+
+  const editorSchema = React.useMemo(() => {
+    const tables = extractSchema(db);
+    const out: Record<string, string[]> = {};
+    for (const t of tables) out[t.name] = t.columns.map((c) => c.name);
+    return out;
+  }, [db]);
 
   // Track the step index that last succeeded so toast can key off it
   const [lastSuccessStep, setLastSuccessStep] = useState<number | null>(null);
@@ -255,6 +263,7 @@ function App() {
               onRawExecute={runRawQuery}
               error={error}
               hints={currentStep?.hints ?? null}
+              schema={editorSchema}
             />
           ) : (
             <div className="h-full flex items-center justify-center text-gray-700 font-mono text-sm">
