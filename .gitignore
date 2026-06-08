@@ -33,3 +33,6 @@ pnpm-debug.log*
 
 # Claude Code
 .claude/
+
+# Brainstorm companion
+.superpowers/
