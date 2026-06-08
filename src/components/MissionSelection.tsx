@@ -7,23 +7,26 @@ import {
 import { domains } from '../domains';
 import { useProgressStore } from '../store/useProgressStore';
 
-const domainConfig: Record<string, { icon: React.ReactNode; color: string; accentBg: string; tag: string }> = {
+const domainConfig: Record<string, { icon: React.ReactNode; color: string; accentBg: string; bar: string; tag: string }> = {
   'clinical-trials-research': {
     icon: <FlaskConical size={28} />,
     color: 'text-emerald-400',
     accentBg: 'from-emerald-500/20 to-teal-500/10',
+    bar: 'from-emerald-500 to-teal-400',
     tag: 'Life Sciences'
   },
   'algorithmic-trading': {
     icon: <LineChart size={28} />,
     color: 'text-indigo-400',
     accentBg: 'from-indigo-500/20 to-blue-500/10',
+    bar: 'from-indigo-500 to-blue-400',
     tag: 'Finance'
   },
   'space-logistics': {
     icon: <Rocket size={28} />,
     color: 'text-amber-400',
     accentBg: 'from-amber-500/20 to-orange-500/10',
+    bar: 'from-amber-500 to-orange-400',
     tag: 'Aerospace'
   }
 };
@@ -191,7 +194,7 @@ export function MissionSelection() {
                         initial={{ width: 0 }}
                         animate={{ width: `${percent}%` }}
                         transition={{ duration: 0.8, delay: idx * 0.1 + 0.3, ease: "easeOut" }}
-                        className={`h-full rounded-full bg-gradient-to-r ${config.accentBg.replace('/20', '/80').replace('/10', '/60')}`}
+                        className={`h-full rounded-full bg-gradient-to-r ${config.bar}`}
                       />
                     </div>
                   </div>
