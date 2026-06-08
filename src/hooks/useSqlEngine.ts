@@ -84,6 +84,9 @@ export function useSqlEngine() {
   const SQL = useRef<SqlJsStatic | null>(null);
   // dbRef holds the working DB so callbacks always see the latest db
   const dbRef = useRef<Database | null>(null);
+  // Tracks the last domain we initialized for, so we can tell a mission switch
+  // (clear the results panel) apart from a step advance (keep the last result visible).
+  const prevDomainRef = useRef<string | null>(null);
 
   const [state, setState] = useState<SqlEngineState>({
     db: null,
@@ -101,13 +104,17 @@ export function useSqlEngine() {
 
     async function initDb() {
       const needsWasmLoad = !SQL.current;
+      // A mission switch clears the results panel; a step advance within the same
+      // mission preserves the just-produced result so the user can actually read it.
+      const domainChanged = prevDomainRef.current !== activeDomainId;
+      prevDomainRef.current = activeDomainId;
 
       // Only show the full loading screen when WASM hasn't been loaded yet
       if (needsWasmLoad) {
         setState(s => ({ ...s, isReady: false, error: null, results: null, isSuccess: false }));
       } else {
-        // For step transitions, just clear results/errors — keep isReady true to avoid flash
-        setState(s => ({ ...s, error: null, results: null, isSuccess: false }));
+        // For step transitions, clear errors but keep the last result unless the mission changed.
+        setState(s => ({ ...s, error: null, results: domainChanged ? null : s.results, isSuccess: false }));
       }
 
       try {
@@ -135,7 +142,7 @@ export function useSqlEngine() {
           // Swap: set new DB first, THEN schedule the old one to close after paint
           const oldDb = dbRef.current;
           dbRef.current = newDb;
-          setState({ db: newDb, isReady: true, error: null, results: null, isSuccess: false });
+          setState(s => ({ ...s, db: newDb, isReady: true, error: null, results: domainChanged ? null : s.results, isSuccess: false }));
 
           // Defer closing the old DB until consumers have re-rendered — no race
           closeSoon(oldDb);
@@ -179,8 +186,8 @@ export function useSqlEngine() {
     const snapshot = db.export();
 
     try {
-      // Stage 2: Execute the query
-      db.exec(rawQuery);
+      // Stage 2: Execute the query (capture the user's own output, e.g. SELECT rows)
+      const userExec = db.exec(rawQuery);
 
       // Stage 3: Run verification query
       const verifyRes = db.exec(stepConfig.verificationQuery);
@@ -188,11 +195,14 @@ export function useSqlEngine() {
       const expected = JSON.parse(stepConfig.expectedResult);
 
       if (looseEqual(actual, expected)) {
-        // ✅ SUCCESS
+        // ✅ SUCCESS — prefer showing the user's own query result (SELECT rows);
+        // fall back to the verification output for DDL/DML steps that return no rows.
+        const userRows = formatResults(userExec);
+        const displayResults = userRows.length > 0 ? userRows : actual;
         store.saveQueryForStep(stepIdx, rawQuery);
         store.recordSolve({ conceptFocus: stepConfig.conceptFocus });
         store.unlockNextStep();
-        setState(s => ({ ...s, error: null, results: actual, isSuccess: true }));
+        setState(s => ({ ...s, error: null, results: displayResults, isSuccess: true }));
       } else {
         // ❌ Verification failed — restore DB
         const clean = new SQL.current!.Database(snapshot);

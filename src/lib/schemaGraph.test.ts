@@ -77,4 +77,61 @@ describe('buildGraph', () => {
     const { edges } = buildGraph([patients]);
     expect(edges).toHaveLength(0);
   });
+
+  it('falls back to the first column as the key when no primary key is declared', () => {
+    // Mirrors the real curriculum: tables have no PRIMARY KEY, the first column is the identifier.
+    const assets: TableSchema = {
+      name: 'assets',
+      columns: [
+        { name: 'symbol', type: 'TEXT', pk: false },
+        { name: 'company_name', type: 'TEXT', pk: false },
+      ],
+      foreignKeys: [],
+      isView: false,
+    };
+    const orders: TableSchema = {
+      name: 'orders',
+      columns: [
+        { name: 'order_id', type: 'INT', pk: false },
+        { name: 'symbol', type: 'TEXT', pk: false },
+      ],
+      foreignKeys: [],
+      isView: false,
+    };
+    const trades: TableSchema = {
+      name: 'trades',
+      columns: [
+        { name: 'trade_id', type: 'INT', pk: false },
+        { name: 'order_id', type: 'INT', pk: false },
+        { name: 'symbol', type: 'TEXT', pk: false },
+      ],
+      foreignKeys: [],
+      isView: false,
+    };
+    const { edges } = buildGraph([assets, orders, trades]);
+    const pairs = edges.map((e) => `${e.source}->${e.target}`).sort();
+    // orders.symbol->assets, trades.symbol->assets, trades.order_id->orders
+    expect(pairs).toEqual(['orders->assets', 'trades->assets', 'trades->orders']);
+  });
+
+  it('does not let a non-key table first column hijack a real primary key owner', () => {
+    // `a` has no PK; its first column happens to be `b_id`, which is `b`'s real PK.
+    const a: TableSchema = {
+      name: 'a',
+      columns: [{ name: 'b_id', type: 'INT', pk: false }],
+      foreignKeys: [],
+      isView: false,
+    };
+    const b: TableSchema = {
+      name: 'b',
+      columns: [{ name: 'b_id', type: 'INT', pk: true }],
+      foreignKeys: [],
+      isView: false,
+    };
+    const { edges } = buildGraph([a, b]);
+    // The PK owner (b) wins, so the edge points a -> b, not b -> a.
+    expect(edges).toHaveLength(1);
+    expect(edges[0].source).toBe('a');
+    expect(edges[0].target).toBe('b');
+  });
 });

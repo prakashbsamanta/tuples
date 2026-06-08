@@ -28,12 +28,22 @@ export function buildGraph(tables: TableSchema[]): { nodes: GraphNode[]; edges: 
     data: { table },
   }));
 
-  // Map primary-key column name -> table name, to infer relationships.
-  const pkOwner = new Map<string, string>();
+  // Map identifier-column name -> owning table, to infer relationships.
+  // Two passes so a declared PRIMARY KEY always wins over the first-column fallback:
+  //   1. PRIMARY KEY columns (authoritative).
+  //   2. For tables with NO primary key, treat the first column as the implied
+  //      identifier (the curriculum declares no PKs, e.g. `assets(symbol, ...)`),
+  //      but never override a name already owned by a real PK.
+  const keyOwner = new Map<string, string>();
   for (const table of tables) {
     for (const col of table.columns) {
-      if (col.pk) pkOwner.set(col.name, table.name);
+      if (col.pk && !keyOwner.has(col.name)) keyOwner.set(col.name, table.name);
     }
+  }
+  for (const table of tables) {
+    if (table.columns.some((c) => c.pk)) continue; // already has an authoritative key
+    const first = table.columns[0];
+    if (first && !keyOwner.has(first.name)) keyOwner.set(first.name, table.name);
   }
 
   const seen = new Set<string>();
@@ -52,9 +62,9 @@ export function buildGraph(tables: TableSchema[]): { nodes: GraphNode[]; edges: 
     for (const fk of table.foreignKeys) {
       addEdge(table.name, fk.toTable, fk.fromColumn);
     }
-    // Inferred: a column matching another table's primary-key column name
+    // Inferred: a column matching another table's identifier column name
     for (const col of table.columns) {
-      const owner = pkOwner.get(col.name);
+      const owner = keyOwner.get(col.name);
       if (owner && owner !== table.name) {
         addEdge(table.name, owner, col.name);
       }

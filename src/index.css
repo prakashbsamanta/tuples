@@ -82,3 +82,30 @@
     border: 1px solid rgba(255, 255, 255, 0.07);
   }
 }
+
+/* ── React Flow (schema map) dark theming ── */
+.react-flow__controls-button {
+  background: #0F1425;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #a5b4fc;
+}
+.react-flow__controls-button:hover {
+  background: #1a2138;
+}
+.react-flow__controls-button svg {
+  fill: #a5b4fc;
+}
+.react-flow__edge-text {
+  fill: #c4b5fd;
+  font-size: 9px;
+  font-family: ui-monospace, monospace;
+}
+.react-flow__edge-textbg {
+  fill: #0F1425;
+}
+.react-flow__handle {
+  width: 6px;
+  height: 6px;
+  border: none;
+}
