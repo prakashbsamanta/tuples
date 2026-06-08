@@ -1,0 +1,497 @@
+{
+  "domainId": "space-logistics",
+  "domainName": "Orbital Space Logistics",
+  "domainDescription": "Manage interplanetary shipments, space station docking bays, crew manifests, fusion fuel reserves, and mission control telemetry.",
+  "curriculumMatrix": [
+    {
+      "stepIndex": 0,
+      "phase": "Novice",
+      "conceptFocus": "CREATE_VESSELS_TABLE",
+      "narrativeBriefing": "Command, we are building the Orbital Logistics Control System from scratch. Start by creating a `vessels` table with `vessel_id` (INT), `vessel_name` (TEXT), and `class_type` (TEXT).",
+      "hints": {
+        "tier1Concept": "Use CREATE TABLE to define the structure of the vessels registry.",
+        "tier2Scaffold": "CREATE TABLE vessels (\n  vessel_id INT,\n  vessel_name TEXT,\n  class_type TEXT\n);",
+        "tier3Solution": "CREATE TABLE vessels (vessel_id INT, vessel_name TEXT, class_type TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='vessels';",
+      "expectedResult": "[{\"name\":\"vessels\"}]"
+    },
+    {
+      "stepIndex": 1,
+      "phase": "Novice",
+      "conceptFocus": "INSERT_VESSELS",
+      "narrativeBriefing": "Three vessels are cleared for registry: (1,'Ares IV','Heavy Freighter'), (2,'Hermes Scout','Recon Class'), (3,'Europa Station','Orbital Platform').",
+      "hints": {
+        "tier1Concept": "Insert multiple rows with a single INSERT using comma-separated VALUES.",
+        "tier2Scaffold": "INSERT INTO vessels VALUES\n  (1,'Ares IV','Heavy Freighter'),\n  (2,'Hermes Scout','Recon Class'),\n  (3,'Europa Station','Orbital Platform');",
+        "tier3Solution": "INSERT INTO vessels VALUES (1,'Ares IV','Heavy Freighter'),(2,'Hermes Scout','Recon Class'),(3,'Europa Station','Orbital Platform');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM vessels;",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 2,
+      "phase": "Novice",
+      "conceptFocus": "SELECT_SPECIFIC",
+      "narrativeBriefing": "Retrieve the vessel_name and class_type for vessel with id 1.",
+      "hints": {
+        "tier1Concept": "SELECT specific columns FROM table WHERE condition.",
+        "tier2Scaffold": "SELECT vessel_name, class_type FROM vessels WHERE vessel_id = 1;",
+        "tier3Solution": "SELECT vessel_name, class_type FROM vessels WHERE vessel_id = 1;"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT vessel_name FROM vessels WHERE vessel_id=1;",
+      "expectedResult": "[{\"vessel_name\":\"Ares IV\"}]"
+    },
+    {
+      "stepIndex": 3,
+      "phase": "Novice",
+      "conceptFocus": "ALTER_ADD_STATUS",
+      "narrativeBriefing": "Add a `status` (TEXT) column to `vessels` to track whether each vessel is 'ACTIVE', 'DOCKED', or 'DECOMMISSIONED'.",
+      "hints": {
+        "tier1Concept": "Use ALTER TABLE ... ADD COLUMN to extend an existing table's structure.",
+        "tier2Scaffold": "ALTER TABLE vessels ADD COLUMN status TEXT;",
+        "tier3Solution": "ALTER TABLE vessels ADD COLUMN status TEXT;"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM pragma_table_info('vessels') WHERE name='status';",
+      "expectedResult": "[{\"count\":1}]"
+    },
+    {
+      "stepIndex": 4,
+      "phase": "Novice",
+      "conceptFocus": "UPDATE_STATUS",
+      "narrativeBriefing": "Set the status of all three vessels: Ares IV is 'ACTIVE', Hermes Scout is 'ACTIVE', Europa Station is 'DOCKED'. Update them individually.",
+      "hints": {
+        "tier1Concept": "Use separate UPDATE statements for each vessel, or a single one for the two ACTIVE ships.",
+        "tier2Scaffold": "UPDATE vessels SET status = 'ACTIVE' WHERE vessel_id IN (1, 2);\nUPDATE vessels SET status = 'DOCKED' WHERE vessel_id = 3;",
+        "tier3Solution": "UPDATE vessels SET status = 'ACTIVE' WHERE vessel_id IN (1, 2); UPDATE vessels SET status = 'DOCKED' WHERE vessel_id = 3;"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT COUNT(*) as count FROM vessels WHERE status='ACTIVE';",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 5,
+      "phase": "Novice",
+      "conceptFocus": "CREATE_DOCKING_BAYS",
+      "narrativeBriefing": "Create a `docking_bays` table: `bay_id` (INT), `station_name` (TEXT), `capacity` (INT), `status` (TEXT).",
+      "hints": {
+        "tier1Concept": "Docking bays track available landing/docking spots at each space station.",
+        "tier2Scaffold": "CREATE TABLE docking_bays (\n  bay_id INT,\n  station_name TEXT,\n  capacity INT,\n  status TEXT\n);",
+        "tier3Solution": "CREATE TABLE docking_bays (bay_id INT, station_name TEXT, capacity INT, status TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='docking_bays';",
+      "expectedResult": "[{\"name\":\"docking_bays\"}]"
+    },
+    {
+      "stepIndex": 6,
+      "phase": "Novice",
+      "conceptFocus": "INSERT_BAYS",
+      "narrativeBriefing": "Insert 4 docking bays: (1,'Olympus Station',5,'AVAILABLE'), (2,'Olympus Station',3,'OCCUPIED'), (3,'Ganymede Depot',8,'AVAILABLE'), (4,'Ganymede Depot',2,'MAINTENANCE').",
+      "hints": {
+        "tier1Concept": "Insert all 4 bays in a single INSERT statement.",
+        "tier2Scaffold": "INSERT INTO docking_bays VALUES\n  (1,'Olympus Station',5,'AVAILABLE'),\n  (2,'Olympus Station',3,'OCCUPIED'),\n  (3,'Ganymede Depot',8,'AVAILABLE'),\n  (4,'Ganymede Depot',2,'MAINTENANCE');",
+        "tier3Solution": "INSERT INTO docking_bays VALUES (1,'Olympus Station',5,'AVAILABLE'),(2,'Olympus Station',3,'OCCUPIED'),(3,'Ganymede Depot',8,'AVAILABLE'),(4,'Ganymede Depot',2,'MAINTENANCE');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM docking_bays;",
+      "expectedResult": "[{\"count\":4}]"
+    },
+    {
+      "stepIndex": 7,
+      "phase": "Novice",
+      "conceptFocus": "AGGREGATE_CAPACITY",
+      "narrativeBriefing": "Calculate the total docking capacity at each station using GROUP BY and SUM.",
+      "hints": {
+        "tier1Concept": "GROUP BY station_name with SUM(capacity) aggregates capacity per station.",
+        "tier2Scaffold": "SELECT station_name, SUM(capacity) as total_capacity FROM docking_bays GROUP BY station_name;",
+        "tier3Solution": "SELECT station_name, SUM(capacity) as total_capacity FROM docking_bays GROUP BY station_name;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT station_name FROM docking_bays GROUP BY station_name);",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 8,
+      "phase": "Novice",
+      "conceptFocus": "FILTER_AVAILABLE",
+      "narrativeBriefing": "List all docking bays that are AVAILABLE for incoming vessels.",
+      "hints": {
+        "tier1Concept": "Use WHERE status = 'AVAILABLE' to filter only available bays.",
+        "tier2Scaffold": "SELECT * FROM docking_bays WHERE status = 'AVAILABLE';",
+        "tier3Solution": "SELECT * FROM docking_bays WHERE status = 'AVAILABLE';"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM docking_bays WHERE status='AVAILABLE';",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 9,
+      "phase": "Operator",
+      "conceptFocus": "CREATE_CREW_TABLE",
+      "narrativeBriefing": "Create a `crew` table: `crew_id` (INT), `name` (TEXT), `rank` (TEXT), `vessel_id` (INT), `specialty` (TEXT).",
+      "hints": {
+        "tier1Concept": "The crew table tracks personnel and which vessel they are assigned to via vessel_id.",
+        "tier2Scaffold": "CREATE TABLE crew (\n  crew_id INT,\n  name TEXT,\n  rank TEXT,\n  vessel_id INT,\n  specialty TEXT\n);",
+        "tier3Solution": "CREATE TABLE crew (crew_id INT, name TEXT, rank TEXT, vessel_id INT, specialty TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='crew';",
+      "expectedResult": "[{\"name\":\"crew\"}]"
+    },
+    {
+      "stepIndex": 10,
+      "phase": "Operator",
+      "conceptFocus": "INSERT_CREW",
+      "narrativeBriefing": "Assign crew: (1,'Cdr. Yara Osei','Commander',1,'Navigation'), (2,'Lt. Sam Reeves','Pilot',1,'Propulsion'), (3,'Dr. Mia Chen','Scientist',2,'Biology'), (4,'Eng. Raj Patel','Engineer',1,'Systems'), (5,'Dr. Zoe Malik','Scientist',2,'Geology').",
+      "hints": {
+        "tier1Concept": "Insert all 5 crew members in a single INSERT.",
+        "tier2Scaffold": "INSERT INTO crew VALUES\n  (1,'Cdr. Yara Osei','Commander',1,'Navigation'),\n  (2,'Lt. Sam Reeves','Pilot',1,'Propulsion'),\n  (3,'Dr. Mia Chen','Scientist',2,'Biology'),\n  (4,'Eng. Raj Patel','Engineer',1,'Systems'),\n  (5,'Dr. Zoe Malik','Scientist',2,'Geology');",
+        "tier3Solution": "INSERT INTO crew VALUES (1,'Cdr. Yara Osei','Commander',1,'Navigation'),(2,'Lt. Sam Reeves','Pilot',1,'Propulsion'),(3,'Dr. Mia Chen','Scientist',2,'Biology'),(4,'Eng. Raj Patel','Engineer',1,'Systems'),(5,'Dr. Zoe Malik','Scientist',2,'Geology');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM crew;",
+      "expectedResult": "[{\"count\":5}]"
+    },
+    {
+      "stepIndex": 11,
+      "phase": "Operator",
+      "conceptFocus": "JOIN_CREW_VESSELS",
+      "narrativeBriefing": "List each crew member's name and the vessel they are assigned to by joining `crew` and `vessels`.",
+      "hints": {
+        "tier1Concept": "INNER JOIN on vessel_id to match crew to their assigned ship.",
+        "tier2Scaffold": "SELECT c.name, v.vessel_name FROM crew c JOIN vessels v ON c.vessel_id = v.vessel_id;",
+        "tier3Solution": "SELECT c.name, v.vessel_name FROM crew c JOIN vessels v ON c.vessel_id = v.vessel_id;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM crew c JOIN vessels v ON c.vessel_id = v.vessel_id;",
+      "expectedResult": "[{\"count\":5}]"
+    },
+    {
+      "stepIndex": 12,
+      "phase": "Operator",
+      "conceptFocus": "GROUP_BY_VESSEL_CREW",
+      "narrativeBriefing": "Count how many crew members are assigned to each vessel.",
+      "hints": {
+        "tier1Concept": "GROUP BY vessel_id with COUNT(*) to tally crew per ship.",
+        "tier2Scaffold": "SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id;",
+        "tier3Solution": "SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT vessel_id FROM crew GROUP BY vessel_id);",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 13,
+      "phase": "Operator",
+      "conceptFocus": "CREATE_CARGO_TABLE",
+      "narrativeBriefing": "Create a `cargo` table: `cargo_id` (INT), `vessel_id` (INT), `cargo_type` (TEXT), `mass_tons` (REAL), `destination` (TEXT).",
+      "hints": {
+        "tier1Concept": "Cargo tracks what each vessel is transporting and its mass.",
+        "tier2Scaffold": "CREATE TABLE cargo (\n  cargo_id INT,\n  vessel_id INT,\n  cargo_type TEXT,\n  mass_tons REAL,\n  destination TEXT\n);",
+        "tier3Solution": "CREATE TABLE cargo (cargo_id INT, vessel_id INT, cargo_type TEXT, mass_tons REAL, destination TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='cargo';",
+      "expectedResult": "[{\"name\":\"cargo\"}]"
+    },
+    {
+      "stepIndex": 14,
+      "phase": "Operator",
+      "conceptFocus": "INSERT_CARGO",
+      "narrativeBriefing": "Load cargo: (1,1,'Medical Supplies',12.5,'Mars Colony'), (2,1,'Fusion Cells',45.0,'Mars Colony'), (3,2,'Scientific Equipment',8.2,'Europa Base'), (4,1,'Food Rations',22.3,'Mars Colony').",
+      "hints": {
+        "tier1Concept": "Insert all 4 cargo items using a single INSERT.",
+        "tier2Scaffold": "INSERT INTO cargo VALUES\n  (1,1,'Medical Supplies',12.5,'Mars Colony'),\n  (2,1,'Fusion Cells',45.0,'Mars Colony'),\n  (3,2,'Scientific Equipment',8.2,'Europa Base'),\n  (4,1,'Food Rations',22.3,'Mars Colony');",
+        "tier3Solution": "INSERT INTO cargo VALUES (1,1,'Medical Supplies',12.5,'Mars Colony'),(2,1,'Fusion Cells',45.0,'Mars Colony'),(3,2,'Scientific Equipment',8.2,'Europa Base'),(4,1,'Food Rations',22.3,'Mars Colony');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM cargo;",
+      "expectedResult": "[{\"count\":4}]"
+    },
+    {
+      "stepIndex": 15,
+      "phase": "Operator",
+      "conceptFocus": "AGGREGATE_CARGO_MASS",
+      "narrativeBriefing": "Calculate the total cargo mass per vessel.",
+      "hints": {
+        "tier1Concept": "GROUP BY vessel_id with SUM(mass_tons).",
+        "tier2Scaffold": "SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id;",
+        "tier3Solution": "SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT vessel_id FROM cargo GROUP BY vessel_id);",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 16,
+      "phase": "Operator",
+      "conceptFocus": "HAVING_HEAVY_CARGO",
+      "narrativeBriefing": "Find vessels whose total cargo mass exceeds 50 tons using HAVING.",
+      "hints": {
+        "tier1Concept": "HAVING filters groups after aggregation. Compare SUM(mass_tons) > 50.",
+        "tier2Scaffold": "SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id HAVING total_mass > 50;",
+        "tier3Solution": "SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id HAVING total_mass > 50;"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT vessel_id FROM cargo GROUP BY vessel_id HAVING SUM(mass_tons) > 50;",
+      "expectedResult": "[{\"vessel_id\":1}]"
+    },
+    {
+      "stepIndex": 17,
+      "phase": "Operator",
+      "conceptFocus": "JOIN_CARGO_VESSELS_CREW",
+      "narrativeBriefing": "Show each cargo item along with the vessel name and the number of crew on that vessel. Use JOINs and subqueries.",
+      "hints": {
+        "tier1Concept": "JOIN cargo to vessels on vessel_id, then JOIN a crew-count subquery.",
+        "tier2Scaffold": "SELECT c.cargo_type, v.vessel_name, cc.crew_count\nFROM cargo c\nJOIN vessels v ON c.vessel_id = v.vessel_id\nJOIN (SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id) cc\n  ON c.vessel_id = cc.vessel_id;",
+        "tier3Solution": "SELECT c.cargo_type, v.vessel_name, cc.crew_count FROM cargo c JOIN vessels v ON c.vessel_id = v.vessel_id JOIN (SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id) cc ON c.vessel_id = cc.vessel_id;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM cargo c JOIN vessels v ON c.vessel_id=v.vessel_id JOIN (SELECT vessel_id, COUNT(*) as n FROM crew GROUP BY vessel_id) cc ON c.vessel_id=cc.vessel_id;",
+      "expectedResult": "[{\"count\":4}]"
+    },
+    {
+      "stepIndex": 18,
+      "phase": "Operator",
+      "conceptFocus": "DELETE_OLD_BAY",
+      "narrativeBriefing": "Bay 4 at Ganymede Depot is decommissioned. Delete it from `docking_bays`.",
+      "hints": {
+        "tier1Concept": "Use DELETE FROM with WHERE bay_id = 4.",
+        "tier2Scaffold": "DELETE FROM docking_bays WHERE bay_id = 4;",
+        "tier3Solution": "DELETE FROM docking_bays WHERE bay_id = 4;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM docking_bays WHERE bay_id=4;",
+      "expectedResult": "[{\"count\":0}]"
+    },
+    {
+      "stepIndex": 19,
+      "phase": "Operator",
+      "conceptFocus": "CREATE_FUEL_DEPOTS",
+      "narrativeBriefing": "Create a `fuel_depots` table: `depot_id` (INT), `station_name` (TEXT), `fuel_type` (TEXT), `reserves_tons` (REAL).",
+      "hints": {
+        "tier1Concept": "Fuel depots store fusion and chemical fuel for vessels.",
+        "tier2Scaffold": "CREATE TABLE fuel_depots (depot_id INT, station_name TEXT, fuel_type TEXT, reserves_tons REAL);",
+        "tier3Solution": "CREATE TABLE fuel_depots (depot_id INT, station_name TEXT, fuel_type TEXT, reserves_tons REAL);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='fuel_depots';",
+      "expectedResult": "[{\"name\":\"fuel_depots\"}]"
+    },
+    {
+      "stepIndex": 20,
+      "phase": "Operator",
+      "conceptFocus": "INSERT_FUEL",
+      "narrativeBriefing": "Stock fuel depots: (1,'Olympus Station','Fusion',500.0), (2,'Olympus Station','Chemical',200.0), (3,'Ganymede Depot','Fusion',320.0).",
+      "hints": {
+        "tier1Concept": "Insert all 3 fuel depot records.",
+        "tier2Scaffold": "INSERT INTO fuel_depots VALUES\n  (1,'Olympus Station','Fusion',500.0),\n  (2,'Olympus Station','Chemical',200.0),\n  (3,'Ganymede Depot','Fusion',320.0);",
+        "tier3Solution": "INSERT INTO fuel_depots VALUES (1,'Olympus Station','Fusion',500.0),(2,'Olympus Station','Chemical',200.0),(3,'Ganymede Depot','Fusion',320.0);"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM fuel_depots;",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 21,
+      "phase": "Operator",
+      "conceptFocus": "UPDATE_FUEL_RESERVES",
+      "narrativeBriefing": "Ares IV departed and consumed 150 tons of Fusion fuel from Olympus Station (depot_id 1). Update reserves accordingly.",
+      "hints": {
+        "tier1Concept": "Use UPDATE with arithmetic: SET reserves_tons = reserves_tons - 150.",
+        "tier2Scaffold": "UPDATE fuel_depots SET reserves_tons = reserves_tons - 150 WHERE depot_id = 1;",
+        "tier3Solution": "UPDATE fuel_depots SET reserves_tons = reserves_tons - 150 WHERE depot_id = 1;"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT reserves_tons FROM fuel_depots WHERE depot_id=1;",
+      "expectedResult": "[{\"reserves_tons\":350}]"
+    },
+    {
+      "stepIndex": 22,
+      "phase": "Operator",
+      "conceptFocus": "CASE_FUEL_STATUS",
+      "narrativeBriefing": "Classify each fuel depot's reserve status: reserves > 400 is 'CRITICAL_SURPLUS', > 200 is 'ADEQUATE', else 'LOW'.",
+      "hints": {
+        "tier1Concept": "Use CASE WHEN with multiple conditions to classify numeric ranges.",
+        "tier2Scaffold": "SELECT station_name, fuel_type, reserves_tons,\n  CASE\n    WHEN reserves_tons > 400 THEN 'CRITICAL_SURPLUS'\n    WHEN reserves_tons > 200 THEN 'ADEQUATE'\n    ELSE 'LOW'\n  END as supply_status\nFROM fuel_depots;",
+        "tier3Solution": "SELECT station_name, fuel_type, reserves_tons, CASE WHEN reserves_tons > 400 THEN 'CRITICAL_SURPLUS' WHEN reserves_tons > 200 THEN 'ADEQUATE' ELSE 'LOW' END as supply_status FROM fuel_depots;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM fuel_depots;",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 23,
+      "phase": "Architect",
+      "conceptFocus": "LEFT_JOIN_UNASSIGNED",
+      "narrativeBriefing": "Show all vessels along with any cargo they carry, including vessels with no cargo assigned (Europa Station has none). Use LEFT JOIN.",
+      "hints": {
+        "tier1Concept": "LEFT JOIN returns all vessels regardless of whether they have matching cargo rows.",
+        "tier2Scaffold": "SELECT v.vessel_name, c.cargo_type, c.mass_tons\nFROM vessels v\nLEFT JOIN cargo c ON v.vessel_id = c.vessel_id;",
+        "tier3Solution": "SELECT v.vessel_name, c.cargo_type, c.mass_tons FROM vessels v LEFT JOIN cargo c ON v.vessel_id = c.vessel_id;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM vessels v LEFT JOIN cargo c ON v.vessel_id=c.vessel_id;",
+      "expectedResult": "[{\"count\":5}]"
+    },
+    {
+      "stepIndex": 24,
+      "phase": "Architect",
+      "conceptFocus": "SUBQUERY_HEAVIEST_VESSEL",
+      "narrativeBriefing": "Find the vessel carrying the most total cargo mass. Use a subquery to get the max total and match it.",
+      "hints": {
+        "tier1Concept": "Use a subquery to compute the MAX of aggregated totals.",
+        "tier2Scaffold": "SELECT vessel_id, SUM(mass_tons) as total FROM cargo\nGROUP BY vessel_id\nHAVING total = (SELECT MAX(total_mass) FROM (SELECT SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id));",
+        "tier3Solution": "SELECT vessel_id, SUM(mass_tons) as total FROM cargo GROUP BY vessel_id HAVING total = (SELECT MAX(total_mass) FROM (SELECT SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id));"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT vessel_id FROM cargo GROUP BY vessel_id ORDER BY SUM(mass_tons) DESC LIMIT 1;",
+      "expectedResult": "[{\"vessel_id\":1}]"
+    },
+    {
+      "stepIndex": 25,
+      "phase": "Architect",
+      "conceptFocus": "CTE_MISSION_LOAD",
+      "narrativeBriefing": "Use a CTE to compute each vessel's total cargo mass, then join with vessels to show vessel_name and total_mass.",
+      "hints": {
+        "tier1Concept": "WITH cte AS (...) SELECT ... FROM cte JOIN ...",
+        "tier2Scaffold": "WITH vessel_load AS (\n  SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id\n)\nSELECT v.vessel_name, vl.total_mass\nFROM vessels v\nJOIN vessel_load vl ON v.vessel_id = vl.vessel_id;",
+        "tier3Solution": "WITH vessel_load AS (SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id) SELECT v.vessel_name, vl.total_mass FROM vessels v JOIN vessel_load vl ON v.vessel_id = vl.vessel_id;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (WITH vl AS (SELECT vessel_id FROM cargo GROUP BY vessel_id) SELECT v.vessel_name FROM vessels v JOIN vl ON v.vessel_id=vl.vessel_id);",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 26,
+      "phase": "Architect",
+      "conceptFocus": "CREATE_VIEW_MANIFEST",
+      "narrativeBriefing": "Create a view `mission_manifest` that shows vessel_name, crew count, and total cargo mass for each active vessel.",
+      "hints": {
+        "tier1Concept": "Use CREATE VIEW with a query that JOINs vessels, crew (counted), and cargo (summed).",
+        "tier2Scaffold": "CREATE VIEW mission_manifest AS\nSELECT v.vessel_name,\n  COUNT(DISTINCT c.crew_id) as crew_count,\n  SUM(ca.mass_tons) as cargo_mass\nFROM vessels v\nLEFT JOIN crew c ON v.vessel_id = c.vessel_id\nLEFT JOIN cargo ca ON v.vessel_id = ca.vessel_id\nWHERE v.status = 'ACTIVE'\nGROUP BY v.vessel_id;",
+        "tier3Solution": "CREATE VIEW mission_manifest AS SELECT v.vessel_name, COUNT(DISTINCT c.crew_id) as crew_count, SUM(ca.mass_tons) as cargo_mass FROM vessels v LEFT JOIN crew c ON v.vessel_id = c.vessel_id LEFT JOIN cargo ca ON v.vessel_id = ca.vessel_id WHERE v.status = 'ACTIVE' GROUP BY v.vessel_id;"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='view' AND name='mission_manifest';",
+      "expectedResult": "[{\"name\":\"mission_manifest\"}]"
+    },
+    {
+      "stepIndex": 27,
+      "phase": "Architect",
+      "conceptFocus": "WINDOW_CREW_RANK",
+      "narrativeBriefing": "Rank each crew member within their vessel by seniority (Commander=1, Pilot=2, Engineer=3, Scientist=4) using CASE + RANK().",
+      "hints": {
+        "tier1Concept": "Use ROW_NUMBER() OVER (PARTITION BY vessel_id ORDER BY CASE rank ...) to assign seniority ranks.",
+        "tier2Scaffold": "SELECT name, rank, vessel_id,\n  ROW_NUMBER() OVER (\n    PARTITION BY vessel_id\n    ORDER BY CASE rank\n      WHEN 'Commander' THEN 1\n      WHEN 'Pilot' THEN 2\n      WHEN 'Engineer' THEN 3\n      ELSE 4\n    END\n  ) as seniority_rank\nFROM crew;",
+        "tier3Solution": "SELECT name, rank, vessel_id, ROW_NUMBER() OVER (PARTITION BY vessel_id ORDER BY CASE rank WHEN 'Commander' THEN 1 WHEN 'Pilot' THEN 2 WHEN 'Engineer' THEN 3 ELSE 4 END) as seniority_rank FROM crew;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT ROW_NUMBER() OVER (PARTITION BY vessel_id ORDER BY crew_id) as rn FROM crew);",
+      "expectedResult": "[{\"count\":5}]"
+    },
+    {
+      "stepIndex": 28,
+      "phase": "Architect",
+      "conceptFocus": "WINDOW_CUMULATIVE_FUEL",
+      "narrativeBriefing": "Compute cumulative fuel reserves at Olympus Station ordered by depot_id using SUM() OVER.",
+      "hints": {
+        "tier1Concept": "SUM() OVER (WHERE station_name='Olympus Station' ORDER BY depot_id) gives running total.",
+        "tier2Scaffold": "SELECT depot_id, fuel_type, reserves_tons,\n  SUM(reserves_tons) OVER (PARTITION BY station_name ORDER BY depot_id) as cumulative_reserves\nFROM fuel_depots\nWHERE station_name = 'Olympus Station';",
+        "tier3Solution": "SELECT depot_id, fuel_type, reserves_tons, SUM(reserves_tons) OVER (PARTITION BY station_name ORDER BY depot_id) as cumulative_reserves FROM fuel_depots WHERE station_name = 'Olympus Station';"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT SUM(reserves_tons) OVER (PARTITION BY station_name ORDER BY depot_id) as cr FROM fuel_depots WHERE station_name='Olympus Station');",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 29,
+      "phase": "Architect",
+      "conceptFocus": "EXISTS_CHECK",
+      "narrativeBriefing": "Find all crew members who are assigned to a vessel that has at least one cargo item, using EXISTS.",
+      "hints": {
+        "tier1Concept": "EXISTS checks whether a correlated subquery returns any rows.",
+        "tier2Scaffold": "SELECT c.name, c.vessel_id\nFROM crew c\nWHERE EXISTS (\n  SELECT 1 FROM cargo ca WHERE ca.vessel_id = c.vessel_id\n);",
+        "tier3Solution": "SELECT c.name, c.vessel_id FROM crew c WHERE EXISTS (SELECT 1 FROM cargo ca WHERE ca.vessel_id = c.vessel_id);"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM crew c WHERE EXISTS (SELECT 1 FROM cargo ca WHERE ca.vessel_id = c.vessel_id);",
+      "expectedResult": "[{\"count\":5}]"
+    },
+    {
+      "stepIndex": 30,
+      "phase": "Architect",
+      "conceptFocus": "DISTINCT_DESTINATIONS",
+      "narrativeBriefing": "Get a list of all DISTINCT cargo destinations in the system.",
+      "hints": {
+        "tier1Concept": "SELECT DISTINCT destination FROM cargo.",
+        "tier2Scaffold": "SELECT DISTINCT destination FROM cargo;",
+        "tier3Solution": "SELECT DISTINCT destination FROM cargo;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(DISTINCT destination) as count FROM cargo;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 31,
+      "phase": "Architect",
+      "conceptFocus": "LIKE_SEARCH_CREW",
+      "narrativeBriefing": "Find all crew members whose rank starts with 'Dr.' using LIKE.",
+      "hints": {
+        "tier1Concept": "Use LIKE 'Dr.%' to match any name starting with Dr.",
+        "tier2Scaffold": "SELECT * FROM crew WHERE name LIKE 'Dr.%';",
+        "tier3Solution": "SELECT * FROM crew WHERE name LIKE 'Dr.%';"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM crew WHERE name LIKE 'Dr.%';",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 32,
+      "phase": "Architect",
+      "conceptFocus": "INDEX_CARGO",
+      "narrativeBriefing": "Create an index `idx_cargo_vessel` on `cargo`(vessel_id) to speed up vessel cargo lookups.",
+      "hints": {
+        "tier1Concept": "CREATE INDEX improves read performance on frequently-queried columns.",
+        "tier2Scaffold": "CREATE INDEX idx_cargo_vessel ON cargo(vessel_id);",
+        "tier3Solution": "CREATE INDEX idx_cargo_vessel ON cargo(vessel_id);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_cargo_vessel';",
+      "expectedResult": "[{\"name\":\"idx_cargo_vessel\"}]"
+    },
+    {
+      "stepIndex": 33,
+      "phase": "Architect",
+      "conceptFocus": "MULTI_CTE_FINAL_REPORT",
+      "narrativeBriefing": "Final Operations Report: use three CTEs to calculate crew_count per vessel, total_cargo per vessel, and total_fuel per station, then present a summary.",
+      "hints": {
+        "tier1Concept": "Chain multiple CTEs with commas in a single WITH block.",
+        "tier2Scaffold": "WITH crew_counts AS (\n  SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id\n),\ncargo_totals AS (\n  SELECT vessel_id, SUM(mass_tons) as total_cargo FROM cargo GROUP BY vessel_id\n)\nSELECT v.vessel_name, cc.crew_count, ct.total_cargo\nFROM vessels v\nLEFT JOIN crew_counts cc ON v.vessel_id = cc.vessel_id\nLEFT JOIN cargo_totals ct ON v.vessel_id = ct.vessel_id;",
+        "tier3Solution": "WITH crew_counts AS (SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id), cargo_totals AS (SELECT vessel_id, SUM(mass_tons) as total_cargo FROM cargo GROUP BY vessel_id) SELECT v.vessel_name, cc.crew_count, ct.total_cargo FROM vessels v LEFT JOIN crew_counts cc ON v.vessel_id = cc.vessel_id LEFT JOIN cargo_totals ct ON v.vessel_id = ct.vessel_id;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM vessels v LEFT JOIN (SELECT vessel_id, COUNT(*) as n FROM crew GROUP BY vessel_id) cc ON v.vessel_id=cc.vessel_id;",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 34,
+      "phase": "Architect",
+      "conceptFocus": "DROP_VIEW_CLEANUP",
+      "narrativeBriefing": "Mission archive complete. Drop the `mission_manifest` view to finalize the database handoff.",
+      "hints": {
+        "tier1Concept": "Use DROP VIEW to remove a view from the schema.",
+        "tier2Scaffold": "DROP VIEW mission_manifest;",
+        "tier3Solution": "DROP VIEW mission_manifest;"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM sqlite_master WHERE type='view' AND name='mission_manifest';",
+      "expectedResult": "[{\"count\":0}]"
+    }
+  ]
+}

@@ -1,0 +1,497 @@
+{
+  "domainId": "clinical-trials-research",
+  "domainName": "Clinical Trials Research",
+  "domainDescription": "Build an enterprise medical research database to manage patient registries, trial logs, dosage configurations, and adverse reactions.",
+  "curriculumMatrix": [
+    {
+      "stepIndex": 0,
+      "phase": "Novice",
+      "conceptFocus": "CREATE_TABLE_BASIC",
+      "narrativeBriefing": "Welcome to MedCore Research Lab. Our clinical trial tracking system needs a foundation. Create a `patients` table with `patient_id` (INT) and `patient_name` (TEXT).",
+      "hints": {
+        "tier1Concept": "Use CREATE TABLE to define a new table and specify columns with their data types inside parentheses.",
+        "tier2Scaffold": "CREATE TABLE patients (\n  patient_id INT,\n  patient_name TEXT\n);",
+        "tier3Solution": "CREATE TABLE patients (patient_id INT, patient_name TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='patients';",
+      "expectedResult": "[{\"name\":\"patients\"}]"
+    },
+    {
+      "stepIndex": 1,
+      "phase": "Novice",
+      "conceptFocus": "INSERT_SINGLE_ROW",
+      "narrativeBriefing": "First patient enrolled! Insert a record for patient_id 101, name 'Alice Monroe' into the `patients` table.",
+      "hints": {
+        "tier1Concept": "Use INSERT INTO to add a new row. Specify column names in parentheses and VALUES in a matching set.",
+        "tier2Scaffold": "INSERT INTO patients (patient_id, patient_name)\nVALUES (101, 'Alice Monroe');",
+        "tier3Solution": "INSERT INTO patients (patient_id, patient_name) VALUES (101, 'Alice Monroe');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM patients WHERE patient_id=101;",
+      "expectedResult": "[{\"count\":1}]"
+    },
+    {
+      "stepIndex": 2,
+      "phase": "Novice",
+      "conceptFocus": "INSERT_MULTIPLE_ROWS",
+      "narrativeBriefing": "Batch-enroll two more patients: patient_id 102 'Bob Chen', and patient_id 103 'Carol Davis'.",
+      "hints": {
+        "tier1Concept": "INSERT INTO can accept multiple rows in a single statement by separating each value tuple with a comma.",
+        "tier2Scaffold": "INSERT INTO patients (patient_id, patient_name) VALUES\n  (102, 'Bob Chen'),\n  (103, 'Carol Davis');",
+        "tier3Solution": "INSERT INTO patients (patient_id, patient_name) VALUES (102, 'Bob Chen'), (103, 'Carol Davis');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM patients;",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 3,
+      "phase": "Novice",
+      "conceptFocus": "SELECT_ALL",
+      "narrativeBriefing": "Run a full audit. Retrieve all records from the `patients` table.",
+      "hints": {
+        "tier1Concept": "Use SELECT * FROM to retrieve every column and every row from a table.",
+        "tier2Scaffold": "SELECT * FROM patients;",
+        "tier3Solution": "SELECT * FROM patients;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM patients;",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 4,
+      "phase": "Novice",
+      "conceptFocus": "SELECT_WHERE",
+      "narrativeBriefing": "Fetch the record for patient 102 only. Use a WHERE clause to filter by patient_id.",
+      "hints": {
+        "tier1Concept": "Add a WHERE clause after the table name to filter rows based on a condition.",
+        "tier2Scaffold": "SELECT * FROM patients WHERE patient_id = ___;",
+        "tier3Solution": "SELECT * FROM patients WHERE patient_id = 102;"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT patient_id, patient_name FROM patients WHERE patient_id = 102;",
+      "expectedResult": "[{\"patient_id\":102,\"patient_name\":\"Bob Chen\"}]"
+    },
+    {
+      "stepIndex": 5,
+      "phase": "Novice",
+      "conceptFocus": "UPDATE_ROW",
+      "narrativeBriefing": "A data entry error was found. Update patient 103's name from 'Carol Davis' to 'Carol Davies'.",
+      "hints": {
+        "tier1Concept": "Use UPDATE ... SET ... WHERE to modify existing records. Always include a WHERE clause to avoid updating every row.",
+        "tier2Scaffold": "UPDATE patients SET patient_name = 'Carol Davies' WHERE patient_id = ___;",
+        "tier3Solution": "UPDATE patients SET patient_name = 'Carol Davies' WHERE patient_id = 103;"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT patient_name FROM patients WHERE patient_id=103;",
+      "expectedResult": "[{\"patient_name\":\"Carol Davies\"}]"
+    },
+    {
+      "stepIndex": 6,
+      "phase": "Novice",
+      "conceptFocus": "DELETE_ROW",
+      "narrativeBriefing": "Patient 101 has withdrawn from the trial. Delete their record from the `patients` table.",
+      "hints": {
+        "tier1Concept": "Use DELETE FROM with a WHERE clause to remove a specific row.",
+        "tier2Scaffold": "DELETE FROM patients WHERE patient_id = ___;",
+        "tier3Solution": "DELETE FROM patients WHERE patient_id = 101;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM patients WHERE patient_id=101;",
+      "expectedResult": "[{\"count\":0}]"
+    },
+    {
+      "stepIndex": 7,
+      "phase": "Novice",
+      "conceptFocus": "ALTER_TABLE_ADD_COLUMN",
+      "narrativeBriefing": "The IRB requires adding a `enrollment_date` (TEXT) column to the `patients` table for compliance.",
+      "hints": {
+        "tier1Concept": "Use ALTER TABLE ... ADD COLUMN to add a new column to an existing table.",
+        "tier2Scaffold": "ALTER TABLE patients ADD COLUMN enrollment_date TEXT;",
+        "tier3Solution": "ALTER TABLE patients ADD COLUMN enrollment_date TEXT;"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM pragma_table_info('patients') WHERE name='enrollment_date';",
+      "expectedResult": "[{\"count\":1}]"
+    },
+    {
+      "stepIndex": 8,
+      "phase": "Novice",
+      "conceptFocus": "INSERT_WITH_DATE",
+      "narrativeBriefing": "Insert patient 104 'David Park', enrolled on '2024-01-15'.",
+      "hints": {
+        "tier1Concept": "Now that enrollment_date exists, you can include it in your INSERT statement.",
+        "tier2Scaffold": "INSERT INTO patients (patient_id, patient_name, enrollment_date) VALUES (104, 'David Park', '2024-01-15');",
+        "tier3Solution": "INSERT INTO patients (patient_id, patient_name, enrollment_date) VALUES (104, 'David Park', '2024-01-15');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM patients WHERE patient_id=104;",
+      "expectedResult": "[{\"count\":1}]"
+    },
+    {
+      "stepIndex": 9,
+      "phase": "Operator",
+      "conceptFocus": "CREATE_TABLE_TRIALS",
+      "narrativeBriefing": "Create a `trials` table with `trial_id` (INT), `trial_name` (TEXT), `phase` (TEXT), and `status` (TEXT).",
+      "hints": {
+        "tier1Concept": "Define a new table with multiple columns using CREATE TABLE.",
+        "tier2Scaffold": "CREATE TABLE trials (\n  trial_id INT,\n  trial_name TEXT,\n  phase TEXT,\n  status TEXT\n);",
+        "tier3Solution": "CREATE TABLE trials (trial_id INT, trial_name TEXT, phase TEXT, status TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='trials';",
+      "expectedResult": "[{\"name\":\"trials\"}]"
+    },
+    {
+      "stepIndex": 10,
+      "phase": "Operator",
+      "conceptFocus": "INSERT_TRIALS_DATA",
+      "narrativeBriefing": "Add two trials: (1, 'Cardio-Alpha Trial', 'Phase II', 'ACTIVE') and (2, 'Neuro-Beta Study', 'Phase III', 'RECRUITING').",
+      "hints": {
+        "tier1Concept": "Use INSERT with multiple value tuples to load multiple rows at once.",
+        "tier2Scaffold": "INSERT INTO trials VALUES\n  (1, 'Cardio-Alpha Trial', 'Phase II', 'ACTIVE'),\n  (2, 'Neuro-Beta Study', 'Phase III', 'RECRUITING');",
+        "tier3Solution": "INSERT INTO trials VALUES (1, 'Cardio-Alpha Trial', 'Phase II', 'ACTIVE'), (2, 'Neuro-Beta Study', 'Phase III', 'RECRUITING');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM trials;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 11,
+      "phase": "Operator",
+      "conceptFocus": "CREATE_TABLE_ENROLLMENTS",
+      "narrativeBriefing": "Create an `enrollments` table to link patients to trials: `enrollment_id` (INT), `patient_id` (INT), `trial_id` (INT).",
+      "hints": {
+        "tier1Concept": "This is a join table (many-to-many bridge). It stores references to both patients and trials.",
+        "tier2Scaffold": "CREATE TABLE enrollments (\n  enrollment_id INT,\n  patient_id INT,\n  trial_id INT\n);",
+        "tier3Solution": "CREATE TABLE enrollments (enrollment_id INT, patient_id INT, trial_id INT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='enrollments';",
+      "expectedResult": "[{\"name\":\"enrollments\"}]"
+    },
+    {
+      "stepIndex": 12,
+      "phase": "Operator",
+      "conceptFocus": "INSERT_ENROLLMENTS",
+      "narrativeBriefing": "Enroll patient 102 in trial 1 and patient 104 in trial 2. Use enrollment_ids 1 and 2.",
+      "hints": {
+        "tier1Concept": "Insert rows that reference patient_id and trial_id values from other tables.",
+        "tier2Scaffold": "INSERT INTO enrollments VALUES (1, 102, 1), (2, 104, 2);",
+        "tier3Solution": "INSERT INTO enrollments VALUES (1, 102, 1), (2, 104, 2);"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM enrollments;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 13,
+      "phase": "Operator",
+      "conceptFocus": "INNER_JOIN",
+      "narrativeBriefing": "List every patient's name alongside the trial they are enrolled in. JOIN patients, enrollments, and trials.",
+      "hints": {
+        "tier1Concept": "Use INNER JOIN to combine rows from tables where the join condition matches.",
+        "tier2Scaffold": "SELECT p.patient_name, t.trial_name\nFROM patients p\nJOIN enrollments e ON p.patient_id = e.patient_id\nJOIN trials t ON e.trial_id = t.trial_id;",
+        "tier3Solution": "SELECT p.patient_name, t.trial_name FROM patients p JOIN enrollments e ON p.patient_id = e.patient_id JOIN trials t ON e.trial_id = t.trial_id;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM patients p JOIN enrollments e ON p.patient_id = e.patient_id JOIN trials t ON e.trial_id = t.trial_id;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 14,
+      "phase": "Operator",
+      "conceptFocus": "CREATE_TABLE_DOSAGE_LOGS",
+      "narrativeBriefing": "Create a `dosage_logs` table: `log_id` (INT), `patient_id` (INT), `mg_administered` (REAL), `log_timestamp` (TEXT).",
+      "hints": {
+        "tier1Concept": "Use REAL for decimal values like milligrams.",
+        "tier2Scaffold": "CREATE TABLE dosage_logs (\n  log_id INT,\n  patient_id INT,\n  mg_administered REAL,\n  log_timestamp TEXT\n);",
+        "tier3Solution": "CREATE TABLE dosage_logs (log_id INT, patient_id INT, mg_administered REAL, log_timestamp TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='dosage_logs';",
+      "expectedResult": "[{\"name\":\"dosage_logs\"}]"
+    },
+    {
+      "stepIndex": 15,
+      "phase": "Operator",
+      "conceptFocus": "INSERT_DOSAGE_DATA",
+      "narrativeBriefing": "Log three dosage records for patient 102: 50mg at '2024-02-01', 75mg at '2024-02-08', 75mg at '2024-02-15'. Use log_ids 1, 2, 3.",
+      "hints": {
+        "tier1Concept": "Insert multiple rows into dosage_logs at once.",
+        "tier2Scaffold": "INSERT INTO dosage_logs VALUES\n  (1, 102, 50, '2024-02-01'),\n  (2, 102, 75, '2024-02-08'),\n  (3, 102, 75, '2024-02-15');",
+        "tier3Solution": "INSERT INTO dosage_logs VALUES (1, 102, 50, '2024-02-01'), (2, 102, 75, '2024-02-08'), (3, 102, 75, '2024-02-15');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM dosage_logs;",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 16,
+      "phase": "Operator",
+      "conceptFocus": "AGGREGATE_SUM",
+      "narrativeBriefing": "Calculate the total milligrams administered to patient 102 across all logged sessions.",
+      "hints": {
+        "tier1Concept": "Use SUM() aggregate function with a WHERE clause to total values for a specific patient.",
+        "tier2Scaffold": "SELECT SUM(mg_administered) as total_mg FROM dosage_logs WHERE patient_id = ___;",
+        "tier3Solution": "SELECT SUM(mg_administered) as total_mg FROM dosage_logs WHERE patient_id = 102;"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT SUM(mg_administered) as total_mg FROM dosage_logs WHERE patient_id = 102;",
+      "expectedResult": "[{\"total_mg\":200}]"
+    },
+    {
+      "stepIndex": 17,
+      "phase": "Operator",
+      "conceptFocus": "AGGREGATE_AVG_COUNT",
+      "narrativeBriefing": "Calculate the average dosage and total number of log entries for patient 102.",
+      "hints": {
+        "tier1Concept": "Use AVG() for average and COUNT(*) for row count within the same SELECT.",
+        "tier2Scaffold": "SELECT AVG(mg_administered) as avg_mg, COUNT(*) as sessions FROM dosage_logs WHERE patient_id = 102;",
+        "tier3Solution": "SELECT AVG(mg_administered) as avg_mg, COUNT(*) as sessions FROM dosage_logs WHERE patient_id = 102;"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT AVG(mg_administered) as avg_mg, COUNT(*) as sessions FROM dosage_logs WHERE patient_id = 102;",
+      "expectedResult": "[{\"avg_mg\":66.6666666666667,\"sessions\":3}]"
+    },
+    {
+      "stepIndex": 18,
+      "phase": "Operator",
+      "conceptFocus": "GROUP_BY",
+      "narrativeBriefing": "Add dosage logs for patient 104: (4, 104, 100, '2024-02-01'). Then calculate total dosage grouped by each patient.",
+      "hints": {
+        "tier1Concept": "First insert the new row, then use GROUP BY with SUM() to aggregate per patient.",
+        "tier2Scaffold": "INSERT INTO dosage_logs VALUES (4, 104, 100, '2024-02-01');\nSELECT patient_id, SUM(mg_administered) as total FROM dosage_logs GROUP BY patient_id;",
+        "tier3Solution": "INSERT INTO dosage_logs VALUES (4, 104, 100, '2024-02-01'); SELECT patient_id, SUM(mg_administered) as total FROM dosage_logs GROUP BY patient_id;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT patient_id FROM dosage_logs GROUP BY patient_id);",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 19,
+      "phase": "Operator",
+      "conceptFocus": "HAVING_CLAUSE",
+      "narrativeBriefing": "Using HAVING, find all patients whose total dosage exceeds 150mg.",
+      "hints": {
+        "tier1Concept": "HAVING filters aggregated results, similar to WHERE but applied after GROUP BY.",
+        "tier2Scaffold": "SELECT patient_id, SUM(mg_administered) as total FROM dosage_logs GROUP BY patient_id HAVING total > ___;",
+        "tier3Solution": "SELECT patient_id, SUM(mg_administered) as total FROM dosage_logs GROUP BY patient_id HAVING total > 150;"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT patient_id, SUM(mg_administered) as total FROM dosage_logs GROUP BY patient_id HAVING total > 150;",
+      "expectedResult": "[{\"patient_id\":102,\"total\":200}]"
+    },
+    {
+      "stepIndex": 20,
+      "phase": "Operator",
+      "conceptFocus": "ORDER_BY",
+      "narrativeBriefing": "List all dosage log entries for patient 102, ordered chronologically by `log_timestamp` ascending.",
+      "hints": {
+        "tier1Concept": "Use ORDER BY column_name ASC to sort results in ascending order.",
+        "tier2Scaffold": "SELECT * FROM dosage_logs WHERE patient_id = 102 ORDER BY log_timestamp ___;",
+        "tier3Solution": "SELECT * FROM dosage_logs WHERE patient_id = 102 ORDER BY log_timestamp ASC;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM dosage_logs WHERE patient_id = 102;",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 21,
+      "phase": "Operator",
+      "conceptFocus": "CREATE_TABLE_ADVERSE_EVENTS",
+      "narrativeBriefing": "Create an `adverse_events` table: `event_id` (INT), `patient_id` (INT), `severity` (TEXT), `description` (TEXT), `event_date` (TEXT).",
+      "hints": {
+        "tier1Concept": "Create another table to track side effects. Severity will hold values like LOW, MEDIUM, HIGH.",
+        "tier2Scaffold": "CREATE TABLE adverse_events (\n  event_id INT,\n  patient_id INT,\n  severity TEXT,\n  description TEXT,\n  event_date TEXT\n);",
+        "tier3Solution": "CREATE TABLE adverse_events (event_id INT, patient_id INT, severity TEXT, description TEXT, event_date TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='adverse_events';",
+      "expectedResult": "[{\"name\":\"adverse_events\"}]"
+    },
+    {
+      "stepIndex": 22,
+      "phase": "Operator",
+      "conceptFocus": "INSERT_ADVERSE_EVENTS",
+      "narrativeBriefing": "Log adverse events: (1, 102, 'LOW', 'Mild nausea', '2024-02-10'), (2, 104, 'HIGH', 'Severe reaction', '2024-02-03').",
+      "hints": {
+        "tier1Concept": "Insert the two events with distinct severity levels.",
+        "tier2Scaffold": "INSERT INTO adverse_events VALUES\n  (1, 102, 'LOW', 'Mild nausea', '2024-02-10'),\n  (2, 104, 'HIGH', 'Severe reaction', '2024-02-03');",
+        "tier3Solution": "INSERT INTO adverse_events VALUES (1, 102, 'LOW', 'Mild nausea', '2024-02-10'), (2, 104, 'HIGH', 'Severe reaction', '2024-02-03');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM adverse_events;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 23,
+      "phase": "Architect",
+      "conceptFocus": "LEFT_JOIN",
+      "narrativeBriefing": "List all patients and any adverse events they may have. Patients with no events should still appear. Use LEFT JOIN.",
+      "hints": {
+        "tier1Concept": "LEFT JOIN returns all rows from the left table, plus matched rows from the right. Unmatched rows get NULLs.",
+        "tier2Scaffold": "SELECT p.patient_name, ae.severity, ae.description\nFROM patients p\nLEFT JOIN adverse_events ae ON p.patient_id = ae.patient_id;",
+        "tier3Solution": "SELECT p.patient_name, ae.severity, ae.description FROM patients p LEFT JOIN adverse_events ae ON p.patient_id = ae.patient_id;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM patients p LEFT JOIN adverse_events ae ON p.patient_id = ae.patient_id;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 24,
+      "phase": "Architect",
+      "conceptFocus": "SUBQUERY",
+      "narrativeBriefing": "Find all patients who have at least one HIGH severity adverse event, using a subquery.",
+      "hints": {
+        "tier1Concept": "Use a subquery inside a WHERE IN (...) clause to filter based on results from another SELECT.",
+        "tier2Scaffold": "SELECT * FROM patients WHERE patient_id IN (\n  SELECT patient_id FROM adverse_events WHERE severity = 'HIGH'\n);",
+        "tier3Solution": "SELECT * FROM patients WHERE patient_id IN (SELECT patient_id FROM adverse_events WHERE severity = 'HIGH');"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT patient_id FROM patients WHERE patient_id IN (SELECT patient_id FROM adverse_events WHERE severity = 'HIGH');",
+      "expectedResult": "[{\"patient_id\":104}]"
+    },
+    {
+      "stepIndex": 25,
+      "phase": "Architect",
+      "conceptFocus": "CREATE_VIEW",
+      "narrativeBriefing": "Create a view called `high_risk_patients` that selects all patients with HIGH severity adverse events.",
+      "hints": {
+        "tier1Concept": "Use CREATE VIEW to define a named virtual table based on a SELECT query.",
+        "tier2Scaffold": "CREATE VIEW high_risk_patients AS\n  SELECT p.* FROM patients p\n  JOIN adverse_events ae ON p.patient_id = ae.patient_id\n  WHERE ae.severity = 'HIGH';",
+        "tier3Solution": "CREATE VIEW high_risk_patients AS SELECT p.* FROM patients p JOIN adverse_events ae ON p.patient_id = ae.patient_id WHERE ae.severity = 'HIGH';"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='view' AND name='high_risk_patients';",
+      "expectedResult": "[{\"name\":\"high_risk_patients\"}]"
+    },
+    {
+      "stepIndex": 26,
+      "phase": "Architect",
+      "conceptFocus": "CTE_WITH_CLAUSE",
+      "narrativeBriefing": "Use a CTE (Common Table Expression) to calculate the average dosage per patient, then select patients whose average exceeds 60mg.",
+      "hints": {
+        "tier1Concept": "A CTE is defined with WITH cte_name AS (...) and then referenced like a table in the subsequent SELECT.",
+        "tier2Scaffold": "WITH avg_dosage AS (\n  SELECT patient_id, AVG(mg_administered) as avg_mg FROM dosage_logs GROUP BY patient_id\n)\nSELECT * FROM avg_dosage WHERE avg_mg > 60;",
+        "tier3Solution": "WITH avg_dosage AS (SELECT patient_id, AVG(mg_administered) as avg_mg FROM dosage_logs GROUP BY patient_id) SELECT * FROM avg_dosage WHERE avg_mg > 60;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (WITH avg_dosage AS (SELECT patient_id, AVG(mg_administered) as avg_mg FROM dosage_logs GROUP BY patient_id) SELECT * FROM avg_dosage WHERE avg_mg > 60);",
+      "expectedResult": "[{\"count\":1}]"
+    },
+    {
+      "stepIndex": 27,
+      "phase": "Architect",
+      "conceptFocus": "WINDOW_ROW_NUMBER",
+      "narrativeBriefing": "Assign a row number to each dosage log entry per patient ordered by timestamp. Use ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY log_timestamp).",
+      "hints": {
+        "tier1Concept": "ROW_NUMBER() is a window function. PARTITION BY resets the count for each group, ORDER BY defines the sequence.",
+        "tier2Scaffold": "SELECT patient_id, log_timestamp, mg_administered,\n  ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY log_timestamp) as session_num\nFROM dosage_logs;",
+        "tier3Solution": "SELECT patient_id, log_timestamp, mg_administered, ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY log_timestamp) as session_num FROM dosage_logs;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY log_timestamp) as rn FROM dosage_logs);",
+      "expectedResult": "[{\"count\":4}]"
+    },
+    {
+      "stepIndex": 28,
+      "phase": "Architect",
+      "conceptFocus": "WINDOW_RUNNING_SUM",
+      "narrativeBriefing": "Compute a running cumulative dosage total per patient sorted chronologically. Use SUM() OVER (PARTITION BY patient_id ORDER BY log_timestamp).",
+      "hints": {
+        "tier1Concept": "SUM() as a window function with ORDER BY creates a running total within each partition.",
+        "tier2Scaffold": "SELECT patient_id, mg_administered,\n  SUM(mg_administered) OVER (PARTITION BY patient_id ORDER BY log_timestamp) AS running_total\nFROM dosage_logs;",
+        "tier3Solution": "SELECT patient_id, mg_administered, SUM(mg_administered) OVER (PARTITION BY patient_id ORDER BY log_timestamp) AS running_total FROM dosage_logs;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT SUM(mg_administered) OVER (PARTITION BY patient_id ORDER BY log_timestamp) as rt FROM dosage_logs);",
+      "expectedResult": "[{\"count\":4}]"
+    },
+    {
+      "stepIndex": 29,
+      "phase": "Architect",
+      "conceptFocus": "CASE_EXPRESSION",
+      "narrativeBriefing": "Add a risk classification to adverse events. Use CASE to label severity: HIGH as 'Critical', LOW as 'Monitored', others as 'Unknown'.",
+      "hints": {
+        "tier1Concept": "Use CASE WHEN ... THEN ... ELSE ... END to create conditional column values.",
+        "tier2Scaffold": "SELECT patient_id, severity,\n  CASE severity\n    WHEN 'HIGH' THEN 'Critical'\n    WHEN 'LOW' THEN 'Monitored'\n    ELSE 'Unknown'\n  END as risk_level\nFROM adverse_events;",
+        "tier3Solution": "SELECT patient_id, severity, CASE severity WHEN 'HIGH' THEN 'Critical' WHEN 'LOW' THEN 'Monitored' ELSE 'Unknown' END as risk_level FROM adverse_events;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT CASE severity WHEN 'HIGH' THEN 'Critical' END as risk_level FROM adverse_events WHERE severity='HIGH');",
+      "expectedResult": "[{\"count\":1}]"
+    },
+    {
+      "stepIndex": 30,
+      "phase": "Architect",
+      "conceptFocus": "DISTINCT_SELECT",
+      "narrativeBriefing": "Retrieve a list of unique severities recorded in the `adverse_events` table using DISTINCT.",
+      "hints": {
+        "tier1Concept": "SELECT DISTINCT eliminates duplicate rows from the result set.",
+        "tier2Scaffold": "SELECT DISTINCT severity FROM adverse_events;",
+        "tier3Solution": "SELECT DISTINCT severity FROM adverse_events;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(DISTINCT severity) as count FROM adverse_events;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 31,
+      "phase": "Architect",
+      "conceptFocus": "LIKE_PATTERN",
+      "narrativeBriefing": "Find all patients whose name starts with 'C' using the LIKE operator.",
+      "hints": {
+        "tier1Concept": "Use LIKE with a % wildcard to match patterns. 'C%' means any string starting with C.",
+        "tier2Scaffold": "SELECT * FROM patients WHERE patient_name LIKE 'C%';",
+        "tier3Solution": "SELECT * FROM patients WHERE patient_name LIKE 'C%';"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT patient_id FROM patients WHERE patient_name LIKE 'C%';",
+      "expectedResult": "[{\"patient_id\":103}]"
+    },
+    {
+      "stepIndex": 32,
+      "phase": "Architect",
+      "conceptFocus": "INDEX_CREATE",
+      "narrativeBriefing": "Optimize query performance. Create an index named `idx_dosage_patient` on the `patient_id` column of `dosage_logs`.",
+      "hints": {
+        "tier1Concept": "CREATE INDEX speeds up lookups on frequently-queried columns.",
+        "tier2Scaffold": "CREATE INDEX idx_dosage_patient ON dosage_logs(patient_id);",
+        "tier3Solution": "CREATE INDEX idx_dosage_patient ON dosage_logs(patient_id);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_dosage_patient';",
+      "expectedResult": "[{\"name\":\"idx_dosage_patient\"}]"
+    },
+    {
+      "stepIndex": 33,
+      "phase": "Architect",
+      "conceptFocus": "MULTI_TABLE_REPORT",
+      "narrativeBriefing": "Final analytics report: list each patient's name, total dosage, and whether they had any HIGH severity events. Use a LEFT JOIN with aggregation.",
+      "hints": {
+        "tier1Concept": "Combine JOIN, GROUP BY, SUM(), and a CASE or MAX() to build a comprehensive report in one query.",
+        "tier2Scaffold": "SELECT p.patient_name,\n  SUM(dl.mg_administered) as total_dosage,\n  MAX(CASE WHEN ae.severity='HIGH' THEN 1 ELSE 0 END) as had_critical_event\nFROM patients p\nLEFT JOIN dosage_logs dl ON p.patient_id = dl.patient_id\nLEFT JOIN adverse_events ae ON p.patient_id = ae.patient_id\nGROUP BY p.patient_id;",
+        "tier3Solution": "SELECT p.patient_name, SUM(dl.mg_administered) as total_dosage, MAX(CASE WHEN ae.severity='HIGH' THEN 1 ELSE 0 END) as had_critical_event FROM patients p LEFT JOIN dosage_logs dl ON p.patient_id = dl.patient_id LEFT JOIN adverse_events ae ON p.patient_id = ae.patient_id GROUP BY p.patient_id;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT p.patient_name FROM patients p LEFT JOIN dosage_logs dl ON p.patient_id = dl.patient_id GROUP BY p.patient_id);",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 34,
+      "phase": "Architect",
+      "conceptFocus": "DROP_TABLE_CLEANUP",
+      "narrativeBriefing": "The trial is closed. Drop the `enrollments` table as it is no longer needed for this archive.",
+      "hints": {
+        "tier1Concept": "Use DROP TABLE to permanently remove a table from the database.",
+        "tier2Scaffold": "DROP TABLE enrollments;",
+        "tier3Solution": "DROP TABLE enrollments;"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM sqlite_master WHERE type='table' AND name='enrollments';",
+      "expectedResult": "[{\"count\":0}]"
+    }
+  ]
+}

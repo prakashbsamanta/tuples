@@ -1,0 +1,497 @@
+{
+  "domainId": "algorithmic-trading",
+  "domainName": "Algorithmic Trading Platform",
+  "domainDescription": "Build a quantitative finance database to track high-frequency ticks, manage order books, portfolio risk, and analyze trading strategies.",
+  "curriculumMatrix": [
+    {
+      "stepIndex": 0,
+      "phase": "Novice",
+      "conceptFocus": "CREATE_ASSETS_TABLE",
+      "narrativeBriefing": "Welcome to the trading floor. Initialize the foundation of our platform by creating an `assets` table with `symbol` (TEXT) and `company_name` (TEXT).",
+      "hints": {
+        "tier1Concept": "Use CREATE TABLE to define a new table with named columns and their data types.",
+        "tier2Scaffold": "CREATE TABLE assets (\n  symbol TEXT,\n  company_name TEXT\n);",
+        "tier3Solution": "CREATE TABLE assets (symbol TEXT, company_name TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='assets';",
+      "expectedResult": "[{\"name\":\"assets\"}]"
+    },
+    {
+      "stepIndex": 1,
+      "phase": "Novice",
+      "conceptFocus": "INSERT_ASSETS",
+      "narrativeBriefing": "Load the initial asset universe: insert 'AAPL'/'Apple Inc.', 'MSFT'/'Microsoft Corp.', and 'GOOG'/'Alphabet Inc.'.",
+      "hints": {
+        "tier1Concept": "Use INSERT INTO with multiple VALUES tuples to insert three rows at once.",
+        "tier2Scaffold": "INSERT INTO assets VALUES ('AAPL', 'Apple Inc.'), ('MSFT', 'Microsoft Corp.'), ('GOOG', 'Alphabet Inc.');",
+        "tier3Solution": "INSERT INTO assets VALUES ('AAPL', 'Apple Inc.'), ('MSFT', 'Microsoft Corp.'), ('GOOG', 'Alphabet Inc.');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM assets;",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 2,
+      "phase": "Novice",
+      "conceptFocus": "SELECT_FILTERED",
+      "narrativeBriefing": "Retrieve only the company name of 'AAPL' from the `assets` table.",
+      "hints": {
+        "tier1Concept": "Use SELECT specific_column FROM table WHERE condition to retrieve filtered data.",
+        "tier2Scaffold": "SELECT company_name FROM assets WHERE symbol = '___';",
+        "tier3Solution": "SELECT company_name FROM assets WHERE symbol = 'AAPL';"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT company_name FROM assets WHERE symbol = 'AAPL';",
+      "expectedResult": "[{\"company_name\":\"Apple Inc.\"}]"
+    },
+    {
+      "stepIndex": 3,
+      "phase": "Novice",
+      "conceptFocus": "ALTER_TABLE_SECTOR",
+      "narrativeBriefing": "Add a `sector` (TEXT) column to the `assets` table so we can classify assets by industry.",
+      "hints": {
+        "tier1Concept": "Use ALTER TABLE ... ADD COLUMN to add a new column to an existing table.",
+        "tier2Scaffold": "ALTER TABLE assets ADD COLUMN sector TEXT;",
+        "tier3Solution": "ALTER TABLE assets ADD COLUMN sector TEXT;"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM pragma_table_info('assets') WHERE name='sector';",
+      "expectedResult": "[{\"count\":1}]"
+    },
+    {
+      "stepIndex": 4,
+      "phase": "Novice",
+      "conceptFocus": "UPDATE_SECTORS",
+      "narrativeBriefing": "All three assets are in the 'Technology' sector. Update all their sector values at once (no WHERE needed here).",
+      "hints": {
+        "tier1Concept": "UPDATE without WHERE modifies every row. Use SET to assign a value.",
+        "tier2Scaffold": "UPDATE assets SET sector = 'Technology';",
+        "tier3Solution": "UPDATE assets SET sector = 'Technology';"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT COUNT(*) as count FROM assets WHERE sector='Technology';",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 5,
+      "phase": "Novice",
+      "conceptFocus": "CREATE_PRICE_TICKS",
+      "narrativeBriefing": "Create a `price_ticks` table: `tick_id` (INT), `symbol` (TEXT), `price` (REAL), `volume` (INT), `tick_time` (TEXT).",
+      "hints": {
+        "tier1Concept": "Create the tick data table with appropriate types — REAL for price, INT for volume.",
+        "tier2Scaffold": "CREATE TABLE price_ticks (\n  tick_id INT,\n  symbol TEXT,\n  price REAL,\n  volume INT,\n  tick_time TEXT\n);",
+        "tier3Solution": "CREATE TABLE price_ticks (tick_id INT, symbol TEXT, price REAL, volume INT, tick_time TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='price_ticks';",
+      "expectedResult": "[{\"name\":\"price_ticks\"}]"
+    },
+    {
+      "stepIndex": 6,
+      "phase": "Novice",
+      "conceptFocus": "INSERT_PRICE_TICKS",
+      "narrativeBriefing": "Insert 5 price ticks: AAPL ticks (1,AAPL,182.50,1000,'2024-03-01 09:30'), (2,AAPL,183.20,1500,'2024-03-01 09:31'), (3,MSFT,415.30,800,'2024-03-01 09:30'), (4,MSFT,416.00,600,'2024-03-01 09:31'), (5,GOOG,172.10,2000,'2024-03-01 09:30').",
+      "hints": {
+        "tier1Concept": "Insert all 5 rows in a single INSERT statement.",
+        "tier2Scaffold": "INSERT INTO price_ticks VALUES\n  (1,'AAPL',182.50,1000,'2024-03-01 09:30'),\n  (2,'AAPL',183.20,1500,'2024-03-01 09:31'),\n  (3,'MSFT',415.30,800,'2024-03-01 09:30'),\n  (4,'MSFT',416.00,600,'2024-03-01 09:31'),\n  (5,'GOOG',172.10,2000,'2024-03-01 09:30');",
+        "tier3Solution": "INSERT INTO price_ticks VALUES (1,'AAPL',182.50,1000,'2024-03-01 09:30'),(2,'AAPL',183.20,1500,'2024-03-01 09:31'),(3,'MSFT',415.30,800,'2024-03-01 09:30'),(4,'MSFT',416.00,600,'2024-03-01 09:31'),(5,'GOOG',172.10,2000,'2024-03-01 09:30');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM price_ticks;",
+      "expectedResult": "[{\"count\":5}]"
+    },
+    {
+      "stepIndex": 7,
+      "phase": "Novice",
+      "conceptFocus": "AGGREGATE_MAX_MIN",
+      "narrativeBriefing": "Find the highest and lowest price ever recorded in `price_ticks` across all symbols.",
+      "hints": {
+        "tier1Concept": "Use MAX() and MIN() aggregate functions in a single SELECT.",
+        "tier2Scaffold": "SELECT MAX(price) as high, MIN(price) as low FROM price_ticks;",
+        "tier3Solution": "SELECT MAX(price) as high, MIN(price) as low FROM price_ticks;"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT MAX(price) as high, MIN(price) as low FROM price_ticks;",
+      "expectedResult": "[{\"high\":416,\"low\":172.1}]"
+    },
+    {
+      "stepIndex": 8,
+      "phase": "Novice",
+      "conceptFocus": "GROUP_BY_SYMBOL",
+      "narrativeBriefing": "Calculate the average price and total volume traded, grouped by each symbol.",
+      "hints": {
+        "tier1Concept": "Use GROUP BY with AVG() and SUM() aggregate functions.",
+        "tier2Scaffold": "SELECT symbol, AVG(price) as avg_price, SUM(volume) as total_volume FROM price_ticks GROUP BY symbol;",
+        "tier3Solution": "SELECT symbol, AVG(price) as avg_price, SUM(volume) as total_volume FROM price_ticks GROUP BY symbol;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT symbol FROM price_ticks GROUP BY symbol);",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 9,
+      "phase": "Operator",
+      "conceptFocus": "CREATE_ORDERS_TABLE",
+      "narrativeBriefing": "Create an `orders` table: `order_id` (INT), `symbol` (TEXT), `order_type` (TEXT), `quantity` (INT), `limit_price` (REAL), `status` (TEXT), `created_at` (TEXT).",
+      "hints": {
+        "tier1Concept": "order_type will hold BUY or SELL, status will be PENDING/FILLED/CANCELLED.",
+        "tier2Scaffold": "CREATE TABLE orders (\n  order_id INT,\n  symbol TEXT,\n  order_type TEXT,\n  quantity INT,\n  limit_price REAL,\n  status TEXT,\n  created_at TEXT\n);",
+        "tier3Solution": "CREATE TABLE orders (order_id INT, symbol TEXT, order_type TEXT, quantity INT, limit_price REAL, status TEXT, created_at TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='orders';",
+      "expectedResult": "[{\"name\":\"orders\"}]"
+    },
+    {
+      "stepIndex": 10,
+      "phase": "Operator",
+      "conceptFocus": "INSERT_ORDERS",
+      "narrativeBriefing": "Place 4 orders: (1,'AAPL','BUY',100,182.00,'PENDING','2024-03-01 09:29'), (2,'MSFT','SELL',50,417.00,'PENDING','2024-03-01 09:29'), (3,'GOOG','BUY',200,171.00,'FILLED','2024-03-01 09:28'), (4,'AAPL','SELL',75,184.00,'CANCELLED','2024-03-01 09:27').",
+      "hints": {
+        "tier1Concept": "Insert all 4 orders using a single INSERT statement.",
+        "tier2Scaffold": "INSERT INTO orders VALUES\n  (1,'AAPL','BUY',100,182.00,'PENDING','2024-03-01 09:29'),\n  (2,'MSFT','SELL',50,417.00,'PENDING','2024-03-01 09:29'),\n  (3,'GOOG','BUY',200,171.00,'FILLED','2024-03-01 09:28'),\n  (4,'AAPL','SELL',75,184.00,'CANCELLED','2024-03-01 09:27');",
+        "tier3Solution": "INSERT INTO orders VALUES (1,'AAPL','BUY',100,182.00,'PENDING','2024-03-01 09:29'),(2,'MSFT','SELL',50,417.00,'PENDING','2024-03-01 09:29'),(3,'GOOG','BUY',200,171.00,'FILLED','2024-03-01 09:28'),(4,'AAPL','SELL',75,184.00,'CANCELLED','2024-03-01 09:27');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM orders;",
+      "expectedResult": "[{\"count\":4}]"
+    },
+    {
+      "stepIndex": 11,
+      "phase": "Operator",
+      "conceptFocus": "UPDATE_ORDER_STATUS",
+      "narrativeBriefing": "Order 1 has been matched. Update its status from 'PENDING' to 'FILLED'.",
+      "hints": {
+        "tier1Concept": "Use UPDATE ... SET ... WHERE to modify a specific order's status.",
+        "tier2Scaffold": "UPDATE orders SET status = 'FILLED' WHERE order_id = 1;",
+        "tier3Solution": "UPDATE orders SET status = 'FILLED' WHERE order_id = 1;"
+      },
+      "validationType": "OUTPUT_MATCH",
+      "verificationQuery": "SELECT status FROM orders WHERE order_id=1;",
+      "expectedResult": "[{\"status\":\"FILLED\"}]"
+    },
+    {
+      "stepIndex": 12,
+      "phase": "Operator",
+      "conceptFocus": "FILTER_BY_STATUS",
+      "narrativeBriefing": "List all FILLED orders from the `orders` table.",
+      "hints": {
+        "tier1Concept": "Use SELECT with WHERE status = 'FILLED'.",
+        "tier2Scaffold": "SELECT * FROM orders WHERE status = 'FILLED';",
+        "tier3Solution": "SELECT * FROM orders WHERE status = 'FILLED';"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM orders WHERE status='FILLED';",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 13,
+      "phase": "Operator",
+      "conceptFocus": "CREATE_PORTFOLIO",
+      "narrativeBriefing": "Create a `portfolio` table: `position_id` (INT), `symbol` (TEXT), `quantity` (INT), `avg_cost` (REAL).",
+      "hints": {
+        "tier1Concept": "The portfolio tracks what we currently hold.",
+        "tier2Scaffold": "CREATE TABLE portfolio (position_id INT, symbol TEXT, quantity INT, avg_cost REAL);",
+        "tier3Solution": "CREATE TABLE portfolio (position_id INT, symbol TEXT, quantity INT, avg_cost REAL);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='portfolio';",
+      "expectedResult": "[{\"name\":\"portfolio\"}]"
+    },
+    {
+      "stepIndex": 14,
+      "phase": "Operator",
+      "conceptFocus": "INSERT_PORTFOLIO",
+      "narrativeBriefing": "We hold: (1,'AAPL',100,182.00), (2,'GOOG',200,171.00). Insert these positions.",
+      "hints": {
+        "tier1Concept": "Insert the two current portfolio positions.",
+        "tier2Scaffold": "INSERT INTO portfolio VALUES (1,'AAPL',100,182.00), (2,'GOOG',200,171.00);",
+        "tier3Solution": "INSERT INTO portfolio VALUES (1,'AAPL',100,182.00), (2,'GOOG',200,171.00);"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM portfolio;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 15,
+      "phase": "Operator",
+      "conceptFocus": "JOIN_PORTFOLIO_WITH_TICKS",
+      "narrativeBriefing": "Join `portfolio` with the latest prices from `price_ticks` to compute current market value (quantity * latest price). Use a subquery to get max price per symbol.",
+      "hints": {
+        "tier1Concept": "Use a subquery in FROM to get the latest price per symbol, then JOIN with portfolio.",
+        "tier2Scaffold": "SELECT p.symbol, p.quantity,\n  latest.price as current_price,\n  p.quantity * latest.price as market_value\nFROM portfolio p\nJOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest\n  ON p.symbol = latest.symbol;",
+        "tier3Solution": "SELECT p.symbol, p.quantity, latest.price as current_price, p.quantity * latest.price as market_value FROM portfolio p JOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest ON p.symbol = latest.symbol;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM portfolio p JOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest ON p.symbol = latest.symbol;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 16,
+      "phase": "Operator",
+      "conceptFocus": "HAVING_FILTER",
+      "narrativeBriefing": "Find symbols with total traded volume (from price_ticks) exceeding 1500 units.",
+      "hints": {
+        "tier1Concept": "Use GROUP BY symbol with SUM(volume), then filter with HAVING.",
+        "tier2Scaffold": "SELECT symbol, SUM(volume) as total_vol FROM price_ticks GROUP BY symbol HAVING total_vol > 1500;",
+        "tier3Solution": "SELECT symbol, SUM(volume) as total_vol FROM price_ticks GROUP BY symbol HAVING total_vol > 1500;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT symbol FROM price_ticks GROUP BY symbol HAVING SUM(volume) > 1500);",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 17,
+      "phase": "Operator",
+      "conceptFocus": "ORDER_BY_DESC",
+      "narrativeBriefing": "List all orders ordered by limit_price descending to identify the highest-value orders at the top.",
+      "hints": {
+        "tier1Concept": "Use ORDER BY column DESC to sort in descending order.",
+        "tier2Scaffold": "SELECT * FROM orders ORDER BY limit_price DESC;",
+        "tier3Solution": "SELECT * FROM orders ORDER BY limit_price DESC;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM orders;",
+      "expectedResult": "[{\"count\":4}]"
+    },
+    {
+      "stepIndex": 18,
+      "phase": "Operator",
+      "conceptFocus": "DELETE_CANCELLED",
+      "narrativeBriefing": "Remove all CANCELLED orders from the `orders` table.",
+      "hints": {
+        "tier1Concept": "Use DELETE FROM with WHERE status = 'CANCELLED'.",
+        "tier2Scaffold": "DELETE FROM orders WHERE status = 'CANCELLED';",
+        "tier3Solution": "DELETE FROM orders WHERE status = 'CANCELLED';"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM orders WHERE status='CANCELLED';",
+      "expectedResult": "[{\"count\":0}]"
+    },
+    {
+      "stepIndex": 19,
+      "phase": "Operator",
+      "conceptFocus": "CREATE_TRADES_TABLE",
+      "narrativeBriefing": "Create a `trades` table to record executed transactions: `trade_id` (INT), `order_id` (INT), `symbol` (TEXT), `price` (REAL), `quantity` (INT), `trade_time` (TEXT).",
+      "hints": {
+        "tier1Concept": "Trades are the confirmed executions of orders. Create the table accordingly.",
+        "tier2Scaffold": "CREATE TABLE trades (trade_id INT, order_id INT, symbol TEXT, price REAL, quantity INT, trade_time TEXT);",
+        "tier3Solution": "CREATE TABLE trades (trade_id INT, order_id INT, symbol TEXT, price REAL, quantity INT, trade_time TEXT);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='trades';",
+      "expectedResult": "[{\"name\":\"trades\"}]"
+    },
+    {
+      "stepIndex": 20,
+      "phase": "Operator",
+      "conceptFocus": "INSERT_TRADES",
+      "narrativeBriefing": "Record two trades: (1, 1, 'AAPL', 183.20, 100, '2024-03-01 09:31') and (2, 3, 'GOOG', 172.10, 200, '2024-03-01 09:30').",
+      "hints": {
+        "tier1Concept": "Insert the executed trade records referencing order_ids 1 and 3.",
+        "tier2Scaffold": "INSERT INTO trades VALUES\n  (1, 1, 'AAPL', 183.20, 100, '2024-03-01 09:31'),\n  (2, 3, 'GOOG', 172.10, 200, '2024-03-01 09:30');",
+        "tier3Solution": "INSERT INTO trades VALUES (1, 1, 'AAPL', 183.20, 100, '2024-03-01 09:31'), (2, 3, 'GOOG', 172.10, 200, '2024-03-01 09:30');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM trades;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 21,
+      "phase": "Operator",
+      "conceptFocus": "COMPUTE_PNL",
+      "narrativeBriefing": "Calculate P&L for each trade: (trade_price - avg_cost) * quantity. Join `trades` with `portfolio` on symbol.",
+      "hints": {
+        "tier1Concept": "Arithmetic expressions in SELECT can compute derived values like profit/loss.",
+        "tier2Scaffold": "SELECT t.symbol, (t.price - p.avg_cost) * t.quantity as pnl\nFROM trades t\nJOIN portfolio p ON t.symbol = p.symbol;",
+        "tier3Solution": "SELECT t.symbol, (t.price - p.avg_cost) * t.quantity as pnl FROM trades t JOIN portfolio p ON t.symbol = p.symbol;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM trades t JOIN portfolio p ON t.symbol = p.symbol;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 22,
+      "phase": "Operator",
+      "conceptFocus": "CASE_ORDER_TYPE",
+      "narrativeBriefing": "For each order, use CASE to show a 'direction_label': BUY orders get 'Long Entry', SELL orders get 'Short Exit'.",
+      "hints": {
+        "tier1Concept": "CASE WHEN ... THEN ... END creates conditional column values.",
+        "tier2Scaffold": "SELECT order_id, symbol, order_type,\n  CASE order_type\n    WHEN 'BUY' THEN 'Long Entry'\n    WHEN 'SELL' THEN 'Short Exit'\n  END as direction_label\nFROM orders;",
+        "tier3Solution": "SELECT order_id, symbol, order_type, CASE order_type WHEN 'BUY' THEN 'Long Entry' WHEN 'SELL' THEN 'Short Exit' END as direction_label FROM orders;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM orders;",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 23,
+      "phase": "Architect",
+      "conceptFocus": "WINDOW_PRICE_RANK",
+      "narrativeBriefing": "Using window functions, rank each price tick within its symbol by price descending. Use RANK() OVER (PARTITION BY symbol ORDER BY price DESC).",
+      "hints": {
+        "tier1Concept": "RANK() assigns a rank within each partition. Ties get the same rank.",
+        "tier2Scaffold": "SELECT symbol, price,\n  RANK() OVER (PARTITION BY symbol ORDER BY price DESC) as price_rank\nFROM price_ticks;",
+        "tier3Solution": "SELECT symbol, price, RANK() OVER (PARTITION BY symbol ORDER BY price DESC) as price_rank FROM price_ticks;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT RANK() OVER (PARTITION BY symbol ORDER BY price DESC) as r FROM price_ticks);",
+      "expectedResult": "[{\"count\":5}]"
+    },
+    {
+      "stepIndex": 24,
+      "phase": "Architect",
+      "conceptFocus": "WINDOW_LAG",
+      "narrativeBriefing": "For AAPL ticks ordered by time, compute the price change from the previous tick using LAG().",
+      "hints": {
+        "tier1Concept": "LAG(column, 1) OVER (ORDER BY ...) accesses the previous row's value.",
+        "tier2Scaffold": "SELECT tick_time, price,\n  price - LAG(price, 1) OVER (ORDER BY tick_time) as price_change\nFROM price_ticks WHERE symbol = 'AAPL';",
+        "tier3Solution": "SELECT tick_time, price, price - LAG(price, 1) OVER (ORDER BY tick_time) as price_change FROM price_ticks WHERE symbol = 'AAPL';"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT LAG(price,1) OVER (ORDER BY tick_time) FROM price_ticks WHERE symbol='AAPL');",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 25,
+      "phase": "Architect",
+      "conceptFocus": "CTE_VWAP",
+      "narrativeBriefing": "Calculate VWAP (Volume Weighted Average Price) per symbol using a CTE. VWAP = SUM(price*volume)/SUM(volume).",
+      "hints": {
+        "tier1Concept": "Use a CTE to organize the computation. SUM(price*volume)/SUM(volume) is the VWAP formula.",
+        "tier2Scaffold": "WITH vwap_calc AS (\n  SELECT symbol,\n    SUM(price * volume) as total_notional,\n    SUM(volume) as total_vol\n  FROM price_ticks\n  GROUP BY symbol\n)\nSELECT symbol, total_notional / total_vol as vwap FROM vwap_calc;",
+        "tier3Solution": "WITH vwap_calc AS (SELECT symbol, SUM(price * volume) as total_notional, SUM(volume) as total_vol FROM price_ticks GROUP BY symbol) SELECT symbol, total_notional / total_vol as vwap FROM vwap_calc;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (WITH v AS (SELECT symbol, SUM(price*volume)/SUM(volume) as vwap FROM price_ticks GROUP BY symbol) SELECT * FROM v);",
+      "expectedResult": "[{\"count\":3}]"
+    },
+    {
+      "stepIndex": 26,
+      "phase": "Architect",
+      "conceptFocus": "CREATE_VIEW_ACTIVE_ORDERS",
+      "narrativeBriefing": "Create a view `active_orders` that contains only orders with status PENDING or FILLED.",
+      "hints": {
+        "tier1Concept": "CREATE VIEW defines a named virtual query. Use IN (...) to check multiple values.",
+        "tier2Scaffold": "CREATE VIEW active_orders AS\n  SELECT * FROM orders WHERE status IN ('PENDING', 'FILLED');",
+        "tier3Solution": "CREATE VIEW active_orders AS SELECT * FROM orders WHERE status IN ('PENDING', 'FILLED');"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='view' AND name='active_orders';",
+      "expectedResult": "[{\"name\":\"active_orders\"}]"
+    },
+    {
+      "stepIndex": 27,
+      "phase": "Architect",
+      "conceptFocus": "SUBQUERY_CORRELATED",
+      "narrativeBriefing": "Find all assets that have at least one FILLED order. Use a subquery with EXISTS.",
+      "hints": {
+        "tier1Concept": "EXISTS returns TRUE if the subquery returns any rows. Use it as a filter.",
+        "tier2Scaffold": "SELECT symbol FROM assets a\nWHERE EXISTS (\n  SELECT 1 FROM orders o WHERE o.symbol = a.symbol AND o.status = 'FILLED'\n);",
+        "tier3Solution": "SELECT symbol FROM assets a WHERE EXISTS (SELECT 1 FROM orders o WHERE o.symbol = a.symbol AND o.status = 'FILLED');"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM assets a WHERE EXISTS (SELECT 1 FROM orders o WHERE o.symbol = a.symbol AND o.status = 'FILLED');",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 28,
+      "phase": "Architect",
+      "conceptFocus": "WINDOW_RUNNING_VOLUME",
+      "narrativeBriefing": "Calculate the cumulative volume traded per symbol over time using SUM(volume) OVER (PARTITION BY symbol ORDER BY tick_time).",
+      "hints": {
+        "tier1Concept": "A running total window function accumulates values within each partition as rows are ordered.",
+        "tier2Scaffold": "SELECT symbol, tick_time, volume,\n  SUM(volume) OVER (PARTITION BY symbol ORDER BY tick_time) as cumulative_volume\nFROM price_ticks;",
+        "tier3Solution": "SELECT symbol, tick_time, volume, SUM(volume) OVER (PARTITION BY symbol ORDER BY tick_time) as cumulative_volume FROM price_ticks;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT SUM(volume) OVER (PARTITION BY symbol ORDER BY tick_time) as cv FROM price_ticks);",
+      "expectedResult": "[{\"count\":5}]"
+    },
+    {
+      "stepIndex": 29,
+      "phase": "Architect",
+      "conceptFocus": "INDEX_PERFORMANCE",
+      "narrativeBriefing": "Create an index `idx_ticks_symbol_time` on `price_ticks`(symbol, tick_time) to speed up time-series lookups.",
+      "hints": {
+        "tier1Concept": "Composite indexes speed up queries filtering on multiple columns.",
+        "tier2Scaffold": "CREATE INDEX idx_ticks_symbol_time ON price_ticks(symbol, tick_time);",
+        "tier3Solution": "CREATE INDEX idx_ticks_symbol_time ON price_ticks(symbol, tick_time);"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_ticks_symbol_time';",
+      "expectedResult": "[{\"name\":\"idx_ticks_symbol_time\"}]"
+    },
+    {
+      "stepIndex": 30,
+      "phase": "Architect",
+      "conceptFocus": "MULTI_CTE_ANALYSIS",
+      "narrativeBriefing": "Use two CTEs: `trade_stats` for total value traded per symbol, and `portfolio_cost` for total cost basis. Then join them.",
+      "hints": {
+        "tier1Concept": "Multiple CTEs are separated by commas after the initial WITH keyword.",
+        "tier2Scaffold": "WITH trade_stats AS (\n  SELECT symbol, SUM(price*quantity) as trade_value FROM trades GROUP BY symbol\n),\nportfolio_cost AS (\n  SELECT symbol, avg_cost*quantity as cost_basis FROM portfolio\n)\nSELECT t.symbol, t.trade_value, p.cost_basis\nFROM trade_stats t\nJOIN portfolio_cost p ON t.symbol = p.symbol;",
+        "tier3Solution": "WITH trade_stats AS (SELECT symbol, SUM(price*quantity) as trade_value FROM trades GROUP BY symbol), portfolio_cost AS (SELECT symbol, avg_cost*quantity as cost_basis FROM portfolio) SELECT t.symbol, t.trade_value, p.cost_basis FROM trade_stats t JOIN portfolio_cost p ON t.symbol = p.symbol;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM (WITH ts AS (SELECT symbol FROM trades GROUP BY symbol), pc AS (SELECT symbol FROM portfolio) SELECT ts.symbol FROM ts JOIN pc ON ts.symbol=pc.symbol);",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 31,
+      "phase": "Architect",
+      "conceptFocus": "DISTINCT_SYMBOLS",
+      "narrativeBriefing": "Get a DISTINCT list of all symbols that appear in the `trades` table.",
+      "hints": {
+        "tier1Concept": "SELECT DISTINCT removes duplicate values from the result.",
+        "tier2Scaffold": "SELECT DISTINCT symbol FROM trades;",
+        "tier3Solution": "SELECT DISTINCT symbol FROM trades;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(DISTINCT symbol) as count FROM trades;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 32,
+      "phase": "Architect",
+      "conceptFocus": "LIKE_SEARCH",
+      "narrativeBriefing": "Find all assets whose company_name contains 'Inc.' using LIKE.",
+      "hints": {
+        "tier1Concept": "Use LIKE with % wildcards on both sides to search for a substring.",
+        "tier2Scaffold": "SELECT * FROM assets WHERE company_name LIKE '%Inc.%';",
+        "tier3Solution": "SELECT * FROM assets WHERE company_name LIKE '%Inc.%';"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM assets WHERE company_name LIKE '%Inc.%';",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 33,
+      "phase": "Architect",
+      "conceptFocus": "PORTFOLIO_RISK_REPORT",
+      "narrativeBriefing": "Final risk report: for each portfolio position, compute market value, unrealized P&L, and classify risk as HIGH if unrealized P&L > 200, else LOW.",
+      "hints": {
+        "tier1Concept": "Combine JOIN, arithmetic, and CASE expressions for a complete analytics report.",
+        "tier2Scaffold": "SELECT p.symbol, p.quantity,\n  latest.price as current_price,\n  p.quantity * latest.price as market_value,\n  (latest.price - p.avg_cost) * p.quantity as unrealized_pnl,\n  CASE WHEN (latest.price - p.avg_cost) * p.quantity > 200 THEN 'HIGH' ELSE 'LOW' END as risk\nFROM portfolio p\nJOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest ON p.symbol = latest.symbol;",
+        "tier3Solution": "SELECT p.symbol, p.quantity, latest.price as current_price, p.quantity * latest.price as market_value, (latest.price - p.avg_cost) * p.quantity as unrealized_pnl, CASE WHEN (latest.price - p.avg_cost) * p.quantity > 200 THEN 'HIGH' ELSE 'LOW' END as risk FROM portfolio p JOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest ON p.symbol = latest.symbol;"
+      },
+      "validationType": "ROW_COUNT_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM portfolio p JOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest ON p.symbol = latest.symbol;",
+      "expectedResult": "[{\"count\":2}]"
+    },
+    {
+      "stepIndex": 34,
+      "phase": "Architect",
+      "conceptFocus": "DROP_VIEW_CLEANUP",
+      "narrativeBriefing": "Session complete. Drop the `active_orders` view as it is no longer needed.",
+      "hints": {
+        "tier1Concept": "Use DROP VIEW to remove a view from the database schema.",
+        "tier2Scaffold": "DROP VIEW active_orders;",
+        "tier3Solution": "DROP VIEW active_orders;"
+      },
+      "validationType": "SCHEMA_VERIFY",
+      "verificationQuery": "SELECT COUNT(*) as count FROM sqlite_master WHERE type='view' AND name='active_orders';",
+      "expectedResult": "[{\"count\":0}]"
+    }
+  ]
+}
