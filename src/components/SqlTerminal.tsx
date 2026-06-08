@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Play, Lightbulb, Copy, Check } from 'lucide-react';
+import { SqlEditor } from './SqlEditor';
 
 interface SqlTerminalProps {
   onExecute: (query: string) => void;
@@ -10,9 +11,10 @@ interface SqlTerminalProps {
     tier2Scaffold: string;
     tier3Solution: string;
   } | null;
+  schema: Record<string, string[]>;
 }
 
-export function SqlTerminal({ onExecute, onRawExecute, error, hints }: SqlTerminalProps) {
+export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema }: SqlTerminalProps) {
   const [query, setQuery] = useState('');
   const [hintLevel, setHintLevel] = useState<0 | 1 | 2 | 3>(0);
   const [copied, setCopied] = useState(false);
@@ -32,13 +34,6 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints }: SqlTermin
       setQuery(hints.tier3Solution);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-      e.preventDefault();
-      handleExecute();
     }
   };
 
@@ -136,25 +131,13 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints }: SqlTermin
       )}
 
       {/* Editor */}
-      <div className="flex-1 relative min-h-0">
-        {/* Line numbers */}
-        <div className="absolute left-0 top-0 bottom-0 w-10 flex flex-col pt-4 pb-4 select-none pointer-events-none">
-          {query.split('\n').map((_, i) => (
-            <div key={i} className="font-mono-code text-[11px] text-gray-700 text-right pr-3 leading-6">{i + 1}</div>
-          ))}
-          {query.split('\n').length === 0 && (
-            <div className="font-mono-code text-[11px] text-gray-700 text-right pr-3 leading-6">1</div>
-          )}
-        </div>
-        <textarea
+      <div className="flex-1 min-h-0 overflow-hidden">
+        <SqlEditor
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={`-- Type your SQL here...\n-- Press ⌘+Enter to submit`}
-          className="absolute inset-0 w-full h-full bg-transparent font-mono-code text-sm text-gray-200 
-            pl-12 pr-4 pt-4 pb-4 resize-none focus:outline-none leading-6 placeholder:text-gray-700"
-          spellCheck={false}
-          autoComplete="off"
+          onChange={setQuery}
+          onSubmit={handleExecute}
+          schema={schema}
+          placeholder={'-- Type your SQL here...\n-- Press ⌘+Enter to submit'}
         />
       </div>
 
