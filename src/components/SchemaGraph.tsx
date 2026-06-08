@@ -1,5 +1,9 @@
-import { useMemo } from 'react';
-import { ReactFlow, Background, Controls, Handle, Position, type NodeProps, type Node } from '@xyflow/react';
+import { useEffect, useMemo } from 'react';
+import {
+  ReactFlow, Background, Controls, Handle, Position,
+  useNodesState, useEdgesState, MarkerType,
+  type NodeProps, type Node, type Edge,
+} from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import type { TableSchema } from '../lib/schema';
 import { buildGraph } from '../lib/schemaGraph';
@@ -53,14 +57,33 @@ interface SchemaGraphProps {
   tables: TableSchema[];
 }
 
+const defaultEdgeOptions = {
+  animated: true,
+  style: { stroke: '#8b5cf6', strokeWidth: 1.5 },
+  markerEnd: { type: MarkerType.ArrowClosed, color: '#8b5cf6' },
+};
+
 export function SchemaGraph({ tables }: SchemaGraphProps) {
-  const { nodes, edges } = useMemo(() => buildGraph(tables), [tables]);
+  const derived = useMemo(() => buildGraph(tables), [tables]);
+
+  // Controlled state WITH change handlers so nodes are actually draggable.
+  const [nodes, setNodes, onNodesChange] = useNodesState(derived.nodes as unknown as Node[]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(derived.edges as unknown as Edge[]);
+
+  // Re-sync the graph whenever the schema changes (e.g. a new table is created).
+  useEffect(() => {
+    setNodes(derived.nodes as unknown as Node[]);
+    setEdges(derived.edges as unknown as Edge[]);
+  }, [derived, setNodes, setEdges]);
 
   return (
     <ReactFlow
       nodes={nodes}
       edges={edges}
+      onNodesChange={onNodesChange}
+      onEdgesChange={onEdgesChange}
       nodeTypes={nodeTypes}
+      defaultEdgeOptions={defaultEdgeOptions}
       fitView
       proOptions={{ hideAttribution: true }}
       className="bg-transparent"
