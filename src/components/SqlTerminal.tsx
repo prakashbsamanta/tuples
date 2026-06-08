@@ -12,9 +12,10 @@ interface SqlTerminalProps {
     tier3Solution: string;
   } | null;
   schema: Record<string, string[]>;
+  onRevealHint?: () => void;
 }
 
-export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema }: SqlTerminalProps) {
+export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onRevealHint }: SqlTerminalProps) {
   const [query, setQuery] = useState('');
   const [hintLevel, setHintLevel] = useState<0 | 1 | 2 | 3>(0);
   const [copied, setCopied] = useState(false);
@@ -55,7 +56,7 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema }: S
         <div className="flex items-center gap-2 flex-wrap justify-end">
           {hints && nextHintLabel && (
             <button
-              onClick={() => setHintLevel(l => (l + 1) as 0 | 1 | 2 | 3)}
+              onClick={() => { onRevealHint?.(); setHintLevel(l => (l + 1) as 0 | 1 | 2 | 3); }}
               className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-amber-400
                 bg-amber-400/8 hover:bg-amber-400/15 border border-amber-400/15 rounded-lg transition-all"
             >

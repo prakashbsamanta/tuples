@@ -7,14 +7,16 @@ interface SuccessToastProps {
   totalSteps: number;
   conceptFocus: string;
   isLastStep: boolean;
+  xpGained?: number;
+  explanation?: string;
 }
 
-export function SuccessToast({ stepIndex, totalSteps, conceptFocus, isLastStep }: SuccessToastProps) {
+export function SuccessToast({ stepIndex, totalSteps, conceptFocus, isLastStep, xpGained, explanation }: SuccessToastProps) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     setVisible(true);
-    const t = setTimeout(() => setVisible(false), 3000);
+    const t = setTimeout(() => setVisible(false), 5000);
     return () => clearTimeout(t);
   }, [stepIndex]);
 
@@ -45,10 +47,15 @@ export function SuccessToast({ stepIndex, totalSteps, conceptFocus, isLastStep }
                 {isLastStep ? 'Mission Complete! 🎉' : 'Step Passed!'}
               </p>
               <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
-                +1 ✓
+                {xpGained != null ? `+${xpGained} XP` : '+1 ✓'}
               </span>
             </div>
             <p className="text-gray-400 text-xs">{conceptFocus.replace(/_/g, ' ')}</p>
+            {explanation && (
+              <p className="text-gray-300 text-[11px] leading-relaxed mt-1.5 pt-1.5 border-t border-white/5">
+                <span className="text-emerald-400 font-semibold">Why it works: </span>{explanation}
+              </p>
+            )}
             {!isLastStep && (
               <div className="flex items-center gap-1.5 mt-1.5">
                 <Zap size={11} className="text-indigo-400" />

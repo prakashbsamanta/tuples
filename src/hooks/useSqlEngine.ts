@@ -190,6 +190,7 @@ export function useSqlEngine() {
       if (looseEqual(actual, expected)) {
         // ✅ SUCCESS
         store.saveQueryForStep(stepIdx, rawQuery);
+        store.recordSolve({ conceptFocus: stepConfig.conceptFocus });
         store.unlockNextStep();
         setState(s => ({ ...s, error: null, results: actual, isSuccess: true }));
       } else {
