@@ -264,6 +264,7 @@ function App() {
               error={error}
               hints={currentStep?.hints ?? null}
               schema={editorSchema}
+              onRevealHint={useProgressStore.getState().revealHint}
             />
           ) : (
             <div className="h-full flex items-center justify-center text-gray-700 font-mono text-sm">
