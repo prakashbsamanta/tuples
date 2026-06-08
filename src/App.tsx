@@ -6,6 +6,7 @@ import { SchemaVisualizer } from './components/SchemaVisualizer';
 import { MissionSelection } from './components/MissionSelection';
 import { PathVisualizer } from './components/PathVisualizer';
 import { SuccessToast } from './components/SuccessToast';
+import { GameStatus } from './components/GameStatus';
 import { ReviewPanel } from './components/ReviewPanel';
 import { useSqlEngine } from './hooks/useSqlEngine';
 import { useProgressStore } from './store/useProgressStore';
@@ -163,6 +164,7 @@ function App() {
 
             {/* Right: Progress + Switch */}
             <div className="flex items-center gap-4">
+              <GameStatus />
               <div className="flex items-center gap-3">
                 <div className="w-28 h-1.5 bg-white/5 rounded-full overflow-hidden">
                   <motion.div
