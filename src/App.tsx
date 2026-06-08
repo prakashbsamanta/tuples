@@ -6,11 +6,13 @@ import { SchemaVisualizer } from './components/SchemaVisualizer';
 import { MissionSelection } from './components/MissionSelection';
 import { PathVisualizer } from './components/PathVisualizer';
 import { SuccessToast } from './components/SuccessToast';
+import { AchievementToast } from './components/AchievementToast';
 import { GameStatus } from './components/GameStatus';
 import { ReviewPanel } from './components/ReviewPanel';
 import { useSqlEngine } from './hooks/useSqlEngine';
 import { useProgressStore } from './store/useProgressStore';
 import { extractSchema } from './lib/schema';
+import { explainConcept } from './lib/whyItWorks';
 import { domains } from './domains';
 import {
   DatabaseZap, CheckCircle2, LogOut, ChevronRight,
@@ -32,6 +34,7 @@ const phaseColors: Record<string, string> = {
 
 function App() {
   const { activeDomainId, progressByDomain, setActiveDomain, resetDomain } = useProgressStore();
+  const lastSolve = useProgressStore((s) => s.lastSolve);
   const { isReady, db, error, results, isSuccess, executeQuery, runRawQuery } = useSqlEngine();
 
   const editorSchema = React.useMemo(() => {
@@ -286,6 +289,14 @@ function App() {
           totalSteps={domain.curriculumMatrix.length}
           conceptFocus={toastStep.conceptFocus}
           isLastStep={lastSuccessStep >= domain.curriculumMatrix.length - 1}
+          xpGained={lastSolve?.xpGained}
+          explanation={explainConcept(toastStep.conceptFocus)}
+        />
+      )}
+      {lastSolve && lastSolve.newAchievements.length > 0 && (
+        <AchievementToast
+          achievementIds={lastSolve.newAchievements}
+          triggerKey={lastSuccessStep ?? 0}
         />
       )}
     </>
