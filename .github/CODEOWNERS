@@ -1,0 +1,8 @@
+# Code owners are automatically requested for review on any PR that touches
+# matching files. When you add collaborators and turn on "Require review from
+# Code Owners" in the branch ruleset, this is what routes reviews.
+#
+# Right now a single owner covers everything. As the project grows you can add
+# more specific lines (e.g. `/src/lib/ @some-collaborator`).
+
+* @prakashbsamanta
