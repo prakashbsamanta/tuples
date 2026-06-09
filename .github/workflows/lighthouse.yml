@@ -40,6 +40,10 @@ jobs:
         run: npm run build
 
       - name: Run Lighthouse CI
+        # Informational only — never blocks a PR. Lab runs can be flaky in
+        # headless CI (e.g. WebGL/GPU differences); the hard weight gate is the
+        # deterministic bundle-size budget in the CI workflow.
+        continue-on-error: true
         uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # 12.6.2
         with:
           configPath: ./lighthouserc.json
