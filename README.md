@@ -2,6 +2,16 @@
 
 > Master SQL by building real production databases from scratch — 35 progressive steps per mission.
 
+[![CI](https://github.com/prakashbsamanta/tuples/actions/workflows/ci.yml/badge.svg)](https://github.com/prakashbsamanta/tuples/actions/workflows/ci.yml)
+[![Deploy](https://github.com/prakashbsamanta/tuples/actions/workflows/deploy.yml/badge.svg)](https://github.com/prakashbsamanta/tuples/actions/workflows/deploy.yml)
+[![CodeQL](https://github.com/prakashbsamanta/tuples/actions/workflows/codeql.yml/badge.svg)](https://github.com/prakashbsamanta/tuples/actions/workflows/codeql.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/prakashbsamanta/tuples/badge)](https://scorecard.dev/viewer/?uri=github.com/prakashbsamanta/tuples)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+**🚀 Live:** https://prakashbsamanta.github.io/tuples/
+
+> **Contributing & DevOps:** see [`CONTRIBUTING.md`](CONTRIBUTING.md) for the branch/PR workflow and [`docs/devops/PIPELINE.md`](docs/devops/PIPELINE.md) for a full walkthrough of the CI/CD and security pipeline.
+
 ## What is Tuples?
 
 Tuples is a local-first, browser-based SQL learning platform where you pick a real-world domain and progressively build a fully functional relational database, step by step. Every mission takes you from `CREATE TABLE` through advanced window functions — no sign-up, no server, no data leaving your browser.

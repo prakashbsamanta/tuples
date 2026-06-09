@@ -1,0 +1,29 @@
+name: Dependency Review
+
+# Supply-chain gate on PRs. Diffs the dependency manifest/lockfile and fails
+# the PR if it would introduce a package with a known vulnerability at or above
+# the configured severity, or a disallowed license.
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    name: dependency-review
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4
+        with:
+          fail-on-severity: high
+          # Block copyleft/network licenses that are risky for a hosted web app.
+          deny-licenses: AGPL-3.0, GPL-3.0
+          comment-summary-in-pr: on-failure
