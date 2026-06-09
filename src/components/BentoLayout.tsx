@@ -97,7 +97,7 @@ export function BentoLayout({ header, pathVisualizer, narrative, terminal, visua
   );
 
   return (
-    <div className="h-screen flex flex-col bg-[#080C14] text-gray-100 overflow-hidden">
+    <div className="h-screen flex flex-col bg-transparent text-gray-100 overflow-hidden">
       {/* Ambient background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-0 left-1/3 w-[500px] h-[300px] rounded-full bg-indigo-600/5 blur-[100px]" />
