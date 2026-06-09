@@ -119,7 +119,12 @@ export function useSqlEngine() {
 
       try {
         if (!SQL.current) {
-          SQL.current = await initSqlJs({ locateFile: f => `/passenger-wasm/${f}` });
+          // BASE_URL is "/" in dev and "/tuples/" on the GitHub Pages project
+          // site, so the .wasm is fetched from the correct path in both. Using a
+          // bare "/passenger-wasm/..." would 404 on Pages (missing the base).
+          SQL.current = await initSqlJs({
+            locateFile: f => `${import.meta.env.BASE_URL}passenger-wasm/${f}`,
+          });
         }
 
         // Build the new DB first, BEFORE touching the old one

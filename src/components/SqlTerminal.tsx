@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Play, Lightbulb, Copy, Check, Sparkles } from 'lucide-react';
-import { SqlEditor } from './SqlEditor';
 import { coachError } from '../lib/errorCoach';
+
+// Lazy-load CodeMirror so its ~140 kB (gz) bundle stays out of the initial
+// payload; it loads when the terminal first mounts (i.e. inside a mission).
+const SqlEditor = lazy(() => import('./SqlEditor'));
 
 interface SqlTerminalProps {
   onExecute: (query: string) => void;
@@ -134,13 +137,21 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onR
 
       {/* Editor */}
       <div className="flex-1 min-h-0 overflow-hidden">
-        <SqlEditor
-          value={query}
-          onChange={setQuery}
-          onSubmit={handleExecute}
-          schema={schema}
-          placeholder={'-- Type your SQL here...\n-- Press ⌘+Enter to submit'}
-        />
+        <Suspense
+          fallback={
+            <div className="h-full w-full p-4 font-mono-code text-xs text-gray-600 select-none">
+              -- Loading editor…
+            </div>
+          }
+        >
+          <SqlEditor
+            value={query}
+            onChange={setQuery}
+            onSubmit={handleExecute}
+            schema={schema}
+            placeholder={'-- Type your SQL here...\n-- Press ⌘+Enter to submit'}
+          />
+        </Suspense>
       </div>
 
       {/* Error */}
