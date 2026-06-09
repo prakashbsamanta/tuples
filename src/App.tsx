@@ -8,6 +8,9 @@ import { PathVisualizer } from './components/PathVisualizer';
 import { SuccessToast } from './components/SuccessToast';
 import { AchievementToast } from './components/AchievementToast';
 import { GameStatus } from './components/GameStatus';
+import { JuiceController } from './components/JuiceController';
+import { MuteButton } from './components/MuteButton';
+import { TypewriterText } from './components/TypewriterText';
 import { ReviewPanel } from './components/ReviewPanel';
 import { useSqlEngine } from './hooks/useSqlEngine';
 import { useProgressStore } from './store/useProgressStore';
@@ -133,6 +136,7 @@ function App() {
 
   return (
     <>
+      <JuiceController />
       <BentoLayout
         header={
           <>
@@ -178,6 +182,7 @@ function App() {
                 </div>
                 <span className="text-xs font-mono text-gray-500 w-8">{percent}%</span>
               </div>
+              <MuteButton />
               <button
                 onClick={handleResetProgress}
                 title="Reset progress for this mission"
@@ -247,7 +252,7 @@ function App() {
                   </span>
                 </div>
                 <p className="text-gray-300 text-sm leading-relaxed">
-                  {currentStep.narrativeBriefing}
+                  <TypewriterText text={currentStep.narrativeBriefing} />
                 </p>
               </motion.div>
             )}

@@ -109,3 +109,14 @@
   height: 6px;
   border: none;
 }
+
+/* ── CodeMirror editor theming (match Tuples) ── */
+.cm-editor { background: transparent !important; }
+.cm-editor .cm-gutters { background: transparent !important; border-right: 1px solid rgba(255,255,255,0.05); color: #4b5563; }
+.cm-editor .cm-activeLine { background: rgba(129,140,248,0.06) !important; }
+.cm-editor .cm-activeLineGutter { background: transparent !important; color: #a5b4fc; }
+.cm-editor .cm-cursor { border-left-color: #c4b5fd !important; }
+.cm-editor .cm-selectionBackground,
+.cm-editor.cm-focused .cm-selectionBackground { background: rgba(139,92,246,0.28) !important; }
+.cm-editor .cm-tooltip-autocomplete { background: #0f1425 !important; border: 1px solid rgba(139,92,246,0.25) !important; border-radius: 8px; }
+.cm-editor .cm-tooltip-autocomplete ul li[aria-selected] { background: rgba(139,92,246,0.25) !important; color: #e0e7ff; }
