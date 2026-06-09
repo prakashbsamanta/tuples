@@ -21,7 +21,7 @@
     "@xyflow/react": "^12.11.0",
     "canvas-confetti": "^1.9.4",
     "framer-motion": "11.11.11",
-    "lucide-react": "0.460.0",
+    "lucide-react": "1.17.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "recharts": "^2.15.4",
