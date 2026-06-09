@@ -201,6 +201,19 @@ behind the just-released Vite 8 — for stability. Moving to Vite 8 is a
 `vitest` supports it, all in one PR, then verify `npm ci` + build + a browser
 smoke test before merging.
 
+The same "pin the major, upgrade manually" policy applies to a few other
+deps whose majors are breaking or coupled (all listed in `dependabot.yml`):
+
+| Dep | Held at | Why |
+| --- | --- | --- |
+| `react` / `react-dom` / `@types/react` | 18 | App + `@react-three/fiber` 8 target React 18. React 19 requires r3f 9 in the **same** PR. |
+| `@react-three/fiber` | 8 | v9 requires React 19. |
+| `typescript` | 5.x | TS majors can add new strictness; upgraded deliberately (`typescript-eslint` must support it). |
+| `recharts` | 2 | v3 is a breaking API rewrite; the chart code uses the v2 API. |
+| `eslint-plugin-react-hooks` | 5 | v7's React-Compiler rules flag intentional three.js buffer mutations. |
+
+Minor/patch updates for all of these still flow automatically.
+
 ---
 
 ## 8. Operating the pipeline
