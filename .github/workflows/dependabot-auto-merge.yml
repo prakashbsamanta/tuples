@@ -1,0 +1,41 @@
+name: Dependabot auto-merge
+
+# Keeps the repo at "0 open PRs" without manual babysitting. For Dependabot PRs
+# that are low-risk, this enables GitHub's auto-merge — the PR then merges itself
+# *only after* all required status checks (CI, CodeQL, Dependency Review) pass.
+# Branch protection still fully applies; nothing merges on red.
+#
+# Auto-merged:
+#   - any GitHub Actions update (we pin by SHA; these are vetted by CI)
+#   - semver minor/patch updates of npm deps
+# Left for manual review:
+#   - semver-major npm updates (these are intentionally rare due to dependabot
+#     ignore rules, but anything that slips through gets a human look)
+
+on: pull_request_target
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    timeout-minutes: 5
+    steps:
+      - name: Fetch Dependabot metadata
+        id: meta
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for low-risk updates
+        if: >
+          steps.meta.outputs.package-ecosystem == 'github_actions' ||
+          steps.meta.outputs.update-type == 'version-update:semver-minor' ||
+          steps.meta.outputs.update-type == 'version-update:semver-patch'
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
