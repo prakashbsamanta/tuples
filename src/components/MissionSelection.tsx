@@ -43,7 +43,7 @@ export function MissionSelection() {
   };
 
   return (
-    <div className="min-h-screen bg-[#080C14] text-gray-100 relative overflow-hidden flex flex-col">
+    <div className="min-h-screen bg-transparent text-gray-100 relative overflow-hidden flex flex-col">
       {/* Ambient background glows */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-violet-600/8 blur-[120px]" />
