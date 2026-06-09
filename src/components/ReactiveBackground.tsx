@@ -12,6 +12,7 @@ import { ParticleField } from './background/ParticleField';
 export default function ReactiveBackground() {
   const [enabled, setEnabled] = useState(true);
   const [visible, setVisible] = useState(true);
+  const [ready, setReady] = useState(false); // fade in once the WebGL context is live
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -29,12 +30,16 @@ export default function ReactiveBackground() {
   if (!enabled) return null;
 
   return (
-    <div className="fixed inset-0 -z-10 pointer-events-none">
+    <div
+      className="fixed inset-0 -z-10 pointer-events-none transition-opacity duration-700 ease-out"
+      style={{ opacity: ready ? 1 : 0 }}
+    >
       <Canvas
         dpr={[1, 1.6]}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         camera={{ position: [0, 0, 9], fov: 60 }}
         frameloop={visible ? 'always' : 'never'}
+        onCreated={() => setReady(true)}
       >
         <ParticleField />
       </Canvas>

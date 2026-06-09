@@ -36,3 +36,6 @@ pnpm-debug.log*
 
 # Brainstorm companion
 .superpowers/
+
+# sql.js wasm is generated from node_modules at build time (scripts/copy-sql-wasm.mjs)
+public/passenger-wasm/

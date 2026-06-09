@@ -52,9 +52,28 @@
   }
 
   .glass-card {
-    background: rgba(13, 18, 30, 0.85);
-    backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(13, 18, 30, 0.55);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 8px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Frosted top/bottom bars (header, toolbars, status strips). */
+  .glass-bar {
+    background: rgba(10, 14, 26, 0.55);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  }
+  /* Same, but border on the top edge (for bottom bars). */
+  .glass-bar-top {
+    background: rgba(10, 14, 26, 0.55);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.04);
   }
 
   .glow-indigo {
@@ -73,13 +92,18 @@
   }
 
   .surface-1 {
-    background: rgba(16, 22, 38, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.055);
+    background: rgba(16, 22, 38, 0.55);
+    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
   }
 
   .surface-2 {
-    background: rgba(22, 30, 48, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(22, 30, 48, 0.5);
+    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 }
 
