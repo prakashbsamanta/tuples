@@ -11,6 +11,7 @@ import { GameStatus } from './components/GameStatus';
 import { JuiceController } from './components/JuiceController';
 import { MuteButton } from './components/MuteButton';
 import { TypewriterText } from './components/TypewriterText';
+import { Mascot } from './components/Mascot';
 import { ReviewPanel } from './components/ReviewPanel';
 import { useSqlEngine } from './hooks/useSqlEngine';
 import { useProgressStore } from './store/useProgressStore';
@@ -137,6 +138,7 @@ function App() {
   return (
     <>
       <JuiceController />
+      <Mascot hasError={!!error} />
       <BentoLayout
         header={
           <>
