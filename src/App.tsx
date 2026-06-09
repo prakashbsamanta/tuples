@@ -9,7 +9,6 @@ import { SuccessToast } from './components/SuccessToast';
 import { AchievementToast } from './components/AchievementToast';
 import { GameStatus } from './components/GameStatus';
 import { JuiceController } from './components/JuiceController';
-import { MuteButton } from './components/MuteButton';
 import { TypewriterText } from './components/TypewriterText';
 import { Mascot } from './components/Mascot';
 import { ReviewPanel } from './components/ReviewPanel';
@@ -174,17 +173,17 @@ function App() {
             {/* Right: Progress + Switch */}
             <div className="flex items-center gap-4">
               <GameStatus />
-              <div className="flex items-center gap-3">
+              <div className="hidden md:flex items-center gap-2" title="Mission completion">
+                <span className="text-[9px] font-mono uppercase tracking-wider text-gray-600">Mission</span>
                 <div className="w-28 h-1.5 bg-white/5 rounded-full overflow-hidden">
                   <motion.div
                     animate={{ width: `${percent}%` }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
-                    className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full"
+                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full"
                   />
                 </div>
-                <span className="text-xs font-mono text-gray-500 w-8">{percent}%</span>
+                <span className="text-xs font-mono text-gray-500 w-8 tabular-nums">{percent}%</span>
               </div>
-              <MuteButton />
               <button
                 onClick={handleResetProgress}
                 title="Reset progress for this mission"
