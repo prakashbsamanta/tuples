@@ -36,3 +36,6 @@ export function SqlEditor({ value, onChange, onSubmit, schema, placeholder }: Sq
     />
   );
 }
+
+// Default export enables React.lazy() code-splitting of the CodeMirror bundle.
+export default SqlEditor;
