@@ -1,5 +1,8 @@
-import React from 'react';
-import { TableIcon, Inbox } from 'lucide-react';
+import React, { Suspense, useMemo, useState, lazy } from 'react';
+import { TableIcon, Inbox, BarChart3 } from 'lucide-react';
+import { detectChart } from '../lib/chartShape';
+
+const ResultChart = lazy(() => import('./ResultChart'));
 
 interface LiveDiffTableProps {
   results: any[] | null;
@@ -7,6 +10,9 @@ interface LiveDiffTableProps {
 }
 
 export function LiveDiffTable({ results, isSuccess }: LiveDiffTableProps) {
+  const chartSpec = useMemo(() => detectChart(results), [results]);
+  const [view, setView] = useState<'table' | 'chart'>('table');
+
   if (!results) {
     return (
       <div className="h-full flex flex-col items-center justify-center text-gray-600 select-none">
@@ -28,6 +34,7 @@ export function LiveDiffTable({ results, isSuccess }: LiveDiffTableProps) {
   }
 
   const columns = Object.keys(results[0]);
+  const showChart = chartSpec && view === 'chart';
 
   return (
     <div className="h-full flex flex-col min-h-0">
@@ -38,6 +45,26 @@ export function LiveDiffTable({ results, isSuccess }: LiveDiffTableProps) {
           <span className="font-mono text-[11px] tracking-widest uppercase text-gray-400 font-semibold">Output</span>
         </div>
         <div className="flex items-center gap-3">
+          {chartSpec && (
+            <div className="flex items-center gap-0.5 bg-white/5 border border-white/8 rounded-md p-0.5">
+              <button
+                onClick={() => setView('table')}
+                className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono transition-colors ${
+                  view === 'table' ? 'bg-white/10 text-gray-200' : 'text-gray-500 hover:text-gray-300'
+                }`}
+              >
+                <TableIcon size={11} /> Table
+              </button>
+              <button
+                onClick={() => setView('chart')}
+                className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono transition-colors ${
+                  view === 'chart' ? 'bg-white/10 text-indigo-300' : 'text-gray-500 hover:text-gray-300'
+                }`}
+              >
+                <BarChart3 size={11} /> Chart
+              </button>
+            </div>
+          )}
           {isSuccess && (
             <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">
               ✓ VERIFIED
@@ -47,7 +74,14 @@ export function LiveDiffTable({ results, isSuccess }: LiveDiffTableProps) {
         </div>
       </div>
 
-      {/* Table */}
+      {showChart ? (
+        <div className="flex-1 min-h-0">
+          <Suspense fallback={<div className="h-full flex items-center justify-center text-gray-600 font-mono text-xs">Loading chart…</div>}>
+            <ResultChart spec={chartSpec} />
+          </Suspense>
+        </div>
+      ) : (
+      /* Table */
       <div className="flex-1 overflow-auto min-h-0">
         <table className="w-full text-left font-mono-code text-xs whitespace-nowrap min-w-full">
           <thead className="sticky top-0 z-10">
@@ -84,6 +118,7 @@ export function LiveDiffTable({ results, isSuccess }: LiveDiffTableProps) {
           </tbody>
         </table>
       </div>
+      )}
     </div>
   );
 }

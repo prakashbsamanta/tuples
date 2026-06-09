@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Play, Lightbulb, Copy, Check } from 'lucide-react';
+import { Play, Lightbulb, Copy, Check, Sparkles } from 'lucide-react';
 import { SqlEditor } from './SqlEditor';
+import { coachError } from '../lib/errorCoach';
 
 interface SqlTerminalProps {
   onExecute: (query: string) => void;
@@ -144,11 +145,17 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onR
 
       {/* Error */}
       {error && (
-        <div className="px-4 py-3 bg-red-950/30 border-t border-red-500/20 shrink-0 max-h-28 overflow-y-auto">
-          <div className="flex items-start gap-2">
+        <div className="bg-red-950/30 border-t border-red-500/20 shrink-0 max-h-40 overflow-y-auto">
+          <div className="px-4 py-3 flex items-start gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1 shrink-0" />
             <p className="font-mono-code text-xs text-red-400 leading-relaxed">{error}</p>
           </div>
+          {coachError(error, query) && (
+            <div className="mx-4 mb-3 px-3 py-2 flex items-start gap-2 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
+              <Sparkles size={13} className="text-indigo-400 mt-0.5 shrink-0" />
+              <p className="text-xs text-indigo-200/90 leading-relaxed">{coachError(error, query)}</p>
+            </div>
+          )}
         </div>
       )}
     </div>
