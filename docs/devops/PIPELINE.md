@@ -93,7 +93,7 @@ Hardening choices in this workflow (these recur in every workflow):
 - **`concurrency` with `cancel-in-progress`** — if you push twice quickly, the
   older run is cancelled to save minutes.
 - **SHA-pinned actions** — see §7.
-- **`node-version-file: .nvmrc`** — CI uses the exact Node version (`20`) the repo
+- **`node-version-file: .nvmrc`** — CI uses the exact Node version (`22` LTS) the repo
   declares, so "works in CI" matches "works locally".
 
 The job is named **`build-test`** — that exact name is what the branch ruleset
@@ -187,6 +187,19 @@ repo. A SHA can't be moved. This is the OpenSSF supply-chain recommendation.
 The trade-off (you don't get automatic updates) is solved by **Dependabot's
 `github-actions` ecosystem**, which opens PRs that update both the SHA and the
 `# v4` comment when a new release ships.
+
+### Build-toolchain version policy
+
+`vite`, `@vitejs/plugin-react`, and `vitest` are **coupled** — they must share
+the same Vite major (the test runner builds with the same Vite as the app). To
+keep that invariant safe, Dependabot is configured to **ignore *major* bumps**
+of these three (see `dependabot.yml`); minor/patch updates still flow normally.
+
+We currently sit on the **Vite 7 line** (Node 22 LTS) — deliberately one major
+behind the just-released Vite 8 — for stability. Moving to Vite 8 is a
+*manual, atomic* change: bump `vite`, `@vitejs/plugin-react` (→ 6), and confirm
+`vitest` supports it, all in one PR, then verify `npm ci` + build + a browser
+smoke test before merging.
 
 ---
 
