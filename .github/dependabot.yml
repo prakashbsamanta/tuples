@@ -22,32 +22,32 @@ updates:
     ignore:
       # Build toolchain — must move together on a shared Vite major (held at 7).
       - dependency-name: vite
-        update-types: [version-update:semver-major]
+        update-types: ["version-update:semver-major"]
       - dependency-name: vitest
-        update-types: [version-update:semver-major]
+        update-types: ["version-update:semver-major"]
       - dependency-name: '@vitejs/plugin-react'
-        update-types: [version-update:semver-major]
+        update-types: ["version-update:semver-major"]
       - dependency-name: typescript
-        update-types: [version-update:semver-major]
+        update-types: ["version-update:semver-major"]
       # React ecosystem — app + @react-three/fiber 8 are built on React 18.
       # Moving to React 19 requires @react-three/fiber 9 in the same PR.
       - dependency-name: react
-        update-types: [version-update:semver-major]
+        update-types: ["version-update:semver-major"]
       - dependency-name: react-dom
-        update-types: [version-update:semver-major]
+        update-types: ["version-update:semver-major"]
       - dependency-name: '@types/react'
-        update-types: [version-update:semver-major]
+        update-types: ["version-update:semver-major"]
       - dependency-name: '@types/react-dom'
-        update-types: [version-update:semver-major]
+        update-types: ["version-update:semver-major"]
       - dependency-name: '@react-three/fiber'
-        update-types: [version-update:semver-major]
+        update-types: ["version-update:semver-major"]
       # Recharts 3 is a breaking API rewrite; chart code targets the v2 API.
       - dependency-name: recharts
-        update-types: [version-update:semver-major]
+        update-types: ["version-update:semver-major"]
       # react-hooks 7 enables React-Compiler rules that flag intentional
       # three.js buffer mutations; held at v5 until that code is refactored.
       - dependency-name: eslint-plugin-react-hooks
-        update-types: [version-update:semver-major]
+        update-types: ["version-update:semver-major"]
     groups:
       # Batch low-risk dev/minor/patch bumps into one PR to reduce noise.
       dev-minor-patch:
