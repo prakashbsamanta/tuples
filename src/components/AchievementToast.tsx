@@ -35,7 +35,7 @@ export function AchievementToast({ achievementIds, triggerKey }: AchievementToas
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: 40, scale: 0.9 }}
                 transition={{ type: 'spring', stiffness: 380, damping: 26, delay: i * 0.08 }}
-                className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#1A1430] border border-amber-500/30 shadow-2xl shadow-amber-500/10 max-w-xs"
+                className="flex items-center gap-3 px-4 py-3 rounded-2xl glass-card border border-amber-500/30 shadow-2xl shadow-amber-500/10 max-w-xs"
               >
                 <div className="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0">
                   <Icon size={18} className="text-amber-400" />

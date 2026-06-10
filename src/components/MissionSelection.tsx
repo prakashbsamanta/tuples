@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import {
-  DatabaseZap, Rocket, LineChart, FlaskConical, ArrowRight,
-  CheckCircle, Trophy, Star, Zap, RotateCcw
+  Rocket, LineChart, FlaskConical, ArrowRight,
+  CheckCircle, Trophy, Zap, RotateCcw
 } from 'lucide-react';
 import { domains } from '../domains';
 import { useProgressStore } from '../store/useProgressStore';
@@ -44,12 +44,8 @@ export function MissionSelection() {
 
   return (
     <div className="min-h-screen bg-transparent text-gray-100 relative overflow-hidden flex flex-col">
-      {/* Ambient background glows */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-violet-600/8 blur-[120px]" />
-        <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] rounded-full bg-indigo-600/8 blur-[100px]" />
-        <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-blue-600/5 blur-[100px]" />
-        {/* Grid pattern */}
+      {/* Grain + grid backdrop */}
+      <div className="fixed inset-0 pointer-events-none grain">
         <div className="absolute inset-0 opacity-[0.02]" style={{
           backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
           backgroundSize: '40px 40px'
@@ -57,18 +53,13 @@ export function MissionSelection() {
       </div>
 
       {/* Top Nav */}
-      <nav className="relative z-10 flex items-center justify-between px-8 py-6 border-b border-white/5">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-            <DatabaseZap size={18} className="text-white" />
-          </div>
+      <nav className="relative z-10 flex items-center justify-between px-8 py-5 border-b border-white/5">
+        <div className="flex items-center gap-2.5">
+          <span className="font-mono font-bold text-volt text-lg leading-none">(,)</span>
           <span className="font-bold text-white text-lg tracking-tight">Tuples</span>
-          <span className="ml-2 px-2 py-0.5 text-[10px] font-mono font-semibold bg-indigo-500/15 text-indigo-400 border border-indigo-500/20 rounded">
-            BETA
-          </span>
         </div>
         <div className="flex items-center gap-2 text-xs text-gray-500 font-mono">
-          <Zap size={12} className="text-yellow-500" />
+          <Zap size={12} className="text-volt" />
           <span>35 STEPS PER MISSION</span>
         </div>
       </nav>
@@ -80,16 +71,15 @@ export function MissionSelection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/25 bg-violet-500/10 text-violet-300 text-sm font-medium mb-8">
-            <Star size={14} className="fill-violet-400 text-violet-400" />
-            Interactive SQL Learning Platform
-          </div>
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-5 leading-none">
-            Choose Your<br />
-            <span className="text-gradient-brand">Mission Domain</span>
+          <p className="font-mono text-xs tracking-[0.3em] text-volt uppercase mb-8">
+            Interactive SQL Learning
+          </p>
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-5 leading-[1.02]">
+            Choose your<br />
+            <span className="text-gradient-brand">mission.</span>
           </h1>
           <p className="text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
-            Master SQL by building real production databases from scratch. 
+            Master SQL by building real production databases from scratch.
             35 progressive steps per mission — from CREATE TABLE to advanced window functions.
           </p>
         </motion.div>

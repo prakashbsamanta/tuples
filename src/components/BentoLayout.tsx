@@ -35,7 +35,7 @@ function Handle({ direction }: { direction: 'horizontal' | 'vertical' }) {
   );
 }
 
-const panelGlass = 'bg-[#0A0E1A]/45 backdrop-blur-xl';
+const panelGlass = 'bg-panel/45 backdrop-blur-xl';
 
 export function BentoLayout({ header, pathVisualizer, narrative, terminal, visualizer, results }: BentoLayoutProps) {
   const [isDesktop, setIsDesktop] = useState(true);
@@ -104,7 +104,9 @@ export function BentoLayout({ header, pathVisualizer, narrative, terminal, visua
         </PanelGroup>
       ) : (
         <div className="relative z-10 flex flex-col flex-1 min-h-0 overflow-y-auto">
-          <div className={`w-full max-h-56 overflow-y-auto border-b border-white/5 ${panelGlass}`}>{pathVisualizer}</div>
+          {/* Fixed height: PathVisualizer uses h-full internally, which collapses
+              inside an auto-height max-h parent. */}
+          <div className={`w-full h-56 overflow-y-auto border-b border-white/5 ${panelGlass}`}>{pathVisualizer}</div>
           <div className="flex flex-col w-full border-b border-white/5">{centerColumn}</div>
           <div className={`flex flex-col w-full min-h-[320px] ${panelGlass}`}>{visualizer}</div>
         </div>

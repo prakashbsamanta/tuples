@@ -18,7 +18,7 @@ import { extractSchema } from './lib/schema';
 import { explainConcept } from './lib/whyItWorks';
 import { domains } from './domains';
 import {
-  DatabaseZap, CheckCircle2, LogOut, ChevronRight,
+  CheckCircle2, LogOut, ChevronRight,
   FlaskConical, LineChart, Rocket, RotateCcw
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -129,9 +129,9 @@ function App() {
 
   if (!isReady) {
     return (
-      <div className="min-h-screen bg-[#080C14] flex flex-col items-center justify-center gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 animate-pulse">
-          <DatabaseZap size={22} className="text-white" />
+      <div className="min-h-screen bg-canvas flex flex-col items-center justify-center gap-4">
+        <div className="w-12 h-12 rounded-2xl glass-card flex items-center justify-center animate-pulse font-mono font-bold text-volt">
+          (,)
         </div>
         <div className="text-center">
           <p className="text-gray-200 font-semibold">Initializing Engine</p>
@@ -141,7 +141,7 @@ function App() {
           {[0, 1, 2].map(i => (
             <div
               key={i}
-              className="w-2 h-2 rounded-full bg-indigo-500 animate-bounce"
+              className="w-2 h-2 rounded-full bg-volt/70 animate-bounce"
               style={{ animationDelay: `${i * 0.15}s` }}
             />
           ))}
@@ -171,10 +171,8 @@ function App() {
           <>
             {/* Left: Brand + Mission */}
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                  <DatabaseZap size={15} className="text-white" />
-                </div>
+              <div className="flex items-center gap-2">
+                <span className="font-mono font-bold text-volt text-base leading-none">(,)</span>
                 <span className="font-bold text-white text-sm tracking-tight">Tuples</span>
               </div>
               <div className="h-4 w-px bg-white/10" />
@@ -207,7 +205,7 @@ function App() {
                   <motion.div
                     animate={{ width: `${percent}%` }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
-                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full"
+                    className="h-full bg-gradient-to-r from-volt-dim to-volt rounded-full"
                   />
                 </div>
                 <span className="text-xs font-mono text-gray-500 w-8 tabular-nums">{percent}%</span>

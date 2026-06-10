@@ -4,7 +4,7 @@ const reduceMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /** Reveals text character-by-character like a futuristic terminal. */
-export function TypewriterText({ text, className, speed = 12 }: { text: string; className?: string; speed?: number }) {
+export function TypewriterText({ text, className, speed = 8 }: { text: string; className?: string; speed?: number }) {
   const [count, setCount] = useState(0);
   const idRef = useRef<number | null>(null);
 
@@ -25,7 +25,7 @@ export function TypewriterText({ text, className, speed = 12 }: { text: string; 
   return (
     <span className={className}>
       {text.slice(0, count)}
-      {!done && <span className="text-indigo-400 animate-pulse">▋</span>}
+      {!done && <span className="text-volt animate-pulse">▋</span>}
     </span>
   );
 }

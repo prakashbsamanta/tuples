@@ -46,7 +46,7 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onR
   const nextHintLabel = hintLevel < 3 ? hintLabels[hintLevel] : null;
 
   return (
-    <div className="flex flex-col h-full min-h-0 bg-[#06090F]/80">
+    <div className="flex flex-col h-full min-h-0 bg-canvas/80">
       {/* Toolbar */}
       <div className="glass-bar flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 shrink-0">
         <div className="flex items-center gap-2">
@@ -81,19 +81,19 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onR
           )}
           <button
             onClick={handleExecute}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold text-white
-              bg-indigo-500 hover:bg-indigo-400 rounded-lg transition-all shadow-lg shadow-indigo-500/25"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-black
+              bg-volt hover:bg-volt-dim rounded-lg transition-all shadow-lg shadow-volt/20"
           >
             <Play size={11} />
             Submit
-            <span className="text-indigo-200/60 ml-0.5">⌘↵</span>
+            <span className="text-black/50 ml-0.5">⌘↵</span>
           </button>
         </div>
       </div>
 
       {/* Hints Area */}
       {hintLevel > 0 && hints && (
-        <div className="border-b border-white/5 bg-[#0A0F1A] shrink-0">
+        <div className="border-b border-white/5 bg-panel shrink-0">
           {hintLevel >= 1 && (
             <div className="px-4 py-3 border-b border-white/5">
               <div className="flex items-center gap-2 mb-1.5">

@@ -89,7 +89,7 @@ export function LiveDiffTable({ results, isSuccess }: LiveDiffTableProps) {
               {columns.map((col, i) => (
                 <th
                   key={i}
-                  className="px-4 py-2.5 bg-[#0D1220] border-b border-white/5 text-gray-400 font-semibold uppercase tracking-wider text-[10px]"
+                  className="px-4 py-2.5 bg-panel border-b border-white/5 text-gray-400 font-semibold uppercase tracking-wider text-[10px]"
                 >
                   {col}
                 </th>
