@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "@codemirror/lang-sql": "^6.10.0",
+    "@fontsource-variable/jetbrains-mono": "^5.2.8",
+    "@fontsource-variable/space-grotesk": "^5.2.10",
     "@react-three/fiber": "^9.6.1",
     "@uiw/react-codemirror": "^4.25.10",
     "@xyflow/react": "^12.11.0",
