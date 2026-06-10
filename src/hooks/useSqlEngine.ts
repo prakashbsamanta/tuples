@@ -2,56 +2,18 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import initSqlJs, { Database, SqlJsStatic } from 'sql.js';
 import { useProgressStore } from '../store/useProgressStore';
 import { domains } from '../domains';
+import { buildMissionDb } from '../lib/missionDb';
+import { validateStep, execTable, type ResultTable } from '../lib/validate';
 
 export interface SqlEngineState {
   db: Database | null;
   isReady: boolean;
   error: string | null;
-  results: any[] | null;
+  results: Record<string, unknown>[] | null;
   isSuccess: boolean;
 }
 
-// Deep-compare two parsed JSON values with safe type handling.
-// FIX #1: Null/undefined/empty-string no longer coerce to 0.
-function looseEqual(a: any, b: any): boolean {
-  // Identical references or both strictly equal
-  if (a === b) return true;
-
-  // If either is null/undefined, only match if BOTH are null/undefined
-  if (a === null || a === undefined || b === null || b === undefined) {
-    return (a ?? null) === (b ?? null);
-  }
-
-  // Arrays
-  if (Array.isArray(a) && Array.isArray(b)) {
-    if (a.length !== b.length) return false;
-    return a.every((item, i) => looseEqual(item, b[i]));
-  }
-
-  // Objects
-  if (typeof a === 'object' && typeof b === 'object') {
-    const keysA = Object.keys(a);
-    const keysB = Object.keys(b);
-    if (keysA.length !== keysB.length) return false;
-    return keysA.every(k => looseEqual(a[k], b[k]));
-  }
-
-  // Numeric comparison — only if both are non-empty strings/numbers that parse to valid numbers
-  const strA = String(a).trim();
-  const strB = String(b).trim();
-  if (strA !== '' && strB !== '') {
-    const numA = Number(strA);
-    const numB = Number(strB);
-    if (!isNaN(numA) && !isNaN(numB)) {
-      return Math.abs(numA - numB) < 0.001;
-    }
-  }
-
-  // Fallback: string comparison
-  return strA === strB;
-}
-
-// FIX #3: Close a replaced database AFTER React has committed + painted the new
+// Close a replaced database AFTER React has committed + painted the new
 // one to all consumers (e.g. SchemaVisualizer). Closing synchronously right after
 // setState leaves a window where a child can still hold — and query — the old
 // instance, which makes sql.js throw the string "Database closed".
@@ -60,12 +22,11 @@ function closeSoon(db: Database | null) {
   setTimeout(() => { try { db.close(); } catch { /* db already closed — ignore */ } }, 0);
 }
 
-function formatResults(res: ReturnType<Database['exec']>): any[] {
-  if (res.length === 0) return [];
-  const { columns, values } = res[0];
-  return values.map((row) => {
-    const obj: Record<string, any> = {};
-    columns.forEach((col, idx) => { obj[col] = row[idx]; });
+function tableToObjects(t: ResultTable | null): Record<string, unknown>[] {
+  if (!t) return [];
+  return t.rows.map((row) => {
+    const obj: Record<string, unknown> = {};
+    t.columns.forEach((col, idx) => { obj[col] = row[idx]; });
     return obj;
   });
 }
@@ -84,6 +45,9 @@ export function useSqlEngine() {
   const SQL = useRef<SqlJsStatic | null>(null);
   // dbRef holds the working DB so callbacks always see the latest db
   const dbRef = useRef<Database | null>(null);
+  // Hidden-variant shadow DB snapshot, cached per (domain, step) — rebuilding
+  // it on every submit would replay the full seed each time.
+  const shadowCache = useRef<{ key: string; snapshot: Uint8Array } | null>(null);
   // Tracks the last domain we initialized for, so we can tell a mission switch
   // (clear the results panel) apart from a step advance (keep the last result visible).
   const prevDomainRef = useRef<string | null>(null);
@@ -97,15 +61,11 @@ export function useSqlEngine() {
   });
 
   // Re-initialize DB only when domain or step changes (NOT on every historicalQueries update)
-  // FIX #2: Only show full-screen loader on initial WASM load, not on step transitions.
-  // FIX #3: Close old DB *after* new one is ready and state is set.
   useEffect(() => {
     let cancelled = false;
 
     async function initDb() {
       const needsWasmLoad = !SQL.current;
-      // A mission switch clears the results panel; a step advance within the same
-      // mission preserves the just-produced result so the user can actually read it.
       const domainChanged = prevDomainRef.current !== activeDomainId;
       prevDomainRef.current = activeDomainId;
 
@@ -113,18 +73,15 @@ export function useSqlEngine() {
       if (needsWasmLoad) {
         setState(s => ({ ...s, isReady: false, error: null, results: null, isSuccess: false }));
       } else {
-        // For step transitions, clear errors but keep the last result unless the mission changed.
         setState(s => ({ ...s, error: null, results: domainChanged ? null : s.results, isSuccess: false }));
       }
 
       try {
         if (!SQL.current) {
           // BASE_URL is "/" in dev and "/tuples/" on the GitHub Pages project
-          // site, so the .wasm is fetched from the correct path in both. Using a
-          // bare "/passenger-wasm/..." would 404 on Pages (missing the base).
+          // site, so the .wasm is fetched from the correct path in both.
           const locateFile = (f: string) => `${import.meta.env.BASE_URL}passenger-wasm/${f}`;
-          // Retry transient fetch failures (e.g. the .wasm request losing a race
-          // with a not-yet-ready static server, or a flaky network on first load).
+          // Retry transient fetch failures.
           let lastErr: unknown;
           for (let attempt = 0; attempt < 3 && !SQL.current; attempt++) {
             try {
@@ -138,37 +95,29 @@ export function useSqlEngine() {
           if (!SQL.current) throw lastErr;
         }
 
-        // Build the new DB first, BEFORE touching the old one
-        const newDb = new SQL.current.Database();
-
-        // Hydrate: replay all saved queries from steps 0..currentStepIndex-1
+        // Build the new DB (setup seed + replay of saved/canonical queries +
+        // seedAfter bulk loads) BEFORE touching the old one.
+        let newDb: Database;
         if (activeDomainId && domains[activeDomainId]) {
           const { historicalQueries } = storeRef.current.progressByDomain[activeDomainId] ?? { historicalQueries: {} };
-          for (let i = 0; i < currentStepIndex; i++) {
-            const q = historicalQueries[i];
-            if (q) {
-              try { newDb.exec(q); } catch (e) {
-                console.warn(`Hydration error at step ${i}:`, e);
-              }
-            }
-          }
+          newDb = buildMissionDb(SQL.current, domains[activeDomainId], currentStepIndex, {
+            savedQueries: historicalQueries,
+          });
+        } else {
+          newDb = new SQL.current.Database();
         }
 
         if (!cancelled) {
-          // Swap: set new DB first, THEN schedule the old one to close after paint
           const oldDb = dbRef.current;
           dbRef.current = newDb;
           setState(s => ({ ...s, db: newDb, isReady: true, error: null, results: domainChanged ? null : s.results, isSuccess: false }));
-
-          // Defer closing the old DB until consumers have re-rendered — no race
           closeSoon(oldDb);
         } else {
-          // If cancelled, close the newDb we just made
-          try { newDb.close(); } catch { /* db already closed — ignore */ }
+          try { newDb.close(); } catch { /* already closed */ }
         }
-      } catch (err: any) {
+      } catch (err) {
         if (!cancelled) {
-          setState(s => ({ ...s, isReady: true, error: `Engine init failed: ${err.message}` }));
+          setState(s => ({ ...s, isReady: true, error: `Engine init failed: ${(err as Error).message}` }));
         }
       }
     }
@@ -180,6 +129,21 @@ export function useSqlEngine() {
     };
     // NOTE: intentionally NOT including historicalQueries to avoid re-init loop
   }, [activeDomainId, currentStepIndex]);
+
+  /** Shadow DB (hidden VARIANT data) for the current step, built lazily and cached. */
+  const getShadowDb = useCallback((): Database | null => {
+    const store = storeRef.current;
+    const domainId = store.activeDomainId;
+    if (!domainId || !SQL.current || !domains[domainId]) return null;
+    const stepIdx = store.progressByDomain[domainId]?.currentStepIndex ?? 0;
+    const key = `${domainId}:${stepIdx}`;
+    if (shadowCache.current?.key !== key) {
+      const db = buildMissionDb(SQL.current, domains[domainId], stepIdx, { variant: true });
+      shadowCache.current = { key, snapshot: db.export() };
+      db.close();
+    }
+    return new SQL.current.Database(shadowCache.current.snapshot);
+  }, []);
 
   // Submit query: validate and advance step on success
   const executeQuery = useCallback((rawQuery: string) => {
@@ -198,54 +162,55 @@ export function useSqlEngine() {
     // Clear previous results/errors immediately
     setState(s => ({ ...s, error: null, results: null, isSuccess: false }));
 
-    // Take a snapshot of DB state before executing (for safe rollback)
+    // Snapshot for rollback if the submission fails
     const snapshot = db.export();
+    let shadowDb: Database | null = null;
 
     try {
-      // Stage 2: Execute the query (capture the user's own output, e.g. SELECT rows)
-      const userExec = db.exec(rawQuery);
+      const userResult = execTable(db, rawQuery);
 
-      // Stage 3: Run verification query
-      const verifyRes = db.exec(stepConfig.verificationQuery);
-      const actual = formatResults(verifyRes);
-      const expected = JSON.parse(stepConfig.expectedResult);
+      const outcome = validateStep(db, stepConfig, rawQuery, userResult, {
+        getShadowDb: () => {
+          shadowDb = getShadowDb();
+          return shadowDb;
+        },
+      });
 
-      if (looseEqual(actual, expected)) {
-        // ✅ SUCCESS — prefer showing the user's own query result (SELECT rows);
-        // fall back to the verification output for DDL/DML steps that return no rows.
-        const userRows = formatResults(userExec);
-        const displayResults = userRows.length > 0 ? userRows : actual;
+      if (outcome.pass) {
+        const displayRows = tableToObjects(outcome.display);
         store.saveQueryForStep(stepIdx, rawQuery);
         store.recordSolve({ conceptFocus: stepConfig.conceptFocus });
         store.unlockNextStep();
-        setState(s => ({ ...s, error: null, results: displayResults, isSuccess: true }));
+        setState(s => ({ ...s, error: null, results: displayRows, isSuccess: true }));
       } else {
-        // ❌ Verification failed — restore DB
+        // Validation failed — restore the pre-submission DB state
         const clean = new SQL.current!.Database(snapshot);
         dbRef.current = clean;
         closeSoon(db);
         setState(s => ({
           ...s,
           db: clean,
-          error: `Verification failed.\nExpected: ${JSON.stringify(expected)}\nGot: ${JSON.stringify(actual)}`,
-          results: null,
-          isSuccess: false
+          error: `Not quite. ${outcome.reason ?? 'The result does not match what the briefing asked for.'}`,
+          results: tableToObjects(outcome.display),
+          isSuccess: false,
         }));
       }
-    } catch (e: any) {
-      // ❌ SQL error — restore DB
+    } catch (e) {
+      // SQL error — restore DB
       const clean = new SQL.current!.Database(snapshot);
       dbRef.current = clean;
       closeSoon(db);
       setState(s => ({
         ...s,
         db: clean,
-        error: e.message,
+        error: (e as Error).message,
         results: null,
         isSuccess: false
       }));
+    } finally {
+      if (shadowDb) { try { (shadowDb as Database).close(); } catch { /* closed */ } }
     }
-  }, []); // No deps — always reads from refs
+  }, [getShadowDb]);
 
   // Test Run: run query on a COPY of the DB (does NOT affect real state)
   const runRawQuery = useCallback((rawQuery: string) => {
@@ -254,18 +219,16 @@ export function useSqlEngine() {
 
     setState(s => ({ ...s, error: null, isSuccess: false }));
 
-    // Export current DB, create a temp copy to run against
     const snapshot = db.export();
     let tempDb: Database | null = null;
     try {
       tempDb = new SQL.current!.Database(snapshot);
-      const res = tempDb.exec(rawQuery);
-      const formatted = formatResults(res);
+      const formatted = tableToObjects(execTable(tempDb, rawQuery));
       setState(s => ({ ...s, results: formatted, error: null }));
-    } catch (e: any) {
-      setState(s => ({ ...s, results: null, error: `[Test Run] ${e.message}` }));
+    } catch (e) {
+      setState(s => ({ ...s, results: null, error: `[Test Run] ${(e as Error).message}` }));
     } finally {
-      if (tempDb) { try { tempDb.close(); } catch { /* db already closed — ignore */ } }
+      if (tempDb) { try { tempDb.close(); } catch { /* already closed */ } }
     }
   }, []);
 
