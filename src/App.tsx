@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { BentoLayout } from './components/BentoLayout';
 import { SqlTerminal } from './components/SqlTerminal';
 import { LiveDiffTable } from './components/LiveDiffTable';
@@ -23,6 +23,18 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const Landing = lazy(() => import('./components/landing/Landing'));
+
+const ENTERED_KEY = 'tuples_entered';
+
+function hasEnteredBefore(): boolean {
+  try {
+    return localStorage.getItem(ENTERED_KEY) === '1';
+  } catch {
+    return true; // storage unavailable — don't trap the user on the landing
+  }
+}
+
 const domainIcons: Record<string, React.ReactNode> = {
   'clinical-trials-research': <FlaskConical size={16} className="text-emerald-400" />,
   'algorithmic-trading': <LineChart size={16} className="text-indigo-400" />,
@@ -37,6 +49,12 @@ const phaseColors: Record<string, string> = {
 
 function App() {
   const { activeDomainId, progressByDomain, setActiveDomain, resetDomain } = useProgressStore();
+  // Landing shows once for brand-new visitors; anyone with mission progress skips it.
+  const [entered, setEntered] = useState(hasEnteredBefore);
+  const handleEnter = () => {
+    try { localStorage.setItem(ENTERED_KEY, '1'); } catch { /* best effort */ }
+    setEntered(true);
+  };
   const lastSolve = useProgressStore((s) => s.lastSolve);
   const { isReady, db, error, results, isSuccess, executeQuery, runRawQuery } = useSqlEngine();
 
@@ -97,7 +115,17 @@ function App() {
     }
   };
 
-  if (!activeDomainId) return <MissionSelection />;
+  if (!activeDomainId) {
+    const hasAnyProgress = Object.values(progressByDomain).some((p) => p.currentStepIndex > 0);
+    if (!entered && !hasAnyProgress) {
+      return (
+        <Suspense fallback={<div className="min-h-screen" />}>
+          <Landing onEnter={handleEnter} />
+        </Suspense>
+      );
+    }
+    return <MissionSelection />;
+  }
 
   if (!isReady) {
     return (
