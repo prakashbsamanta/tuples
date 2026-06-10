@@ -354,6 +354,10 @@ function clinicalBulkPatients(variant: boolean): string {
   const r = rng(variant ? VARIANT_SEED + 2 : BASE_SEED + 2);
   const rows: string[][] = [];
   const emails: string[] = [];
+  // (name, age, site) must be unique among ids 1000+ — the later visits seed
+  // references these ids, and the dedupe step must only ever remove the
+  // explicit 2000+ duplicates (or FK constraints would break on bulk load).
+  const identities = new Set<string>();
   const n = variant ? 290 : 300;
   for (let i = 0; i < n; i++) {
     const id = 1000 + i;
@@ -376,10 +380,13 @@ function clinicalBulkPatients(variant: boolean): string {
       email = q(e);
     }
 
-    const age = r() < 0.03 ? int(r, 130, 190) : int(r, 18, 89); // outliers
+    let age = r() < 0.03 ? int(r, 130, 190) : int(r, 18, 89); // outliers
+    const site = pick(r, SITES);
+    while (identities.has(`${name}|${age}|${site}`)) age = int(r, 18, 89);
+    identities.add(`${name}|${age}|${site}`);
     rows.push([
       String(id), q(name), String(age), email,
-      q(pick(r, SITES)), q(tradingDay(int(r, 0, 100))),
+      q(site), q(tradingDay(int(r, 0, 100))),
     ]);
   }
   // Exact duplicate people (same name+age, new ids) — dedupe-step material.
@@ -398,9 +405,11 @@ function clinicalBulkVisits(variant: boolean): string {
   const r = rng(variant ? VARIANT_SEED + 3 : BASE_SEED + 3);
   const rows: string[][] = [];
   const n = variant ? 1150 : 1200;
+  // Must stay within the patient ids the bulk-patients seed actually created.
+  const maxPatientOffset = (variant ? 290 : 300) - 1;
   for (let i = 1; i <= n; i++) {
     rows.push([
-      String(i), String(1000 + int(r, 0, 299)), q(tradingDay(int(r, 0, 110))),
+      String(i), String(1000 + int(r, 0, maxPatientOffset)), q(tradingDay(int(r, 0, 110))),
       r() < 0.05 ? 'NULL' : String(int(r, 95, 185)),
       (45 + r() * 75).toFixed(1),
       r() < 0.3 ? q(pick(r, ['stable', 'follow-up needed', 'dose adjusted', 'adverse reaction noted'])) : 'NULL',

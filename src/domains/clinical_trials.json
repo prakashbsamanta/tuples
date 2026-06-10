@@ -1,497 +1,756 @@
 {
   "domainId": "clinical-trials-research",
   "domainName": "Clinical Trials Research",
-  "domainDescription": "Build an enterprise medical research database to manage patient registries, trial logs, dosage configurations, and adverse reactions.",
+  "domainDescription": "The Builder track. Design a medical research database that cannot lie: schemas, constraints, transactions, triggers — and the cleanup of a very dirty legacy import.",
   "curriculumMatrix": [
     {
       "stepIndex": 0,
       "phase": "Novice",
-      "conceptFocus": "CREATE_TABLE_BASIC",
-      "narrativeBriefing": "Welcome to MedCore Research Lab. Our clinical trial tracking system needs a foundation. Create a `patients` table with `patient_id` (INT) and `patient_name` (TEXT).",
+      "conceptFocus": "CREATE_TABLE_TYPED",
+      "narrativeBriefing": "Welcome to MedCore Research. Day one: create the `patients` registry — a table with `patient_id` (INTEGER, the PRIMARY KEY), `full_name` (TEXT) and `age` (INTEGER).",
       "hints": {
-        "tier1Concept": "Use CREATE TABLE to define a new table and specify columns with their data types inside parentheses.",
-        "tier2Scaffold": "CREATE TABLE patients (\n  patient_id INT,\n  patient_name TEXT\n);",
-        "tier3Solution": "CREATE TABLE patients (patient_id INT, patient_name TEXT);"
+        "tier1Concept": "CREATE TABLE defines a new table. Each column gets a name and a type; PRIMARY KEY marks the column that uniquely identifies each row.",
+        "tier2Scaffold": "CREATE TABLE patients (\n  patient_id INTEGER PRIMARY KEY,\n  full_name ___,\n  age ___\n);",
+        "tier3Solution": "CREATE TABLE patients (patient_id INTEGER PRIMARY KEY, full_name TEXT, age INTEGER);"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='patients';",
-      "expectedResult": "[{\"name\":\"patients\"}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT name, type, pk FROM pragma_table_info('patients') ORDER BY cid;",
+        "expectedResult": "[{\"name\":\"patient_id\",\"type\":\"INTEGER\",\"pk\":1},{\"name\":\"full_name\",\"type\":\"TEXT\",\"pk\":0},{\"name\":\"age\",\"type\":\"INTEGER\",\"pk\":0}]"
+      }
     },
     {
       "stepIndex": 1,
       "phase": "Novice",
-      "conceptFocus": "INSERT_SINGLE_ROW",
-      "narrativeBriefing": "First patient enrolled! Insert a record for patient_id 101, name 'Alice Monroe' into the `patients` table.",
+      "conceptFocus": "INSERT_ROW",
+      "narrativeBriefing": "Our first volunteer signed up. Insert patient 1: Maya Okonkwo, age 34.",
       "hints": {
-        "tier1Concept": "Use INSERT INTO to add a new row. Specify column names in parentheses and VALUES in a matching set.",
-        "tier2Scaffold": "INSERT INTO patients (patient_id, patient_name)\nVALUES (101, 'Alice Monroe');",
-        "tier3Solution": "INSERT INTO patients (patient_id, patient_name) VALUES (101, 'Alice Monroe');"
+        "tier1Concept": "INSERT INTO adds a row. List the columns, then VALUES with one value per column. Text values go in single quotes.",
+        "tier2Scaffold": "INSERT INTO patients (patient_id, full_name, age)\nVALUES (1, '___', ___);",
+        "tier3Solution": "INSERT INTO patients (patient_id, full_name, age) VALUES (1, 'Maya Okonkwo', 34);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM patients WHERE patient_id=101;",
-      "expectedResult": "[{\"count\":1}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT patient_id, full_name, age FROM patients;",
+        "expectedResult": "[{\"patient_id\":1,\"full_name\":\"Maya Okonkwo\",\"age\":34}]"
+      }
     },
     {
       "stepIndex": 2,
       "phase": "Novice",
-      "conceptFocus": "INSERT_MULTIPLE_ROWS",
-      "narrativeBriefing": "Batch-enroll two more patients: patient_id 102 'Bob Chen', and patient_id 103 'Carol Davis'.",
+      "conceptFocus": "INSERT_MULTI_ROW",
+      "narrativeBriefing": "Three more volunteers in one go — use a single INSERT with multiple value tuples: (2, 'Ahmed Haddad', 47), (3, 'Lena Berg', 29), (4, 'Carlos Reyes', 52).",
       "hints": {
-        "tier1Concept": "INSERT INTO can accept multiple rows in a single statement by separating each value tuple with a comma.",
-        "tier2Scaffold": "INSERT INTO patients (patient_id, patient_name) VALUES\n  (102, 'Bob Chen'),\n  (103, 'Carol Davis');",
-        "tier3Solution": "INSERT INTO patients (patient_id, patient_name) VALUES (102, 'Bob Chen'), (103, 'Carol Davis');"
+        "tier1Concept": "One INSERT can add many rows: separate each (…) tuple with commas. Far faster than one statement per row.",
+        "tier2Scaffold": "INSERT INTO patients (patient_id, full_name, age) VALUES\n  (2, 'Ahmed Haddad', 47),\n  (3, ___, ___),\n  (4, ___, ___);",
+        "tier3Solution": "INSERT INTO patients (patient_id, full_name, age) VALUES (2, 'Ahmed Haddad', 47), (3, 'Lena Berg', 29), (4, 'Carlos Reyes', 52);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM patients;",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT patient_id, full_name, age FROM patients ORDER BY patient_id;",
+        "expectedResult": "[{\"patient_id\":1,\"full_name\":\"Maya Okonkwo\",\"age\":34},{\"patient_id\":2,\"full_name\":\"Ahmed Haddad\",\"age\":47},{\"patient_id\":3,\"full_name\":\"Lena Berg\",\"age\":29},{\"patient_id\":4,\"full_name\":\"Carlos Reyes\",\"age\":52}]"
+      }
     },
     {
       "stepIndex": 3,
       "phase": "Novice",
-      "conceptFocus": "SELECT_ALL",
-      "narrativeBriefing": "Run a full audit. Retrieve all records from the `patients` table.",
+      "conceptFocus": "SELECT_WHERE",
+      "narrativeBriefing": "The trial protocol only covers volunteers over 40. Show the `full_name` and `age` of every patient older than 40.",
       "hints": {
-        "tier1Concept": "Use SELECT * FROM to retrieve every column and every row from a table.",
-        "tier2Scaffold": "SELECT * FROM patients;",
-        "tier3Solution": "SELECT * FROM patients;"
+        "tier1Concept": "SELECT picks columns; WHERE filters rows with a condition. Comparison operators: >, <, >=, <=, =, <>.",
+        "tier2Scaffold": "SELECT full_name, age\nFROM patients\nWHERE age ___ 40;",
+        "tier3Solution": "SELECT full_name, age FROM patients WHERE age > 40;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM patients;",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT full_name, age FROM patients WHERE age > 40;"
+      }
     },
     {
       "stepIndex": 4,
       "phase": "Novice",
-      "conceptFocus": "SELECT_WHERE",
-      "narrativeBriefing": "Fetch the record for patient 102 only. Use a WHERE clause to filter by patient_id.",
+      "conceptFocus": "UPDATE_ROW",
+      "narrativeBriefing": "Data-entry slip: Ahmed Haddad (patient 2) is 44, not 47. Correct his age — and only his.",
       "hints": {
-        "tier1Concept": "Add a WHERE clause after the table name to filter rows based on a condition.",
-        "tier2Scaffold": "SELECT * FROM patients WHERE patient_id = ___;",
-        "tier3Solution": "SELECT * FROM patients WHERE patient_id = 102;"
+        "tier1Concept": "UPDATE changes existing rows. The WHERE clause decides which rows change; without it, EVERY row is updated.",
+        "tier2Scaffold": "UPDATE patients\nSET age = ___\nWHERE patient_id = ___;",
+        "tier3Solution": "UPDATE patients SET age = 44 WHERE patient_id = 2;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT patient_id, patient_name FROM patients WHERE patient_id = 102;",
-      "expectedResult": "[{\"patient_id\":102,\"patient_name\":\"Bob Chen\"}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT patient_id, age FROM patients ORDER BY patient_id;",
+        "expectedResult": "[{\"patient_id\":1,\"age\":34},{\"patient_id\":2,\"age\":44},{\"patient_id\":3,\"age\":29},{\"patient_id\":4,\"age\":52}]"
+      }
     },
     {
       "stepIndex": 5,
       "phase": "Novice",
-      "conceptFocus": "UPDATE_ROW",
-      "narrativeBriefing": "A data entry error was found. Update patient 103's name from 'Carol Davis' to 'Carol Davies'.",
+      "conceptFocus": "DELETE_ROW",
+      "narrativeBriefing": "Carlos Reyes (patient 4) withdrew consent. Remove his row from the registry.",
       "hints": {
-        "tier1Concept": "Use UPDATE ... SET ... WHERE to modify existing records. Always include a WHERE clause to avoid updating every row.",
-        "tier2Scaffold": "UPDATE patients SET patient_name = 'Carol Davies' WHERE patient_id = ___;",
-        "tier3Solution": "UPDATE patients SET patient_name = 'Carol Davies' WHERE patient_id = 103;"
+        "tier1Concept": "DELETE FROM removes rows matching WHERE. Like UPDATE, an unscoped DELETE wipes the whole table — always write the WHERE first.",
+        "tier2Scaffold": "DELETE FROM patients\nWHERE patient_id = ___;",
+        "tier3Solution": "DELETE FROM patients WHERE patient_id = 4;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT patient_name FROM patients WHERE patient_id=103;",
-      "expectedResult": "[{\"patient_name\":\"Carol Davies\"}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS n, MAX(patient_id) AS mx FROM patients;",
+        "expectedResult": "[{\"n\":3,\"mx\":3}]"
+      }
     },
     {
       "stepIndex": 6,
       "phase": "Novice",
-      "conceptFocus": "DELETE_ROW",
-      "narrativeBriefing": "Patient 101 has withdrawn from the trial. Delete their record from the `patients` table.",
+      "conceptFocus": "ALTER_ADD_COLUMN",
+      "narrativeBriefing": "Compliance wants contact details. Add an `email` column (TEXT) to `patients`.",
       "hints": {
-        "tier1Concept": "Use DELETE FROM with a WHERE clause to remove a specific row.",
-        "tier2Scaffold": "DELETE FROM patients WHERE patient_id = ___;",
-        "tier3Solution": "DELETE FROM patients WHERE patient_id = 101;"
+        "tier1Concept": "ALTER TABLE … ADD COLUMN evolves a table that already holds data. Existing rows get NULL for the new column.",
+        "tier2Scaffold": "ALTER TABLE patients ADD COLUMN ___ ___;",
+        "tier3Solution": "ALTER TABLE patients ADD COLUMN email TEXT;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM patients WHERE patient_id=101;",
-      "expectedResult": "[{\"count\":0}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS cols, SUM(CASE WHEN name='email' AND type='TEXT' THEN 1 ELSE 0 END) AS has_email FROM pragma_table_info('patients');",
+        "expectedResult": "[{\"cols\":4,\"has_email\":1}]"
+      }
     },
     {
       "stepIndex": 7,
       "phase": "Novice",
-      "conceptFocus": "ALTER_TABLE_ADD_COLUMN",
-      "narrativeBriefing": "The IRB requires adding a `enrollment_date` (TEXT) column to the `patients` table for compliance.",
+      "conceptFocus": "ALTER_MULTI",
+      "narrativeBriefing": "Two more fields before the big import: add `site` (TEXT) and `enrolled_on` (TEXT) to `patients`. SQLite takes one ADD COLUMN per statement — submit both statements together, separated by a semicolon.",
       "hints": {
-        "tier1Concept": "Use ALTER TABLE ... ADD COLUMN to add a new column to an existing table.",
-        "tier2Scaffold": "ALTER TABLE patients ADD COLUMN enrollment_date TEXT;",
-        "tier3Solution": "ALTER TABLE patients ADD COLUMN enrollment_date TEXT;"
+        "tier1Concept": "You can submit several SQL statements at once; each ends with a semicolon. SQLite's ALTER TABLE adds one column at a time.",
+        "tier2Scaffold": "ALTER TABLE patients ADD COLUMN site TEXT;\nALTER TABLE patients ADD COLUMN ___ ___;",
+        "tier3Solution": "ALTER TABLE patients ADD COLUMN site TEXT;\nALTER TABLE patients ADD COLUMN enrolled_on TEXT;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM pragma_table_info('patients') WHERE name='enrollment_date';",
-      "expectedResult": "[{\"count\":1}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS cols, SUM(CASE WHEN name IN ('site','enrolled_on') THEN 1 ELSE 0 END) AS new_cols FROM pragma_table_info('patients');",
+        "expectedResult": "[{\"cols\":6,\"new_cols\":2}]"
+      }
     },
     {
       "stepIndex": 8,
       "phase": "Novice",
-      "conceptFocus": "INSERT_WITH_DATE",
-      "narrativeBriefing": "Insert patient 104 'David Park', enrolled on '2024-01-15'.",
+      "conceptFocus": "NOT_NULL_DEFAULT",
+      "narrativeBriefing": "Create the `sites` table where bad data is impossible: `site_id` (INTEGER PRIMARY KEY), `city` (TEXT NOT NULL), and `capacity` (INTEGER NOT NULL DEFAULT 50).",
       "hints": {
-        "tier1Concept": "Now that enrollment_date exists, you can include it in your INSERT statement.",
-        "tier2Scaffold": "INSERT INTO patients (patient_id, patient_name, enrollment_date) VALUES (104, 'David Park', '2024-01-15');",
-        "tier3Solution": "INSERT INTO patients (patient_id, patient_name, enrollment_date) VALUES (104, 'David Park', '2024-01-15');"
+        "tier1Concept": "NOT NULL rejects rows missing a value; DEFAULT fills the column automatically when the INSERT omits it. Constraints are how a schema defends itself.",
+        "tier2Scaffold": "CREATE TABLE sites (\n  site_id INTEGER PRIMARY KEY,\n  city TEXT ___ ___,\n  capacity INTEGER NOT NULL DEFAULT ___\n);",
+        "tier3Solution": "CREATE TABLE sites (site_id INTEGER PRIMARY KEY, city TEXT NOT NULL, capacity INTEGER NOT NULL DEFAULT 50);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM patients WHERE patient_id=104;",
-      "expectedResult": "[{\"count\":1}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT name, \"notnull\" AS nn, dflt_value AS dv FROM pragma_table_info('sites') ORDER BY cid;",
+        "expectedResult": "[{\"name\":\"site_id\",\"nn\":0,\"dv\":null},{\"name\":\"city\",\"nn\":1,\"dv\":null},{\"name\":\"capacity\",\"nn\":1,\"dv\":\"50\"}]"
+      }
     },
     {
       "stepIndex": 9,
-      "phase": "Operator",
-      "conceptFocus": "CREATE_TABLE_TRIALS",
-      "narrativeBriefing": "Create a `trials` table with `trial_id` (INT), `trial_name` (TEXT), `phase` (TEXT), and `status` (TEXT).",
+      "phase": "Novice",
+      "conceptFocus": "CHECK_CONSTRAINT",
+      "narrativeBriefing": "Consent records are legally binding — the status can only ever be GRANTED or REVOKED. Create `consents` with `consent_id` (INTEGER PRIMARY KEY), `patient_id` (INTEGER NOT NULL), and `status` (TEXT NOT NULL) with a CHECK that status is one of those two values.",
       "hints": {
-        "tier1Concept": "Define a new table with multiple columns using CREATE TABLE.",
-        "tier2Scaffold": "CREATE TABLE trials (\n  trial_id INT,\n  trial_name TEXT,\n  phase TEXT,\n  status TEXT\n);",
-        "tier3Solution": "CREATE TABLE trials (trial_id INT, trial_name TEXT, phase TEXT, status TEXT);"
+        "tier1Concept": "A CHECK constraint is a rule every row must satisfy. CHECK (status IN ('A','B')) makes invalid states unrepresentable — the database rejects them at write time.",
+        "tier2Scaffold": "CREATE TABLE consents (\n  consent_id INTEGER PRIMARY KEY,\n  patient_id INTEGER NOT NULL,\n  status TEXT NOT NULL CHECK (status IN (___, ___))\n);",
+        "tier3Solution": "CREATE TABLE consents (consent_id INTEGER PRIMARY KEY, patient_id INTEGER NOT NULL, status TEXT NOT NULL CHECK (status IN ('GRANTED','REVOKED')));"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='trials';",
-      "expectedResult": "[{\"name\":\"trials\"}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT (SELECT COUNT(*) FROM pragma_table_info('consents')) AS cols, (SELECT COUNT(*) FROM sqlite_master WHERE name='consents' AND sql LIKE '%CHECK%') AS has_check;",
+        "expectedResult": "[{\"cols\":3,\"has_check\":1}]"
+      }
     },
     {
       "stepIndex": 10,
-      "phase": "Operator",
-      "conceptFocus": "INSERT_TRIALS_DATA",
-      "narrativeBriefing": "Add two trials: (1, 'Cardio-Alpha Trial', 'Phase II', 'ACTIVE') and (2, 'Neuro-Beta Study', 'Phase III', 'RECRUITING').",
+      "phase": "Novice",
+      "conceptFocus": "INSERT_DEFAULTS",
+      "narrativeBriefing": "Register our five sites: (1, 'Geneva', 120), (2, 'Boston', 80), (3, 'Mumbai', 150), (4, 'Lagos', 90) in one INSERT — and for (5, 'Osaka'), use a second INSERT listing only site_id and city so the capacity DEFAULT does its job.",
+      "challengeType": "open",
       "hints": {
-        "tier1Concept": "Use INSERT with multiple value tuples to load multiple rows at once.",
-        "tier2Scaffold": "INSERT INTO trials VALUES\n  (1, 'Cardio-Alpha Trial', 'Phase II', 'ACTIVE'),\n  (2, 'Neuro-Beta Study', 'Phase III', 'RECRUITING');",
-        "tier3Solution": "INSERT INTO trials VALUES (1, 'Cardio-Alpha Trial', 'Phase II', 'ACTIVE'), (2, 'Neuro-Beta Study', 'Phase III', 'RECRUITING');"
+        "tier1Concept": "When an INSERT omits a column, SQLite applies its DEFAULT. You can mix a multi-row INSERT and a column-subset INSERT in one submission.",
+        "tier2Scaffold": "INSERT INTO sites (site_id, city, capacity) VALUES (1,'Geneva',120), (2,'Boston',80), (3,'Mumbai',150), (4,'Lagos',90);\nINSERT INTO sites (site_id, city) VALUES (5, ___);",
+        "tier3Solution": "INSERT INTO sites (site_id, city, capacity) VALUES (1,'Geneva',120), (2,'Boston',80), (3,'Mumbai',150), (4,'Lagos',90);\nINSERT INTO sites (site_id, city) VALUES (5, 'Osaka');"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM trials;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT site_id, city, capacity FROM sites ORDER BY site_id;",
+        "expectedResult": "[{\"site_id\":1,\"city\":\"Geneva\",\"capacity\":120},{\"site_id\":2,\"city\":\"Boston\",\"capacity\":80},{\"site_id\":3,\"city\":\"Mumbai\",\"capacity\":150},{\"site_id\":4,\"city\":\"Lagos\",\"capacity\":90},{\"site_id\":5,\"city\":\"Osaka\",\"capacity\":50}]"
+      },
+      "seedAfter": "clinical_bulk_patients"
     },
     {
       "stepIndex": 11,
       "phase": "Operator",
-      "conceptFocus": "CREATE_TABLE_ENROLLMENTS",
-      "narrativeBriefing": "Create an `enrollments` table to link patients to trials: `enrollment_id` (INT), `patient_id` (INT), `trial_id` (INT).",
+      "conceptFocus": "COUNT_BULK",
+      "narrativeBriefing": "Overnight, IT migrated the legacy registry into your `patients` table — hundreds of rows of… questionable quality. First: how many patients are in the table now? Return a single count.",
       "hints": {
-        "tier1Concept": "This is a join table (many-to-many bridge). It stores references to both patients and trials.",
-        "tier2Scaffold": "CREATE TABLE enrollments (\n  enrollment_id INT,\n  patient_id INT,\n  trial_id INT\n);",
-        "tier3Solution": "CREATE TABLE enrollments (enrollment_id INT, patient_id INT, trial_id INT);"
+        "tier1Concept": "COUNT(*) counts rows. It's the first thing to run after any bulk import — does the volume even look right?",
+        "tier2Scaffold": "SELECT COUNT(*) FROM ___;",
+        "tier3Solution": "SELECT COUNT(*) AS total FROM patients;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='enrollments';",
-      "expectedResult": "[{\"name\":\"enrollments\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT COUNT(*) AS total FROM patients;"
+      }
     },
     {
       "stepIndex": 12,
       "phase": "Operator",
-      "conceptFocus": "INSERT_ENROLLMENTS",
-      "narrativeBriefing": "Enroll patient 102 in trial 1 and patient 104 in trial 2. Use enrollment_ids 1 and 2.",
+      "conceptFocus": "GROUP_HAVING_DUPES",
+      "narrativeBriefing": "The migration didn't deduplicate contacts. Find every email used by MORE than one patient: return the `email` and how many patients share it. Ignore NULL and empty-string emails.",
       "hints": {
-        "tier1Concept": "Insert rows that reference patient_id and trial_id values from other tables.",
-        "tier2Scaffold": "INSERT INTO enrollments VALUES (1, 102, 1), (2, 104, 2);",
-        "tier3Solution": "INSERT INTO enrollments VALUES (1, 102, 1), (2, 104, 2);"
+        "tier1Concept": "GROUP BY collapses rows per group; HAVING filters the groups AFTER aggregation (WHERE filters rows before).",
+        "tier2Scaffold": "SELECT email, COUNT(*) AS n\nFROM patients\nWHERE email IS NOT NULL AND email <> ''\nGROUP BY ___\nHAVING COUNT(*) ___;",
+        "tier3Solution": "SELECT email, COUNT(*) AS n FROM patients WHERE email IS NOT NULL AND email <> '' GROUP BY email HAVING COUNT(*) > 1;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM enrollments;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT email, COUNT(*) AS n FROM patients WHERE email IS NOT NULL AND email <> '' GROUP BY email HAVING COUNT(*) > 1;"
+      }
     },
     {
       "stepIndex": 13,
       "phase": "Operator",
-      "conceptFocus": "INNER_JOIN",
-      "narrativeBriefing": "List every patient's name alongside the trial they are enrolled in. JOIN patients, enrollments, and trials.",
+      "conceptFocus": "NULL_THREE_VALUED",
+      "narrativeBriefing": "A colleague wrote this query to count patients with a missing email — it returns 0, which is clearly wrong. Fix it. (Missing means NULL or an empty string.)",
+      "challengeType": "fix",
+      "starterQuery": "SELECT COUNT(*) AS missing_email\nFROM patients\nWHERE email = NULL;",
       "hints": {
-        "tier1Concept": "Use INNER JOIN to combine rows from tables where the join condition matches.",
-        "tier2Scaffold": "SELECT p.patient_name, t.trial_name\nFROM patients p\nJOIN enrollments e ON p.patient_id = e.patient_id\nJOIN trials t ON e.trial_id = t.trial_id;",
-        "tier3Solution": "SELECT p.patient_name, t.trial_name FROM patients p JOIN enrollments e ON p.patient_id = e.patient_id JOIN trials t ON e.trial_id = t.trial_id;"
+        "tier1Concept": "NULL is not a value — it's the absence of one. `email = NULL` is never true (it's NULL), so the filter matches nothing. Use IS NULL.",
+        "tier2Scaffold": "SELECT COUNT(*) AS missing_email\nFROM patients\nWHERE email ___ NULL OR email = '';",
+        "tier3Solution": "SELECT COUNT(*) AS missing_email FROM patients WHERE email IS NULL OR email = '';"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM patients p JOIN enrollments e ON p.patient_id = e.patient_id JOIN trials t ON e.trial_id = t.trial_id;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT COUNT(*) AS missing_email FROM patients WHERE email IS NULL OR email = '';"
+      }
     },
     {
       "stepIndex": 14,
       "phase": "Operator",
-      "conceptFocus": "CREATE_TABLE_DOSAGE_LOGS",
-      "narrativeBriefing": "Create a `dosage_logs` table: `log_id` (INT), `patient_id` (INT), `mg_administered` (REAL), `log_timestamp` (TEXT).",
+      "conceptFocus": "COALESCE_FALLBACK",
+      "narrativeBriefing": "The outreach team needs a contact list that never shows blanks. For the 10 lowest patient_ids, return `patient_id` and the email — but substitute 'no-contact' when it is NULL or empty. Order by patient_id.",
       "hints": {
-        "tier1Concept": "Use REAL for decimal values like milligrams.",
-        "tier2Scaffold": "CREATE TABLE dosage_logs (\n  log_id INT,\n  patient_id INT,\n  mg_administered REAL,\n  log_timestamp TEXT\n);",
-        "tier3Solution": "CREATE TABLE dosage_logs (log_id INT, patient_id INT, mg_administered REAL, log_timestamp TEXT);"
+        "tier1Concept": "COALESCE(a, b, …) returns the first non-NULL argument. Pair it with NULLIF(email, '') to also catch empty strings: NULLIF returns NULL when its two arguments are equal.",
+        "tier2Scaffold": "SELECT patient_id, COALESCE(NULLIF(email, ''), ___) AS contact\nFROM patients\nORDER BY patient_id\nLIMIT 10;",
+        "tier3Solution": "SELECT patient_id, COALESCE(NULLIF(email, ''), 'no-contact') AS contact FROM patients ORDER BY patient_id LIMIT 10;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='dosage_logs';",
-      "expectedResult": "[{\"name\":\"dosage_logs\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT patient_id, COALESCE(NULLIF(email, ''), 'no-contact') AS contact FROM patients ORDER BY patient_id LIMIT 10;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 15,
       "phase": "Operator",
-      "conceptFocus": "INSERT_DOSAGE_DATA",
-      "narrativeBriefing": "Log three dosage records for patient 102: 50mg at '2024-02-01', 75mg at '2024-02-08', 75mg at '2024-02-15'. Use log_ids 1, 2, 3.",
+      "conceptFocus": "UPDATE_TRIM_CLEAN",
+      "narrativeBriefing": "Some imported names carry leading or trailing whitespace — a classic legacy-system gift. Clean ALL names in place with TRIM.",
       "hints": {
-        "tier1Concept": "Insert multiple rows into dosage_logs at once.",
-        "tier2Scaffold": "INSERT INTO dosage_logs VALUES\n  (1, 102, 50, '2024-02-01'),\n  (2, 102, 75, '2024-02-08'),\n  (3, 102, 75, '2024-02-15');",
-        "tier3Solution": "INSERT INTO dosage_logs VALUES (1, 102, 50, '2024-02-01'), (2, 102, 75, '2024-02-08'), (3, 102, 75, '2024-02-15');"
+        "tier1Concept": "String functions can be used inside UPDATE … SET to clean a whole column in one statement. TRIM strips leading/trailing spaces.",
+        "tier2Scaffold": "UPDATE patients\nSET full_name = TRIM(___);",
+        "tier3Solution": "UPDATE patients SET full_name = TRIM(full_name);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM dosage_logs;",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS dirty FROM patients WHERE full_name LIKE ' %' OR full_name LIKE '% ';",
+        "expectedResult": "[{\"dirty\":0}]"
+      }
     },
     {
       "stepIndex": 16,
       "phase": "Operator",
-      "conceptFocus": "AGGREGATE_SUM",
-      "narrativeBriefing": "Calculate the total milligrams administered to patient 102 across all logged sessions.",
+      "conceptFocus": "DEDUPE_KEEP_FIRST",
+      "narrativeBriefing": "The import created literal duplicate people — same name, age and site under different ids. Delete every duplicate, keeping the row with the LOWEST patient_id in each group.",
       "hints": {
-        "tier1Concept": "Use SUM() aggregate function with a WHERE clause to total values for a specific patient.",
-        "tier2Scaffold": "SELECT SUM(mg_administered) as total_mg FROM dosage_logs WHERE patient_id = ___;",
-        "tier3Solution": "SELECT SUM(mg_administered) as total_mg FROM dosage_logs WHERE patient_id = 102;"
+        "tier1Concept": "The classic dedupe: keep MIN(id) per group, delete everything whose id is not in that set. (ROW_NUMBER() OVER (PARTITION BY …) is the windowed variant.)",
+        "tier2Scaffold": "DELETE FROM patients\nWHERE patient_id NOT IN (\n  SELECT MIN(patient_id)\n  FROM patients\n  GROUP BY full_name, age, ___\n);",
+        "tier3Solution": "DELETE FROM patients WHERE patient_id NOT IN (SELECT MIN(patient_id) FROM patients GROUP BY full_name, age, site);"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT SUM(mg_administered) as total_mg FROM dosage_logs WHERE patient_id = 102;",
-      "expectedResult": "[{\"total_mg\":200}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS dup_groups FROM (SELECT 1 FROM patients GROUP BY full_name, age, site HAVING COUNT(*) > 1);",
+        "expectedResult": "[{\"dup_groups\":0}]"
+      }
     },
     {
       "stepIndex": 17,
       "phase": "Operator",
-      "conceptFocus": "AGGREGATE_AVG_COUNT",
-      "narrativeBriefing": "Calculate the average dosage and total number of log entries for patient 102.",
+      "conceptFocus": "OUTLIER_SCRUB",
+      "narrativeBriefing": "Several imported ages are biologically impossible (above 120). Don't guess — set those ages to NULL so they read as 'unknown' instead of wrong.",
       "hints": {
-        "tier1Concept": "Use AVG() for average and COUNT(*) for row count within the same SELECT.",
-        "tier2Scaffold": "SELECT AVG(mg_administered) as avg_mg, COUNT(*) as sessions FROM dosage_logs WHERE patient_id = 102;",
-        "tier3Solution": "SELECT AVG(mg_administered) as avg_mg, COUNT(*) as sessions FROM dosage_logs WHERE patient_id = 102;"
+        "tier1Concept": "Setting a column to NULL is how you record 'we don't know'. An impossible value is worse than a missing one — it silently poisons averages.",
+        "tier2Scaffold": "UPDATE patients\nSET age = ___\nWHERE age > ___;",
+        "tier3Solution": "UPDATE patients SET age = NULL WHERE age > 120;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT AVG(mg_administered) as avg_mg, COUNT(*) as sessions FROM dosage_logs WHERE patient_id = 102;",
-      "expectedResult": "[{\"avg_mg\":66.6666666666667,\"sessions\":3}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS impossible FROM patients WHERE age > 120;",
+        "expectedResult": "[{\"impossible\":0}]"
+      }
     },
     {
       "stepIndex": 18,
       "phase": "Operator",
-      "conceptFocus": "GROUP_BY",
-      "narrativeBriefing": "Add dosage logs for patient 104: (4, 104, 100, '2024-02-01'). Then calculate total dosage grouped by each patient.",
+      "conceptFocus": "GROUP_SITE_REPORT",
+      "narrativeBriefing": "Now that the data is clean, profile each site: return `site`, the patient count, and the average age rounded to 1 decimal (AVG skips NULL ages automatically).",
       "hints": {
-        "tier1Concept": "First insert the new row, then use GROUP BY with SUM() to aggregate per patient.",
-        "tier2Scaffold": "INSERT INTO dosage_logs VALUES (4, 104, 100, '2024-02-01');\nSELECT patient_id, SUM(mg_administered) as total FROM dosage_logs GROUP BY patient_id;",
-        "tier3Solution": "INSERT INTO dosage_logs VALUES (4, 104, 100, '2024-02-01'); SELECT patient_id, SUM(mg_administered) as total FROM dosage_logs GROUP BY patient_id;"
+        "tier1Concept": "Aggregates ignore NULLs — AVG(age) averages only known ages. ROUND(x, 1) keeps reports readable.",
+        "tier2Scaffold": "SELECT site, COUNT(*) AS patients, ROUND(AVG(age), 1) AS avg_age\nFROM patients\nGROUP BY ___;",
+        "tier3Solution": "SELECT site, COUNT(*) AS patients, ROUND(AVG(age), 1) AS avg_age FROM patients GROUP BY site;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT patient_id FROM dosage_logs GROUP BY patient_id);",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT site, COUNT(*) AS patients, ROUND(AVG(age), 1) AS avg_age FROM patients GROUP BY site;"
+      }
     },
     {
       "stepIndex": 19,
       "phase": "Operator",
-      "conceptFocus": "HAVING_CLAUSE",
-      "narrativeBriefing": "Using HAVING, find all patients whose total dosage exceeds 150mg.",
+      "conceptFocus": "STRFTIME_MONTHLY",
+      "narrativeBriefing": "Enrollment trend time. Count enrollments per calendar month: return the month as 'YYYY-MM' and the count, ordered by month.",
       "hints": {
-        "tier1Concept": "HAVING filters aggregated results, similar to WHERE but applied after GROUP BY.",
-        "tier2Scaffold": "SELECT patient_id, SUM(mg_administered) as total FROM dosage_logs GROUP BY patient_id HAVING total > ___;",
-        "tier3Solution": "SELECT patient_id, SUM(mg_administered) as total FROM dosage_logs GROUP BY patient_id HAVING total > 150;"
+        "tier1Concept": "strftime('%Y-%m', date_col) extracts a sortable month bucket from an ISO date string — the backbone of time-series reporting in SQLite.",
+        "tier2Scaffold": "SELECT strftime('%Y-%m', enrolled_on) AS month, COUNT(*) AS enrolled\nFROM patients\nGROUP BY month\nORDER BY ___;",
+        "tier3Solution": "SELECT strftime('%Y-%m', enrolled_on) AS month, COUNT(*) AS enrolled FROM patients GROUP BY month ORDER BY month;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT patient_id, SUM(mg_administered) as total FROM dosage_logs GROUP BY patient_id HAVING total > 150;",
-      "expectedResult": "[{\"patient_id\":102,\"total\":200}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT strftime('%Y-%m', enrolled_on) AS month, COUNT(*) AS enrolled FROM patients GROUP BY month ORDER BY month;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 20,
       "phase": "Operator",
-      "conceptFocus": "ORDER_BY",
-      "narrativeBriefing": "List all dosage log entries for patient 102, ordered chronologically by `log_timestamp` ascending.",
+      "conceptFocus": "FOREIGN_KEY_TABLE",
+      "narrativeBriefing": "Visits start next week. Create `visits`: `visit_id` (INTEGER PRIMARY KEY), `patient_id` (INTEGER NOT NULL referencing patients(patient_id)), `visit_on` (TEXT NOT NULL), `systolic` (INTEGER), `weight_kg` (REAL), `notes` (TEXT).",
       "hints": {
-        "tier1Concept": "Use ORDER BY column_name ASC to sort results in ascending order.",
-        "tier2Scaffold": "SELECT * FROM dosage_logs WHERE patient_id = 102 ORDER BY log_timestamp ___;",
-        "tier3Solution": "SELECT * FROM dosage_logs WHERE patient_id = 102 ORDER BY log_timestamp ASC;"
+        "tier1Concept": "REFERENCES parent(col) declares a foreign key: a visit can only point at a patient that exists. With PRAGMA foreign_keys=ON (it is, here), SQLite enforces it.",
+        "tier2Scaffold": "CREATE TABLE visits (\n  visit_id INTEGER PRIMARY KEY,\n  patient_id INTEGER NOT NULL REFERENCES ___(___),\n  visit_on TEXT NOT NULL,\n  systolic INTEGER,\n  weight_kg REAL,\n  notes TEXT\n);",
+        "tier3Solution": "CREATE TABLE visits (visit_id INTEGER PRIMARY KEY, patient_id INTEGER NOT NULL REFERENCES patients(patient_id), visit_on TEXT NOT NULL, systolic INTEGER, weight_kg REAL, notes TEXT);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM dosage_logs WHERE patient_id = 102;",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT (SELECT COUNT(*) FROM pragma_table_info('visits')) AS cols, (SELECT COUNT(*) FROM pragma_foreign_key_list('visits')) AS fks;",
+        "expectedResult": "[{\"cols\":6,\"fks\":1}]"
+      },
+      "seedAfter": "clinical_bulk_visits"
     },
     {
       "stepIndex": 21,
       "phase": "Operator",
-      "conceptFocus": "CREATE_TABLE_ADVERSE_EVENTS",
-      "narrativeBriefing": "Create an `adverse_events` table: `event_id` (INT), `patient_id` (INT), `severity` (TEXT), `description` (TEXT), `event_date` (TEXT).",
+      "conceptFocus": "UPDATE_FROM_SUBQUERY",
+      "narrativeBriefing": "A thousand visit records just landed. Denormalize for the dashboard: add a `last_visit` (TEXT) column to patients, then fill it with each patient's most recent `visit_on` using a correlated subquery. Submit both statements together.",
       "hints": {
-        "tier1Concept": "Create another table to track side effects. Severity will hold values like LOW, MEDIUM, HIGH.",
-        "tier2Scaffold": "CREATE TABLE adverse_events (\n  event_id INT,\n  patient_id INT,\n  severity TEXT,\n  description TEXT,\n  event_date TEXT\n);",
-        "tier3Solution": "CREATE TABLE adverse_events (event_id INT, patient_id INT, severity TEXT, description TEXT, event_date TEXT);"
+        "tier1Concept": "An UPDATE can SET a column from a subquery that references the outer row — a correlated subquery runs once per patient.",
+        "tier2Scaffold": "ALTER TABLE patients ADD COLUMN last_visit TEXT;\nUPDATE patients SET last_visit = (\n  SELECT MAX(visit_on) FROM visits WHERE visits.patient_id = patients.___\n);",
+        "tier3Solution": "ALTER TABLE patients ADD COLUMN last_visit TEXT;\nUPDATE patients SET last_visit = (SELECT MAX(visit_on) FROM visits WHERE visits.patient_id = patients.patient_id);"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='adverse_events';",
-      "expectedResult": "[{\"name\":\"adverse_events\"}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT (SELECT COUNT(*) FROM pragma_table_info('patients') WHERE name='last_visit') AS has_col, (SELECT COUNT(*) FROM patients p WHERE last_visit IS NOT (SELECT MAX(visit_on) FROM visits v WHERE v.patient_id = p.patient_id)) AS stale;",
+        "expectedResult": "[{\"has_col\":1,\"stale\":0}]"
+      }
     },
     {
       "stepIndex": 22,
       "phase": "Operator",
-      "conceptFocus": "INSERT_ADVERSE_EVENTS",
-      "narrativeBriefing": "Log adverse events: (1, 102, 'LOW', 'Mild nausea', '2024-02-10'), (2, 104, 'HIGH', 'Severe reaction', '2024-02-03').",
+      "conceptFocus": "CAST_ROUND",
+      "narrativeBriefing": "The print report wants whole numbers. Return the average systolic blood pressure across all visits, CAST to an INTEGER.",
       "hints": {
-        "tier1Concept": "Insert the two events with distinct severity levels.",
-        "tier2Scaffold": "INSERT INTO adverse_events VALUES\n  (1, 102, 'LOW', 'Mild nausea', '2024-02-10'),\n  (2, 104, 'HIGH', 'Severe reaction', '2024-02-03');",
-        "tier3Solution": "INSERT INTO adverse_events VALUES (1, 102, 'LOW', 'Mild nausea', '2024-02-10'), (2, 104, 'HIGH', 'Severe reaction', '2024-02-03');"
+        "tier1Concept": "CAST(expr AS INTEGER) converts types explicitly. AVG returns a REAL; casting truncates toward zero — different from ROUND, and worth knowing which one you want.",
+        "tier2Scaffold": "SELECT CAST(AVG(systolic) AS ___) AS avg_systolic\nFROM visits;",
+        "tier3Solution": "SELECT CAST(AVG(systolic) AS INTEGER) AS avg_systolic FROM visits;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM adverse_events;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT CAST(AVG(systolic) AS INTEGER) AS avg_systolic FROM visits;"
+      }
     },
     {
       "stepIndex": 23,
-      "phase": "Architect",
-      "conceptFocus": "LEFT_JOIN",
-      "narrativeBriefing": "List all patients and any adverse events they may have. Patients with no events should still appear. Use LEFT JOIN.",
+      "phase": "Operator",
+      "conceptFocus": "UNIQUE_INDEX_GUARD",
+      "narrativeBriefing": "The dedupe must never be needed again. Create a UNIQUE index `uq_patient_identity` on patients(full_name, age, site) so duplicate people are rejected at insert time.",
       "hints": {
-        "tier1Concept": "LEFT JOIN returns all rows from the left table, plus matched rows from the right. Unmatched rows get NULLs.",
-        "tier2Scaffold": "SELECT p.patient_name, ae.severity, ae.description\nFROM patients p\nLEFT JOIN adverse_events ae ON p.patient_id = ae.patient_id;",
-        "tier3Solution": "SELECT p.patient_name, ae.severity, ae.description FROM patients p LEFT JOIN adverse_events ae ON p.patient_id = ae.patient_id;"
+        "tier1Concept": "A UNIQUE index is both a constraint and an index: it rejects duplicate key tuples AND speeds up lookups on those columns.",
+        "tier2Scaffold": "CREATE UNIQUE INDEX uq_patient_identity\nON patients(___, ___, ___);",
+        "tier3Solution": "CREATE UNIQUE INDEX uq_patient_identity ON patients(full_name, age, site);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM patients p LEFT JOIN adverse_events ae ON p.patient_id = ae.patient_id;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS idx FROM sqlite_master WHERE type='index' AND name='uq_patient_identity' AND sql LIKE '%UNIQUE%';",
+        "expectedResult": "[{\"idx\":1}]"
+      }
     },
     {
       "stepIndex": 24,
-      "phase": "Architect",
-      "conceptFocus": "SUBQUERY",
-      "narrativeBriefing": "Find all patients who have at least one HIGH severity adverse event, using a subquery.",
+      "phase": "Operator",
+      "conceptFocus": "TOP_N_TIEBREAK",
+      "narrativeBriefing": "Who are we seeing most? Return the 5 patients with the most visits: `patient_id` and `visit_count`, ordered by visit_count descending, then patient_id ascending to break ties.",
       "hints": {
-        "tier1Concept": "Use a subquery inside a WHERE IN (...) clause to filter based on results from another SELECT.",
-        "tier2Scaffold": "SELECT * FROM patients WHERE patient_id IN (\n  SELECT patient_id FROM adverse_events WHERE severity = 'HIGH'\n);",
-        "tier3Solution": "SELECT * FROM patients WHERE patient_id IN (SELECT patient_id FROM adverse_events WHERE severity = 'HIGH');"
+        "tier1Concept": "Top-N queries need a DETERMINISTIC order: always add a tiebreaker column, or two runs of the same query can return different rows.",
+        "tier2Scaffold": "SELECT patient_id, COUNT(*) AS visit_count\nFROM visits\nGROUP BY patient_id\nORDER BY visit_count DESC, patient_id ASC\nLIMIT ___;",
+        "tier3Solution": "SELECT patient_id, COUNT(*) AS visit_count FROM visits GROUP BY patient_id ORDER BY visit_count DESC, patient_id ASC LIMIT 5;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT patient_id FROM patients WHERE patient_id IN (SELECT patient_id FROM adverse_events WHERE severity = 'HIGH');",
-      "expectedResult": "[{\"patient_id\":104}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT patient_id, COUNT(*) AS visit_count FROM visits GROUP BY patient_id ORDER BY visit_count DESC, patient_id ASC LIMIT 5;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 25,
       "phase": "Architect",
-      "conceptFocus": "CREATE_VIEW",
-      "narrativeBriefing": "Create a view called `high_risk_patients` that selects all patients with HIGH severity adverse events.",
+      "conceptFocus": "TRANSACTION_ATOMIC",
+      "narrativeBriefing": "Consent paperwork for patients 1 and 2 cleared legal — both must be recorded together or not at all. Inside a single transaction (BEGIN … COMMIT), insert consents (1, 1, 'GRANTED') and (2, 2, 'GRANTED').",
       "hints": {
-        "tier1Concept": "Use CREATE VIEW to define a named virtual table based on a SELECT query.",
-        "tier2Scaffold": "CREATE VIEW high_risk_patients AS\n  SELECT p.* FROM patients p\n  JOIN adverse_events ae ON p.patient_id = ae.patient_id\n  WHERE ae.severity = 'HIGH';",
-        "tier3Solution": "CREATE VIEW high_risk_patients AS SELECT p.* FROM patients p JOIN adverse_events ae ON p.patient_id = ae.patient_id WHERE ae.severity = 'HIGH';"
+        "tier1Concept": "A transaction makes several statements atomic: either every one commits, or none do. BEGIN starts it; COMMIT makes it permanent.",
+        "tier2Scaffold": "BEGIN;\nINSERT INTO consents (consent_id, patient_id, status) VALUES (1, 1, 'GRANTED');\nINSERT INTO consents (consent_id, patient_id, status) VALUES (2, 2, ___);\nCOMMIT;",
+        "tier3Solution": "BEGIN;\nINSERT INTO consents (consent_id, patient_id, status) VALUES (1, 1, 'GRANTED');\nINSERT INTO consents (consent_id, patient_id, status) VALUES (2, 2, 'GRANTED');\nCOMMIT;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='view' AND name='high_risk_patients';",
-      "expectedResult": "[{\"name\":\"high_risk_patients\"}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT consent_id, patient_id, status FROM consents ORDER BY consent_id;",
+        "expectedResult": "[{\"consent_id\":1,\"patient_id\":1,\"status\":\"GRANTED\"},{\"consent_id\":2,\"patient_id\":2,\"status\":\"GRANTED\"}]"
+      }
     },
     {
       "stepIndex": 26,
       "phase": "Architect",
-      "conceptFocus": "CTE_WITH_CLAUSE",
-      "narrativeBriefing": "Use a CTE (Common Table Expression) to calculate the average dosage per patient, then select patients whose average exceeds 60mg.",
+      "conceptFocus": "TRANSACTION_ROLLBACK",
+      "narrativeBriefing": "Rehearse the disaster drill: BEGIN a transaction, DELETE every row from `sites`, then ROLLBACK. Done right, the sites table survives untouched — that's the point. (patients can't be bulk-deleted at all: visits' foreign keys protect them. Constraints already saved you once today.)",
       "hints": {
-        "tier1Concept": "A CTE is defined with WITH cte_name AS (...) and then referenced like a table in the subsequent SELECT.",
-        "tier2Scaffold": "WITH avg_dosage AS (\n  SELECT patient_id, AVG(mg_administered) as avg_mg FROM dosage_logs GROUP BY patient_id\n)\nSELECT * FROM avg_dosage WHERE avg_mg > 60;",
-        "tier3Solution": "WITH avg_dosage AS (SELECT patient_id, AVG(mg_administered) as avg_mg FROM dosage_logs GROUP BY patient_id) SELECT * FROM avg_dosage WHERE avg_mg > 60;"
+        "tier1Concept": "ROLLBACK abandons everything since BEGIN. It's the safety net that makes risky maintenance survivable — practice it before you need it.",
+        "tier2Scaffold": "BEGIN;\nDELETE FROM sites;\n___;",
+        "tier3Solution": "BEGIN;\nDELETE FROM sites;\nROLLBACK;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (WITH avg_dosage AS (SELECT patient_id, AVG(mg_administered) as avg_mg FROM dosage_logs GROUP BY patient_id) SELECT * FROM avg_dosage WHERE avg_mg > 60);",
-      "expectedResult": "[{\"count\":1}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS sites_intact FROM sites;",
+        "expectedResult": "[{\"sites_intact\":5}]"
+      }
     },
     {
       "stepIndex": 27,
       "phase": "Architect",
-      "conceptFocus": "WINDOW_ROW_NUMBER",
-      "narrativeBriefing": "Assign a row number to each dosage log entry per patient ordered by timestamp. Use ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY log_timestamp).",
+      "conceptFocus": "UPSERT_ON_CONFLICT",
+      "narrativeBriefing": "Maya Okonkwo (patient 1) re-registered with a new email: 'maya.k@medcore.org'. Write ONE statement that inserts patient 1 (full_name 'Maya Okonkwo') — but on a patient_id conflict, just updates the email instead. That's an UPSERT.",
       "hints": {
-        "tier1Concept": "ROW_NUMBER() is a window function. PARTITION BY resets the count for each group, ORDER BY defines the sequence.",
-        "tier2Scaffold": "SELECT patient_id, log_timestamp, mg_administered,\n  ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY log_timestamp) as session_num\nFROM dosage_logs;",
-        "tier3Solution": "SELECT patient_id, log_timestamp, mg_administered, ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY log_timestamp) as session_num FROM dosage_logs;"
+        "tier1Concept": "INSERT … ON CONFLICT(key) DO UPDATE SET … is the idempotent write: insert when new, update when it already exists. excluded.col refers to the value you tried to insert.",
+        "tier2Scaffold": "INSERT INTO patients (patient_id, full_name, email)\nVALUES (1, 'Maya Okonkwo', 'maya.k@medcore.org')\nON CONFLICT(patient_id) DO UPDATE SET email = excluded.___;",
+        "tier3Solution": "INSERT INTO patients (patient_id, full_name, email) VALUES (1, 'Maya Okonkwo', 'maya.k@medcore.org') ON CONFLICT(patient_id) DO UPDATE SET email = excluded.email;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY log_timestamp) as rn FROM dosage_logs);",
-      "expectedResult": "[{\"count\":4}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT (SELECT email FROM patients WHERE patient_id=1) AS email, (SELECT COUNT(*) FROM patients WHERE patient_id=1) AS n;",
+        "expectedResult": "[{\"email\":\"maya.k@medcore.org\",\"n\":1}]"
+      }
     },
     {
       "stepIndex": 28,
       "phase": "Architect",
-      "conceptFocus": "WINDOW_RUNNING_SUM",
-      "narrativeBriefing": "Compute a running cumulative dosage total per patient sorted chronologically. Use SUM() OVER (PARTITION BY patient_id ORDER BY log_timestamp).",
+      "conceptFocus": "RETURNING_CLAUSE",
+      "narrativeBriefing": "Legal revoked consent 2. Update its status to 'REVOKED' and, in the same statement, RETURN the consent_id and new status so the case file shows exactly what changed.",
+      "mutates": true,
       "hints": {
-        "tier1Concept": "SUM() as a window function with ORDER BY creates a running total within each partition.",
-        "tier2Scaffold": "SELECT patient_id, mg_administered,\n  SUM(mg_administered) OVER (PARTITION BY patient_id ORDER BY log_timestamp) AS running_total\nFROM dosage_logs;",
-        "tier3Solution": "SELECT patient_id, mg_administered, SUM(mg_administered) OVER (PARTITION BY patient_id ORDER BY log_timestamp) AS running_total FROM dosage_logs;"
+        "tier1Concept": "RETURNING turns a write into a read: UPDATE/DELETE/INSERT can emit the affected rows directly — no second query, no race.",
+        "tier2Scaffold": "UPDATE consents\nSET status = 'REVOKED'\nWHERE consent_id = 2\nRETURNING consent_id, ___;",
+        "tier3Solution": "UPDATE consents SET status = 'REVOKED' WHERE consent_id = 2 RETURNING consent_id, status;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT SUM(mg_administered) OVER (PARTITION BY patient_id ORDER BY log_timestamp) as rt FROM dosage_logs);",
-      "expectedResult": "[{\"count\":4}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "UPDATE consents SET status = 'REVOKED' WHERE consent_id = 2 RETURNING consent_id, status;"
+      }
     },
     {
       "stepIndex": 29,
       "phase": "Architect",
-      "conceptFocus": "CASE_EXPRESSION",
-      "narrativeBriefing": "Add a risk classification to adverse events. Use CASE to label severity: HIGH as 'Critical', LOW as 'Monitored', others as 'Unknown'.",
+      "conceptFocus": "AUDIT_TRIGGER",
+      "narrativeBriefing": "Regulators demand a paper trail for contact changes. Create table `email_audit` (audit_id INTEGER PRIMARY KEY, patient_id INTEGER, old_email TEXT, new_email TEXT) and a trigger `trg_email_audit` that fires AFTER UPDATE OF email ON patients, inserting OLD.email and NEW.email.",
       "hints": {
-        "tier1Concept": "Use CASE WHEN ... THEN ... ELSE ... END to create conditional column values.",
-        "tier2Scaffold": "SELECT patient_id, severity,\n  CASE severity\n    WHEN 'HIGH' THEN 'Critical'\n    WHEN 'LOW' THEN 'Monitored'\n    ELSE 'Unknown'\n  END as risk_level\nFROM adverse_events;",
-        "tier3Solution": "SELECT patient_id, severity, CASE severity WHEN 'HIGH' THEN 'Critical' WHEN 'LOW' THEN 'Monitored' ELSE 'Unknown' END as risk_level FROM adverse_events;"
+        "tier1Concept": "Triggers are code that lives in the database: AFTER UPDATE OF col runs for each changed row. OLD and NEW give you both versions of the row.",
+        "tier2Scaffold": "CREATE TABLE email_audit (audit_id INTEGER PRIMARY KEY, patient_id INTEGER, old_email TEXT, new_email TEXT);\nCREATE TRIGGER trg_email_audit AFTER UPDATE OF email ON patients\nBEGIN\n  INSERT INTO email_audit (patient_id, old_email, new_email)\n  VALUES (OLD.patient_id, OLD.___, NEW.___);\nEND;",
+        "tier3Solution": "CREATE TABLE email_audit (audit_id INTEGER PRIMARY KEY, patient_id INTEGER, old_email TEXT, new_email TEXT);\nCREATE TRIGGER trg_email_audit AFTER UPDATE OF email ON patients\nBEGIN\n  INSERT INTO email_audit (patient_id, old_email, new_email) VALUES (OLD.patient_id, OLD.email, NEW.email);\nEND;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT CASE severity WHEN 'HIGH' THEN 'Critical' END as risk_level FROM adverse_events WHERE severity='HIGH');",
-      "expectedResult": "[{\"count\":1}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT (SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='email_audit') AS tbl, (SELECT COUNT(*) FROM sqlite_master WHERE type='trigger' AND name='trg_email_audit') AS trg;",
+        "expectedResult": "[{\"tbl\":1,\"trg\":1}]"
+      }
     },
     {
       "stepIndex": 30,
       "phase": "Architect",
-      "conceptFocus": "DISTINCT_SELECT",
-      "narrativeBriefing": "Retrieve a list of unique severities recorded in the `adverse_events` table using DISTINCT.",
+      "conceptFocus": "TRIGGER_FIRES",
+      "narrativeBriefing": "Prove the trail works: change patient 2's email to 'ahmed.h@medcore.org'. The trigger should write the audit row for you — you only run the UPDATE.",
       "hints": {
-        "tier1Concept": "SELECT DISTINCT eliminates duplicate rows from the result set.",
-        "tier2Scaffold": "SELECT DISTINCT severity FROM adverse_events;",
-        "tier3Solution": "SELECT DISTINCT severity FROM adverse_events;"
+        "tier1Concept": "Once a trigger exists, ordinary statements gain side effects. You update patients; the database writes the audit. That's the architecture working for you.",
+        "tier2Scaffold": "UPDATE patients\nSET email = 'ahmed.h@medcore.org'\nWHERE patient_id = ___;",
+        "tier3Solution": "UPDATE patients SET email = 'ahmed.h@medcore.org' WHERE patient_id = 2;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(DISTINCT severity) as count FROM adverse_events;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT (SELECT COUNT(*) FROM email_audit WHERE patient_id = 2 AND new_email = 'ahmed.h@medcore.org') AS audited, (SELECT email FROM patients WHERE patient_id = 2) AS email;",
+        "expectedResult": "[{\"audited\":1,\"email\":\"ahmed.h@medcore.org\"}]"
+      }
     },
     {
       "stepIndex": 31,
       "phase": "Architect",
-      "conceptFocus": "LIKE_PATTERN",
-      "narrativeBriefing": "Find all patients whose name starts with 'C' using the LIKE operator.",
+      "conceptFocus": "GUARD_TRIGGER_RAISE",
+      "narrativeBriefing": "Make impossible ages unrepresentable forever: create trigger `trg_age_guard` BEFORE UPDATE ON patients that calls RAISE(ABORT, 'age out of range') WHEN NEW.age > 120.",
       "hints": {
-        "tier1Concept": "Use LIKE with a % wildcard to match patterns. 'C%' means any string starting with C.",
-        "tier2Scaffold": "SELECT * FROM patients WHERE patient_name LIKE 'C%';",
-        "tier3Solution": "SELECT * FROM patients WHERE patient_name LIKE 'C%';"
+        "tier1Concept": "A BEFORE trigger with RAISE(ABORT, msg) vetoes a write before it happens — a programmable CHECK constraint for rules you add after the table exists.",
+        "tier2Scaffold": "CREATE TRIGGER trg_age_guard BEFORE UPDATE ON patients\nWHEN NEW.age > 120\nBEGIN\n  SELECT RAISE(ABORT, '___');\nEND;",
+        "tier3Solution": "CREATE TRIGGER trg_age_guard BEFORE UPDATE ON patients\nWHEN NEW.age > 120\nBEGIN\n  SELECT RAISE(ABORT, 'age out of range');\nEND;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT patient_id FROM patients WHERE patient_name LIKE 'C%';",
-      "expectedResult": "[{\"patient_id\":103}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS trg FROM sqlite_master WHERE type='trigger' AND name='trg_age_guard' AND sql LIKE '%RAISE%';",
+        "expectedResult": "[{\"trg\":1}]"
+      }
     },
     {
       "stepIndex": 32,
       "phase": "Architect",
-      "conceptFocus": "INDEX_CREATE",
-      "narrativeBriefing": "Optimize query performance. Create an index named `idx_dosage_patient` on the `patient_id` column of `dosage_logs`.",
+      "conceptFocus": "CREATE_VIEW_ROSTER",
+      "narrativeBriefing": "The analytics team keeps rewriting the same SELECT. Create view `active_roster` exposing patient_id, full_name, site and last_visit for patients whose email is present (not NULL, not empty).",
       "hints": {
-        "tier1Concept": "CREATE INDEX speeds up lookups on frequently-queried columns.",
-        "tier2Scaffold": "CREATE INDEX idx_dosage_patient ON dosage_logs(patient_id);",
-        "tier3Solution": "CREATE INDEX idx_dosage_patient ON dosage_logs(patient_id);"
+        "tier1Concept": "A view is a saved query that behaves like a table. Consumers SELECT from the view; you keep one definition of 'active' in one place.",
+        "tier2Scaffold": "CREATE VIEW active_roster AS\nSELECT patient_id, full_name, site, last_visit\nFROM patients\nWHERE email IS NOT NULL AND email <> ___;",
+        "tier3Solution": "CREATE VIEW active_roster AS SELECT patient_id, full_name, site, last_visit FROM patients WHERE email IS NOT NULL AND email <> '';"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_dosage_patient';",
-      "expectedResult": "[{\"name\":\"idx_dosage_patient\"}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS v FROM sqlite_master WHERE type='view' AND name='active_roster';",
+        "expectedResult": "[{\"v\":1}]"
+      }
     },
     {
       "stepIndex": 33,
       "phase": "Architect",
-      "conceptFocus": "MULTI_TABLE_REPORT",
-      "narrativeBriefing": "Final analytics report: list each patient's name, total dosage, and whether they had any HIGH severity events. Use a LEFT JOIN with aggregation.",
+      "conceptFocus": "CTE_READABILITY",
+      "narrativeBriefing": "Which site is busiest? Using a CTE named `site_load` that computes visits per site (join visits to patients), return the single site with the highest visit count: site and visits. Order by visits descending, site ascending, limit 1.",
       "hints": {
-        "tier1Concept": "Combine JOIN, GROUP BY, SUM(), and a CASE or MAX() to build a comprehensive report in one query.",
-        "tier2Scaffold": "SELECT p.patient_name,\n  SUM(dl.mg_administered) as total_dosage,\n  MAX(CASE WHEN ae.severity='HIGH' THEN 1 ELSE 0 END) as had_critical_event\nFROM patients p\nLEFT JOIN dosage_logs dl ON p.patient_id = dl.patient_id\nLEFT JOIN adverse_events ae ON p.patient_id = ae.patient_id\nGROUP BY p.patient_id;",
-        "tier3Solution": "SELECT p.patient_name, SUM(dl.mg_administered) as total_dosage, MAX(CASE WHEN ae.severity='HIGH' THEN 1 ELSE 0 END) as had_critical_event FROM patients p LEFT JOIN dosage_logs dl ON p.patient_id = dl.patient_id LEFT JOIN adverse_events ae ON p.patient_id = ae.patient_id GROUP BY p.patient_id;"
+        "tier1Concept": "WITH name AS (…) defines a Common Table Expression — a named intermediate result. Complex queries become readable pipelines instead of nested onions.",
+        "tier2Scaffold": "WITH site_load AS (\n  SELECT p.site, COUNT(*) AS visits\n  FROM visits v JOIN patients p ON p.patient_id = v.patient_id\n  GROUP BY p.site\n)\nSELECT site, visits FROM site_load\nORDER BY visits DESC, site ASC\nLIMIT ___;",
+        "tier3Solution": "WITH site_load AS (SELECT p.site, COUNT(*) AS visits FROM visits v JOIN patients p ON p.patient_id = v.patient_id GROUP BY p.site)\nSELECT site, visits FROM site_load ORDER BY visits DESC, site ASC LIMIT 1;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT p.patient_name FROM patients p LEFT JOIN dosage_logs dl ON p.patient_id = dl.patient_id GROUP BY p.patient_id);",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH site_load AS (SELECT p.site, COUNT(*) AS visits FROM visits v JOIN patients p ON p.patient_id = v.patient_id GROUP BY p.site) SELECT site, visits FROM site_load ORDER BY visits DESC, site ASC LIMIT 1;"
+      }
     },
     {
       "stepIndex": 34,
       "phase": "Architect",
-      "conceptFocus": "DROP_TABLE_CLEANUP",
-      "narrativeBriefing": "The trial is closed. Drop the `enrollments` table as it is no longer needed for this archive.",
+      "conceptFocus": "GENERATED_COLUMN",
+      "narrativeBriefing": "US partner sites read weight in pounds. Add a GENERATED column `weight_lb` to visits, computed as weight_kg * 2.20462 (VIRTUAL — computed on read, stored nowhere).",
       "hints": {
-        "tier1Concept": "Use DROP TABLE to permanently remove a table from the database.",
-        "tier2Scaffold": "DROP TABLE enrollments;",
-        "tier3Solution": "DROP TABLE enrollments;"
+        "tier1Concept": "GENERATED ALWAYS AS (expr) VIRTUAL defines a column the database computes for you. One source of truth (kg), zero drift in the derived value.",
+        "tier2Scaffold": "ALTER TABLE visits\nADD COLUMN weight_lb REAL GENERATED ALWAYS AS (___ * 2.20462) VIRTUAL;",
+        "tier3Solution": "ALTER TABLE visits ADD COLUMN weight_lb REAL GENERATED ALWAYS AS (weight_kg * 2.20462) VIRTUAL;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM sqlite_master WHERE type='table' AND name='enrollments';",
-      "expectedResult": "[{\"count\":0}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT (SELECT COUNT(*) FROM sqlite_master WHERE name='visits' AND sql LIKE '%GENERATED%') AS gen, (SELECT COUNT(*) FROM pragma_table_xinfo('visits') WHERE name='weight_lb') AS col;",
+        "expectedResult": "[{\"gen\":1,\"col\":1}]"
+      }
+    },
+    {
+      "stepIndex": 35,
+      "phase": "Architect",
+      "conceptFocus": "JSON_BUILD",
+      "narrativeBriefing": "The portal API wants JSON. For patients 1-3, return one column `payload`: a JSON object with keys 'id', 'name' and 'site' built from each row, ordered by patient_id.",
+      "hints": {
+        "tier1Concept": "SQLite ships JSON functions: json_object('k1', v1, 'k2', v2, …) builds an object per row. Databases can speak API directly.",
+        "tier2Scaffold": "SELECT json_object('id', patient_id, 'name', full_name, 'site', ___) AS payload\nFROM patients\nWHERE patient_id <= 3\nORDER BY patient_id;",
+        "tier3Solution": "SELECT json_object('id', patient_id, 'name', full_name, 'site', site) AS payload FROM patients WHERE patient_id <= 3 ORDER BY patient_id;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT json_object('id', patient_id, 'name', full_name, 'site', site) AS payload FROM patients WHERE patient_id <= 3 ORDER BY patient_id;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 36,
+      "phase": "Architect",
+      "conceptFocus": "JSON_EACH_EXPAND",
+      "narrativeBriefing": "The lab uploads panels as JSON arrays. Expand the array '[\"glucose\",\"a1c\",\"lipids\"]' into rows using json_each — return one column `panel` with three rows.",
+      "hints": {
+        "tier1Concept": "json_each(json) is a table-valued function: each array element becomes a row with a `value` column. It turns embedded JSON into queryable rows.",
+        "tier2Scaffold": "SELECT value AS panel\nFROM json_each('[\"glucose\",\"a1c\",\"lipids\"]');",
+        "tier3Solution": "SELECT value AS panel FROM json_each('[\"glucose\",\"a1c\",\"lipids\"]');"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT value AS panel FROM json_each('[\"glucose\",\"a1c\",\"lipids\"]');"
+      }
+    },
+    {
+      "stepIndex": 37,
+      "phase": "Architect",
+      "conceptFocus": "LEFT_JOIN_GAPS",
+      "narrativeBriefing": "Quality gap report: per site, how many patients have NEVER had a visit? Return site and `never_seen`. LEFT JOIN patients to the distinct patient_ids in visits and count the NULLs.",
+      "hints": {
+        "tier1Concept": "LEFT JOIN keeps every left row, filling NULLs when the right side has no match — checking `right_col IS NULL` after it finds the gaps.",
+        "tier2Scaffold": "SELECT p.site, SUM(CASE WHEN v.patient_id IS NULL THEN 1 ELSE 0 END) AS never_seen\nFROM patients p\nLEFT JOIN (SELECT DISTINCT patient_id FROM visits) v ON v.patient_id = p.patient_id\nGROUP BY p.___;",
+        "tier3Solution": "SELECT p.site, SUM(CASE WHEN v.patient_id IS NULL THEN 1 ELSE 0 END) AS never_seen FROM patients p LEFT JOIN (SELECT DISTINCT patient_id FROM visits) v ON v.patient_id = p.patient_id GROUP BY p.site;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT p.site, SUM(CASE WHEN v.patient_id IS NULL THEN 1 ELSE 0 END) AS never_seen FROM patients p LEFT JOIN (SELECT DISTINCT patient_id FROM visits) v ON v.patient_id = p.patient_id GROUP BY p.site;"
+      }
+    },
+    {
+      "stepIndex": 38,
+      "phase": "Architect",
+      "conceptFocus": "WINDOW_LATEST_PER_GROUP",
+      "narrativeBriefing": "For patients 1000-1009, show each patient's MOST RECENT visit: patient_id, visit_on and systolic. Use ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY visit_on DESC, visit_id DESC) and keep row 1 per patient. Order by patient_id.",
+      "hints": {
+        "tier1Concept": "'Latest row per group' is THE window-function interview question: number rows within each partition, newest first, then filter rn = 1 in an outer query or CTE.",
+        "tier2Scaffold": "WITH ranked AS (\n  SELECT patient_id, visit_on, systolic,\n         ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY visit_on DESC, visit_id DESC) AS rn\n  FROM visits\n  WHERE patient_id BETWEEN 1000 AND 1009\n)\nSELECT patient_id, visit_on, systolic FROM ranked WHERE rn = ___ ORDER BY patient_id;",
+        "tier3Solution": "WITH ranked AS (SELECT patient_id, visit_on, systolic, ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY visit_on DESC, visit_id DESC) AS rn FROM visits WHERE patient_id BETWEEN 1000 AND 1009)\nSELECT patient_id, visit_on, systolic FROM ranked WHERE rn = 1 ORDER BY patient_id;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH ranked AS (SELECT patient_id, visit_on, systolic, ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY visit_on DESC, visit_id DESC) AS rn FROM visits WHERE patient_id BETWEEN 1000 AND 1009) SELECT patient_id, visit_on, systolic FROM ranked WHERE rn = 1 ORDER BY patient_id;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 39,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_CUMULATIVE",
+      "narrativeBriefing": "AUDIT WEEK, day 1. The inspector wants the enrollment story: per month ('YYYY-MM'), the new enrollments AND the running total of all enrollments to date. Order by month. (Window SUM over the monthly counts.)",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Aggregate first (per month), then window over the aggregate: SUM(cnt) OVER (ORDER BY month) turns monthly counts into a cumulative curve.",
+        "tier2Scaffold": "WITH monthly AS (\n  SELECT strftime('%Y-%m', enrolled_on) AS month, COUNT(*) AS enrolled\n  FROM patients GROUP BY month\n)\nSELECT month, enrolled, SUM(enrolled) OVER (ORDER BY month) AS total_to_date\nFROM monthly ORDER BY month;",
+        "tier3Solution": "WITH monthly AS (SELECT strftime('%Y-%m', enrolled_on) AS month, COUNT(*) AS enrolled FROM patients GROUP BY month)\nSELECT month, enrolled, SUM(enrolled) OVER (ORDER BY month) AS total_to_date FROM monthly ORDER BY month;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH monthly AS (SELECT strftime('%Y-%m', enrolled_on) AS month, COUNT(*) AS enrolled FROM patients GROUP BY month) SELECT month, enrolled, SUM(enrolled) OVER (ORDER BY month) AS total_to_date FROM monthly ORDER BY month;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 40,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_QUALITY_SCORE",
+      "narrativeBriefing": "Day 2: data-quality scorecard per site — site, patient count, and the percentage with a usable email (not NULL, not empty), rounded to 1 decimal. Order by the percentage descending, site ascending.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Conditional aggregation: AVG(CASE WHEN ok THEN 100.0 ELSE 0 END) computes a percentage in one pass — no subqueries needed.",
+        "tier2Scaffold": "SELECT site, COUNT(*) AS patients,\n       ROUND(AVG(CASE WHEN email IS NOT NULL AND email <> '' THEN 100.0 ELSE 0 END), 1) AS pct_contactable\nFROM patients\nGROUP BY site\nORDER BY pct_contactable DESC, site ASC;",
+        "tier3Solution": "SELECT site, COUNT(*) AS patients, ROUND(AVG(CASE WHEN email IS NOT NULL AND email <> '' THEN 100.0 ELSE 0 END), 1) AS pct_contactable FROM patients GROUP BY site ORDER BY pct_contactable DESC, site ASC;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT site, COUNT(*) AS patients, ROUND(AVG(CASE WHEN email IS NOT NULL AND email <> '' THEN 100.0 ELSE 0 END), 1) AS pct_contactable FROM patients GROUP BY site ORDER BY pct_contactable DESC, site ASC;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 41,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_ANTI_JOIN",
+      "narrativeBriefing": "Day 3: compliance risk. Count patients who have NO visit after '2026-03-01' (including those with no visits at all). Use NOT EXISTS.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "NOT EXISTS (SELECT 1 FROM … WHERE correlated) is the NULL-safe anti-join: 'rows with no matching row over there'. It never falls into the NOT IN + NULL trap.",
+        "tier2Scaffold": "SELECT COUNT(*) AS lapsed\nFROM patients p\nWHERE NOT EXISTS (\n  SELECT 1 FROM visits v\n  WHERE v.patient_id = p.patient_id AND v.visit_on > '2026-03-01'\n);",
+        "tier3Solution": "SELECT COUNT(*) AS lapsed FROM patients p WHERE NOT EXISTS (SELECT 1 FROM visits v WHERE v.patient_id = p.patient_id AND v.visit_on > '2026-03-01');"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT COUNT(*) AS lapsed FROM patients p WHERE NOT EXISTS (SELECT 1 FROM visits v WHERE v.patient_id = p.patient_id AND v.visit_on > '2026-03-01');"
+      }
+    },
+    {
+      "stepIndex": 42,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_CLINICAL_FLAGS",
+      "narrativeBriefing": "Day 4: safety review. List every visit with systolic of 175 or higher: the patient's full_name, the visit_on date and the systolic reading, ordered by systolic descending, then visit_on ascending, then full_name ascending.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "A join plus a threshold filter is the everyday workhorse: connect the measurement to the person, filter, and order deterministically for the report.",
+        "tier2Scaffold": "SELECT p.full_name, v.visit_on, v.systolic\nFROM visits v\nJOIN patients p ON p.patient_id = v.patient_id\nWHERE v.systolic >= ___\nORDER BY v.systolic DESC, v.visit_on ASC, p.full_name ASC;",
+        "tier3Solution": "SELECT p.full_name, v.visit_on, v.systolic FROM visits v JOIN patients p ON p.patient_id = v.patient_id WHERE v.systolic >= 175 ORDER BY v.systolic DESC, v.visit_on ASC, p.full_name ASC;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT p.full_name, v.visit_on, v.systolic FROM visits v JOIN patients p ON p.patient_id = v.patient_id WHERE v.systolic >= 175 ORDER BY v.systolic DESC, v.visit_on ASC, p.full_name ASC;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 43,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_FINAL_DOSSIER",
+      "narrativeBriefing": "Final day: the dossier. For patients 1000-1014: patient_id, full_name, site, their visit count (0 if none), and average systolic rounded to 1 decimal (NULL if no visits). Aggregate visits in a CTE, LEFT JOIN it to patients. Order by patient_id.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Production reports are CTE pipelines: aggregate the detail table once, LEFT JOIN it to the dimension table, and present. Every piece is something you've already built.",
+        "tier2Scaffold": "WITH vis AS (\n  SELECT patient_id, COUNT(*) AS visit_count, ROUND(AVG(systolic), 1) AS avg_systolic\n  FROM visits GROUP BY patient_id\n)\nSELECT p.patient_id, p.full_name, p.site, COALESCE(v.visit_count, 0) AS visit_count, v.avg_systolic\nFROM patients p LEFT JOIN vis v ON v.patient_id = p.patient_id\nWHERE p.patient_id BETWEEN 1000 AND 1014\nORDER BY p.patient_id;",
+        "tier3Solution": "WITH vis AS (SELECT patient_id, COUNT(*) AS visit_count, ROUND(AVG(systolic), 1) AS avg_systolic FROM visits GROUP BY patient_id)\nSELECT p.patient_id, p.full_name, p.site, COALESCE(v.visit_count, 0) AS visit_count, v.avg_systolic FROM patients p LEFT JOIN vis v ON v.patient_id = p.patient_id WHERE p.patient_id BETWEEN 1000 AND 1014 ORDER BY p.patient_id;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH vis AS (SELECT patient_id, COUNT(*) AS visit_count, ROUND(AVG(systolic), 1) AS avg_systolic FROM visits GROUP BY patient_id) SELECT p.patient_id, p.full_name, p.site, COALESCE(v.visit_count, 0) AS visit_count, v.avg_systolic FROM patients p LEFT JOIN vis v ON v.patient_id = p.patient_id WHERE p.patient_id BETWEEN 1000 AND 1014 ORDER BY p.patient_id;",
+        "requiresOrder": true
+      }
+    }
+  ],
+  "examPool": [
+    {
+      "prompt": "How many patients are registered at each site? Return site and the count.",
+      "conceptFocus": "GROUP_SITE_REPORT",
+      "solutionQuery": "SELECT site, COUNT(*) AS n FROM patients GROUP BY site;"
+    },
+    {
+      "prompt": "Count patients whose email is missing (NULL or empty string). Return a single count.",
+      "conceptFocus": "NULL_THREE_VALUED",
+      "solutionQuery": "SELECT COUNT(*) AS n FROM patients WHERE email IS NULL OR email = '';"
+    },
+    {
+      "prompt": "Find every email shared by more than one patient (exclude NULL and empty). Return email and the count of patients sharing it.",
+      "conceptFocus": "GROUP_HAVING_DUPES",
+      "solutionQuery": "SELECT email, COUNT(*) AS n FROM patients WHERE email IS NOT NULL AND email <> '' GROUP BY email HAVING COUNT(*) > 1;"
+    },
+    {
+      "prompt": "Return the 3 patients with the most visits: patient_id and visit count, ordered by count descending then patient_id ascending.",
+      "conceptFocus": "TOP_N_TIEBREAK",
+      "solutionQuery": "SELECT patient_id, COUNT(*) AS n FROM visits GROUP BY patient_id ORDER BY n DESC, patient_id ASC LIMIT 3;",
+      "requiresOrder": true
+    },
+    {
+      "prompt": "Count enrollments per month as 'YYYY-MM', ordered by month.",
+      "conceptFocus": "STRFTIME_MONTHLY",
+      "solutionQuery": "SELECT strftime('%Y-%m', enrolled_on) AS month, COUNT(*) AS n FROM patients GROUP BY month ORDER BY month;",
+      "requiresOrder": true
+    },
+    {
+      "prompt": "How many patients have never had any visit? Use NOT EXISTS. Return a single count.",
+      "conceptFocus": "CAPSTONE_ANTI_JOIN",
+      "solutionQuery": "SELECT COUNT(*) AS n FROM patients p WHERE NOT EXISTS (SELECT 1 FROM visits v WHERE v.patient_id = p.patient_id);"
+    },
+    {
+      "prompt": "For each patient from 1000 to 1004, show their most recent visit date. Return patient_id and the max visit_on, ordered by patient_id.",
+      "conceptFocus": "WINDOW_LATEST_PER_GROUP",
+      "solutionQuery": "SELECT patient_id, MAX(visit_on) AS last_visit FROM visits WHERE patient_id BETWEEN 1000 AND 1004 GROUP BY patient_id ORDER BY patient_id;",
+      "requiresOrder": true
+    },
+    {
+      "prompt": "What is the average systolic blood pressure across all visits, rounded to 1 decimal place?",
+      "conceptFocus": "CAST_ROUND",
+      "solutionQuery": "SELECT ROUND(AVG(systolic), 1) AS avg_systolic FROM visits;"
     }
   ]
 }
