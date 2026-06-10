@@ -41,3 +41,8 @@ pnpm-debug.log*
 public/passenger-wasm/
 vite.config.js
 vite.config.d.ts
+
+# Test artifacts
+.lighthouseci/
+test-results/
+playwright-report/

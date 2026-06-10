@@ -37,14 +37,15 @@ The entire SQL runtime runs inside a **WebAssembly-powered SQLite engine** in yo
 
 | Layer | Technology |
 |---|---|
-| Framework | React 18.3.1 |
-| Language | TypeScript 5.4.5 |
-| Build Tool | Vite 5.4.11 |
-| Styles | Tailwind CSS 3.4.15 |
-| SQL Engine | sql.js 1.10.3 (SQLite WASM) |
-| Animation | Framer Motion 11.11.11 |
-| Icons | Lucide React 0.460.0 |
+| Framework | React 19 |
+| Language | TypeScript 5.9 |
+| Build Tool | Vite 7 |
+| Styles | Tailwind CSS 4 |
+| SQL Engine | sql.js (SQLite WASM) |
+| Animation | Framer Motion 12 + GSAP (landing) |
+| Icons | Lucide React |
 | State | Zustand 5.x (persisted to localStorage) |
+| E2E Tests | Playwright (production-build smoke suite) |
 
 ---
 

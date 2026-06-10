@@ -63,3 +63,12 @@ jobs:
           name: dist
           path: dist
           retention-days: 7
+
+      # End-to-end smoke: boots the production build in vite preview and walks
+      # the real user journey (landing → mission → solve a step on the WASM
+      # engine → persistence → review mode).
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E smoke tests
+        run: npm run test:e2e
