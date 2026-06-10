@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 // https://vitejs.dev/config/
 // `base` differs between dev and prod:
 //   - dev server runs at "/" for convenience
@@ -11,7 +12,7 @@ export default defineConfig(function (_a) {
     var command = _a.command;
     return ({
         base: command === 'build' ? '/tuples/' : '/',
-        plugins: [react()],
+        plugins: [react(), tailwindcss()],
         build: {
             // Rollup's generic per-chunk warning is noise here: the only chunks over
             // 500 kB are intentionally lazy (the three.js background). The real guard is
