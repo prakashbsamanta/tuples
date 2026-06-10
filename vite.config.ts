@@ -9,8 +9,11 @@ import tailwindcss from '@tailwindcss/vite'
 //     https://<user>.github.io/tuples/, so assets must be referenced under "/tuples/".
 // If you later move to a custom domain or a user/org page (served at "/"),
 // change the build base back to "/".
-export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/tuples/' : '/',
+export default defineConfig(({ command, isPreview }) => ({
+  // `vite preview` resolves config with command === 'serve', so check isPreview
+  // too — otherwise preview serves at "/" while the build references "/tuples/"
+  // and every asset 404s (breaking Playwright e2e and Lighthouse runs).
+  base: command === 'build' || isPreview ? '/tuples/' : '/',
   plugins: [react(), tailwindcss()],
   build: {
     // Rollup's generic per-chunk warning is noise here: the only chunks over
