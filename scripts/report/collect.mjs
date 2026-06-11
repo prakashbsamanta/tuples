@@ -15,9 +15,17 @@
 // "integration" (they exercise the real seed/replay/validation pipeline);
 // every other vitest file is "unit"; Playwright is "e2e".
 
-import { readFileSync, writeFileSync, existsSync, copyFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
-const read = (p) => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : null);
+// Read-and-parse without a check-then-use race: a missing or partial file
+// (a gate that never ran) is simply "no data".
+const read = (p) => {
+  try {
+    return JSON.parse(readFileSync(p, 'utf8'));
+  } catch {
+    return null;
+  }
+};
 const INTEGRATION_FILE = /(integrity|missionDb)\.test\.ts$/;
 
 mkdirSync('reports', { recursive: true });

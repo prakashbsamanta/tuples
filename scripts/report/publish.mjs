@@ -10,8 +10,18 @@
 // Retention: entries (and their detail dirs) older than RETENTION_DAYS are
 // pruned on every publish, so the dashboard always serves a rolling window.
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, cpSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
+
+// Read-and-parse without a check-then-use race: attempt the read, treat any
+// failure (missing file, partial write) as "no data".
+function readJson(path, fallback) {
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    return fallback;
+  }
+}
 
 const RETENTION_DAYS = 183; // ~6 months
 const MAX_RUNS = 1500; // hard cap as a safety net
@@ -27,17 +37,21 @@ const dataDir = join(dest, 'data');
 const runsDir = join(dataDir, 'runs');
 mkdirSync(runsDir, { recursive: true });
 
-// Copy granular detail files for this run.
+// Copy granular detail files for this run (skip whatever a failed gate
+// didn't produce).
 const runDir = join(runsDir, record.id);
 mkdirSync(runDir, { recursive: true });
 for (const f of ['vitest.json', 'playwright.json', 'lighthouse.json', 'size.json', 'coverage.json']) {
-  const src = join('reports', f);
-  if (existsSync(src)) cpSync(src, join(runDir, f));
+  try {
+    cpSync(join('reports', f), join(runDir, f));
+  } catch {
+    /* gate didn't run — nothing to copy */
+  }
 }
 
 // Update the index: prepend, dedupe by id, prune by age and count.
 const indexPath = join(dataDir, 'index.json');
-const index = existsSync(indexPath) ? JSON.parse(readFileSync(indexPath, 'utf8')) : [];
+const index = readJson(indexPath, []);
 const cutoff = Date.now() - RETENTION_DAYS * 24 * 60 * 60 * 1000;
 
 const merged = [record, ...index.filter((r) => r.id !== record.id)]
