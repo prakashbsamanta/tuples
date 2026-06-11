@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tuples — CI Reports</title>
+<meta name="description" content="Quality dashboard for Tuples: six months of unit, integration, e2e, coverage, bundle-size and Lighthouse history across PR and production runs." />
+<style>
+  :root {
+    --canvas: #060709; --panel: #0b0d12; --panel2: #10131a;
+    --volt: #c8ff3d; --unit: #5dcaa5; --integration: #8fb6ff; --e2e: #ffb454;
+    --red: #f87171; --text: #e5e7eb; --muted: #9ca3af; --dim: #6b7280;
+    --border: rgba(255,255,255,0.08);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--canvas); color: var(--text);
+    font: 14px/1.5 "Space Grotesk", system-ui, -apple-system, sans-serif;
+  }
+  code, .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace; }
+  a { color: inherit; }
+  header {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    justify-content: space-between; padding: 18px 28px; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: rgba(6,7,9,0.85); backdrop-filter: blur(14px); z-index: 5;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+  .brand .glyph { color: var(--volt); font-family: ui-monospace, monospace; }
+  .brand small { color: var(--dim); font-weight: 400; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  select, .btn {
+    background: var(--panel); color: var(--text); border: 1px solid var(--border);
+    border-radius: 10px; padding: 7px 12px; font: inherit; font-size: 12px; cursor: pointer;
+  }
+  main { max-width: 1280px; margin: 0 auto; padding: 24px 28px 60px; }
+  .meta { color: var(--dim); font-size: 12px; margin: 4px 0 18px; }
+  .meta a { color: var(--muted); }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .kpi { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
+  .kpi .label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-family: ui-monospace, monospace; }
+  .kpi .value { font-size: 24px; font-weight: 700; margin-top: 4px; }
+  .kpi .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 14px; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+  .card h2 { font-size: 13px; margin: 0 0 10px; display: flex; justify-content: space-between; align-items: center; }
+  .card h2 .hint { font-size: 10px; color: var(--dim); font-weight: 400; }
+  .chart-wrap { position: relative; height: 230px; }
+  .ok { color: var(--unit); } .bad { color: var(--red); }
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 10px;
+    font-family: ui-monospace, monospace; border: 1px solid var(--border); white-space: nowrap;
+  }
+  .badge.prod { color: var(--volt); border-color: rgba(200,255,61,0.35); background: rgba(200,255,61,0.08); }
+  .badge.pr { color: var(--integration); border-color: rgba(143,182,255,0.35); background: rgba(143,182,255,0.08); }
+  .badge.pass { color: var(--unit); border-color: rgba(93,202,165,0.35); background: rgba(93,202,165,0.08); }
+  .badge.fail { color: var(--red); border-color: rgba(248,113,113,0.35); background: rgba(248,113,113,0.08); }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); padding: 8px 10px; border-bottom: 1px solid var(--border); font-family: ui-monospace, monospace; }
+  td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; white-space: nowrap; }
+  tr.run { cursor: pointer; } tr.run:hover { background: rgba(255,255,255,0.03); }
+  tr.detail td { background: var(--panel2); white-space: normal; }
+  .links a { color: var(--muted); font-size: 11px; margin-right: 10px; text-decoration: none; border-bottom: 1px dotted var(--dim); }
+  .links a:hover { color: var(--volt); }
+  .suite-chip { font-family: ui-monospace, monospace; font-size: 11px; margin-right: 8px; }
+  .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; padding: 6px 0; }
+  .detail-grid h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin: 0 0 8px; font-family: ui-monospace, monospace; }
+  .tlist { max-height: 320px; overflow: auto; font-size: 11px; font-family: ui-monospace, monospace; }
+  .tlist div { padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.03); display: flex; gap: 8px; }
+  .tlist .dur { color: var(--dim); margin-left: auto; }
+  .tlist .err { color: var(--red); white-space: pre-wrap; font-size: 10px; padding-left: 18px; }
+  .empty { text-align: center; color: var(--dim); padding: 60px 0; }
+  footer { text-align: center; color: var(--dim); font-size: 11px; padding: 20px; }
+  @media (max-width: 700px) { main { padding: 16px 12px 40px; } td, th { padding: 6px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <span class="glyph">(,)</span> Tuples <small>· CI reports</small>
+  </div>
+  <div class="filters">
+    <select id="f-context" title="Run context">
+      <option value="all">All runs</option>
+      <option value="production">Production</option>
+      <option value="pr">Pull requests</option>
+    </select>
+    <select id="f-range" title="Time window">
+      <option value="7">Last 7 days</option>
+      <option value="30">Last 30 days</option>
+      <option value="90">Last 90 days</option>
+      <option value="183" selected>Last 6 months</option>
+    </select>
+    <select id="f-suite" title="Suite focus for the results chart">
+      <option value="all">All suites</option>
+      <option value="unit">Unit</option>
+      <option value="integration">Integration</option>
+      <option value="e2e">E2E</option>
+    </select>
+    <button class="btn" id="refresh">Refresh</button>
+    <a class="btn" href="../" style="text-decoration:none">← App</a>
+  </div>
+</header>
+
+<main>
+  <p class="meta" id="meta">Loading run history…</p>
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid">
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>Test results per run <span class="hint">passed / failed / skipped · click bars via the table below for details</span></h2>
+      <div class="chart-wrap" style="height:260px;"><canvas id="c-results"></canvas></div>
+    </div>
+    <div class="card"><h2>Suite durations <span class="hint">ms, log scale</span></h2><div class="chart-wrap"><canvas id="c-durations"></canvas></div></div>
+    <div class="card"><h2>Coverage <span class="hint">% of src</span></h2><div class="chart-wrap"><canvas id="c-coverage"></canvas></div></div>
+    <div class="card"><h2>Bundle size <span class="hint">critical path, gzipped</span></h2><div class="chart-wrap"><canvas id="c-bundle"></canvas></div></div>
+    <div class="card"><h2>Lighthouse <span class="hint">lab scores</span></h2><div class="chart-wrap"><canvas id="c-lighthouse"></canvas></div></div>
+    <div class="card"><h2>Window summary</h2><div class="chart-wrap"><canvas id="c-donut"></canvas></div></div>
+    <div class="card"><h2>Core Web Vitals trend <span class="hint">LCP / FCP / TBT (ms)</span></h2><div class="chart-wrap"><canvas id="c-vitals"></canvas></div></div>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <h2>Runs <span class="hint">newest first · click a row for granular per-test data</span></h2>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr>
+          <th>When</th><th>Context</th><th>Status</th><th>Unit</th><th>Integration</th><th>E2E</th>
+          <th>Cov</th><th>Bundle</th><th>LH</th><th>Links</th>
+        </tr></thead>
+        <tbody id="runs"></tbody>
+      </table>
+    </div>
+    <div class="empty" id="empty" hidden>No runs in this window yet. Records appear here after each CI run.</div>
+  </div>
+</main>
+<footer>Data lives on the <a id="branch-link" href="#">ci-reports</a> branch · 183-day rolling retention · auto-refreshes every 60s</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script>
+const REPO = 'prakashbsamanta/tuples';
+const DATA = `https://raw.githubusercontent.com/${REPO}/ci-reports/data/`;
+document.getElementById('branch-link').href = `https://github.com/${REPO}/tree/ci-reports`;
+
+const $ = (id) => document.getElementById(id);
+const charts = {};
+let all = [];
+let meta = null;
+
+const SUITES = ['unit', 'integration', 'e2e'];
+const SUITE_COLOR = { unit: '#5dcaa5', integration: '#8fb6ff', e2e: '#ffb454' };
+const fmtTime = (iso) => new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+const fmtDay = (iso) => new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+const ms = (v) => (v >= 60000 ? (v / 60000).toFixed(1) + 'm' : v >= 1000 ? (v / 1000).toFixed(1) + 's' : Math.round(v) + 'ms');
+
+Chart.defaults.color = '#9ca3af';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+Chart.defaults.font.family = 'ui-monospace, monospace';
+Chart.defaults.font.size = 10;
+
+async function load() {
+  try {
+    const bust = `?t=${Math.floor(Date.now() / 30000)}`;
+    const [idx, m] = await Promise.all([
+      fetch(DATA + 'index.json' + bust).then((r) => r.json()),
+      fetch(DATA + 'meta.json' + bust).then((r) => r.json()).catch(() => null),
+    ]);
+    all = idx;
+    meta = m;
+    render();
+  } catch (e) {
+    $('meta').textContent = 'Could not load run data: ' + e.message;
+  }
+}
+
+function windowed() {
+  const days = Number($('f-range').value);
+  const ctx = $('f-context').value;
+  const cutoff = Date.now() - days * 86400000;
+  return all
+    .filter((r) => new Date(r.timestamp).getTime() >= cutoff)
+    .filter((r) => (ctx === 'all' ? true : r.context === ctx))
+    .slice()
+    .reverse(); // oldest → newest for time axes
+}
+
+function suiteTotals(r) {
+  const t = { total: 0, passed: 0, failed: 0, skipped: 0 };
+  for (const s of SUITES) {
+    const v = r.suites?.[s] ?? {};
+    t.total += v.total ?? 0; t.passed += v.passed ?? 0; t.failed += v.failed ?? 0; t.skipped += v.skipped ?? 0;
+  }
+  return t;
+}
+
+function chart(id, cfg) {
+  charts[id]?.destroy();
+  charts[id] = new Chart($(id), cfg);
+}
+
+function render() {
+  const runs = windowed();
+  const latest = runs[runs.length - 1];
+
+  // ── Meta line ──
+  $('meta').innerHTML = meta
+    ? `${all.length} runs stored · window shows <b>${runs.length}</b> · retention ${meta.retentionDays} days · data updated ${fmtTime(meta.updatedAt ?? Date.now())}`
+    : `${all.length} runs stored · window shows ${runs.length}`;
+
+  // ── KPIs ──
+  const passRuns = runs.filter((r) => r.status === 'passed').length;
+  const k = [];
+  if (latest) {
+    const lt = suiteTotals(latest);
+    k.push(['Latest run', latest.status === 'passed' ? '✓ passed' : '✗ failed',
+      `<a href="${latest.runUrl}" target="_blank" rel="noopener">${fmtTime(latest.timestamp)} · logs ↗</a>`,
+      latest.status === 'passed' ? 'ok' : 'bad']);
+    k.push(['Run pass rate', runs.length ? Math.round((100 * passRuns) / runs.length) + '%' : '—', `${passRuns}/${runs.length} runs in window`]);
+    k.push(['Tests (latest)', `${lt.passed}/${lt.total}`, `${lt.failed} failed · ${lt.skipped} skipped`, lt.failed ? 'bad' : 'ok']);
+    if (latest.coverage) k.push(['Line coverage', latest.coverage.lines.toFixed(1) + '%', `branches ${latest.coverage.branches.toFixed(1)}%`]);
+    if (latest.bundle) k.push(['Bundle', latest.bundle.criticalKb + ' kB', `budget ${latest.bundle.budgetKb} kB`, latest.bundle.criticalKb > latest.bundle.budgetKb ? 'bad' : 'ok']);
+    if (latest.lighthouse) k.push(['Lighthouse perf', latest.lighthouse.performance, `a11y ${latest.lighthouse.accessibility} · bp ${latest.lighthouse.bestPractices}`]);
+  }
+  $('kpis').innerHTML = k.map(([l, v, s, cls]) =>
+    `<div class="kpi"><div class="label">${l}</div><div class="value ${cls ?? ''}">${v}</div><div class="sub">${s ?? ''}</div></div>`).join('');
+
+  const labels = runs.map((r) => (r.context === 'pr' ? `PR${r.pr?.number ?? ''} ` : '') + fmtDay(r.timestamp));
+
+  // ── Results stacked bars ──
+  const focus = $('f-suite').value;
+  const pick = (r, key) => focus === 'all'
+    ? SUITES.reduce((a, s) => a + (r.suites?.[s]?.[key] ?? 0), 0)
+    : (r.suites?.[focus]?.[key] ?? 0);
+  chart('c-results', {
+    type: 'bar',
+    data: { labels, datasets: [
+      { label: 'passed', data: runs.map((r) => pick(r, 'passed')), backgroundColor: '#5dcaa5', stack: 's' },
+      { label: 'failed', data: runs.map((r) => pick(r, 'failed')), backgroundColor: '#f87171', stack: 's' },
+      { label: 'skipped', data: runs.map((r) => pick(r, 'skipped')), backgroundColor: '#4b5563', stack: 's' },
+    ]},
+    options: { maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true } },
+      plugins: { legend: { position: 'bottom' } } },
+  });
+
+  // ── Durations ──
+  chart('c-durations', {
+    type: 'line',
+    data: { labels, datasets: SUITES.map((s) => ({
+      label: s, data: runs.map((r) => Math.max(1, Math.round(r.suites?.[s]?.durationMs ?? 0))),
+      borderColor: SUITE_COLOR[s], backgroundColor: SUITE_COLOR[s], pointRadius: 2, tension: 0.3,
+    }))},
+    options: { maintainAspectRatio: false, scales: { y: { type: 'logarithmic', ticks: { callback: (v) => ms(v) } } },
+      plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: (c) => `${c.dataset.label}: ${ms(c.parsed.y)}` } } } },
+  });
+
+  // ── Coverage ──
+  const covSets = [['lines', '#c8ff3d'], ['statements', '#5dcaa5'], ['functions', '#8fb6ff'], ['branches', '#ffb454']];
+  chart('c-coverage', {
+    type: 'line',
+    data: { labels, datasets: covSets.map(([key, color]) => ({
+      label: key, data: runs.map((r) => r.coverage?.[key] ?? null),
+      borderColor: color, backgroundColor: color, pointRadius: 2, tension: 0.3, spanGaps: true,
+    }))},
+    options: { maintainAspectRatio: false, scales: { y: { min: 0, max: 100 } }, plugins: { legend: { position: 'bottom' } } },
+  });
+
+  // ── Bundle ──
+  chart('c-bundle', {
+    type: 'line',
+    data: { labels, datasets: [
+      { label: 'critical kB', data: runs.map((r) => r.bundle?.criticalKb ?? null), borderColor: '#c8ff3d', backgroundColor: '#c8ff3d', pointRadius: 2, tension: 0.3, spanGaps: true },
+      { label: 'budget', data: runs.map((r) => r.bundle?.budgetKb ?? null), borderColor: '#f87171', borderDash: [6, 5], pointRadius: 0, spanGaps: true },
+    ]},
+    options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } },
+  });
+
+  // ── Lighthouse scores ──
+  const lhSets = [['performance', '#c8ff3d'], ['accessibility', '#5dcaa5'], ['bestPractices', '#8fb6ff']];
+  chart('c-lighthouse', {
+    type: 'line',
+    data: { labels, datasets: lhSets.map(([key, color]) => ({
+      label: key, data: runs.map((r) => r.lighthouse?.[key] ?? null),
+      borderColor: color, backgroundColor: color, pointRadius: 2, tension: 0.3, spanGaps: true,
+    }))},
+    options: { maintainAspectRatio: false, scales: { y: { min: 0, max: 100 } }, plugins: { legend: { position: 'bottom' } } },
+  });
+
+  // ── Donut ──
+  chart('c-donut', {
+    type: 'doughnut',
+    data: { labels: ['passed runs', 'failed runs'], datasets: [{ data: [passRuns, runs.length - passRuns], backgroundColor: ['#5dcaa5', '#f87171'], borderWidth: 0 }] },
+    options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, cutout: '65%' },
+  });
+
+  // ── Web vitals ──
+  const vit = [['lcpMs', '#ffb454'], ['fcpMs', '#8fb6ff'], ['tbtMs', '#f87171']];
+  chart('c-vitals', {
+    type: 'line',
+    data: { labels, datasets: vit.map(([key, color]) => ({
+      label: key.replace('Ms', '').toUpperCase(), data: runs.map((r) => r.lighthouse?.[key] ?? null),
+      borderColor: color, backgroundColor: color, pointRadius: 2, tension: 0.3, spanGaps: true,
+    }))},
+    options: { maintainAspectRatio: false, scales: { y: { ticks: { callback: (v) => ms(v) } } },
+      plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: (c) => `${c.dataset.label}: ${ms(c.parsed.y)}` } } } },
+  });
+
+  // ── Runs table (newest first) ──
+  const newest = runs.slice().reverse();
+  $('empty').hidden = newest.length > 0;
+  $('runs').innerHTML = newest.map((r) => {
+    const chips = SUITES.map((s) => {
+      const v = r.suites?.[s] ?? {};
+      const failed = v.failed ?? 0;
+      return `<td><span class="suite-chip" style="color:${failed ? '#f87171' : SUITE_COLOR[s]}">${v.passed ?? 0}/${v.total ?? 0}${failed ? ' ✗' + failed : ''}${v.flaky ? ' ~' + v.flaky : ''}</span></td>`;
+    }).join('');
+    const ctxBadge = r.context === 'production'
+      ? '<span class="badge prod">PROD</span>'
+      : `<span class="badge pr">PR ${r.pr?.number ? `<a href="${r.pr.url}" target="_blank" rel="noopener" style="color:inherit">#${r.pr.number}</a>` : ''}</span>`;
+    const det = r.details ?? {};
+    const raw = (p) => p ? `${DATA}${p}` : null;
+    const links = [
+      `<a href="${r.runUrl}" target="_blank" rel="noopener" title="GitHub Actions logs">logs</a>`,
+      `<a href="${r.commitUrl}" target="_blank" rel="noopener">commit</a>`,
+      raw(det.vitest) ? `<a href="${raw(det.vitest)}" target="_blank" rel="noopener">vitest</a>` : '',
+      raw(det.playwright) ? `<a href="${raw(det.playwright)}" target="_blank" rel="noopener">e2e</a>` : '',
+      raw(det.lighthouse) ? `<a href="${raw(det.lighthouse)}" target="_blank" rel="noopener">lh</a>` : '',
+    ].filter(Boolean).join('');
+    return `<tr class="run" data-id="${r.id}">
+      <td class="mono" title="${r.timestamp}">${fmtTime(r.timestamp)}</td>
+      <td>${ctxBadge}<div style="font-size:10px;color:var(--dim)" class="mono">${(r.branch || '').slice(0, 28)}</div></td>
+      <td><span class="badge ${r.status === 'passed' ? 'pass' : 'fail'}">${r.status}</span></td>
+      ${chips}
+      <td class="mono">${r.coverage ? r.coverage.lines.toFixed(1) + '%' : '—'}</td>
+      <td class="mono">${r.bundle ? r.bundle.criticalKb + 'kB' : '—'}</td>
+      <td class="mono">${r.lighthouse ? r.lighthouse.performance : '—'}</td>
+      <td class="links">${links}</td>
+    </tr>`;
+  }).join('');
+
+  document.querySelectorAll('tr.run').forEach((tr) => tr.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    toggleDetail(tr);
+  }));
+}
+
+async function toggleDetail(tr) {
+  const next = tr.nextElementSibling;
+  if (next?.classList.contains('detail')) { next.remove(); return; }
+  document.querySelectorAll('tr.detail').forEach((d) => d.remove());
+  const id = tr.dataset.id;
+  const row = document.createElement('tr');
+  row.className = 'detail';
+  row.innerHTML = `<td colspan="10">Loading granular results…</td>`;
+  tr.after(row);
+
+  const get = (f) => fetch(`${DATA}runs/${id}/${f}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  const [vt, pw] = await Promise.all([get('vitest.json'), get('playwright.json')]);
+
+  const vitestList = (filter, title) => {
+    if (!vt) return `<div><h3>${title}</h3><div class="tlist">no data</div></div>`;
+    const rows = [];
+    for (const f of vt.testResults ?? []) {
+      if (!filter(f.name)) continue;
+      const short = f.name.split('/src/')[1] ?? f.name;
+      for (const t of f.assertionResults ?? []) {
+        const ok = t.status === 'passed';
+        rows.push(`<div><span class="${ok ? 'ok' : 'bad'}">${ok ? '✓' : '✗'}</span> <span title="${short}">${t.fullName}</span><span class="dur">${Math.round(t.duration ?? 0)}ms</span></div>`);
+        if (!ok && t.failureMessages?.length) rows.push(`<div class="err">${String(t.failureMessages[0]).slice(0, 400).replace(/</g, '&lt;')}</div>`);
+      }
+    }
+    return `<div><h3>${title} (${rows.length})</h3><div class="tlist">${rows.join('') || 'none'}</div></div>`;
+  };
+
+  const pwRows = [];
+  const walk = (suite, path) => {
+    for (const s of suite.suites ?? []) walk(s, path);
+    for (const spec of suite.specs ?? []) {
+      for (const t of spec.tests ?? []) {
+        const res = t.results?.[t.results.length - 1];
+        const ok = spec.ok;
+        pwRows.push(`<div><span class="${ok ? 'ok' : 'bad'}">${ok ? '✓' : '✗'}</span> ${spec.title}<span class="dur">${Math.round(res?.duration ?? 0)}ms${t.status === 'flaky' ? ' · flaky' : ''}</span></div>`);
+        if (!ok && res?.error?.message) pwRows.push(`<div class="err">${String(res.error.message).slice(0, 400).replace(/</g, '&lt;')}</div>`);
+      }
+    }
+  };
+  if (pw) for (const s of pw.suites ?? []) walk(s, '');
+  const isIntegration = (n) => /(integrity|missionDb)\.test\.ts$/.test(n);
+
+  row.innerHTML = `<td colspan="10"><div class="detail-grid">
+    ${vitestList((n) => !isIntegration(n), 'Unit tests')}
+    ${vitestList(isIntegration, 'Integration tests')}
+    <div><h3>E2E tests (${pwRows.length})</h3><div class="tlist">${pwRows.join('') || 'no data'}</div></div>
+  </div></td>`;
+}
+
+['f-context', 'f-range', 'f-suite'].forEach((id) => $(id).addEventListener('change', render));
+$('refresh').addEventListener('click', load);
+setInterval(load, 60000);
+load();
+</script>
+</body>
+</html>
