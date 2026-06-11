@@ -10,18 +10,16 @@ async function typeInEditor(page: Page, sql: string) {
   await page.keyboard.type(sql);
 }
 
-test('full journey: landing → mission → solve → persist → review', async ({ page }) => {
-  // ── Landing (new visitor) ──
+test('full journey: homepage → enter world → solve → persist → review', async ({ page }) => {
+  // ── Homepage: triptych is the single entry for everyone ──
   await page.goto(APP);
-  await expect(page.getByRole('heading', { name: /Speak/ })).toBeVisible();
-  await expect(page.getByText('Three worlds.')).toBeVisible();
-  await page.getByTestId('landing-cta').click();
+  await expect(page.getByRole('heading', { name: /Every world runs/ })).toBeVisible();
+  await expect(page.getByTestId('world-lab')).toBeVisible();
+  await expect(page.getByTestId('world-floor')).toBeVisible();
+  await expect(page.getByTestId('world-belt')).toBeVisible();
 
-  // ── Mission selection ──
-  await expect(page.getByRole('heading', { name: /Choose your/ })).toBeVisible();
-  await page.getByRole('button', { name: 'Begin Mission' }).first().click();
-
-  // ── Workspace boots: WASM engine + editor ready ──
+  // ── Enter The Lab (Builder / clinical trials) ──
+  await page.getByTestId('world-lab').click();
   await expect(page.getByText('MISSION PATH')).toBeVisible();
   await expect(page.locator('.cm-content')).toBeVisible({ timeout: 30_000 });
 
@@ -35,7 +33,7 @@ test('full journey: landing → mission → solve → persist → review', async
   // Schema visualizer picked up the new table.
   await expect(page.getByText('patients').first()).toBeVisible();
 
-  // ── Persistence: reload skips landing, keeps progress ──
+  // ── Persistence: reload resumes the mission ──
   await page.reload();
   await expect(page.locator('.cm-content')).toBeVisible({ timeout: 30_000 });
   await expect(page.getByText(/Step .*2.* \/ .*44|Step 2/).first()).toBeVisible();
@@ -45,13 +43,29 @@ test('full journey: landing → mission → solve → persist → review', async
   await expect(page.getByText(/Reviewing|Review/i).first()).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.locator('.cm-content')).toBeVisible();
+
+  // ── Switch World returns to the homepage with progress on the panel ──
+  await page.getByRole('button', { name: /Switch World/ }).click();
+  await expect(page.getByTestId('world-lab')).toContainText(/Continue/i);
+});
+
+test('homepage proof terminal runs real SQL', async ({ page }) => {
+  await page.goto(APP);
+  await expect(page.getByRole('heading', { name: /Every world runs/ })).toBeVisible();
+
+  // The playground wakes lazily as it scrolls into view.
+  await page.getByTestId('proof-terminal').scrollIntoViewIfNeeded();
+  await expect(page.getByTestId('proof-terminal')).toContainText('READY', { timeout: 30_000 });
+
+  await page.getByRole('button', { name: 'Run query' }).click();
+  const output = page.getByTestId('proof-output');
+  await expect(output).toContainText('The Belt');
+  await expect(output).toContainText('51');
 });
 
 test('error coaching and test-run preview', async ({ page }) => {
-  // Returning user: skip landing, fresh progress.
-  await page.addInitScript(() => localStorage.setItem('tuples_entered', '1'));
   await page.goto(APP);
-  await page.getByRole('button', { name: 'Begin Mission' }).first().click();
+  await page.getByTestId('world-lab').click();
   await expect(page.locator('.cm-content')).toBeVisible({ timeout: 30_000 });
 
   // Wrong SQL → engine error surfaces, progress does not advance.

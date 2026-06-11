@@ -95,8 +95,11 @@ export function ExamPanel({ domain, db, schema }: ExamPanelProps) {
   if (state.mode === 'intro') {
     return (
       <div className="h-full flex flex-col items-center justify-center text-center px-6 py-4 gap-3">
-        <div className="w-12 h-12 rounded-2xl bg-violet-500/15 border border-violet-500/25 flex items-center justify-center">
-          <GraduationCap size={24} className="text-violet-400" />
+        <div
+          className="w-12 h-12 rounded-2xl border flex items-center justify-center"
+          style={{ background: 'var(--world-soft)', borderColor: 'var(--world-border)', color: 'var(--world-accent)' }}
+        >
+          <GraduationCap size={24} />
         </div>
         <h3 className="text-white font-bold">Certification Exam</h3>
         <p className="text-gray-400 text-xs leading-relaxed max-w-sm">
@@ -112,7 +115,8 @@ export function ExamPanel({ domain, db, schema }: ExamPanelProps) {
         <button
           onClick={start}
           data-testid="exam-start"
-          className="mt-1 px-5 py-2 text-xs font-bold bg-violet-500 hover:bg-violet-400 text-white rounded-xl transition-all shadow-lg shadow-violet-500/25"
+          style={{ background: 'var(--world-accent)', color: 'var(--world-ink)', boxShadow: '0 4px 18px var(--world-glow)' }}
+          className="mt-1 px-5 py-2 text-xs font-bold rounded-xl transition-all hover:brightness-110"
         >
           {certification ? 'Retake Exam' : 'Start Exam'}
         </button>
@@ -162,7 +166,10 @@ export function ExamPanel({ domain, db, schema }: ExamPanelProps) {
     <div className="flex flex-col h-full min-h-0 bg-canvas/80">
       <div className="glass-bar flex items-center justify-between gap-2 px-4 py-2.5 shrink-0">
         <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 rounded-md border text-[10px] font-mono font-bold tracking-wider text-violet-400 bg-violet-500/10 border-violet-500/25">
+          <span
+            className="px-2 py-0.5 rounded-md border text-[10px] font-mono font-bold tracking-wider"
+            style={{ color: 'var(--world-accent)', background: 'var(--world-soft)', borderColor: 'var(--world-border)' }}
+          >
             EXAM
           </span>
           <span className="font-mono text-[11px] text-gray-500">
@@ -177,8 +184,8 @@ export function ExamPanel({ domain, db, schema }: ExamPanelProps) {
         <button
           onClick={submit}
           data-testid="exam-submit"
-          className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-black
-            bg-volt hover:bg-volt-dim rounded-lg transition-all shadow-lg shadow-volt/20"
+          style={{ background: 'var(--world-accent)', color: 'var(--world-ink)', boxShadow: '0 4px 18px var(--world-glow)' }}
+          className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold rounded-lg transition-all hover:brightness-110"
         >
           <Play size={11} /> Final Answer
         </button>

@@ -124,12 +124,12 @@ export function SqlTerminal({
           )}
           <button
             onClick={handleExecute}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-black
-              bg-volt hover:bg-volt-dim rounded-lg transition-all shadow-lg shadow-volt/20"
+            style={{ background: 'var(--world-accent)', color: 'var(--world-ink)', boxShadow: '0 4px 18px var(--world-glow)' }}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold rounded-lg transition-all hover:brightness-110"
           >
             <Play size={11} />
             Submit
-            <span className="text-black/50 ml-0.5">⌘↵</span>
+            <span className="opacity-50 ml-0.5">⌘↵</span>
           </button>
         </div>
       </div>

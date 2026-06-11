@@ -3,7 +3,6 @@ import { BentoLayout } from './components/BentoLayout';
 import { SqlTerminal } from './components/SqlTerminal';
 import { LiveDiffTable } from './components/LiveDiffTable';
 import { SchemaVisualizer } from './components/SchemaVisualizer';
-import { MissionSelection } from './components/MissionSelection';
 import { PathVisualizer } from './components/PathVisualizer';
 import { SuccessToast } from './components/SuccessToast';
 import { AchievementToast } from './components/AchievementToast';
@@ -13,33 +12,25 @@ import { TypewriterText } from './components/TypewriterText';
 import { Mascot } from './components/Mascot';
 import { ReviewPanel } from './components/ReviewPanel';
 import { ExamPanel } from './components/ExamPanel';
+import { Atmosphere } from './components/Atmosphere';
 import { useSqlEngine } from './hooks/useSqlEngine';
 import { useProgressStore } from './store/useProgressStore';
 import { extractSchema } from './lib/schema';
 import { explainConcept } from './lib/whyItWorks';
 import { domains } from './domains';
+import { worldByDomain } from './lib/worlds';
 import {
   CheckCircle2, LogOut, ChevronRight,
   FlaskConical, LineChart, Rocket, RotateCcw
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Landing = lazy(() => import('./components/landing/Landing'));
-
-const ENTERED_KEY = 'tuples_entered';
-
-function hasEnteredBefore(): boolean {
-  try {
-    return localStorage.getItem(ENTERED_KEY) === '1';
-  } catch {
-    return true; // storage unavailable — don't trap the user on the landing
-  }
-}
+const Home = lazy(() => import('./components/home/Home'));
 
 const domainIcons: Record<string, React.ReactNode> = {
-  'clinical-trials-research': <FlaskConical size={16} className="text-emerald-400" />,
-  'algorithmic-trading': <LineChart size={16} className="text-indigo-400" />,
-  'space-logistics': <Rocket size={16} className="text-amber-400" />,
+  'clinical-trials-research': <FlaskConical size={16} />,
+  'algorithmic-trading': <LineChart size={16} />,
+  'space-logistics': <Rocket size={16} />,
 };
 
 const phaseColors: Record<string, string> = {
@@ -52,12 +43,6 @@ const phaseColors: Record<string, string> = {
 
 function App() {
   const { activeDomainId, progressByDomain, setActiveDomain, resetDomain } = useProgressStore();
-  // Landing shows once for brand-new visitors; anyone with mission progress skips it.
-  const [entered, setEntered] = useState(hasEnteredBefore);
-  const handleEnter = () => {
-    try { localStorage.setItem(ENTERED_KEY, '1'); } catch { /* best effort */ }
-    setEntered(true);
-  };
   const lastSolve = useProgressStore((s) => s.lastSolve);
   const { isReady, db, error, results, isSuccess, executeQuery, runRawQuery } = useSqlEngine();
 
@@ -119,15 +104,11 @@ function App() {
   };
 
   if (!activeDomainId) {
-    const hasAnyProgress = Object.values(progressByDomain).some((p) => p.currentStepIndex > 0);
-    if (!entered && !hasAnyProgress) {
-      return (
-        <Suspense fallback={<div className="min-h-screen" />}>
-          <Landing onEnter={handleEnter} />
-        </Suspense>
-      );
-    }
-    return <MissionSelection />;
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-canvas" />}>
+        <Home />
+      </Suspense>
+    );
   }
 
   if (!isReady) {
@@ -154,7 +135,14 @@ function App() {
   }
 
   const domain = domains[activeDomainId];
-  if (!domain) return <MissionSelection />;
+  if (!domain) {
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-canvas" />}>
+        <Home />
+      </Suspense>
+    );
+  }
+  const world = worldByDomain[activeDomainId];
 
   const progress = progressByDomain[activeDomainId] || { currentStepIndex: 0 };
   const currentStepIndex = progress.currentStepIndex;
@@ -166,9 +154,17 @@ function App() {
   const toastStep = lastSuccessStep !== null ? domain.curriculumMatrix[lastSuccessStep] : null;
 
   return (
-    <>
+    <div data-world={world?.id} className="contents">
       <JuiceController />
       <Mascot hasError={!!error} />
+      {world && (
+        <Atmosphere
+          tint={world.accent}
+          intensity={0.35}
+          density={0.35}
+          className="fixed inset-0 w-full h-full -z-10"
+        />
+      )}
       <BentoLayout
         header={
           <>
@@ -180,8 +176,11 @@ function App() {
               </div>
               <div className="h-4 w-px bg-white/10" />
               <div className="flex items-center gap-2 text-sm">
-                {domainIcons[activeDomainId]}
-                <span className="text-gray-200 font-medium">{domain.domainName}</span>
+                <span style={{ color: 'var(--world-accent)' }}>{domainIcons[activeDomainId]}</span>
+                <span className="text-gray-200 font-medium">{world?.name ?? domain.domainName}</span>
+                <span className="hidden lg:inline font-mono text-[10px] uppercase tracking-widest text-gray-600">
+                  {world?.role}
+                </span>
               </div>
             </div>
 
@@ -208,7 +207,8 @@ function App() {
                   <motion.div
                     animate={{ width: `${percent}%` }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
-                    className="h-full bg-gradient-to-r from-volt-dim to-volt rounded-full"
+                    className="h-full rounded-full"
+                    style={{ background: 'var(--world-accent)' }}
                   />
                 </div>
                 <span className="text-xs font-mono text-gray-500 w-8 tabular-nums">{percent}%</span>
@@ -228,7 +228,7 @@ function App() {
                   hover:text-gray-200 bg-white/5 hover:bg-white/10 border border-white/8 hover:border-white/15
                   rounded-lg transition-all"
               >
-                <LogOut size={13} /> <span className="hidden sm:inline">Switch Mission</span>
+                <LogOut size={13} /> <span className="hidden sm:inline">Switch World</span>
               </button>
             </div>
           </>
@@ -255,14 +255,15 @@ function App() {
                 </div>
                 <h2 className="text-xl font-bold text-white mb-1">Mission Complete!</h2>
                 <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
-                  All {domain.curriculumMatrix.length} steps of <span className="text-gray-200">{domain.domainName}</span> mastered.
+                  All {domain.curriculumMatrix.length} steps of <span className="text-gray-200">{world?.name ?? domain.domainName}</span> mastered.
                   One thing remains: the certification exam, waiting in the terminal below.
                 </p>
                 <button
                   onClick={() => setActiveDomain(null)}
-                  className="mt-5 px-5 py-2.5 text-sm font-semibold bg-indigo-500 hover:bg-indigo-400 text-white rounded-xl transition-all shadow-lg shadow-indigo-500/25"
+                  className="mt-5 px-5 py-2.5 text-sm font-bold rounded-xl transition-all hover:brightness-110"
+                  style={{ background: 'var(--world-accent)', color: 'var(--world-ink)' }}
                 >
-                  Choose Another Mission
+                  Choose Another World
                 </button>
               </motion.div>
             ) : (
@@ -275,7 +276,10 @@ function App() {
                 className="space-y-3"
               >
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-lg">
+                  <span
+                    className="text-[10px] font-mono font-bold uppercase tracking-widest px-2.5 py-1 rounded-lg border"
+                    style={{ color: 'var(--world-accent)', background: 'var(--world-soft)', borderColor: 'var(--world-border)' }}
+                  >
                     Mission Briefing
                   </span>
                   <span className="text-[10px] font-mono text-gray-500 bg-white/3 border border-white/5 px-2 py-1 rounded-md">
@@ -335,7 +339,7 @@ function App() {
           triggerKey={lastSuccessStep ?? 0}
         />
       )}
-    </>
+    </div>
   );
 }
 

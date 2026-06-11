@@ -39,15 +39,19 @@ export function SuccessToast({ stepIndex, totalSteps, conceptFocus, isLastStep, 
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+          style={{ borderColor: 'var(--world-border)' }}
           className="fixed bottom-6 right-6 z-50 flex items-start gap-4 px-5 py-4 rounded-2xl
-            glass-card border-volt/25 shadow-2xl shadow-volt/5 max-w-sm"
+            glass-card shadow-2xl max-w-sm"
           data-testid="success-toast"
         >
-          <div className="w-10 h-10 rounded-xl bg-volt/10 border border-volt/25 flex items-center justify-center shrink-0">
+          <div
+            className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
+            style={{ background: 'var(--world-soft)', borderColor: 'var(--world-border)' }}
+          >
             {isLastStep ? (
               <Trophy size={20} className="text-amber-400" />
             ) : (
-              <Check size={20} className="text-volt" />
+              <Check size={20} style={{ color: 'var(--world-accent)' }} />
             )}
           </div>
           <div>
@@ -62,7 +66,7 @@ export function SuccessToast({ stepIndex, totalSteps, conceptFocus, isLastStep, 
             <p className="text-gray-400 text-xs font-mono lowercase">{conceptFocus.replace(/_/g, ' ')}</p>
             {explanation && (
               <p className="text-gray-300 text-[11px] leading-relaxed mt-1.5 pt-1.5 border-t border-white/5">
-                <span className="text-volt font-semibold">Why it works: </span>{explanation}
+                <span className="font-semibold" style={{ color: 'var(--world-accent)' }}>Why it works: </span>{explanation}
               </p>
             )}
             {!isLastStep && (

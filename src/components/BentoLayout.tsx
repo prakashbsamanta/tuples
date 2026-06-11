@@ -17,8 +17,8 @@ function Handle({ direction }: { direction: 'horizontal' | 'vertical' }) {
   return (
     <PanelResizeHandle
       className={
-        'group relative shrink-0 bg-white/5 transition-colors data-[resize-handle-state=hover]:bg-indigo-500/40 ' +
-        'data-[resize-handle-state=drag]:bg-indigo-500/60 ' +
+        'group relative shrink-0 bg-white/5 transition-colors data-[resize-handle-state=hover]:bg-(--world-border) ' +
+        'data-[resize-handle-state=drag]:bg-(--world-accent) ' +
         (vertical ? 'h-px w-full cursor-row-resize' : 'w-px h-full cursor-col-resize')
       }
     >
@@ -72,10 +72,10 @@ export function BentoLayout({ header, pathVisualizer, narrative, terminal, visua
 
   return (
     <div className="h-screen flex flex-col bg-transparent text-gray-100 overflow-hidden">
-      {/* Ambient glow */}
+      {/* Ambient glow — tinted by the active world */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-1/3 w-[500px] h-[300px] rounded-full bg-indigo-600/5 blur-[100px]" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] rounded-full bg-violet-600/5 blur-[80px]" />
+        <div className="absolute top-0 left-1/3 w-[500px] h-[300px] rounded-full blur-[100px]" style={{ background: 'var(--world-glow)' }} />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] rounded-full blur-[80px]" style={{ background: 'var(--world-glow)' }} />
       </div>
 
       {/* Header (glass) */}
