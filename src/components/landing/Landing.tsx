@@ -14,8 +14,8 @@ const HERO_QUERY = "SELECT skill FROM you\n  JOIN tuples USING (curiosity);";
 
 const HERO_ROWS = [
   ['CREATE TABLE', 'novice'],
-  ['INNER JOIN', 'operator'],
-  ['WINDOW FUNCTIONS', 'architect'],
+  ['RECURSIVE CTE', 'architect'],
+  ['EXPLAIN QUERY PLAN', 'principal'],
 ];
 
 const domainMeta: Record<string, { icon: React.ReactNode; accent: string; ring: string }> = {
@@ -38,8 +38,8 @@ const domainMeta: Record<string, { icon: React.ReactNode; accent: string; ring: 
 
 const PHASES = [
   { name: 'Novice', desc: 'Tables, rows, your first SELECT', icon: <Database size={18} /> },
-  { name: 'Operator', desc: 'Joins, aggregates, GROUP BY fluency', icon: <Terminal size={18} /> },
-  { name: 'Architect', desc: 'CTEs, windows, views — production SQL', icon: <GitBranch size={18} /> },
+  { name: 'Operator', desc: 'Joins, sets, recursion, NULL traps', icon: <Terminal size={18} /> },
+  { name: 'Architect+', desc: 'Indexes, triggers, query plans, capstones', icon: <GitBranch size={18} /> },
 ];
 
 export default function Landing({ onEnter }: LandingProps) {
@@ -221,8 +221,9 @@ export default function Landing({ onEnter }: LandingProps) {
           Three worlds. <span className="text-gray-600">One language.</span>
         </h2>
         <p data-rise className="text-gray-500 max-w-lg mb-14">
-          Every mission is a real schema you build from nothing — 35 progressive
-          steps from your first table to window functions.
+          Three expert tracks on real, messy data — build the schema, interrogate
+          the market, optimize the network. 140 steps, hidden test datasets,
+          a certification exam at the end of each.
         </p>
         <div className="grid md:grid-cols-3 gap-5">
           {domainList.map((d) => {
@@ -248,7 +249,7 @@ export default function Landing({ onEnter }: LandingProps) {
       {/* ── Skill path ── */}
       <section data-path className="relative px-6 sm:px-10 py-28 max-w-6xl mx-auto">
         <h2 data-rise className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-16">
-          Novice to <span className="text-gradient-brand">architect.</span>
+          Novice to <span className="text-gradient-brand">principal.</span>
         </h2>
 
         {/* Connecting line (draws on scroll) */}

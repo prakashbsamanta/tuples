@@ -12,6 +12,7 @@ import { JuiceController } from './components/JuiceController';
 import { TypewriterText } from './components/TypewriterText';
 import { Mascot } from './components/Mascot';
 import { ReviewPanel } from './components/ReviewPanel';
+import { ExamPanel } from './components/ExamPanel';
 import { useSqlEngine } from './hooks/useSqlEngine';
 import { useProgressStore } from './store/useProgressStore';
 import { extractSchema } from './lib/schema';
@@ -45,6 +46,8 @@ const phaseColors: Record<string, string> = {
   'Novice': 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
   'Operator': 'text-blue-400 bg-blue-500/10 border-blue-500/20',
   'Architect': 'text-violet-400 bg-violet-500/10 border-violet-500/20',
+  'Principal': 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+  'Capstone': 'text-rose-400 bg-rose-500/10 border-rose-500/20',
 };
 
 function App() {
@@ -252,7 +255,8 @@ function App() {
                 </div>
                 <h2 className="text-xl font-bold text-white mb-1">Mission Complete!</h2>
                 <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
-                  You've built the complete <span className="text-gray-200">{domain.domainName}</span> database architecture from scratch — 35 steps mastered.
+                  All {domain.curriculumMatrix.length} steps of <span className="text-gray-200">{domain.domainName}</span> mastered.
+                  One thing remains: the certification exam, waiting in the terminal below.
                 </p>
                 <button
                   onClick={() => setActiveDomain(null)}
@@ -302,11 +306,11 @@ function App() {
               hints={currentStep?.hints ?? null}
               schema={editorSchema}
               onRevealHint={useProgressStore.getState().revealHint}
+              challengeType={currentStep?.challengeType}
+              starterQuery={currentStep?.starterQuery}
             />
           ) : (
-            <div className="h-full flex items-center justify-center text-gray-700 font-mono text-sm">
-              -- Mission Complete --
-            </div>
+            <ExamPanel domain={domain} db={db} schema={editorSchema} />
           )
         }
         visualizer={<SchemaVisualizer db={db} />}

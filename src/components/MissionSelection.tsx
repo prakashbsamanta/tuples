@@ -2,10 +2,18 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import {
   Rocket, LineChart, FlaskConical, ArrowRight,
-  CheckCircle, Trophy, Zap, RotateCcw
+  CheckCircle, Trophy, Zap, RotateCcw, Award
 } from 'lucide-react';
 import { domains } from '../domains';
 import { useProgressStore } from '../store/useProgressStore';
+
+const phasePillColor: Record<string, string> = {
+  'Novice': 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20',
+  'Operator': 'bg-blue-500/15 text-blue-400 border-blue-500/20',
+  'Architect': 'bg-violet-500/15 text-violet-400 border-violet-500/20',
+  'Principal': 'bg-amber-500/15 text-amber-400 border-amber-500/20',
+  'Capstone': 'bg-rose-500/15 text-rose-400 border-rose-500/20',
+};
 
 const domainConfig: Record<string, { icon: React.ReactNode; color: string; accentBg: string; bar: string; tag: string }> = {
   'clinical-trials-research': {
@@ -32,8 +40,10 @@ const domainConfig: Record<string, { icon: React.ReactNode; color: string; accen
 };
 
 export function MissionSelection() {
-  const { setActiveDomain, progressByDomain, resetDomain } = useProgressStore();
+  const { setActiveDomain, progressByDomain, resetDomain, certifications } = useProgressStore();
   const domainList = Object.values(domains);
+  const allSteps = domainList.reduce((a, d) => a + d.curriculumMatrix.length, 0);
+  const totalConcepts = new Set(domainList.flatMap(d => d.curriculumMatrix.map(s => s.conceptFocus))).size;
 
   const handleReset = (e: React.MouseEvent, domainId: string, name: string) => {
     e.stopPropagation();
@@ -60,7 +70,7 @@ export function MissionSelection() {
         </div>
         <div className="flex items-center gap-2 text-xs text-gray-500 font-mono">
           <Zap size={12} className="text-volt" />
-          <span>35 STEPS PER MISSION</span>
+          <span>{allSteps} STEPS · {domainList.length} EXPERT TRACKS</span>
         </div>
       </nav>
 
@@ -79,8 +89,9 @@ export function MissionSelection() {
             <span className="text-gradient-brand">mission.</span>
           </h1>
           <p className="text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
-            Master SQL by building real production databases from scratch.
-            35 progressive steps per mission — from CREATE TABLE to advanced window functions.
+            Three expert tracks — build it, analyze it, make it fast.
+            {' '}{allSteps} progressive steps from your first CREATE TABLE to query plans,
+            triggers, and recursive graph traversal. Finish a track, pass its exam, get certified.
           </p>
         </motion.div>
       </div>
@@ -96,11 +107,15 @@ export function MissionSelection() {
             const percent = Math.round((currentStep / totalSteps) * 100);
             const isStarted = currentStep > 0;
             const isComplete = currentStep >= totalSteps;
+            const certification = certifications[domain.domainId];
 
-            // Phase breakdown
-            const noviceSteps = domain.curriculumMatrix.filter(s => s.phase === 'Novice').length;
-            const operatorSteps = domain.curriculumMatrix.filter(s => s.phase === 'Operator').length;
-            const architectSteps = domain.curriculumMatrix.filter(s => s.phase === 'Architect').length;
+            // Phase breakdown in curriculum order
+            const phaseCounts: Array<{ label: string; count: number }> = [];
+            for (const s of domain.curriculumMatrix) {
+              const last = phaseCounts[phaseCounts.length - 1];
+              if (last && last.label === s.phase) last.count++;
+              else phaseCounts.push({ label: s.phase, count: 1 });
+            }
 
             return (
               <motion.div
@@ -129,7 +144,15 @@ export function MissionSelection() {
                       <span className={`text-xs font-semibold px-2.5 py-1 rounded-full bg-white/5 border border-white/8 ${config.color}`}>
                         {config.tag}
                       </span>
-                      {isComplete && (
+                      {certification && (
+                        <span
+                          title={`Certified ${certification.score}/${certification.total} on ${certification.earnedOn}`}
+                          className="text-xs font-semibold px-2.5 py-1 rounded-full bg-volt/10 border border-volt/30 text-volt flex items-center gap-1"
+                        >
+                          <Award size={10} /> Certified
+                        </span>
+                      )}
+                      {isComplete && !certification && (
                         <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 flex items-center gap-1">
                           <Trophy size={10} /> Complete
                         </span>
@@ -147,13 +170,9 @@ export function MissionSelection() {
                   <p className="text-gray-400 text-sm leading-relaxed relative flex-1 mb-6">{domain.domainDescription}</p>
 
                   {/* Phase Pills */}
-                  <div className="flex gap-2 mb-6 relative">
-                    {[
-                      { label: 'Novice', count: noviceSteps, color: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20' },
-                      { label: 'Operator', count: operatorSteps, color: 'bg-blue-500/15 text-blue-400 border-blue-500/20' },
-                      { label: 'Architect', count: architectSteps, color: 'bg-violet-500/15 text-violet-400 border-violet-500/20' }
-                    ].map(phase => (
-                      <div key={phase.label} className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs font-medium ${phase.color}`}>
+                  <div className="flex flex-wrap gap-1.5 mb-6 relative">
+                    {phaseCounts.map(phase => (
+                      <div key={phase.label} className={`flex items-center gap-1 px-2 py-1 rounded-lg border text-[11px] font-medium ${phasePillColor[phase.label] ?? 'bg-white/5 text-gray-400 border-white/10'}`}>
                         <span className="font-mono font-bold">{phase.count}</span>
                         <span className="opacity-80">{phase.label}</span>
                       </div>
@@ -193,7 +212,9 @@ export function MissionSelection() {
                   <button className={`mt-6 w-full py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2
                     bg-white/5 hover:bg-white/10 border border-white/8 hover:border-white/15 
                     text-gray-200 transition-all duration-200 relative group/btn`}>
-                    {isComplete ? (
+                    {isComplete && !certification ? (
+                      <><Award size={16} className="text-volt" /> Take the Exam</>
+                    ) : isComplete ? (
                       <><CheckCircle size={16} className="text-emerald-400" /> Review Mission</>
                     ) : isStarted ? (
                       <>Continue Mission <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" /></>
@@ -215,9 +236,9 @@ export function MissionSelection() {
           className="mt-12 flex items-center justify-center gap-8 text-sm text-gray-500"
         >
           {[
-            { label: 'Total Questions', value: `${domainList.reduce((a, d) => a + d.curriculumMatrix.length, 0)}` },
-            { label: 'Mission Domains', value: `${domainList.length}` },
-            { label: 'SQL Concepts', value: '30+' },
+            { label: 'Total Steps', value: `${allSteps}` },
+            { label: 'Expert Tracks', value: `${domainList.length}` },
+            { label: 'SQL Concepts', value: `${totalConcepts}` },
             { label: 'Progress Saved', value: 'Locally' },
           ].map((stat, i) => (
             <div key={i} className="text-center">

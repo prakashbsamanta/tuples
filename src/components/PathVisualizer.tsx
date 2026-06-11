@@ -16,12 +16,16 @@ const phaseColor: Record<string, string> = {
   'Novice': 'text-emerald-400',
   'Operator': 'text-blue-400',
   'Architect': 'text-violet-400',
+  'Principal': 'text-amber-400',
+  'Capstone': 'text-rose-400',
 };
 
 const phaseDot: Record<string, string> = {
   'Novice': 'bg-emerald-400',
   'Operator': 'bg-blue-400',
   'Architect': 'bg-violet-400',
+  'Principal': 'bg-amber-400',
+  'Capstone': 'bg-rose-400',
 };
 
 export function PathVisualizer({ steps, currentStepIndex, reviewStepIndex = null, onSelectStep }: PathVisualizerProps) {

@@ -51,7 +51,6 @@ function tradingDay(offset: number): string {
 
 // ── Trading: The Analyst ───────────────────────────────────────────────
 
-const SECTORS = ['Tech', 'Energy', 'Health', 'Finance'];
 const SYMBOLS: Array<[string, string, string, number]> = [
   ['NVAX', 'NovaVax Systems', 'Health', 2014], ['HELX', 'Helix Biotech', 'Health', 2018],
   ['CURE', 'CureWell Labs', 'Health', 2011], ['GENM', 'GenomicaMed', 'Health', 2020],

@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 
 const APP = '/tuples/';
-const STEP1_SQL = 'CREATE TABLE patients (patient_id INT, patient_name TEXT);';
+const STEP1_SQL = 'CREATE TABLE patients (patient_id INTEGER PRIMARY KEY, full_name TEXT, age INTEGER);';
 
 async function typeInEditor(page: Page, sql: string) {
   const editor = page.locator('.cm-content');
@@ -38,10 +38,10 @@ test('full journey: landing → mission → solve → persist → review', async
   // ── Persistence: reload skips landing, keeps progress ──
   await page.reload();
   await expect(page.locator('.cm-content')).toBeVisible({ timeout: 30_000 });
-  await expect(page.getByText(/Step .*2.* \/ .*35|Step 2/).first()).toBeVisible();
+  await expect(page.getByText(/Step .*2.* \/ .*44|Step 2/).first()).toBeVisible();
 
   // ── Review mode: open completed step 1, then Esc back ──
-  await page.getByRole('button', { name: /CREATE TABLE BASIC/ }).click();
+  await page.getByRole('button', { name: /CREATE TABLE TYPED/ }).click();
   await expect(page.getByText(/Reviewing|Review/i).first()).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.locator('.cm-content')).toBeVisible();

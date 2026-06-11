@@ -1,6 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { Play, Lightbulb, Copy, Check, Sparkles, FlaskConical } from 'lucide-react';
+import { Play, Lightbulb, Copy, Check, Sparkles, FlaskConical, Route } from 'lucide-react';
 import { coachError } from '../lib/errorCoach';
+import type { ChallengeType } from '../domains';
 
 // Lazy-load CodeMirror so its ~140 kB (gz) bundle stays out of the initial
 // payload; it loads when the terminal first mounts (i.e. inside a mission).
@@ -17,18 +18,41 @@ interface SqlTerminalProps {
   } | null;
   schema: Record<string, string[]>;
   onRevealHint?: () => void;
+  /** 'fix'/'optimize' pre-fill the editor with starterQuery; 'open' = no scaffold. */
+  challengeType?: ChallengeType;
+  starterQuery?: string;
 }
 
-export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onRevealHint }: SqlTerminalProps) {
-  const [query, setQuery] = useState('');
+const challengeBadge: Record<string, { label: string; cls: string; title: string }> = {
+  fix: {
+    label: 'FIX THE BUG',
+    cls: 'text-red-400 bg-red-500/10 border-red-500/25',
+    title: 'This query is broken in a subtle way. Diagnose it and repair it.',
+  },
+  optimize: {
+    label: 'OPTIMIZE',
+    cls: 'text-amber-400 bg-amber-500/10 border-amber-500/25',
+    title: 'This query works but is written poorly. Rewrite it the right way.',
+  },
+  open: {
+    label: 'OPEN CHALLENGE',
+    cls: 'text-violet-400 bg-violet-500/10 border-violet-500/25',
+    title: 'No scaffolding — design the query yourself from the briefing.',
+  },
+};
+
+export function SqlTerminal({
+  onExecute, onRawExecute, error, hints, schema, onRevealHint, challengeType, starterQuery,
+}: SqlTerminalProps) {
+  const [query, setQuery] = useState(starterQuery ?? '');
   const [hintLevel, setHintLevel] = useState<0 | 1 | 2 | 3>(0);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    setQuery('');
+    setQuery(starterQuery ?? '');
     setHintLevel(0);
     setCopied(false);
-  }, [hints]);
+  }, [hints, starterQuery]);
 
   const handleExecute = () => {
     if (query.trim()) onExecute(query);
@@ -56,6 +80,14 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onR
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/50" />
           </div>
           <span className="font-mono text-[11px] text-gray-600 sm:ml-1 tracking-widest uppercase">query.sql</span>
+          {challengeType && challengeBadge[challengeType] && (
+            <span
+              title={challengeBadge[challengeType].title}
+              className={`px-2 py-0.5 rounded-md border text-[10px] font-mono font-bold tracking-wider ${challengeBadge[challengeType].cls}`}
+            >
+              {challengeBadge[challengeType].label}
+            </span>
+          )}
         </div>
         <div className="flex items-center gap-2 flex-wrap justify-end">
           {hints && nextHintLabel && (
@@ -77,6 +109,17 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onR
             >
               <FlaskConical size={12} className="text-sky-400" />
               Test Run
+            </button>
+          )}
+          {onRawExecute && (
+            <button
+              onClick={() => query.trim() && onRawExecute(`EXPLAIN QUERY PLAN ${query}`)}
+              title="Show how SQLite will execute your query (SCAN vs SEARCH, which indexes). Runs as a preview — never checks the answer or changes your progress."
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-gray-300
+                bg-white/5 hover:bg-white/10 border border-white/8 rounded-lg transition-all"
+            >
+              <Route size={12} className="text-violet-400" />
+              Explain
             </button>
           )}
           <button

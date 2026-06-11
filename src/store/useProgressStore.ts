@@ -8,6 +8,12 @@ export interface DomainProgress {
   historicalQueries: Record<number, string>;
 }
 
+export interface Certification {
+  score: number;
+  total: number;
+  earnedOn: string; // YYYY-MM-DD
+}
+
 export interface LastSolve {
   xpGained: number;
   combo: number;
@@ -20,6 +26,8 @@ export interface ProgressState {
   // ── Existing per-domain progress ──
   activeDomainId: string | null;
   progressByDomain: Record<string, DomainProgress>;
+  /** Exam certifications earned per domain (score >= passing threshold). */
+  certifications: Record<string, Certification>;
 
   // ── Global game state ──
   xp: number;
@@ -43,6 +51,7 @@ export interface ProgressState {
   revealHint: () => void;
   recordSolve: (meta: { conceptFocus: string }) => void;
   clearLastSolve: () => void;
+  recordCertification: (domainId: string, cert: Certification) => void;
 }
 
 const todayStr = () => {
@@ -71,6 +80,7 @@ export const useProgressStore = create<ProgressState>()(
     (set) => ({
       activeDomainId: null,
       progressByDomain: {},
+      certifications: {},
       ...GAME_DEFAULTS,
 
       setActiveDomain: (domainId) =>
@@ -173,12 +183,34 @@ export const useProgressStore = create<ProgressState>()(
         }),
 
       clearLastSolve: () => set({ lastSolve: null }),
+
+      recordCertification: (domainId, cert) =>
+        set((state) => ({
+          certifications: { ...state.certifications, [domainId]: cert },
+        })),
     }),
     {
       name: 'tuples_user_progress',
+      // v2: the expert-curriculum overhaul renumbered every step, so persisted
+      // step indices/queries from v1 are meaningless — reset mission progress
+      // but keep global XP, streaks, and achievements.
+      version: 2,
+      migrate: (persisted, version) => {
+        const state = (persisted ?? {}) as ProgressState;
+        if (version < 2) {
+          return {
+            ...state,
+            activeDomainId: null,
+            progressByDomain: {},
+            certifications: {},
+          };
+        }
+        return state;
+      },
       partialize: (state) => ({
         activeDomainId: state.activeDomainId,
         progressByDomain: state.progressByDomain,
+        certifications: state.certifications,
         xp: state.xp,
         combo: state.combo,
         bestCombo: state.bestCombo,
