@@ -80,3 +80,56 @@ test('error coaching and test-run preview', async ({ page }) => {
   await expect(page.getByText('greeting').first()).toBeVisible();
   await expect(page.getByText('Step 1', { exact: false }).first()).toBeVisible();
 });
+
+test('each world themes the workspace with its own accent', async ({ page }) => {
+  await page.goto(APP);
+
+  // The Belt → amber accents flow through the workspace via data-world tokens.
+  await page.getByTestId('world-belt').click();
+  await expect(page.locator('.cm-content')).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByText('The Belt').first()).toBeVisible();
+  const beltAccent = await page
+    .locator('[data-world="belt"]')
+    .first()
+    .evaluate((el) => getComputedStyle(el).getPropertyValue('--world-accent').trim());
+  expect(beltAccent).toBe('#ffb454');
+
+  // Switching to The Lab swaps the entire palette.
+  await page.getByRole('button', { name: /Switch World/ }).click();
+  await page.getByTestId('world-lab').click();
+  await expect(page.getByText('The Lab').first()).toBeVisible({ timeout: 30_000 });
+  const labAccent = await page
+    .locator('[data-world="lab"]')
+    .first()
+    .evaluate((el) => getComputedStyle(el).getPropertyValue('--world-accent').trim());
+  expect(labAccent).toBe('#5dcaa5');
+});
+
+test('completed mission offers the certification exam', async ({ page }) => {
+  // Seed a finished Analyst track (45/45) directly into the persisted store.
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      'tuples_user_progress',
+      JSON.stringify({
+        state: {
+          activeDomainId: null,
+          progressByDomain: {
+            'algorithmic-trading': { currentStepIndex: 45, historicalQueries: {} },
+          },
+          certifications: {},
+          xp: 0, combo: 0, bestCombo: 0, totalSolved: 0, noHintSolves: 0,
+          solvedConcepts: [], streakCount: 0, streakLastDate: null, unlockedAchievements: [],
+        },
+        version: 2,
+      })
+    );
+  });
+  await page.goto(APP);
+
+  // The panel reflects completion, and entering leads to the exam intro.
+  await expect(page.getByTestId('world-floor')).toContainText(/exam/i);
+  await page.getByTestId('world-floor').click();
+  await expect(page.getByRole('heading', { name: 'Certification Exam' })).toBeVisible({ timeout: 60_000 });
+  await expect(page.getByTestId('exam-start')).toBeVisible();
+  await expect(page.getByText(/Score 6\/8 or better/)).toBeVisible();
+});

@@ -309,6 +309,10 @@ export default function Home() {
         </div>
         <p className="mt-14 text-center font-mono text-[11px] text-gray-600">
           <span className="text-volt">(,)</span> Tuples — SQL, spoken fluently. Progress saved locally.
+          {' · '}
+          <a href={`${import.meta.env.BASE_URL}reports/index.html`} className="hover:text-volt transition-colors underline decoration-dotted underline-offset-2">
+            CI reports
+          </a>
         </p>
       </section>
     </div>

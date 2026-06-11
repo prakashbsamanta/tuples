@@ -54,7 +54,9 @@ for (const domain of Object.values(domains)) {
       });
     });
 
-    it('every step is solvable with its canonical solution', () => {
+    // Generous timeouts: these build hundreds of seeded DBs (base + hidden
+    // variant per step) and run visibly slower under coverage instrumentation.
+    it('every step is solvable with its canonical solution', { timeout: 180_000 }, () => {
       domain.curriculumMatrix.forEach((step, i) => {
         const outcome = attempt(domain, step, i, step.hints.tier3Solution);
         expect(
@@ -64,7 +66,7 @@ for (const domain of Object.values(domains)) {
       });
     });
 
-    it('fix-the-bug starter queries do NOT pass as-is', () => {
+    it('fix-the-bug starter queries do NOT pass as-is', { timeout: 60_000 }, () => {
       domain.curriculumMatrix.forEach((step, i) => {
         if (step.challengeType !== 'fix' || !step.starterQuery) return;
         let pass = false;
@@ -77,7 +79,7 @@ for (const domain of Object.values(domains)) {
       });
     });
 
-    it('every exam question is solvable on the completed mission DB', () => {
+    it('every exam question is solvable on the completed mission DB', { timeout: 60_000 }, () => {
       expect(domain.examPool.length).toBeGreaterThanOrEqual(6);
       const db = buildMissionDb(SQL, domain, domain.curriculumMatrix.length);
       try {

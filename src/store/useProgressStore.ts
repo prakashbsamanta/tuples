@@ -61,6 +61,24 @@ const todayStr = () => {
   return `${d.getFullYear()}-${m}-${day}`;
 };
 
+/**
+ * Persist migration. v1 → v2 resets mission progress (the expert-curriculum
+ * overhaul renumbered every step) while keeping global XP/streaks/achievements.
+ * Exported for direct testing — the persist API is unavailable in node.
+ */
+export function migrateProgress(persisted: unknown, version: number): ProgressState {
+  const state = (persisted ?? {}) as ProgressState;
+  if (version < 2) {
+    return {
+      ...state,
+      activeDomainId: null,
+      progressByDomain: {},
+      certifications: {},
+    };
+  }
+  return state;
+}
+
 const GAME_DEFAULTS = {
   xp: 0,
   combo: 0,
@@ -195,18 +213,7 @@ export const useProgressStore = create<ProgressState>()(
       // step indices/queries from v1 are meaningless — reset mission progress
       // but keep global XP, streaks, and achievements.
       version: 2,
-      migrate: (persisted, version) => {
-        const state = (persisted ?? {}) as ProgressState;
-        if (version < 2) {
-          return {
-            ...state,
-            activeDomainId: null,
-            progressByDomain: {},
-            certifications: {},
-          };
-        }
-        return state;
-      },
+      migrate: migrateProgress,
       partialize: (state) => ({
         activeDomainId: state.activeDomainId,
         progressByDomain: state.progressByDomain,

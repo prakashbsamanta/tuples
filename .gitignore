@@ -46,3 +46,4 @@ vite.config.d.ts
 .lighthouseci/
 test-results/
 playwright-report/
+reports/

@@ -5,7 +5,10 @@ export default defineConfig({
   timeout: 60_000,
   fullyParallel: false,
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? 'github' : 'list',
+  // In CI, also emit machine-readable results for the reports dashboard.
+  reporter: process.env.CI
+    ? [['github'], ['json', { outputFile: 'reports/playwright.json' }]]
+    : 'list',
   use: {
     baseURL: 'http://localhost:4173/tuples/',
     trace: 'retain-on-failure',

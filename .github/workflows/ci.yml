@@ -4,6 +4,11 @@ name: CI
 # Runs on every PR targeting main, and on direct pushes to main (post-merge
 # safety net). Branch protection makes the `build-test` check required, so a PR
 # cannot be merged unless this is green.
+#
+# Every run (PR and production) also publishes a machine-readable run record to
+# the `ci-reports` branch, which feeds the public reports dashboard at
+# /tuples/reports/ — six months of unit/integration/e2e/coverage/bundle/
+# Lighthouse history with links back to each run's logs.
 
 on:
   pull_request:
@@ -12,7 +17,8 @@ on:
     branches: [main]
   workflow_dispatch: {}
 
-# Least privilege: this workflow only needs to read the repo contents.
+# Least privilege by default; the report-publishing job elevates contents to
+# write for itself only.
 permissions:
   contents: read
 
@@ -25,7 +31,7 @@ jobs:
   build-test:
     name: build-test
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -44,20 +50,31 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Unit tests
-        run: npm test
+      # Unit + integration tests with coverage and a JSON results file for the
+      # reports dashboard. The default reporter keeps human-readable CI logs.
+      - name: Unit & integration tests
+        run: >
+          npm test --
+          --coverage
+          --reporter=default
+          --reporter=json
+          --outputFile=reports/vitest.json
 
       # `npm run build` runs `tsc -b` (type-check) then `vite build`, so a type
       # error or a broken build fails the gate here.
       - name: Build
+        if: always()
         run: npm run build
 
       # Fail the build if the gzipped critical-path bundle exceeds its budget.
+      # Also writes reports/size.json for the dashboard.
       - name: Bundle-size budget
+        if: always()
         run: npm run size
 
       # Keep the production bundle around for inspection / debugging a run.
       - name: Upload build artifact
+        if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: dist
@@ -65,10 +82,103 @@ jobs:
           retention-days: 7
 
       # End-to-end smoke: boots the production build in vite preview and walks
-      # the real user journey (landing → mission → solve a step on the WASM
-      # engine → persistence → review mode).
+      # the real user journeys (homepage triptych → world → solve a step on the
+      # WASM engine → persistence → review; proof playground; theming; exam).
       - name: Install Playwright Chromium
+        if: always()
         run: npx playwright install --with-deps chromium
 
-      - name: E2E smoke tests
+      - name: E2E tests
+        if: always()
         run: npm run test:e2e
+
+      # Lighthouse lab data for the dashboard (perf/a11y/best-practices +
+      # FCP/LCP/TBT/CLS). Informational — lab scores are noisy in CI; the
+      # deterministic weight gate is the bundle-size budget above.
+      - name: Lighthouse (report data)
+        if: always()
+        continue-on-error: true
+        run: |
+          npm run preview -- --port 4173 --strictPort &
+          for i in $(seq 1 30); do
+            curl -fsS http://localhost:4173/tuples/ >/dev/null 2>&1 && break || sleep 1
+          done
+          CHROME_PATH=$(node -e "console.log(require('@playwright/test').chromium.executablePath())") \
+            npx lighthouse http://localhost:4173/tuples/ \
+            --quiet \
+            --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices \
+            --output=json --output-path=reports/lighthouse-full.json
+          kill %1 || true
+
+      # Assemble the run record (works on partial data when earlier gates
+      # failed — failed runs belong on the dashboard too).
+      - name: Collect run record
+        if: always()
+        run: node scripts/report/collect.mjs
+
+      - name: Upload report data
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: report-data
+          path: reports
+          retention-days: 30
+
+  # Publishes the run record to the ci-reports branch that backs the public
+  # reports dashboard. Runs even when build-test fails (failures are data),
+  # but only for same-repo refs (a fork PR has no write token).
+  publish-report:
+    name: publish-report
+    needs: build-test
+    if: >
+      always() &&
+      (github.event_name != 'pull_request' ||
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: ci-reports-publish
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - name: Checkout ci-reports branch
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          ref: ci-reports
+          path: ci-reports
+
+      - name: Download report data
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          name: report-data
+          path: reports
+
+      - name: Publish run record
+        run: node scripts/report/publish.mjs ci-reports
+
+      - name: Commit & push (with retry for concurrent runs)
+        run: |
+          cd ci-reports
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "Nothing to publish."
+            exit 0
+          fi
+          git commit -m "report: ${{ github.event_name }} run ${{ github.run_id }} (${{ github.sha }})"
+          for attempt in 1 2 3 4 5; do
+            if git push origin ci-reports; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — rebasing onto latest ci-reports."
+            git fetch origin ci-reports
+            git rebase origin/ci-reports
+          done
+          echo "Failed to push report after 5 attempts." >&2
+          exit 1

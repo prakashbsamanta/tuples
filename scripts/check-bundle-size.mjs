@@ -6,7 +6,7 @@
 //
 // Prints a per-build report so every CI run shows the current numbers.
 
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 
@@ -53,6 +53,22 @@ for (const [name, kb] of rows.sort((a, b) => b[1] - a[1])) console.log(`    ${pa
 console.log(`    ${pad('— total critical —', 34)} ${fmt(criticalKb)}  (budget ${BUDGET_KB} kB)`);
 console.log('\n  Lazy chunks (loaded on demand, not budgeted):');
 for (const [name, kb] of lazy.sort((a, b) => b[1] - a[1])) console.log(`    ${pad(name, 34)} ${fmt(kb)}`);
+
+// Machine-readable copy for the CI reports dashboard.
+mkdirSync('reports', { recursive: true });
+writeFileSync(
+  join('reports', 'size.json'),
+  JSON.stringify(
+    {
+      budgetKb: BUDGET_KB,
+      criticalKb: Number(criticalKb.toFixed(1)),
+      critical: rows.map(([name, kb]) => ({ name, kb: Number(kb.toFixed(1)) })),
+      lazy: lazy.map(([name, kb]) => ({ name, kb: Number(kb.toFixed(1)) })),
+    },
+    null,
+    2
+  )
+);
 
 const headroom = BUDGET_KB - criticalKb;
 console.log('');
