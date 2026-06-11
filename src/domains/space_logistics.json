@@ -1,497 +1,844 @@
 {
   "domainId": "space-logistics",
   "domainName": "Orbital Space Logistics",
-  "domainDescription": "Manage interplanetary shipments, space station docking bays, crew manifests, fusion fuel reserves, and mission control telemetry.",
+  "domainDescription": "The Optimizer track. You inherit a tangled interplanetary freight network — 14 stations, 30 routes, 18 vessels, 800 shipments — and a mandate: understand it, traverse it, then make it fast.",
+  "setupSeedKey": "logistics_setup",
   "curriculumMatrix": [
     {
       "stepIndex": 0,
       "phase": "Novice",
-      "conceptFocus": "CREATE_VESSELS_TABLE",
-      "narrativeBriefing": "Command, we are building the Orbital Logistics Control System from scratch. Start by creating a `vessels` table with `vessel_id` (INT), `vessel_name` (TEXT), and `class_type` (TEXT).",
+      "conceptFocus": "STATION_DIRECTORY",
+      "narrativeBriefing": "Welcome aboard Meridian HQ. Before you optimize anything, you read the board. Pull the full station directory: every station's id, name, and orbit zone.",
       "hints": {
-        "tier1Concept": "Use CREATE TABLE to define the structure of the vessels registry.",
-        "tier2Scaffold": "CREATE TABLE vessels (\n  vessel_id INT,\n  vessel_name TEXT,\n  class_type TEXT\n);",
-        "tier3Solution": "CREATE TABLE vessels (vessel_id INT, vessel_name TEXT, class_type TEXT);"
+        "tier1Concept": "SELECT lists the columns you want; FROM names the table. Asking for everything in a small table is the first move in any unfamiliar database.",
+        "tier2Scaffold": "SELECT station_id, name, ___\nFROM ___;",
+        "tier3Solution": "SELECT station_id, name, orbit_zone FROM stations;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='vessels';",
-      "expectedResult": "[{\"name\":\"vessels\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT station_id, name, orbit_zone FROM stations;"
+      }
     },
     {
       "stepIndex": 1,
       "phase": "Novice",
-      "conceptFocus": "INSERT_VESSELS",
-      "narrativeBriefing": "Three vessels are cleared for registry: (1,'Ares IV','Heavy Freighter'), (2,'Hermes Scout','Recon Class'), (3,'Europa Station','Orbital Platform').",
+      "conceptFocus": "ZONE_DISTINCT",
+      "narrativeBriefing": "The network spans several orbit zones — LEO, Lunar, Mars and beyond. List each distinct orbit zone exactly once, so we know how many theaters we operate in.",
       "hints": {
-        "tier1Concept": "Insert multiple rows with a single INSERT using comma-separated VALUES.",
-        "tier2Scaffold": "INSERT INTO vessels VALUES\n  (1,'Ares IV','Heavy Freighter'),\n  (2,'Hermes Scout','Recon Class'),\n  (3,'Europa Station','Orbital Platform');",
-        "tier3Solution": "INSERT INTO vessels VALUES (1,'Ares IV','Heavy Freighter'),(2,'Hermes Scout','Recon Class'),(3,'Europa Station','Orbital Platform');"
+        "tier1Concept": "SELECT DISTINCT collapses duplicate values, returning each unique value once.",
+        "tier2Scaffold": "SELECT DISTINCT ___ FROM stations;",
+        "tier3Solution": "SELECT DISTINCT orbit_zone FROM stations;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM vessels;",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT DISTINCT orbit_zone FROM stations;"
+      }
     },
     {
       "stepIndex": 2,
       "phase": "Novice",
-      "conceptFocus": "SELECT_SPECIFIC",
-      "narrativeBriefing": "Retrieve the vessel_name and class_type for vessel with id 1.",
+      "conceptFocus": "FLEET_TOP_HAULERS",
+      "narrativeBriefing": "Fleet command wants the five biggest haulers: vessel name, class, and max_cargo_tons, largest capacity first. Capacities can tie — break ties by vessel_id so the order is reproducible.",
       "hints": {
-        "tier1Concept": "SELECT specific columns FROM table WHERE condition.",
-        "tier2Scaffold": "SELECT vessel_name, class_type FROM vessels WHERE vessel_id = 1;",
-        "tier3Solution": "SELECT vessel_name, class_type FROM vessels WHERE vessel_id = 1;"
+        "tier1Concept": "ORDER BY sorts; DESC reverses; LIMIT truncates. When the sort key can tie, add a unique tiebreaker column so the result is deterministic.",
+        "tier2Scaffold": "SELECT name, class, max_cargo_tons\nFROM vessels\nORDER BY max_cargo_tons DESC, ___\nLIMIT 5;",
+        "tier3Solution": "SELECT name, class, max_cargo_tons FROM vessels ORDER BY max_cargo_tons DESC, vessel_id LIMIT 5;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT vessel_name FROM vessels WHERE vessel_id=1;",
-      "expectedResult": "[{\"vessel_name\":\"Ares IV\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT name, class, max_cargo_tons FROM vessels ORDER BY max_cargo_tons DESC, vessel_id LIMIT 5;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 3,
       "phase": "Novice",
-      "conceptFocus": "ALTER_ADD_STATUS",
-      "narrativeBriefing": "Add a `status` (TEXT) column to `vessels` to track whether each vessel is 'ACTIVE', 'DOCKED', or 'DECOMMISSIONED'.",
+      "conceptFocus": "CLASS_FILTER_TANKERS",
+      "narrativeBriefing": "A fuel contract is coming up. Pull the name and max_cargo_tons of every vessel whose class is exactly 'Tanker'.",
       "hints": {
-        "tier1Concept": "Use ALTER TABLE ... ADD COLUMN to extend an existing table's structure.",
-        "tier2Scaffold": "ALTER TABLE vessels ADD COLUMN status TEXT;",
-        "tier3Solution": "ALTER TABLE vessels ADD COLUMN status TEXT;"
+        "tier1Concept": "WHERE filters rows. Text comparisons use single quotes and are exact: class = 'Tanker'.",
+        "tier2Scaffold": "SELECT name, max_cargo_tons\nFROM vessels\nWHERE class = '___';",
+        "tier3Solution": "SELECT name, max_cargo_tons FROM vessels WHERE class = 'Tanker';"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM pragma_table_info('vessels') WHERE name='status';",
-      "expectedResult": "[{\"count\":1}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT name, max_cargo_tons FROM vessels WHERE class = 'Tanker';"
+      }
     },
     {
       "stepIndex": 4,
       "phase": "Novice",
-      "conceptFocus": "UPDATE_STATUS",
-      "narrativeBriefing": "Set the status of all three vessels: Ares IV is 'ACTIVE', Hermes Scout is 'ACTIVE', Europa Station is 'DOCKED'. Update them individually.",
+      "conceptFocus": "ROUTE_RANGE_FILTER",
+      "narrativeBriefing": "We need cheap, quick lanes for courier runs. List route_id, from_station, and to_station for routes where fuel_cost is under 40 AND transit_hours is under 30.",
       "hints": {
-        "tier1Concept": "Use separate UPDATE statements for each vessel, or a single one for the two ACTIVE ships.",
-        "tier2Scaffold": "UPDATE vessels SET status = 'ACTIVE' WHERE vessel_id IN (1, 2);\nUPDATE vessels SET status = 'DOCKED' WHERE vessel_id = 3;",
-        "tier3Solution": "UPDATE vessels SET status = 'ACTIVE' WHERE vessel_id IN (1, 2); UPDATE vessels SET status = 'DOCKED' WHERE vessel_id = 3;"
+        "tier1Concept": "AND combines conditions — both must be true for a row to survive the filter.",
+        "tier2Scaffold": "SELECT route_id, from_station, to_station\nFROM routes\nWHERE fuel_cost < ___ AND transit_hours < ___;",
+        "tier3Solution": "SELECT route_id, from_station, to_station FROM routes WHERE fuel_cost < 40 AND transit_hours < 30;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT COUNT(*) as count FROM vessels WHERE status='ACTIVE';",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT route_id, from_station, to_station FROM routes WHERE fuel_cost < 40 AND transit_hours < 30;"
+      }
     },
     {
       "stepIndex": 5,
       "phase": "Novice",
-      "conceptFocus": "CREATE_DOCKING_BAYS",
-      "narrativeBriefing": "Create a `docking_bays` table: `bay_id` (INT), `station_name` (TEXT), `capacity` (INT), `status` (TEXT).",
+      "conceptFocus": "STATIONS_PER_ZONE",
+      "narrativeBriefing": "How is our infrastructure distributed? Count the stations in each orbit zone — return the zone and the count.",
       "hints": {
-        "tier1Concept": "Docking bays track available landing/docking spots at each space station.",
-        "tier2Scaffold": "CREATE TABLE docking_bays (\n  bay_id INT,\n  station_name TEXT,\n  capacity INT,\n  status TEXT\n);",
-        "tier3Solution": "CREATE TABLE docking_bays (bay_id INT, station_name TEXT, capacity INT, status TEXT);"
+        "tier1Concept": "GROUP BY collapses rows into one row per group; COUNT(*) counts the rows in each group.",
+        "tier2Scaffold": "SELECT orbit_zone, COUNT(*) AS stations\nFROM stations\nGROUP BY ___;",
+        "tier3Solution": "SELECT orbit_zone, COUNT(*) AS stations FROM stations GROUP BY orbit_zone;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='docking_bays';",
-      "expectedResult": "[{\"name\":\"docking_bays\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT orbit_zone, COUNT(*) AS stations FROM stations GROUP BY orbit_zone;"
+      }
     },
     {
       "stepIndex": 6,
       "phase": "Novice",
-      "conceptFocus": "INSERT_BAYS",
-      "narrativeBriefing": "Insert 4 docking bays: (1,'Olympus Station',5,'AVAILABLE'), (2,'Olympus Station',3,'OCCUPIED'), (3,'Ganymede Depot',8,'AVAILABLE'), (4,'Ganymede Depot',2,'MAINTENANCE').",
+      "conceptFocus": "VESSEL_HOME_JOIN",
+      "narrativeBriefing": "Vessels store only a home_station id — useless to a human. JOIN vessels to stations and list each vessel's name next to its home station's name. Vessels with no home port will drop out; that is expected here.",
       "hints": {
-        "tier1Concept": "Insert all 4 bays in a single INSERT statement.",
-        "tier2Scaffold": "INSERT INTO docking_bays VALUES\n  (1,'Olympus Station',5,'AVAILABLE'),\n  (2,'Olympus Station',3,'OCCUPIED'),\n  (3,'Ganymede Depot',8,'AVAILABLE'),\n  (4,'Ganymede Depot',2,'MAINTENANCE');",
-        "tier3Solution": "INSERT INTO docking_bays VALUES (1,'Olympus Station',5,'AVAILABLE'),(2,'Olympus Station',3,'OCCUPIED'),(3,'Ganymede Depot',8,'AVAILABLE'),(4,'Ganymede Depot',2,'MAINTENANCE');"
+        "tier1Concept": "An INNER JOIN matches rows across tables via ON. Rows that find no match are excluded from the result.",
+        "tier2Scaffold": "SELECT v.name AS vessel, s.name AS home\nFROM vessels v\nJOIN stations s ON s.station_id = v.___;",
+        "tier3Solution": "SELECT v.name AS vessel, s.name AS home FROM vessels v JOIN stations s ON s.station_id = v.home_station;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM docking_bays;",
-      "expectedResult": "[{\"count\":4}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT v.name AS vessel, s.name AS home FROM vessels v JOIN stations s ON s.station_id = v.home_station;"
+      }
     },
     {
       "stepIndex": 7,
       "phase": "Novice",
-      "conceptFocus": "AGGREGATE_CAPACITY",
-      "narrativeBriefing": "Calculate the total docking capacity at each station using GROUP BY and SUM.",
+      "conceptFocus": "MOTHBALLED_LEFT_JOIN",
+      "narrativeBriefing": "Two vessels vanished from the last report — they are mothballed, with no home station. Use a LEFT JOIN to stations and keep only vessels where the join found nothing. Return the vessel names.",
       "hints": {
-        "tier1Concept": "GROUP BY station_name with SUM(capacity) aggregates capacity per station.",
-        "tier2Scaffold": "SELECT station_name, SUM(capacity) as total_capacity FROM docking_bays GROUP BY station_name;",
-        "tier3Solution": "SELECT station_name, SUM(capacity) as total_capacity FROM docking_bays GROUP BY station_name;"
+        "tier1Concept": "LEFT JOIN keeps every row from the left table; unmatched rows get NULLs on the right side. Filtering WHERE right-side IS NULL isolates the orphans.",
+        "tier2Scaffold": "SELECT v.name\nFROM vessels v\nLEFT JOIN stations s ON s.station_id = v.home_station\nWHERE s.station_id IS ___;",
+        "tier3Solution": "SELECT v.name FROM vessels v LEFT JOIN stations s ON s.station_id = v.home_station WHERE s.station_id IS NULL;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT station_name FROM docking_bays GROUP BY station_name);",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT v.name FROM vessels v LEFT JOIN stations s ON s.station_id = v.home_station WHERE s.station_id IS NULL;"
+      }
     },
     {
       "stepIndex": 8,
       "phase": "Novice",
-      "conceptFocus": "FILTER_AVAILABLE",
-      "narrativeBriefing": "List all docking bays that are AVAILABLE for incoming vessels.",
+      "conceptFocus": "CERTS_M2M_JOIN",
+      "narrativeBriefing": "Certifications live in a separate many-to-many table because one crew member can hold several. List the names of all crew who hold the 'REACTOR' certification.",
       "hints": {
-        "tier1Concept": "Use WHERE status = 'AVAILABLE' to filter only available bays.",
-        "tier2Scaffold": "SELECT * FROM docking_bays WHERE status = 'AVAILABLE';",
-        "tier3Solution": "SELECT * FROM docking_bays WHERE status = 'AVAILABLE';"
+        "tier1Concept": "A junction table like crew_certifications links crew to certs. JOIN through it and filter on the cert value.",
+        "tier2Scaffold": "SELECT c.name\nFROM crew c\nJOIN crew_certifications cc ON cc.crew_id = c.crew_id\nWHERE cc.cert = '___';",
+        "tier3Solution": "SELECT c.name FROM crew c JOIN crew_certifications cc ON cc.crew_id = c.crew_id WHERE cc.cert = 'REACTOR';"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM docking_bays WHERE status='AVAILABLE';",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT c.name FROM crew c JOIN crew_certifications cc ON cc.crew_id = c.crew_id WHERE cc.cert = 'REACTOR';"
+      }
     },
     {
       "stepIndex": 9,
-      "phase": "Operator",
-      "conceptFocus": "CREATE_CREW_TABLE",
-      "narrativeBriefing": "Create a `crew` table: `crew_id` (INT), `name` (TEXT), `rank` (TEXT), `vessel_id` (INT), `specialty` (TEXT).",
+      "phase": "Novice",
+      "conceptFocus": "CARGO_MASS_HAVING",
+      "narrativeBriefing": "Dock crews are complaining about overweight loads. For each shipment, total its cargo mass, and keep only shipments whose total exceeds 90 tons. Return shipment_id and the total.",
       "hints": {
-        "tier1Concept": "The crew table tracks personnel and which vessel they are assigned to via vessel_id.",
-        "tier2Scaffold": "CREATE TABLE crew (\n  crew_id INT,\n  name TEXT,\n  rank TEXT,\n  vessel_id INT,\n  specialty TEXT\n);",
-        "tier3Solution": "CREATE TABLE crew (crew_id INT, name TEXT, rank TEXT, vessel_id INT, specialty TEXT);"
+        "tier1Concept": "HAVING filters groups after aggregation — WHERE filters rows before it. Conditions on SUM() belong in HAVING.",
+        "tier2Scaffold": "SELECT shipment_id, SUM(mass_tons) AS total_mass\nFROM cargo\nGROUP BY shipment_id\nHAVING SUM(mass_tons) > ___;",
+        "tier3Solution": "SELECT shipment_id, SUM(mass_tons) AS total_mass FROM cargo GROUP BY shipment_id HAVING SUM(mass_tons) > 90;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='crew';",
-      "expectedResult": "[{\"name\":\"crew\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT shipment_id, SUM(mass_tons) AS total_mass FROM cargo GROUP BY shipment_id HAVING SUM(mass_tons) > 90;"
+      }
     },
     {
       "stepIndex": 10,
-      "phase": "Operator",
-      "conceptFocus": "INSERT_CREW",
-      "narrativeBriefing": "Assign crew: (1,'Cdr. Yara Osei','Commander',1,'Navigation'), (2,'Lt. Sam Reeves','Pilot',1,'Propulsion'), (3,'Dr. Mia Chen','Scientist',2,'Biology'), (4,'Eng. Raj Patel','Engineer',1,'Systems'), (5,'Dr. Zoe Malik','Scientist',2,'Geology').",
+      "phase": "Novice",
+      "conceptFocus": "THREE_TABLE_JOIN",
+      "narrativeBriefing": "Shipments have gone LOST and the insurance board wants names, not ids. For every LOST shipment, report the shipment_id, the vessel's name, and the origin station's name — three tables, one query.",
       "hints": {
-        "tier1Concept": "Insert all 5 crew members in a single INSERT.",
-        "tier2Scaffold": "INSERT INTO crew VALUES\n  (1,'Cdr. Yara Osei','Commander',1,'Navigation'),\n  (2,'Lt. Sam Reeves','Pilot',1,'Propulsion'),\n  (3,'Dr. Mia Chen','Scientist',2,'Biology'),\n  (4,'Eng. Raj Patel','Engineer',1,'Systems'),\n  (5,'Dr. Zoe Malik','Scientist',2,'Geology');",
-        "tier3Solution": "INSERT INTO crew VALUES (1,'Cdr. Yara Osei','Commander',1,'Navigation'),(2,'Lt. Sam Reeves','Pilot',1,'Propulsion'),(3,'Dr. Mia Chen','Scientist',2,'Biology'),(4,'Eng. Raj Patel','Engineer',1,'Systems'),(5,'Dr. Zoe Malik','Scientist',2,'Geology');"
+        "tier1Concept": "Chain multiple JOINs: each ON clause links one more table. Aliases keep it readable.",
+        "tier2Scaffold": "SELECT s.shipment_id, v.name AS vessel, st.name AS origin\nFROM shipments s\nJOIN vessels v ON v.vessel_id = s.vessel_id\nJOIN stations st ON st.station_id = s.___\nWHERE s.status = 'LOST';",
+        "tier3Solution": "SELECT s.shipment_id, v.name AS vessel, st.name AS origin FROM shipments s JOIN vessels v ON v.vessel_id = s.vessel_id JOIN stations st ON st.station_id = s.origin WHERE s.status = 'LOST';"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM crew;",
-      "expectedResult": "[{\"count\":5}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT s.shipment_id, v.name AS vessel, st.name AS origin FROM shipments s JOIN vessels v ON v.vessel_id = s.vessel_id JOIN stations st ON st.station_id = s.origin WHERE s.status = 'LOST';"
+      }
     },
     {
       "stepIndex": 11,
       "phase": "Operator",
-      "conceptFocus": "JOIN_CREW_VESSELS",
-      "narrativeBriefing": "List each crew member's name and the vessel they are assigned to by joining `crew` and `vessels`.",
+      "conceptFocus": "EXISTS_HAZ_VESSELS",
+      "narrativeBriefing": "Safety audit: which vessels have EVER carried hazardous cargo? Return vessel_id and name. Use EXISTS — we only care whether at least one hazardous item rode on the vessel, not how many.",
       "hints": {
-        "tier1Concept": "INNER JOIN on vessel_id to match crew to their assigned ship.",
-        "tier2Scaffold": "SELECT c.name, v.vessel_name FROM crew c JOIN vessels v ON c.vessel_id = v.vessel_id;",
-        "tier3Solution": "SELECT c.name, v.vessel_name FROM crew c JOIN vessels v ON c.vessel_id = v.vessel_id;"
+        "tier1Concept": "EXISTS (subquery) is true if the subquery returns at least one row. It short-circuits and never duplicates outer rows the way a JOIN can.",
+        "tier2Scaffold": "SELECT v.vessel_id, v.name\nFROM vessels v\nWHERE EXISTS (\n  SELECT 1 FROM shipments s\n  JOIN cargo c ON c.shipment_id = s.shipment_id\n  WHERE s.vessel_id = v.vessel_id AND c.hazardous = ___\n);",
+        "tier3Solution": "SELECT v.vessel_id, v.name FROM vessels v WHERE EXISTS (SELECT 1 FROM shipments s JOIN cargo c ON c.shipment_id = s.shipment_id WHERE s.vessel_id = v.vessel_id AND c.hazardous = 1);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM crew c JOIN vessels v ON c.vessel_id = v.vessel_id;",
-      "expectedResult": "[{\"count\":5}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT v.vessel_id, v.name FROM vessels v WHERE EXISTS (SELECT 1 FROM shipments s JOIN cargo c ON c.shipment_id = s.shipment_id WHERE s.vessel_id = v.vessel_id AND c.hazardous = 1);"
+      }
     },
     {
       "stepIndex": 12,
       "phase": "Operator",
-      "conceptFocus": "GROUP_BY_VESSEL_CREW",
-      "narrativeBriefing": "Count how many crew members are assigned to each vessel.",
+      "conceptFocus": "ROUTE_SELF_JOIN_ROUNDTRIP",
+      "narrativeBriefing": "Routes are DIRECTED — a lane out is not a lane back. Find every round-trip pair: station pairs connected in both directions. Self-join routes and return from_station, to_station once per pair (use from_station < to_station to avoid mirror duplicates).",
       "hints": {
-        "tier1Concept": "GROUP BY vessel_id with COUNT(*) to tally crew per ship.",
-        "tier2Scaffold": "SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id;",
-        "tier3Solution": "SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id;"
+        "tier1Concept": "A self-join treats one table as two. Match route A against a reversed route B; the < trick keeps each unordered pair once.",
+        "tier2Scaffold": "SELECT a.from_station, a.to_station\nFROM routes a\nJOIN routes b ON b.from_station = a.to_station AND b.to_station = a.from_station\nWHERE a.from_station ___ a.to_station;",
+        "tier3Solution": "SELECT a.from_station, a.to_station FROM routes a JOIN routes b ON b.from_station = a.to_station AND b.to_station = a.from_station WHERE a.from_station < a.to_station;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT vessel_id FROM crew GROUP BY vessel_id);",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT a.from_station, a.to_station FROM routes a JOIN routes b ON b.from_station = a.to_station AND b.to_station = a.from_station WHERE a.from_station < a.to_station;"
+      }
     },
     {
       "stepIndex": 13,
       "phase": "Operator",
-      "conceptFocus": "CREATE_CARGO_TABLE",
-      "narrativeBriefing": "Create a `cargo` table: `cargo_id` (INT), `vessel_id` (INT), `cargo_type` (TEXT), `mass_tons` (REAL), `destination` (TEXT).",
+      "conceptFocus": "ONE_WAY_LANES",
+      "narrativeBriefing": "The opposite question: which lanes have NO return route? A vessel that takes one is stuck routing the long way home. LEFT-join each route to its reverse and keep the ones where the reverse is missing. Return from_station and to_station.",
       "hints": {
-        "tier1Concept": "Cargo tracks what each vessel is transporting and its mass.",
-        "tier2Scaffold": "CREATE TABLE cargo (\n  cargo_id INT,\n  vessel_id INT,\n  cargo_type TEXT,\n  mass_tons REAL,\n  destination TEXT\n);",
-        "tier3Solution": "CREATE TABLE cargo (cargo_id INT, vessel_id INT, cargo_type TEXT, mass_tons REAL, destination TEXT);"
+        "tier1Concept": "An anti-join: LEFT JOIN to the row you hope exists, then keep WHERE it IS NULL. Here the right side is the same table, reversed.",
+        "tier2Scaffold": "SELECT a.from_station, a.to_station\nFROM routes a\nLEFT JOIN routes b ON b.from_station = a.to_station AND b.to_station = a.from_station\nWHERE b.route_id IS ___;",
+        "tier3Solution": "SELECT a.from_station, a.to_station FROM routes a LEFT JOIN routes b ON b.from_station = a.to_station AND b.to_station = a.from_station WHERE b.route_id IS NULL;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='cargo';",
-      "expectedResult": "[{\"name\":\"cargo\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT a.from_station, a.to_station FROM routes a LEFT JOIN routes b ON b.from_station = a.to_station AND b.to_station = a.from_station WHERE b.route_id IS NULL;"
+      }
     },
     {
       "stepIndex": 14,
       "phase": "Operator",
-      "conceptFocus": "INSERT_CARGO",
-      "narrativeBriefing": "Load cargo: (1,1,'Medical Supplies',12.5,'Mars Colony'), (2,1,'Fusion Cells',45.0,'Mars Colony'), (3,2,'Scientific Equipment',8.2,'Europa Base'), (4,1,'Food Rations',22.3,'Mars Colony').",
+      "conceptFocus": "SET_INTERSECT_HUBS",
+      "narrativeBriefing": "True hubs both send and receive. Using set operations, find the station ids that appear as a shipment origin AND as a shipment destination.",
       "hints": {
-        "tier1Concept": "Insert all 4 cargo items using a single INSERT.",
-        "tier2Scaffold": "INSERT INTO cargo VALUES\n  (1,1,'Medical Supplies',12.5,'Mars Colony'),\n  (2,1,'Fusion Cells',45.0,'Mars Colony'),\n  (3,2,'Scientific Equipment',8.2,'Europa Base'),\n  (4,1,'Food Rations',22.3,'Mars Colony');",
-        "tier3Solution": "INSERT INTO cargo VALUES (1,1,'Medical Supplies',12.5,'Mars Colony'),(2,1,'Fusion Cells',45.0,'Mars Colony'),(3,2,'Scientific Equipment',8.2,'Europa Base'),(4,1,'Food Rations',22.3,'Mars Colony');"
+        "tier1Concept": "INTERSECT keeps only values present in both result sets, deduplicated. It is the set-algebra way to say 'in both lists'.",
+        "tier2Scaffold": "SELECT origin FROM shipments\n___\nSELECT destination FROM shipments;",
+        "tier3Solution": "SELECT origin FROM shipments INTERSECT SELECT destination FROM shipments;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM cargo;",
-      "expectedResult": "[{\"count\":4}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT origin FROM shipments INTERSECT SELECT destination FROM shipments;"
+      }
     },
     {
       "stepIndex": 15,
       "phase": "Operator",
-      "conceptFocus": "AGGREGATE_CARGO_MASS",
-      "narrativeBriefing": "Calculate the total cargo mass per vessel.",
+      "conceptFocus": "SET_EXCEPT_DEADENDS",
+      "narrativeBriefing": "Routing software keeps crashing on 'dead-end' ports: stations that routes arrive AT but never depart FROM. Use EXCEPT on the routes table to find their station ids.",
       "hints": {
-        "tier1Concept": "GROUP BY vessel_id with SUM(mass_tons).",
-        "tier2Scaffold": "SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id;",
-        "tier3Solution": "SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id;"
+        "tier1Concept": "EXCEPT returns rows in the first set that are absent from the second — set subtraction. Destinations minus origins leaves the dead ends.",
+        "tier2Scaffold": "SELECT to_station FROM routes\n___\nSELECT from_station FROM routes;",
+        "tier3Solution": "SELECT to_station FROM routes EXCEPT SELECT from_station FROM routes;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT vessel_id FROM cargo GROUP BY vessel_id);",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT to_station FROM routes EXCEPT SELECT from_station FROM routes;"
+      }
     },
     {
       "stepIndex": 16,
       "phase": "Operator",
-      "conceptFocus": "HAVING_HEAVY_CARGO",
-      "narrativeBriefing": "Find vessels whose total cargo mass exceeds 50 tons using HAVING.",
+      "conceptFocus": "DEGREE_UNION_ALL",
+      "narrativeBriefing": "Network analysis 101: a station's degree is how many route endpoints touch it, inbound plus outbound. Stack origins and destinations with UNION ALL (duplicates must survive!) and count per station. Return station id and degree.",
       "hints": {
-        "tier1Concept": "HAVING filters groups after aggregation. Compare SUM(mass_tons) > 50.",
-        "tier2Scaffold": "SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id HAVING total_mass > 50;",
-        "tier3Solution": "SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id HAVING total_mass > 50;"
+        "tier1Concept": "UNION deduplicates; UNION ALL keeps everything. For counting occurrences you need ALL — dedup would destroy the tally.",
+        "tier2Scaffold": "SELECT station, COUNT(*) AS degree\nFROM (\n  SELECT from_station AS station FROM routes\n  UNION ___\n  SELECT to_station FROM routes\n)\nGROUP BY station;",
+        "tier3Solution": "SELECT station, COUNT(*) AS degree FROM (SELECT from_station AS station FROM routes UNION ALL SELECT to_station FROM routes) GROUP BY station;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT vessel_id FROM cargo GROUP BY vessel_id HAVING SUM(mass_tons) > 50;",
-      "expectedResult": "[{\"vessel_id\":1}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT station, COUNT(*) AS degree FROM (SELECT from_station AS station FROM routes UNION ALL SELECT to_station FROM routes) GROUP BY station;"
+      }
     },
     {
       "stepIndex": 17,
       "phase": "Operator",
-      "conceptFocus": "JOIN_CARGO_VESSELS_CREW",
-      "narrativeBriefing": "Show each cargo item along with the vessel name and the number of crew on that vessel. Use JOINs and subqueries.",
+      "conceptFocus": "CORRELATED_CHEAPEST_OUT",
+      "narrativeBriefing": "For every station that has at least one outbound route, report the station's name and the fuel_cost of its CHEAPEST outbound route. Use a correlated subquery — a subquery that references the outer row.",
       "hints": {
-        "tier1Concept": "JOIN cargo to vessels on vessel_id, then JOIN a crew-count subquery.",
-        "tier2Scaffold": "SELECT c.cargo_type, v.vessel_name, cc.crew_count\nFROM cargo c\nJOIN vessels v ON c.vessel_id = v.vessel_id\nJOIN (SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id) cc\n  ON c.vessel_id = cc.vessel_id;",
-        "tier3Solution": "SELECT c.cargo_type, v.vessel_name, cc.crew_count FROM cargo c JOIN vessels v ON c.vessel_id = v.vessel_id JOIN (SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id) cc ON c.vessel_id = cc.vessel_id;"
+        "tier1Concept": "A correlated subquery runs once per outer row, referencing its columns (r.from_station = s.station_id). MIN() inside it picks the cheapest per station.",
+        "tier2Scaffold": "SELECT s.name,\n  (SELECT MIN(r.fuel_cost) FROM routes r WHERE r.from_station = s.station_id) AS cheapest_fuel\nFROM stations s\nWHERE EXISTS (SELECT 1 FROM routes r WHERE r.from_station = s.___);",
+        "tier3Solution": "SELECT s.name, (SELECT MIN(r.fuel_cost) FROM routes r WHERE r.from_station = s.station_id) AS cheapest_fuel FROM stations s WHERE EXISTS (SELECT 1 FROM routes r WHERE r.from_station = s.station_id);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM cargo c JOIN vessels v ON c.vessel_id=v.vessel_id JOIN (SELECT vessel_id, COUNT(*) as n FROM crew GROUP BY vessel_id) cc ON c.vessel_id=cc.vessel_id;",
-      "expectedResult": "[{\"count\":4}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT s.name, (SELECT MIN(r.fuel_cost) FROM routes r WHERE r.from_station = s.station_id) AS cheapest_fuel FROM stations s WHERE EXISTS (SELECT 1 FROM routes r WHERE r.from_station = s.station_id);"
+      }
     },
     {
       "stepIndex": 18,
       "phase": "Operator",
-      "conceptFocus": "DELETE_OLD_BAY",
-      "narrativeBriefing": "Bay 4 at Ganymede Depot is decommissioned. Delete it from `docking_bays`.",
+      "conceptFocus": "RECURSIVE_NUMBERS",
+      "narrativeBriefing": "Time to learn the most powerful tool in this mission: the recursive CTE. Warm up by generating the numbers 1 through 10 from nothing — a base case, plus a rule that builds row n+1 from row n.",
       "hints": {
-        "tier1Concept": "Use DELETE FROM with WHERE bay_id = 4.",
-        "tier2Scaffold": "DELETE FROM docking_bays WHERE bay_id = 4;",
-        "tier3Solution": "DELETE FROM docking_bays WHERE bay_id = 4;"
+        "tier1Concept": "WITH RECURSIVE has two parts joined by UNION ALL: an anchor row (SELECT 1) and a recursive member that selects FROM the CTE itself, with a stop condition.",
+        "tier2Scaffold": "WITH RECURSIVE n(x) AS (\n  SELECT 1\n  UNION ALL\n  SELECT x + 1 FROM n WHERE x < ___\n)\nSELECT x FROM n;",
+        "tier3Solution": "WITH RECURSIVE n(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM n WHERE x < 10) SELECT x FROM n;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM docking_bays WHERE bay_id=4;",
-      "expectedResult": "[{\"count\":0}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH RECURSIVE n(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM n WHERE x < 10) SELECT x FROM n;"
+      }
     },
     {
       "stepIndex": 19,
       "phase": "Operator",
-      "conceptFocus": "CREATE_FUEL_DEPOTS",
-      "narrativeBriefing": "Create a `fuel_depots` table: `depot_id` (INT), `station_name` (TEXT), `fuel_type` (TEXT), `reserves_tons` (REAL).",
+      "conceptFocus": "RECURSIVE_REACHABILITY",
+      "narrativeBriefing": "Now the real thing. Starting from Meridian HQ (station 1), which stations can a vessel reach by following routes any number of hops? Return station_id and name of every reachable station, HQ included. Use UNION (not UNION ALL) in the recursion — the dedup is what stops infinite loops in a cyclic graph.",
       "hints": {
-        "tier1Concept": "Fuel depots store fusion and chemical fuel for vessels.",
-        "tier2Scaffold": "CREATE TABLE fuel_depots (depot_id INT, station_name TEXT, fuel_type TEXT, reserves_tons REAL);",
-        "tier3Solution": "CREATE TABLE fuel_depots (depot_id INT, station_name TEXT, fuel_type TEXT, reserves_tons REAL);"
+        "tier1Concept": "Graph reachability: anchor = the start station; recursive member follows routes from any station already reached. UNION discards already-seen stations, so cycles terminate.",
+        "tier2Scaffold": "WITH RECURSIVE reach(sid) AS (\n  SELECT 1\n  UNION\n  SELECT r.to_station FROM routes r JOIN reach ON r.from_station = reach.sid\n)\nSELECT s.station_id, s.name\nFROM stations s JOIN reach ON reach.sid = s.___;",
+        "tier3Solution": "WITH RECURSIVE reach(sid) AS (SELECT 1 UNION SELECT r.to_station FROM routes r JOIN reach ON r.from_station = reach.sid) SELECT s.station_id, s.name FROM stations s JOIN reach ON reach.sid = s.station_id;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='fuel_depots';",
-      "expectedResult": "[{\"name\":\"fuel_depots\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH RECURSIVE reach(sid) AS (SELECT 1 UNION SELECT r.to_station FROM routes r JOIN reach ON r.from_station = reach.sid) SELECT s.station_id, s.name FROM stations s JOIN reach ON reach.sid = s.station_id;"
+      }
     },
     {
       "stepIndex": 20,
       "phase": "Operator",
-      "conceptFocus": "INSERT_FUEL",
-      "narrativeBriefing": "Stock fuel depots: (1,'Olympus Station','Fusion',500.0), (2,'Olympus Station','Chemical',200.0), (3,'Ganymede Depot','Fusion',320.0).",
+      "conceptFocus": "RECURSIVE_MIN_HOPS",
+      "narrativeBriefing": "Reachable is not enough — dispatch needs distances. Compute the minimum number of hops from Meridian HQ (station 1) to every reachable station. Track depth in the recursion (cap it below 6 to stay safe in cycles), then take MIN(depth) per station.",
       "hints": {
-        "tier1Concept": "Insert all 3 fuel depot records.",
-        "tier2Scaffold": "INSERT INTO fuel_depots VALUES\n  (1,'Olympus Station','Fusion',500.0),\n  (2,'Olympus Station','Chemical',200.0),\n  (3,'Ganymede Depot','Fusion',320.0);",
-        "tier3Solution": "INSERT INTO fuel_depots VALUES (1,'Olympus Station','Fusion',500.0),(2,'Olympus Station','Chemical',200.0),(3,'Ganymede Depot','Fusion',320.0);"
+        "tier1Concept": "Carry a depth counter through the recursion (d + 1 each hop) with UNION ALL, bound it with WHERE d < 6, and aggregate MIN(d) per station at the end.",
+        "tier2Scaffold": "WITH RECURSIVE hops(sid, d) AS (\n  SELECT 1, 0\n  UNION ALL\n  SELECT r.to_station, h.d + 1\n  FROM hops h JOIN routes r ON r.from_station = h.sid\n  WHERE h.d < 6\n)\nSELECT sid, MIN(d) AS min_hops FROM hops GROUP BY ___;",
+        "tier3Solution": "WITH RECURSIVE hops(sid, d) AS (SELECT 1, 0 UNION ALL SELECT r.to_station, h.d + 1 FROM hops h JOIN routes r ON r.from_station = h.sid WHERE h.d < 6) SELECT sid, MIN(d) AS min_hops FROM hops GROUP BY sid;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM fuel_depots;",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH RECURSIVE hops(sid, d) AS (SELECT 1, 0 UNION ALL SELECT r.to_station, h.d + 1 FROM hops h JOIN routes r ON r.from_station = h.sid WHERE h.d < 6) SELECT sid, MIN(d) AS min_hops FROM hops GROUP BY sid;"
+      }
     },
     {
       "stepIndex": 21,
       "phase": "Operator",
-      "conceptFocus": "UPDATE_FUEL_RESERVES",
-      "narrativeBriefing": "Ares IV departed and consumed 150 tons of Fusion fuel from Olympus Station (depot_id 1). Update reserves accordingly.",
+      "conceptFocus": "RECURSIVE_COMMAND_CHAIN",
+      "narrativeBriefing": "Recursion works on org charts too. Crew member 1 is the fleet commander; captains report to them, and everyone else reports to a captain. Walk the commander_id hierarchy from the top and return every crew member's name with their depth (commander = 0).",
       "hints": {
-        "tier1Concept": "Use UPDATE with arithmetic: SET reserves_tons = reserves_tons - 150.",
-        "tier2Scaffold": "UPDATE fuel_depots SET reserves_tons = reserves_tons - 150 WHERE depot_id = 1;",
-        "tier3Solution": "UPDATE fuel_depots SET reserves_tons = reserves_tons - 150 WHERE depot_id = 1;"
+        "tier1Concept": "Hierarchies are graphs: anchor = the row with commander_id IS NULL, recursive member joins children (c.commander_id = parent's id), depth increments each level.",
+        "tier2Scaffold": "WITH RECURSIVE chain(cid, lvl) AS (\n  SELECT crew_id, 0 FROM crew WHERE commander_id IS NULL\n  UNION ALL\n  SELECT c.crew_id, ch.lvl + 1\n  FROM crew c JOIN chain ch ON c.commander_id = ch.___\n)\nSELECT c.name, ch.lvl FROM chain ch JOIN crew c ON c.crew_id = ch.cid;",
+        "tier3Solution": "WITH RECURSIVE chain(cid, lvl) AS (SELECT crew_id, 0 FROM crew WHERE commander_id IS NULL UNION ALL SELECT c.crew_id, ch.lvl + 1 FROM crew c JOIN chain ch ON c.commander_id = ch.cid) SELECT c.name, ch.lvl FROM chain ch JOIN crew c ON c.crew_id = ch.cid;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT reserves_tons FROM fuel_depots WHERE depot_id=1;",
-      "expectedResult": "[{\"reserves_tons\":350}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH RECURSIVE chain(cid, lvl) AS (SELECT crew_id, 0 FROM crew WHERE commander_id IS NULL UNION ALL SELECT c.crew_id, ch.lvl + 1 FROM crew c JOIN chain ch ON c.commander_id = ch.cid) SELECT c.name, ch.lvl FROM chain ch JOIN crew c ON c.crew_id = ch.cid;"
+      }
     },
     {
       "stepIndex": 22,
       "phase": "Operator",
-      "conceptFocus": "CASE_FUEL_STATUS",
-      "narrativeBriefing": "Classify each fuel depot's reserve status: reserves > 400 is 'CRITICAL_SURPLUS', > 200 is 'ADEQUATE', else 'LOW'.",
+      "conceptFocus": "RECURSIVE_UNREACHABLE",
+      "narrativeBriefing": "Ganymede Spur (station 14) has inbound lanes but no outbound routes — a one-way trap. Prove it: compute every station UNREACHABLE from station 14. Combine a recursive reachability CTE with NOT IN. Return station_id and name.",
       "hints": {
-        "tier1Concept": "Use CASE WHEN with multiple conditions to classify numeric ranges.",
-        "tier2Scaffold": "SELECT station_name, fuel_type, reserves_tons,\n  CASE\n    WHEN reserves_tons > 400 THEN 'CRITICAL_SURPLUS'\n    WHEN reserves_tons > 200 THEN 'ADEQUATE'\n    ELSE 'LOW'\n  END as supply_status\nFROM fuel_depots;",
-        "tier3Solution": "SELECT station_name, fuel_type, reserves_tons, CASE WHEN reserves_tons > 400 THEN 'CRITICAL_SURPLUS' WHEN reserves_tons > 200 THEN 'ADEQUATE' ELSE 'LOW' END as supply_status FROM fuel_depots;"
+        "tier1Concept": "Compute the reachable set recursively, then invert it: stations whose id is NOT IN the reachable set. From a station with no outbound routes, only itself is reachable.",
+        "tier2Scaffold": "WITH RECURSIVE reach(sid) AS (\n  SELECT 14\n  UNION\n  SELECT r.to_station FROM routes r JOIN reach ON r.from_station = reach.sid\n)\nSELECT station_id, name FROM stations\nWHERE station_id NOT IN (SELECT ___ FROM reach);",
+        "tier3Solution": "WITH RECURSIVE reach(sid) AS (SELECT 14 UNION SELECT r.to_station FROM routes r JOIN reach ON r.from_station = reach.sid) SELECT station_id, name FROM stations WHERE station_id NOT IN (SELECT sid FROM reach);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM fuel_depots;",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH RECURSIVE reach(sid) AS (SELECT 14 UNION SELECT r.to_station FROM routes r JOIN reach ON r.from_station = reach.sid) SELECT station_id, name FROM stations WHERE station_id NOT IN (SELECT sid FROM reach);"
+      }
     },
     {
       "stepIndex": 23,
-      "phase": "Architect",
-      "conceptFocus": "LEFT_JOIN_UNASSIGNED",
-      "narrativeBriefing": "Show all vessels along with any cargo they carry, including vessels with no cargo assigned (Europa Station has none). Use LEFT JOIN.",
+      "phase": "Operator",
+      "conceptFocus": "FULL_OUTER_FLEET_MAP",
+      "narrativeBriefing": "Command wants ONE map showing both gaps at once: vessels with no home station AND stations that are home to no vessel. FULL OUTER JOIN vessels to stations on home_station and return vessel name and station name — NULLs mark the gaps on each side.",
       "hints": {
-        "tier1Concept": "LEFT JOIN returns all vessels regardless of whether they have matching cargo rows.",
-        "tier2Scaffold": "SELECT v.vessel_name, c.cargo_type, c.mass_tons\nFROM vessels v\nLEFT JOIN cargo c ON v.vessel_id = c.vessel_id;",
-        "tier3Solution": "SELECT v.vessel_name, c.cargo_type, c.mass_tons FROM vessels v LEFT JOIN cargo c ON v.vessel_id = c.vessel_id;"
+        "tier1Concept": "FULL OUTER JOIN keeps unmatched rows from BOTH sides. Mothballed vessels appear with a NULL station; empty stations appear with a NULL vessel.",
+        "tier2Scaffold": "SELECT v.name AS vessel, s.name AS station\nFROM vessels v\n___ OUTER JOIN stations s ON s.station_id = v.home_station;",
+        "tier3Solution": "SELECT v.name AS vessel, s.name AS station FROM vessels v FULL OUTER JOIN stations s ON s.station_id = v.home_station;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM vessels v LEFT JOIN cargo c ON v.vessel_id=c.vessel_id;",
-      "expectedResult": "[{\"count\":5}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT v.name AS vessel, s.name AS station FROM vessels v FULL OUTER JOIN stations s ON s.station_id = v.home_station;"
+      }
     },
     {
       "stepIndex": 24,
-      "phase": "Architect",
-      "conceptFocus": "SUBQUERY_HEAVIEST_VESSEL",
-      "narrativeBriefing": "Find the vessel carrying the most total cargo mass. Use a subquery to get the max total and match it.",
+      "phase": "Operator",
+      "conceptFocus": "VIEW_NETWORK_DIRECTORY",
+      "narrativeBriefing": "Dispatchers keep rewriting the same three-table join. Create a VIEW named route_directory exposing route_id, from_name, to_name, fuel_cost, and transit_hours — station names resolved, ready to query like a table.",
       "hints": {
-        "tier1Concept": "Use a subquery to compute the MAX of aggregated totals.",
-        "tier2Scaffold": "SELECT vessel_id, SUM(mass_tons) as total FROM cargo\nGROUP BY vessel_id\nHAVING total = (SELECT MAX(total_mass) FROM (SELECT SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id));",
-        "tier3Solution": "SELECT vessel_id, SUM(mass_tons) as total FROM cargo GROUP BY vessel_id HAVING total = (SELECT MAX(total_mass) FROM (SELECT SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id));"
+        "tier1Concept": "CREATE VIEW name AS SELECT … stores the query, not the data. Every read runs the underlying join fresh.",
+        "tier2Scaffold": "CREATE VIEW route_directory AS\nSELECT r.route_id, f.name AS from_name, t.name AS to_name, r.fuel_cost, r.transit_hours\nFROM routes r\nJOIN stations f ON f.station_id = r.from_station\nJOIN stations t ON t.station_id = r.___;",
+        "tier3Solution": "CREATE VIEW route_directory AS SELECT r.route_id, f.name AS from_name, t.name AS to_name, r.fuel_cost, r.transit_hours FROM routes r JOIN stations f ON f.station_id = r.from_station JOIN stations t ON t.station_id = r.to_station;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT vessel_id FROM cargo GROUP BY vessel_id ORDER BY SUM(mass_tons) DESC LIMIT 1;",
-      "expectedResult": "[{\"vessel_id\":1}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT (SELECT COUNT(*) FROM sqlite_master WHERE type='view' AND name='route_directory') AS view_ok, (SELECT COUNT(*) FROM route_directory) AS rows_in_view;",
+        "expectedResult": "[{\"view_ok\":1,\"rows_in_view\":30}]"
+      }
     },
     {
       "stepIndex": 25,
       "phase": "Architect",
-      "conceptFocus": "CTE_MISSION_LOAD",
-      "narrativeBriefing": "Use a CTE to compute each vessel's total cargo mass, then join with vessels to show vessel_name and total_mass.",
+      "conceptFocus": "EXPLAIN_BASELINE_SCAN",
+      "narrativeBriefing": "Welcome to the Optimizer's core discipline: reading query plans. Run EXPLAIN QUERY PLAN on this exact query: SELECT * FROM shipments WHERE status = 'DELAYED' — and look at the output. 'SCAN shipments' means SQLite reads all 800 rows to find a handful. We will fix that next.",
       "hints": {
-        "tier1Concept": "WITH cte AS (...) SELECT ... FROM cte JOIN ...",
-        "tier2Scaffold": "WITH vessel_load AS (\n  SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id\n)\nSELECT v.vessel_name, vl.total_mass\nFROM vessels v\nJOIN vessel_load vl ON v.vessel_id = vl.vessel_id;",
-        "tier3Solution": "WITH vessel_load AS (SELECT vessel_id, SUM(mass_tons) as total_mass FROM cargo GROUP BY vessel_id) SELECT v.vessel_name, vl.total_mass FROM vessels v JOIN vessel_load vl ON v.vessel_id = vl.vessel_id;"
+        "tier1Concept": "Prefix any SELECT with EXPLAIN QUERY PLAN and SQLite tells you HOW it will execute: SCAN = read every row; SEARCH = jump straight to matches via an index.",
+        "tier2Scaffold": "EXPLAIN QUERY PLAN\nSELECT * FROM shipments WHERE status = '___';",
+        "tier3Solution": "EXPLAIN QUERY PLAN SELECT * FROM shipments WHERE status = 'DELAYED';"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (WITH vl AS (SELECT vessel_id FROM cargo GROUP BY vessel_id) SELECT v.vessel_name FROM vessels v JOIN vl ON v.vessel_id=vl.vessel_id);",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "EXPLAIN QUERY PLAN SELECT * FROM shipments WHERE status = 'DELAYED';"
+      }
     },
     {
       "stepIndex": 26,
       "phase": "Architect",
-      "conceptFocus": "CREATE_VIEW_MANIFEST",
-      "narrativeBriefing": "Create a view `mission_manifest` that shows vessel_name, crew count, and total cargo mass for each active vessel.",
+      "conceptFocus": "INDEX_CREATE_STATUS",
+      "narrativeBriefing": "Give the planner a shortcut. Create an index named idx_ship_status on shipments(status). An index is a sorted copy of one or more columns that lets SQLite binary-search instead of scanning.",
       "hints": {
-        "tier1Concept": "Use CREATE VIEW with a query that JOINs vessels, crew (counted), and cargo (summed).",
-        "tier2Scaffold": "CREATE VIEW mission_manifest AS\nSELECT v.vessel_name,\n  COUNT(DISTINCT c.crew_id) as crew_count,\n  SUM(ca.mass_tons) as cargo_mass\nFROM vessels v\nLEFT JOIN crew c ON v.vessel_id = c.vessel_id\nLEFT JOIN cargo ca ON v.vessel_id = ca.vessel_id\nWHERE v.status = 'ACTIVE'\nGROUP BY v.vessel_id;",
-        "tier3Solution": "CREATE VIEW mission_manifest AS SELECT v.vessel_name, COUNT(DISTINCT c.crew_id) as crew_count, SUM(ca.mass_tons) as cargo_mass FROM vessels v LEFT JOIN crew c ON v.vessel_id = c.vessel_id LEFT JOIN cargo ca ON v.vessel_id = ca.vessel_id WHERE v.status = 'ACTIVE' GROUP BY v.vessel_id;"
+        "tier1Concept": "CREATE INDEX index_name ON table(column). Reads get faster; writes pay a small tax to keep the index current.",
+        "tier2Scaffold": "CREATE INDEX idx_ship_status ON shipments(___);",
+        "tier3Solution": "CREATE INDEX idx_ship_status ON shipments(status);"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='view' AND name='mission_manifest';",
-      "expectedResult": "[{\"name\":\"mission_manifest\"}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS idx_ok FROM sqlite_master WHERE type='index' AND name='idx_ship_status' AND tbl_name='shipments';",
+        "expectedResult": "[{\"idx_ok\":1}]"
+      }
     },
     {
       "stepIndex": 27,
       "phase": "Architect",
-      "conceptFocus": "WINDOW_CREW_RANK",
-      "narrativeBriefing": "Rank each crew member within their vessel by seniority (Commander=1, Pilot=2, Engineer=3, Scientist=4) using CASE + RANK().",
+      "conceptFocus": "PLAN_SEARCH_VS_SCAN",
+      "narrativeBriefing": "Prove the index earns its keep. Write a query returning shipment_id and vessel_id of all LOST shipments. Your rows must be right AND your query plan must show the planner using idx_ship_status — we verify both.",
       "hints": {
-        "tier1Concept": "Use ROW_NUMBER() OVER (PARTITION BY vessel_id ORDER BY CASE rank ...) to assign seniority ranks.",
-        "tier2Scaffold": "SELECT name, rank, vessel_id,\n  ROW_NUMBER() OVER (\n    PARTITION BY vessel_id\n    ORDER BY CASE rank\n      WHEN 'Commander' THEN 1\n      WHEN 'Pilot' THEN 2\n      WHEN 'Engineer' THEN 3\n      ELSE 4\n    END\n  ) as seniority_rank\nFROM crew;",
-        "tier3Solution": "SELECT name, rank, vessel_id, ROW_NUMBER() OVER (PARTITION BY vessel_id ORDER BY CASE rank WHEN 'Commander' THEN 1 WHEN 'Pilot' THEN 2 WHEN 'Engineer' THEN 3 ELSE 4 END) as seniority_rank FROM crew;"
+        "tier1Concept": "With an index on status, an equality filter on status becomes a SEARCH ... USING INDEX. You don't invoke the index — you write a query the planner can use it for.",
+        "tier2Scaffold": "SELECT shipment_id, vessel_id\nFROM shipments\nWHERE status = '___';",
+        "tier3Solution": "SELECT shipment_id, vessel_id FROM shipments WHERE status = 'LOST';"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT ROW_NUMBER() OVER (PARTITION BY vessel_id ORDER BY crew_id) as rn FROM crew);",
-      "expectedResult": "[{\"count\":5}]"
+      "validation": {
+        "type": "PLAN_VERIFY",
+        "solutionQuery": "SELECT shipment_id, vessel_id FROM shipments WHERE status = 'LOST';",
+        "planMustInclude": "idx_ship_status"
+      }
     },
     {
       "stepIndex": 28,
       "phase": "Architect",
-      "conceptFocus": "WINDOW_CUMULATIVE_FUEL",
-      "narrativeBriefing": "Compute cumulative fuel reserves at Olympus Station ordered by depot_id using SUM() OVER.",
+      "conceptFocus": "COMPOSITE_INDEX_LANE",
+      "narrativeBriefing": "Dispatch constantly filters by origin AND status together. Build a composite index named idx_ship_origin_status on shipments(origin, status). Column order matters: the index is sorted by origin first, then status within it.",
       "hints": {
-        "tier1Concept": "SUM() OVER (WHERE station_name='Olympus Station' ORDER BY depot_id) gives running total.",
-        "tier2Scaffold": "SELECT depot_id, fuel_type, reserves_tons,\n  SUM(reserves_tons) OVER (PARTITION BY station_name ORDER BY depot_id) as cumulative_reserves\nFROM fuel_depots\nWHERE station_name = 'Olympus Station';",
-        "tier3Solution": "SELECT depot_id, fuel_type, reserves_tons, SUM(reserves_tons) OVER (PARTITION BY station_name ORDER BY depot_id) as cumulative_reserves FROM fuel_depots WHERE station_name = 'Olympus Station';"
+        "tier1Concept": "A composite index on (a, b) serves filters on a, or on a AND b — but not on b alone. Put the most selective / most-used leading column first.",
+        "tier2Scaffold": "CREATE INDEX idx_ship_origin_status ON shipments(___, ___);",
+        "tier3Solution": "CREATE INDEX idx_ship_origin_status ON shipments(origin, status);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT SUM(reserves_tons) OVER (PARTITION BY station_name ORDER BY depot_id) as cr FROM fuel_depots WHERE station_name='Olympus Station');",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS idx_ok FROM sqlite_master WHERE type='index' AND name='idx_ship_origin_status' AND tbl_name='shipments';",
+        "expectedResult": "[{\"idx_ok\":1}]"
+      }
     },
     {
       "stepIndex": 29,
       "phase": "Architect",
-      "conceptFocus": "EXISTS_CHECK",
-      "narrativeBriefing": "Find all crew members who are assigned to a vessel that has at least one cargo item, using EXISTS.",
+      "conceptFocus": "PLAN_COMPOSITE_PREFIX",
+      "narrativeBriefing": "Use it: return the shipment_ids of DELIVERED shipments that departed from Ares Junction (origin = 7). Both filter columns match the composite index, so the planner should pick idx_ship_origin_status over the single-column index.",
       "hints": {
-        "tier1Concept": "EXISTS checks whether a correlated subquery returns any rows.",
-        "tier2Scaffold": "SELECT c.name, c.vessel_id\nFROM crew c\nWHERE EXISTS (\n  SELECT 1 FROM cargo ca WHERE ca.vessel_id = c.vessel_id\n);",
-        "tier3Solution": "SELECT c.name, c.vessel_id FROM crew c WHERE EXISTS (SELECT 1 FROM cargo ca WHERE ca.vessel_id = c.vessel_id);"
+        "tier1Concept": "When a query has equality filters on both columns of a composite index, that index narrows the search the most — the planner prefers it to a single-column index.",
+        "tier2Scaffold": "SELECT shipment_id\nFROM shipments\nWHERE origin = ___ AND status = 'DELIVERED';",
+        "tier3Solution": "SELECT shipment_id FROM shipments WHERE origin = 7 AND status = 'DELIVERED';"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM crew c WHERE EXISTS (SELECT 1 FROM cargo ca WHERE ca.vessel_id = c.vessel_id);",
-      "expectedResult": "[{\"count\":5}]"
+      "validation": {
+        "type": "PLAN_VERIFY",
+        "solutionQuery": "SELECT shipment_id FROM shipments WHERE origin = 7 AND status = 'DELIVERED';",
+        "planMustInclude": "idx_ship_origin_status"
+      }
     },
     {
       "stepIndex": 30,
       "phase": "Architect",
-      "conceptFocus": "DISTINCT_DESTINATIONS",
-      "narrativeBriefing": "Get a list of all DISTINCT cargo destinations in the system.",
+      "conceptFocus": "INDEX_DATE_RANGE",
+      "narrativeBriefing": "Departure-date reports are next on the slow list. Create an index named idx_ship_departed on shipments(departed_on). Because our dates are ISO-8601 text (YYYY-MM-DD), sorted text order IS chronological order — range scans work.",
       "hints": {
-        "tier1Concept": "SELECT DISTINCT destination FROM cargo.",
-        "tier2Scaffold": "SELECT DISTINCT destination FROM cargo;",
-        "tier3Solution": "SELECT DISTINCT destination FROM cargo;"
+        "tier1Concept": "B-tree indexes serve range queries (>=, <, BETWEEN), not just equality — as long as the stored format sorts the way you query it.",
+        "tier2Scaffold": "CREATE INDEX idx_ship_departed ON shipments(___);",
+        "tier3Solution": "CREATE INDEX idx_ship_departed ON shipments(departed_on);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(DISTINCT destination) as count FROM cargo;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS idx_ok FROM sqlite_master WHERE type='index' AND name='idx_ship_departed' AND tbl_name='shipments';",
+        "expectedResult": "[{\"idx_ok\":1}]"
+      }
     },
     {
       "stepIndex": 31,
       "phase": "Architect",
-      "conceptFocus": "LIKE_SEARCH_CREW",
-      "narrativeBriefing": "Find all crew members whose rank starts with 'Dr.' using LIKE.",
+      "conceptFocus": "FIX_SARGABLE_DATE",
+      "narrativeBriefing": "A dispatcher wrote this March report and complains it is still slow — and the plan confirms it: wrapping departed_on in date() blinds the planner to your new index. Rewrite the filter as a plain range on the raw column so idx_ship_departed kicks in. Same rows, indexed plan.",
+      "challengeType": "fix",
+      "starterQuery": "SELECT shipment_id, departed_on\nFROM shipments\nWHERE date(departed_on) BETWEEN '2026-03-01' AND '2026-03-31';",
       "hints": {
-        "tier1Concept": "Use LIKE 'Dr.%' to match any name starting with Dr.",
-        "tier2Scaffold": "SELECT * FROM crew WHERE name LIKE 'Dr.%';",
-        "tier3Solution": "SELECT * FROM crew WHERE name LIKE 'Dr.%';"
+        "tier1Concept": "An index on a column cannot serve a filter on function(column) — the stored values are not function results. Rewrite the predicate to compare the bare column: this is called a 'sargable' predicate.",
+        "tier2Scaffold": "SELECT shipment_id, departed_on\nFROM shipments\nWHERE departed_on >= '2026-03-01' AND departed_on < '___';",
+        "tier3Solution": "SELECT shipment_id, departed_on FROM shipments WHERE departed_on >= '2026-03-01' AND departed_on < '2026-04-01';"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM crew WHERE name LIKE 'Dr.%';",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "PLAN_VERIFY",
+        "solutionQuery": "SELECT shipment_id, departed_on FROM shipments WHERE departed_on >= '2026-03-01' AND departed_on < '2026-04-01';",
+        "planMustInclude": "SEARCH shipments"
+      }
     },
     {
       "stepIndex": 32,
       "phase": "Architect",
-      "conceptFocus": "INDEX_CARGO",
-      "narrativeBriefing": "Create an index `idx_cargo_vessel` on `cargo`(vessel_id) to speed up vessel cargo lookups.",
+      "conceptFocus": "COVERING_INDEX_CARGO",
+      "narrativeBriefing": "The cargo-mass report joins nothing, yet it is slow: it scans the whole cargo table just to read two columns. Create an index named idx_cargo_ship_mass on cargo(shipment_id, mass_tons) — when an index contains every column a query needs, SQLite never touches the table at all.",
       "hints": {
-        "tier1Concept": "CREATE INDEX improves read performance on frequently-queried columns.",
-        "tier2Scaffold": "CREATE INDEX idx_cargo_vessel ON cargo(vessel_id);",
-        "tier3Solution": "CREATE INDEX idx_cargo_vessel ON cargo(vessel_id);"
+        "tier1Concept": "A 'covering' index contains all the columns a query reads, so the query is answered entirely from the index — no table lookups.",
+        "tier2Scaffold": "CREATE INDEX idx_cargo_ship_mass ON cargo(shipment_id, ___);",
+        "tier3Solution": "CREATE INDEX idx_cargo_ship_mass ON cargo(shipment_id, mass_tons);"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_cargo_vessel';",
-      "expectedResult": "[{\"name\":\"idx_cargo_vessel\"}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS idx_ok FROM sqlite_master WHERE type='index' AND name='idx_cargo_ship_mass' AND tbl_name='cargo';",
+        "expectedResult": "[{\"idx_ok\":1}]"
+      }
     },
     {
       "stepIndex": 33,
       "phase": "Architect",
-      "conceptFocus": "MULTI_CTE_FINAL_REPORT",
-      "narrativeBriefing": "Final Operations Report: use three CTEs to calculate crew_count per vessel, total_cargo per vessel, and total_fuel per station, then present a summary.",
+      "conceptFocus": "PLAN_COVERING_SUM",
+      "narrativeBriefing": "Now run the report: total mass_tons per shipment_id over all of cargo. Check your plan — it should say COVERING INDEX, meaning the table itself was never opened.",
       "hints": {
-        "tier1Concept": "Chain multiple CTEs with commas in a single WITH block.",
-        "tier2Scaffold": "WITH crew_counts AS (\n  SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id\n),\ncargo_totals AS (\n  SELECT vessel_id, SUM(mass_tons) as total_cargo FROM cargo GROUP BY vessel_id\n)\nSELECT v.vessel_name, cc.crew_count, ct.total_cargo\nFROM vessels v\nLEFT JOIN crew_counts cc ON v.vessel_id = cc.vessel_id\nLEFT JOIN cargo_totals ct ON v.vessel_id = ct.vessel_id;",
-        "tier3Solution": "WITH crew_counts AS (SELECT vessel_id, COUNT(*) as crew_count FROM crew GROUP BY vessel_id), cargo_totals AS (SELECT vessel_id, SUM(mass_tons) as total_cargo FROM cargo GROUP BY vessel_id) SELECT v.vessel_name, cc.crew_count, ct.total_cargo FROM vessels v LEFT JOIN crew_counts cc ON v.vessel_id = cc.vessel_id LEFT JOIN cargo_totals ct ON v.vessel_id = ct.vessel_id;"
+        "tier1Concept": "GROUP BY shipment_id reads in index order and SUM(mass_tons) reads the second indexed column — everything the query needs lives in idx_cargo_ship_mass.",
+        "tier2Scaffold": "SELECT shipment_id, SUM(___) AS total_mass\nFROM cargo\nGROUP BY shipment_id;",
+        "tier3Solution": "SELECT shipment_id, SUM(mass_tons) AS total_mass FROM cargo GROUP BY shipment_id;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM vessels v LEFT JOIN (SELECT vessel_id, COUNT(*) as n FROM crew GROUP BY vessel_id) cc ON v.vessel_id=cc.vessel_id;",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "PLAN_VERIFY",
+        "solutionQuery": "SELECT shipment_id, SUM(mass_tons) AS total_mass FROM cargo GROUP BY shipment_id;",
+        "planMustInclude": "COVERING INDEX"
+      }
     },
     {
       "stepIndex": 34,
       "phase": "Architect",
-      "conceptFocus": "DROP_VIEW_CLEANUP",
-      "narrativeBriefing": "Mission archive complete. Drop the `mission_manifest` view to finalize the database handoff.",
+      "conceptFocus": "PARTIAL_INDEX_DELAYED",
+      "narrativeBriefing": "Ops only ever drills into DELAYED shipments, but a full index pays storage for all 800 rows. Create a PARTIAL index named idx_ship_delayed on shipments(origin) that only includes rows WHERE status = 'DELAYED' — a fraction of the size, all of the speed for that one query shape.",
       "hints": {
-        "tier1Concept": "Use DROP VIEW to remove a view from the schema.",
-        "tier2Scaffold": "DROP VIEW mission_manifest;",
-        "tier3Solution": "DROP VIEW mission_manifest;"
+        "tier1Concept": "CREATE INDEX … ON table(cols) WHERE condition indexes only matching rows. The planner uses it when the query's WHERE clause implies the index's condition.",
+        "tier2Scaffold": "CREATE INDEX idx_ship_delayed ON shipments(origin) WHERE status = '___';",
+        "tier3Solution": "CREATE INDEX idx_ship_delayed ON shipments(origin) WHERE status = 'DELAYED';"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM sqlite_master WHERE type='view' AND name='mission_manifest';",
-      "expectedResult": "[{\"count\":0}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS idx_ok FROM sqlite_master WHERE type='index' AND name='idx_ship_delayed' AND tbl_name='shipments' AND sql LIKE '%WHERE%';",
+        "expectedResult": "[{\"idx_ok\":1}]"
+      }
+    },
+    {
+      "stepIndex": 35,
+      "phase": "Architect",
+      "conceptFocus": "EXPRESSION_INDEX_MONTH",
+      "narrativeBriefing": "Monthly rollups group by substr(departed_on, 1, 7) — a computed value, so no column index helps. SQLite can index the EXPRESSION itself. Create an index named idx_ship_month on shipments(substr(departed_on, 1, 7)).",
+      "hints": {
+        "tier1Concept": "An expression index stores the computed value. It serves queries whose predicate uses the EXACT same expression, character for character.",
+        "tier2Scaffold": "CREATE INDEX idx_ship_month ON shipments(substr(departed_on, 1, ___));",
+        "tier3Solution": "CREATE INDEX idx_ship_month ON shipments(substr(departed_on, 1, 7));"
+      },
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS idx_ok FROM sqlite_master WHERE type='index' AND name='idx_ship_month' AND tbl_name='shipments';",
+        "expectedResult": "[{\"idx_ok\":1}]"
+      }
+    },
+    {
+      "stepIndex": 36,
+      "phase": "Architect",
+      "conceptFocus": "PLAN_EXPRESSION_MATCH",
+      "narrativeBriefing": "Use the expression index: count the shipments that departed in February 2026, filtering with substr(departed_on, 1, 7) = '2026-02' — the exact expression you indexed. The plan must show idx_ship_month doing the work.",
+      "hints": {
+        "tier1Concept": "Match the indexed expression exactly and the planner treats it like an indexed column: SEARCH shipments USING INDEX idx_ship_month (<expr>=?).",
+        "tier2Scaffold": "SELECT COUNT(*) AS feb_shipments\nFROM shipments\nWHERE substr(departed_on, 1, 7) = '___';",
+        "tier3Solution": "SELECT COUNT(*) AS feb_shipments FROM shipments WHERE substr(departed_on, 1, 7) = '2026-02';"
+      },
+      "validation": {
+        "type": "PLAN_VERIFY",
+        "solutionQuery": "SELECT COUNT(*) AS feb_shipments FROM shipments WHERE substr(departed_on, 1, 7) = '2026-02';",
+        "planMustInclude": "idx_ship_month"
+      }
+    },
+    {
+      "stepIndex": 37,
+      "phase": "Architect",
+      "conceptFocus": "FIX_NULL_HOME_TRAP",
+      "narrativeBriefing": "Facilities asked which stations are nobody's home port — and this query says NONE, which is wrong. The culprit: two mothballed vessels have NULL home_station, and one NULL inside NOT IN makes the whole test unknowable for every row. Rewrite it with NOT EXISTS.",
+      "challengeType": "fix",
+      "starterQuery": "SELECT station_id, name\nFROM stations\nWHERE station_id NOT IN (SELECT home_station FROM vessels);",
+      "hints": {
+        "tier1Concept": "x NOT IN (list with NULL) can never be true — x <> NULL is unknown. NOT EXISTS with a correlated subquery is NULL-proof; filtering the NULLs out of the subquery also works.",
+        "tier2Scaffold": "SELECT s.station_id, s.name\nFROM stations s\nWHERE NOT EXISTS (\n  SELECT 1 FROM vessels v WHERE v.home_station = s.___\n);",
+        "tier3Solution": "SELECT s.station_id, s.name FROM stations s WHERE NOT EXISTS (SELECT 1 FROM vessels v WHERE v.home_station = s.station_id);"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT s.station_id, s.name FROM stations s WHERE NOT EXISTS (SELECT 1 FROM vessels v WHERE v.home_station = s.station_id);"
+      }
+    },
+    {
+      "stepIndex": 38,
+      "phase": "Principal",
+      "conceptFocus": "COUNTER_CACHE_TABLE",
+      "narrativeBriefing": "The fleet dashboard recounts shipments per vessel on every refresh. Principals cache. Create a table vessel_stats from a query: one row per vessel (all 18, even idle ones) with vessel_id and shipment_count. CREATE TABLE … AS SELECT materializes the result.",
+      "hints": {
+        "tier1Concept": "CREATE TABLE name AS SELECT … creates and fills a table from a query in one statement. LEFT JOIN + COUNT(s.shipment_id) keeps zero-shipment vessels with a count of 0.",
+        "tier2Scaffold": "CREATE TABLE vessel_stats AS\nSELECT v.vessel_id, COUNT(s.shipment_id) AS shipment_count\nFROM vessels v\nLEFT JOIN shipments s ON s.vessel_id = v.vessel_id\nGROUP BY v.___;",
+        "tier3Solution": "CREATE TABLE vessel_stats AS SELECT v.vessel_id, COUNT(s.shipment_id) AS shipment_count FROM vessels v LEFT JOIN shipments s ON s.vessel_id = v.vessel_id GROUP BY v.vessel_id;"
+      },
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT (SELECT COUNT(*) FROM vessel_stats) AS rows_cached, (SELECT COUNT(*) FROM vessel_stats vs WHERE vs.shipment_count <> (SELECT COUNT(*) FROM shipments s WHERE s.vessel_id = vs.vessel_id)) AS drift;",
+        "expectedResult": "[{\"rows_cached\":18,\"drift\":0}]"
+      }
+    },
+    {
+      "stepIndex": 39,
+      "phase": "Principal",
+      "conceptFocus": "TRIGGER_CACHE_SYNC",
+      "narrativeBriefing": "A cache that drifts is worse than no cache. Create a trigger named trg_ship_insert that fires AFTER INSERT ON shipments and increments the matching vessel's shipment_count in vessel_stats. NEW refers to the row just inserted.",
+      "hints": {
+        "tier1Concept": "CREATE TRIGGER name AFTER INSERT ON table BEGIN …; END; runs its body on every insert. Inside, NEW.column reads the inserted row's values.",
+        "tier2Scaffold": "CREATE TRIGGER trg_ship_insert AFTER INSERT ON shipments\nBEGIN\n  UPDATE vessel_stats SET shipment_count = shipment_count + 1\n  WHERE vessel_id = NEW.___;\nEND;",
+        "tier3Solution": "CREATE TRIGGER trg_ship_insert AFTER INSERT ON shipments BEGIN UPDATE vessel_stats SET shipment_count = shipment_count + 1 WHERE vessel_id = NEW.vessel_id; END;"
+      },
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS trg_ok FROM sqlite_master WHERE type='trigger' AND name='trg_ship_insert';",
+        "expectedResult": "[{\"trg_ok\":1}]"
+      }
+    },
+    {
+      "stepIndex": 40,
+      "phase": "Principal",
+      "conceptFocus": "TRIGGER_PROOF_INSERT",
+      "narrativeBriefing": "Trust, then verify. Insert a new shipment with shipment_id 9001: vessel 3, origin 1, destination 7, departed_on '2026-06-11', status 'IN_TRANSIT'. If your trigger works, vessel 3's cached count stays exactly in sync with the live count — that is what we check.",
+      "hints": {
+        "tier1Concept": "A plain INSERT is the test: the trigger fires automatically. The cache is correct when cached count minus live COUNT(*) is zero.",
+        "tier2Scaffold": "INSERT INTO shipments (shipment_id, vessel_id, origin, destination, departed_on, status)\nVALUES (9001, 3, 1, 7, '2026-06-11', '___');",
+        "tier3Solution": "INSERT INTO shipments (shipment_id, vessel_id, origin, destination, departed_on, status) VALUES (9001, 3, 1, 7, '2026-06-11', 'IN_TRANSIT');"
+      },
+      "validation": {
+        "type": "STATE_VERIFY",
+        "verificationQuery": "SELECT (SELECT shipment_count FROM vessel_stats WHERE vessel_id = 3) - (SELECT COUNT(*) FROM shipments WHERE vessel_id = 3) AS drift, (SELECT COUNT(*) FROM shipments WHERE shipment_id = 9001) AS inserted;",
+        "expectedResult": "[{\"drift\":0,\"inserted\":1}]"
+      }
+    },
+    {
+      "stepIndex": 41,
+      "phase": "Principal",
+      "conceptFocus": "WINDOW_FUEL_RANK",
+      "narrativeBriefing": "Route planners want options ranked, not averaged. For every route, show from_station, to_station, fuel_cost, and its RANK among routes sharing the same origin, cheapest first — a window function, so no rows collapse.",
+      "hints": {
+        "tier1Concept": "RANK() OVER (PARTITION BY from_station ORDER BY fuel_cost) numbers routes within each origin without collapsing rows — every route keeps its own row.",
+        "tier2Scaffold": "SELECT from_station, to_station, fuel_cost,\n  RANK() OVER (PARTITION BY ___ ORDER BY fuel_cost) AS fuel_rank\nFROM routes;",
+        "tier3Solution": "SELECT from_station, to_station, fuel_cost, RANK() OVER (PARTITION BY from_station ORDER BY fuel_cost) AS fuel_rank FROM routes;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT from_station, to_station, fuel_cost, RANK() OVER (PARTITION BY from_station ORDER BY fuel_cost) AS fuel_rank FROM routes;"
+      }
+    },
+    {
+      "stepIndex": 42,
+      "phase": "Principal",
+      "conceptFocus": "EFFICIENCY_TOPN_ORDERED",
+      "narrativeBriefing": "Fuel is the budget killer. Compute each route's burn rate — fuel_cost per transit hour — and return the five worst: route_id and the ratio rounded to 2 decimals, highest burn first. Sort by the raw ratio descending and break ties by route_id.",
+      "hints": {
+        "tier1Concept": "Integer division truncates — CAST one operand to REAL first. Sort on the precise ratio, display the rounded one, and add a unique tiebreaker for a stable top-N.",
+        "tier2Scaffold": "SELECT route_id, ROUND(CAST(fuel_cost AS REAL) / transit_hours, 2) AS fuel_per_hour\nFROM routes\nORDER BY CAST(fuel_cost AS REAL) / transit_hours DESC, ___\nLIMIT 5;",
+        "tier3Solution": "SELECT route_id, ROUND(CAST(fuel_cost AS REAL) / transit_hours, 2) AS fuel_per_hour FROM routes ORDER BY CAST(fuel_cost AS REAL) / transit_hours DESC, route_id LIMIT 5;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT route_id, ROUND(CAST(fuel_cost AS REAL) / transit_hours, 2) AS fuel_per_hour FROM routes ORDER BY CAST(fuel_cost AS REAL) / transit_hours DESC, route_id LIMIT 5;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 43,
+      "phase": "Principal",
+      "conceptFocus": "LANE_STATUS_MATRIX",
+      "narrativeBriefing": "The board wants a one-page matrix: for each ORIGIN orbit zone, how many shipments are DELIVERED, DELAYED, and LOST — three counts side by side as columns, not stacked as rows. Conditional aggregation is the pivot tool.",
+      "hints": {
+        "tier1Concept": "SUM(CASE WHEN condition THEN 1 ELSE 0 END) counts matching rows per group. Several of them in one SELECT pivots categories into columns.",
+        "tier2Scaffold": "SELECT st.orbit_zone,\n  SUM(CASE WHEN s.status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered,\n  SUM(CASE WHEN s.status = 'DELAYED' THEN 1 ELSE 0 END) AS delayed,\n  SUM(CASE WHEN s.status = '___' THEN 1 ELSE 0 END) AS lost\nFROM shipments s\nJOIN stations st ON st.station_id = s.origin\nGROUP BY st.orbit_zone;",
+        "tier3Solution": "SELECT st.orbit_zone, SUM(CASE WHEN s.status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered, SUM(CASE WHEN s.status = 'DELAYED' THEN 1 ELSE 0 END) AS delayed, SUM(CASE WHEN s.status = 'LOST' THEN 1 ELSE 0 END) AS lost FROM shipments s JOIN stations st ON st.station_id = s.origin GROUP BY st.orbit_zone;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT st.orbit_zone, SUM(CASE WHEN s.status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered, SUM(CASE WHEN s.status = 'DELAYED' THEN 1 ELSE 0 END) AS delayed, SUM(CASE WHEN s.status = 'LOST' THEN 1 ELSE 0 END) AS lost FROM shipments s JOIN stations st ON st.station_id = s.origin GROUP BY st.orbit_zone;"
+      }
+    },
+    {
+      "stepIndex": 44,
+      "phase": "Principal",
+      "conceptFocus": "HEAVY_LANES_HAVING",
+      "narrativeBriefing": "Which specific lanes carry the most traffic? Group shipments by origin AND destination, join both ends to station names, and report from_name, to_name, and the shipment count — but only lanes with at least 6 shipments.",
+      "hints": {
+        "tier1Concept": "Group by the pair (origin, destination) to count per directed lane; join stations twice — once per endpoint — with different aliases.",
+        "tier2Scaffold": "SELECT f.name AS from_name, t.name AS to_name, COUNT(*) AS shipments\nFROM shipments s\nJOIN stations f ON f.station_id = s.origin\nJOIN stations t ON t.station_id = s.destination\nGROUP BY s.origin, s.destination\nHAVING COUNT(*) >= ___;",
+        "tier3Solution": "SELECT f.name AS from_name, t.name AS to_name, COUNT(*) AS shipments FROM shipments s JOIN stations f ON f.station_id = s.origin JOIN stations t ON t.station_id = s.destination GROUP BY s.origin, s.destination HAVING COUNT(*) >= 6;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT f.name AS from_name, t.name AS to_name, COUNT(*) AS shipments FROM shipments s JOIN stations f ON f.station_id = s.origin JOIN stations t ON t.station_id = s.destination GROUP BY s.origin, s.destination HAVING COUNT(*) >= 6;"
+      }
+    },
+    {
+      "stepIndex": 45,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_CHEAPEST_ROUTE",
+      "narrativeBriefing": "FUEL CRISIS — final assignment, no scaffolding from here. Reserves are critical and a relief convoy must reach Pallas Reach (station 12) from Meridian HQ (station 1). Compute the minimum total fuel cost of any path from 1 to 12 using at most 6 hops. Return one value: min_fuel.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Extend the recursive pattern: carry an accumulating total_fuel and a hop counter through the recursion, bound the hops, then MIN() over rows that arrived at the target.",
+        "tier2Scaffold": "WITH RECURSIVE paths(sid, total_fuel, hops) AS (\n  SELECT 1, 0, 0\n  UNION ALL\n  SELECT r.to_station, p.total_fuel + r.fuel_cost, p.hops + 1\n  FROM paths p JOIN routes r ON r.from_station = p.sid\n  WHERE p.hops < 6\n)\nSELECT MIN(total_fuel) AS min_fuel FROM paths WHERE sid = ___;",
+        "tier3Solution": "WITH RECURSIVE paths(sid, total_fuel, hops) AS (SELECT 1, 0, 0 UNION ALL SELECT r.to_station, p.total_fuel + r.fuel_cost, p.hops + 1 FROM paths p JOIN routes r ON r.from_station = p.sid WHERE p.hops < 6) SELECT MIN(total_fuel) AS min_fuel FROM paths WHERE sid = 12;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH RECURSIVE paths(sid, total_fuel, hops) AS (SELECT 1, 0, 0 UNION ALL SELECT r.to_station, p.total_fuel + r.fuel_cost, p.hops + 1 FROM paths p JOIN routes r ON r.from_station = p.sid WHERE p.hops < 6) SELECT MIN(total_fuel) AS min_fuel FROM paths WHERE sid = 12;"
+      }
+    },
+    {
+      "stepIndex": 46,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_HAZMAT_EXPOSURE",
+      "narrativeBriefing": "Hazard control needs exposure numbers NOW: for shipments currently IN_TRANSIT, how many tons of hazardous cargo are heading into each orbit zone? Group by the DESTINATION station's zone and return the zone and total hazardous tonnage.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Join shipments to cargo and to the destination station, filter status and the hazardous flag, then SUM mass per zone.",
+        "tier2Scaffold": "SELECT st.orbit_zone, SUM(c.mass_tons) AS haz_tons\nFROM shipments s\nJOIN cargo c ON c.shipment_id = s.shipment_id\nJOIN stations st ON st.station_id = s.destination\nWHERE s.status = 'IN_TRANSIT' AND c.hazardous = 1\nGROUP BY st.___;",
+        "tier3Solution": "SELECT st.orbit_zone, SUM(c.mass_tons) AS haz_tons FROM shipments s JOIN cargo c ON c.shipment_id = s.shipment_id JOIN stations st ON st.station_id = s.destination WHERE s.status = 'IN_TRANSIT' AND c.hazardous = 1 GROUP BY st.orbit_zone;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT st.orbit_zone, SUM(c.mass_tons) AS haz_tons FROM shipments s JOIN cargo c ON c.shipment_id = s.shipment_id JOIN stations st ON st.station_id = s.destination WHERE s.status = 'IN_TRANSIT' AND c.hazardous = 1 GROUP BY st.orbit_zone;"
+      }
+    },
+    {
+      "stepIndex": 47,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_FLEET_SCORECARD",
+      "narrativeBriefing": "Build the fleet scorecard the board will use to decommission ships: per vessel that has shipments — name, total shipments, delivered count, and delivery percentage as ROUND(100.0 * delivered / total, 1). One query, conditional aggregation.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "COUNT(*) gives the total per group; SUM(CASE WHEN status='DELIVERED' THEN 1 ELSE 0 END) gives the delivered slice; their ratio is the success rate. Multiply by 100.0 to force real division.",
+        "tier2Scaffold": "SELECT v.name,\n  COUNT(*) AS total,\n  SUM(CASE WHEN s.status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered,\n  ROUND(100.0 * SUM(CASE WHEN s.status = 'DELIVERED' THEN 1 ELSE 0 END) / COUNT(*), 1) AS pct\nFROM vessels v\nJOIN shipments s ON s.vessel_id = v.vessel_id\nGROUP BY v.vessel_id, v.___;",
+        "tier3Solution": "SELECT v.name, COUNT(*) AS total, SUM(CASE WHEN s.status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered, ROUND(100.0 * SUM(CASE WHEN s.status = 'DELIVERED' THEN 1 ELSE 0 END) / COUNT(*), 1) AS pct FROM vessels v JOIN shipments s ON s.vessel_id = v.vessel_id GROUP BY v.vessel_id, v.name;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT v.name, COUNT(*) AS total, SUM(CASE WHEN s.status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered, ROUND(100.0 * SUM(CASE WHEN s.status = 'DELIVERED' THEN 1 ELSE 0 END) / COUNT(*), 1) AS pct FROM vessels v JOIN shipments s ON s.vessel_id = v.vessel_id GROUP BY v.vessel_id, v.name;"
+      }
+    },
+    {
+      "stepIndex": 48,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_CERT_GAP",
+      "narrativeBriefing": "Compliance red alert: find every vessel that has carried hazardous cargo but has NO crew member holding a HAZMAT certification. Return vessel_id and name. Two existence tests in one query — one positive, one negative.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Combine EXISTS (the vessel carried hazardous cargo) with NOT EXISTS (no crew on the vessel holds the cert). Each subquery correlates on the vessel.",
+        "tier2Scaffold": "SELECT v.vessel_id, v.name\nFROM vessels v\nWHERE EXISTS (\n  SELECT 1 FROM shipments s JOIN cargo c ON c.shipment_id = s.shipment_id\n  WHERE s.vessel_id = v.vessel_id AND c.hazardous = 1\n)\nAND NOT EXISTS (\n  SELECT 1 FROM crew cr JOIN crew_certifications cc ON cc.crew_id = cr.crew_id\n  WHERE cr.vessel_id = v.vessel_id AND cc.cert = '___'\n);",
+        "tier3Solution": "SELECT v.vessel_id, v.name FROM vessels v WHERE EXISTS (SELECT 1 FROM shipments s JOIN cargo c ON c.shipment_id = s.shipment_id WHERE s.vessel_id = v.vessel_id AND c.hazardous = 1) AND NOT EXISTS (SELECT 1 FROM crew cr JOIN crew_certifications cc ON cc.crew_id = cr.crew_id WHERE cr.vessel_id = v.vessel_id AND cc.cert = 'HAZMAT');"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT v.vessel_id, v.name FROM vessels v WHERE EXISTS (SELECT 1 FROM shipments s JOIN cargo c ON c.shipment_id = s.shipment_id WHERE s.vessel_id = v.vessel_id AND c.hazardous = 1) AND NOT EXISTS (SELECT 1 FROM crew cr JOIN crew_certifications cc ON cc.crew_id = cr.crew_id WHERE cr.vessel_id = v.vessel_id AND cc.cert = 'HAZMAT');"
+      }
+    },
+    {
+      "stepIndex": 49,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_JOIN_PLAN_AUDIT",
+      "narrativeBriefing": "Last performance audit. Write the query that lists cargo_ids of all cargo aboard LOST shipments — and make it efficient: the plan must show the join probing cargo through idx_cargo_ship_mass instead of scanning the cargo table per shipment.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "In a nested-loop join the inner table is probed once per outer row — an index on the join key (cargo.shipment_id) turns each probe into a SEARCH. Write the natural join; the planner finds your index.",
+        "tier2Scaffold": "SELECT c.cargo_id\nFROM cargo c\nJOIN shipments s ON s.shipment_id = c.shipment_id\nWHERE s.status = '___';",
+        "tier3Solution": "SELECT c.cargo_id FROM cargo c JOIN shipments s ON s.shipment_id = c.shipment_id WHERE s.status = 'LOST';"
+      },
+      "validation": {
+        "type": "PLAN_VERIFY",
+        "solutionQuery": "SELECT c.cargo_id FROM cargo c JOIN shipments s ON s.shipment_id = c.shipment_id WHERE s.status = 'LOST';",
+        "planMustInclude": "idx_cargo_ship_mass"
+      }
+    },
+    {
+      "stepIndex": 50,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_CRISIS_DOSSIER",
+      "narrativeBriefing": "The final dossier for the crisis council — one table, the whole network. Per orbit zone: number of stations, vessels home-ported there (0 if none), shipments originating there, and how many of those were DELIVERED. Build it from CTEs and LEFT JOIN them so no zone disappears.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Compute each metric in its own CTE at zone grain, then LEFT JOIN them onto the zone list from stations. COALESCE turns missing vessels into 0.",
+        "tier2Scaffold": "WITH zone_stations AS (\n  SELECT orbit_zone, COUNT(*) AS stations FROM stations GROUP BY orbit_zone\n), zone_vessels AS (\n  SELECT s.orbit_zone, COUNT(v.vessel_id) AS vessels\n  FROM stations s JOIN vessels v ON v.home_station = s.station_id\n  GROUP BY s.orbit_zone\n), zone_ship AS (\n  SELECT st.orbit_zone, COUNT(*) AS outbound,\n         SUM(CASE WHEN sh.status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered\n  FROM shipments sh JOIN stations st ON st.station_id = sh.origin\n  GROUP BY st.orbit_zone\n)\nSELECT zs.orbit_zone, zs.stations, COALESCE(zv.vessels, 0) AS vessels, z.outbound, z.delivered\nFROM zone_stations zs\nLEFT JOIN zone_vessels zv ON zv.orbit_zone = zs.orbit_zone\nLEFT JOIN zone_ship z ON z.orbit_zone = zs.___;",
+        "tier3Solution": "WITH zone_stations AS (SELECT orbit_zone, COUNT(*) AS stations FROM stations GROUP BY orbit_zone), zone_vessels AS (SELECT s.orbit_zone, COUNT(v.vessel_id) AS vessels FROM stations s JOIN vessels v ON v.home_station = s.station_id GROUP BY s.orbit_zone), zone_ship AS (SELECT st.orbit_zone, COUNT(*) AS outbound, SUM(CASE WHEN sh.status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered FROM shipments sh JOIN stations st ON st.station_id = sh.origin GROUP BY st.orbit_zone) SELECT zs.orbit_zone, zs.stations, COALESCE(zv.vessels, 0) AS vessels, z.outbound, z.delivered FROM zone_stations zs LEFT JOIN zone_vessels zv ON zv.orbit_zone = zs.orbit_zone LEFT JOIN zone_ship z ON z.orbit_zone = zs.orbit_zone;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH zone_stations AS (SELECT orbit_zone, COUNT(*) AS stations FROM stations GROUP BY orbit_zone), zone_vessels AS (SELECT s.orbit_zone, COUNT(v.vessel_id) AS vessels FROM stations s JOIN vessels v ON v.home_station = s.station_id GROUP BY s.orbit_zone), zone_ship AS (SELECT st.orbit_zone, COUNT(*) AS outbound, SUM(CASE WHEN sh.status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered FROM shipments sh JOIN stations st ON st.station_id = sh.origin GROUP BY st.orbit_zone) SELECT zs.orbit_zone, zs.stations, COALESCE(zv.vessels, 0) AS vessels, z.outbound, z.delivered FROM zone_stations zs LEFT JOIN zone_vessels zv ON zv.orbit_zone = zs.orbit_zone LEFT JOIN zone_ship z ON z.orbit_zone = zs.orbit_zone;"
+      }
+    }
+  ],
+  "examPool": [
+    {
+      "prompt": "How many vessels does the fleet have in each class? Return the class and the count.",
+      "conceptFocus": "STATIONS_PER_ZONE",
+      "solutionQuery": "SELECT class, COUNT(*) AS n FROM vessels GROUP BY class;"
+    },
+    {
+      "prompt": "List the names of all crew members who hold the DOCKING certification.",
+      "conceptFocus": "CERTS_M2M_JOIN",
+      "solutionQuery": "SELECT c.name FROM crew c JOIN crew_certifications cc ON cc.crew_id = c.crew_id WHERE cc.cert = 'DOCKING';"
+    },
+    {
+      "prompt": "For each shipment status, what is the total cargo mass riding on shipments in that status? Return status and total mass.",
+      "conceptFocus": "CARGO_MASS_HAVING",
+      "solutionQuery": "SELECT s.status, SUM(c.mass_tons) AS total_mass FROM shipments s JOIN cargo c ON c.shipment_id = s.shipment_id GROUP BY s.status;"
+    },
+    {
+      "prompt": "How many round-trip route pairs exist — station pairs connected by routes in both directions? Return a single count (count each unordered pair once).",
+      "conceptFocus": "ROUTE_SELF_JOIN_ROUNDTRIP",
+      "solutionQuery": "SELECT COUNT(*) AS pairs FROM routes a JOIN routes b ON b.from_station = a.to_station AND b.to_station = a.from_station WHERE a.from_station < a.to_station;"
+    },
+    {
+      "prompt": "Using a recursive CTE, what is the minimum number of hops from Aurora Ring (station 2) to Ganymede Spur (station 14)? Return one value.",
+      "conceptFocus": "RECURSIVE_MIN_HOPS",
+      "solutionQuery": "WITH RECURSIVE hops(sid, d) AS (SELECT 2, 0 UNION ALL SELECT r.to_station, h.d + 1 FROM hops h JOIN routes r ON r.from_station = h.sid WHERE h.d < 6) SELECT MIN(d) AS min_hops FROM hops WHERE sid = 14;"
+    },
+    {
+      "prompt": "Which vessels have no crew members assigned at all? Return their names. Use a NULL-safe pattern.",
+      "conceptFocus": "FIX_NULL_HOME_TRAP",
+      "solutionQuery": "SELECT v.name FROM vessels v WHERE NOT EXISTS (SELECT 1 FROM crew c WHERE c.vessel_id = v.vessel_id);"
+    },
+    {
+      "prompt": "For each origin station NAME, count its LOST shipments. Only include stations that have at least one lost shipment.",
+      "conceptFocus": "THREE_TABLE_JOIN",
+      "solutionQuery": "SELECT st.name, COUNT(*) AS lost FROM shipments s JOIN stations st ON st.station_id = s.origin WHERE s.status = 'LOST' GROUP BY st.station_id, st.name;"
+    },
+    {
+      "prompt": "What are the three heaviest individual cargo items? Return description and mass_tons, heaviest first, ties broken by cargo_id.",
+      "conceptFocus": "FLEET_TOP_HAULERS",
+      "solutionQuery": "SELECT description, mass_tons FROM cargo ORDER BY mass_tons DESC, cargo_id LIMIT 3;",
+      "requiresOrder": true
     }
   ]
 }
