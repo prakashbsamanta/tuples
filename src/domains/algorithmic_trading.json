@@ -1,497 +1,761 @@
 {
   "domainId": "algorithmic-trading",
   "domainName": "Algorithmic Trading Platform",
-  "domainDescription": "Build a quantitative finance database to track high-frequency ticks, manage order books, portfolio risk, and analyze trading strategies.",
+  "domainDescription": "The Analyst track. A live quant desk database — 20 symbols, thousands of price ticks, order flow and portfolios — and you, asking it increasingly dangerous questions.",
+  "setupSeedKey": "trading_setup",
   "curriculumMatrix": [
     {
       "stepIndex": 0,
       "phase": "Novice",
-      "conceptFocus": "CREATE_ASSETS_TABLE",
-      "narrativeBriefing": "Welcome to the trading floor. Initialize the foundation of our platform by creating an `assets` table with `symbol` (TEXT) and `company_name` (TEXT).",
+      "conceptFocus": "SELECT_LIMIT",
+      "narrativeBriefing": "Welcome to the Meridian desk. The database is already live — your job is to read it. Start small: show the first 5 assets ordered by symbol (all columns).",
       "hints": {
-        "tier1Concept": "Use CREATE TABLE to define a new table with named columns and their data types.",
-        "tier2Scaffold": "CREATE TABLE assets (\n  symbol TEXT,\n  company_name TEXT\n);",
-        "tier3Solution": "CREATE TABLE assets (symbol TEXT, company_name TEXT);"
+        "tier1Concept": "SELECT * returns every column; ORDER BY sorts; LIMIT caps the row count. The three together are how you peek at any unfamiliar table.",
+        "tier2Scaffold": "SELECT *\nFROM assets\nORDER BY symbol\nLIMIT ___;",
+        "tier3Solution": "SELECT * FROM assets ORDER BY symbol LIMIT 5;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='assets';",
-      "expectedResult": "[{\"name\":\"assets\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT * FROM assets ORDER BY symbol LIMIT 5;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 1,
       "phase": "Novice",
-      "conceptFocus": "INSERT_ASSETS",
-      "narrativeBriefing": "Load the initial asset universe: insert 'AAPL'/'Apple Inc.', 'MSFT'/'Microsoft Corp.', and 'GOOG'/'Alphabet Inc.'.",
+      "conceptFocus": "LIMIT_OFFSET",
+      "narrativeBriefing": "Pagination drill: show assets 6 through 10 in the same symbol order — page two of the previous query, using LIMIT with OFFSET.",
       "hints": {
-        "tier1Concept": "Use INSERT INTO with multiple VALUES tuples to insert three rows at once.",
-        "tier2Scaffold": "INSERT INTO assets VALUES ('AAPL', 'Apple Inc.'), ('MSFT', 'Microsoft Corp.'), ('GOOG', 'Alphabet Inc.');",
-        "tier3Solution": "INSERT INTO assets VALUES ('AAPL', 'Apple Inc.'), ('MSFT', 'Microsoft Corp.'), ('GOOG', 'Alphabet Inc.');"
+        "tier1Concept": "OFFSET skips rows before LIMIT counts. LIMIT 5 OFFSET 5 = rows 6-10. (Stable pagination needs a deterministic ORDER BY.)",
+        "tier2Scaffold": "SELECT *\nFROM assets\nORDER BY symbol\nLIMIT 5 OFFSET ___;",
+        "tier3Solution": "SELECT * FROM assets ORDER BY symbol LIMIT 5 OFFSET 5;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM assets;",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT * FROM assets ORDER BY symbol LIMIT 5 OFFSET 5;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 2,
       "phase": "Novice",
-      "conceptFocus": "SELECT_FILTERED",
-      "narrativeBriefing": "Retrieve only the company name of 'AAPL' from the `assets` table.",
+      "conceptFocus": "WHERE_AND",
+      "narrativeBriefing": "Tape check: show the hour and price of every NVAX tick on '2026-01-05', ordered by hour.",
       "hints": {
-        "tier1Concept": "Use SELECT specific_column FROM table WHERE condition to retrieve filtered data.",
-        "tier2Scaffold": "SELECT company_name FROM assets WHERE symbol = '___';",
-        "tier3Solution": "SELECT company_name FROM assets WHERE symbol = 'AAPL';"
+        "tier1Concept": "Combine conditions with AND — both must hold. Filtering on two columns at once is the bread and butter of time-series lookups.",
+        "tier2Scaffold": "SELECT hour, price\nFROM price_ticks\nWHERE symbol = 'NVAX' AND day = '___'\nORDER BY hour;",
+        "tier3Solution": "SELECT hour, price FROM price_ticks WHERE symbol = 'NVAX' AND day = '2026-01-05' ORDER BY hour;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT company_name FROM assets WHERE symbol = 'AAPL';",
-      "expectedResult": "[{\"company_name\":\"Apple Inc.\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT hour, price FROM price_ticks WHERE symbol = 'NVAX' AND day = '2026-01-05' ORDER BY hour;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 3,
       "phase": "Novice",
-      "conceptFocus": "ALTER_TABLE_SECTOR",
-      "narrativeBriefing": "Add a `sector` (TEXT) column to the `assets` table so we can classify assets by industry.",
+      "conceptFocus": "IN_LIST",
+      "narrativeBriefing": "The energy-and-tech book is under review. List the symbol and name of every asset whose sector is 'Tech' or 'Energy' — use IN, not two ORs.",
       "hints": {
-        "tier1Concept": "Use ALTER TABLE ... ADD COLUMN to add a new column to an existing table.",
-        "tier2Scaffold": "ALTER TABLE assets ADD COLUMN sector TEXT;",
-        "tier3Solution": "ALTER TABLE assets ADD COLUMN sector TEXT;"
+        "tier1Concept": "col IN ('a','b','c') matches any value in the list — cleaner and less error-prone than chained OR conditions.",
+        "tier2Scaffold": "SELECT symbol, name\nFROM assets\nWHERE sector IN ('___', '___');",
+        "tier3Solution": "SELECT symbol, name FROM assets WHERE sector IN ('Tech', 'Energy');"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM pragma_table_info('assets') WHERE name='sector';",
-      "expectedResult": "[{\"count\":1}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT symbol, name FROM assets WHERE sector IN ('Tech', 'Energy');"
+      }
     },
     {
       "stepIndex": 4,
       "phase": "Novice",
-      "conceptFocus": "UPDATE_SECTORS",
-      "narrativeBriefing": "All three assets are in the 'Technology' sector. Update all their sector values at once (no WHERE needed here).",
+      "conceptFocus": "BETWEEN_RANGE",
+      "narrativeBriefing": "Risk wants the mid-price band sized. How many ticks (across all symbols) have a price BETWEEN 50 AND 100? Return one count.",
       "hints": {
-        "tier1Concept": "UPDATE without WHERE modifies every row. Use SET to assign a value.",
-        "tier2Scaffold": "UPDATE assets SET sector = 'Technology';",
-        "tier3Solution": "UPDATE assets SET sector = 'Technology';"
+        "tier1Concept": "BETWEEN a AND b is an inclusive range filter — equivalent to col >= a AND col <= b, but reads like the sentence you meant.",
+        "tier2Scaffold": "SELECT COUNT(*) AS band_ticks\nFROM price_ticks\nWHERE price BETWEEN ___ AND ___;",
+        "tier3Solution": "SELECT COUNT(*) AS band_ticks FROM price_ticks WHERE price BETWEEN 50 AND 100;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT COUNT(*) as count FROM assets WHERE sector='Technology';",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT COUNT(*) AS band_ticks FROM price_ticks WHERE price BETWEEN 50 AND 100;"
+      }
     },
     {
       "stepIndex": 5,
       "phase": "Novice",
-      "conceptFocus": "CREATE_PRICE_TICKS",
-      "narrativeBriefing": "Create a `price_ticks` table: `tick_id` (INT), `symbol` (TEXT), `price` (REAL), `volume` (INT), `tick_time` (TEXT).",
+      "conceptFocus": "ORDER_MULTI_KEY",
+      "narrativeBriefing": "Produce the asset directory: all assets ordered by sector (A→Z), then by ipo_year newest-first within each sector. Return symbol, sector, ipo_year.",
       "hints": {
-        "tier1Concept": "Create the tick data table with appropriate types — REAL for price, INT for volume.",
-        "tier2Scaffold": "CREATE TABLE price_ticks (\n  tick_id INT,\n  symbol TEXT,\n  price REAL,\n  volume INT,\n  tick_time TEXT\n);",
-        "tier3Solution": "CREATE TABLE price_ticks (tick_id INT, symbol TEXT, price REAL, volume INT, tick_time TEXT);"
+        "tier1Concept": "ORDER BY takes multiple keys: the second only breaks ties in the first. ASC is the default; DESC flips a key.",
+        "tier2Scaffold": "SELECT symbol, sector, ipo_year\nFROM assets\nORDER BY sector ASC, ipo_year ___;",
+        "tier3Solution": "SELECT symbol, sector, ipo_year FROM assets ORDER BY sector ASC, ipo_year DESC;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='price_ticks';",
-      "expectedResult": "[{\"name\":\"price_ticks\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT symbol, sector, ipo_year FROM assets ORDER BY sector ASC, ipo_year DESC;"
+      }
     },
     {
       "stepIndex": 6,
       "phase": "Novice",
-      "conceptFocus": "INSERT_PRICE_TICKS",
-      "narrativeBriefing": "Insert 5 price ticks: AAPL ticks (1,AAPL,182.50,1000,'2024-03-01 09:30'), (2,AAPL,183.20,1500,'2024-03-01 09:31'), (3,MSFT,415.30,800,'2024-03-01 09:30'), (4,MSFT,416.00,600,'2024-03-01 09:31'), (5,GOOG,172.10,2000,'2024-03-01 09:30').",
+      "conceptFocus": "LIKE_PATTERN",
+      "narrativeBriefing": "Compliance flags anything branded 'Nova'. Find every asset whose name contains the substring 'Nova' — return symbol and name.",
       "hints": {
-        "tier1Concept": "Insert all 5 rows in a single INSERT statement.",
-        "tier2Scaffold": "INSERT INTO price_ticks VALUES\n  (1,'AAPL',182.50,1000,'2024-03-01 09:30'),\n  (2,'AAPL',183.20,1500,'2024-03-01 09:31'),\n  (3,'MSFT',415.30,800,'2024-03-01 09:30'),\n  (4,'MSFT',416.00,600,'2024-03-01 09:31'),\n  (5,'GOOG',172.10,2000,'2024-03-01 09:30');",
-        "tier3Solution": "INSERT INTO price_ticks VALUES (1,'AAPL',182.50,1000,'2024-03-01 09:30'),(2,'AAPL',183.20,1500,'2024-03-01 09:31'),(3,'MSFT',415.30,800,'2024-03-01 09:30'),(4,'MSFT',416.00,600,'2024-03-01 09:31'),(5,'GOOG',172.10,2000,'2024-03-01 09:30');"
+        "tier1Concept": "LIKE matches patterns: % is 'any characters', _ is 'one character'. '%Nova%' means 'Nova appears anywhere'.",
+        "tier2Scaffold": "SELECT symbol, name\nFROM assets\nWHERE name LIKE '___';",
+        "tier3Solution": "SELECT symbol, name FROM assets WHERE name LIKE '%Nova%';"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM price_ticks;",
-      "expectedResult": "[{\"count\":5}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT symbol, name FROM assets WHERE name LIKE '%Nova%';"
+      }
     },
     {
       "stepIndex": 7,
       "phase": "Novice",
-      "conceptFocus": "AGGREGATE_MAX_MIN",
-      "narrativeBriefing": "Find the highest and lowest price ever recorded in `price_ticks` across all symbols.",
+      "conceptFocus": "AGG_MIN_MAX_AVG",
+      "narrativeBriefing": "Profile CLDX in one row: its lowest tick price, highest tick price, and average tick price rounded to 2 decimals.",
       "hints": {
-        "tier1Concept": "Use MAX() and MIN() aggregate functions in a single SELECT.",
-        "tier2Scaffold": "SELECT MAX(price) as high, MIN(price) as low FROM price_ticks;",
-        "tier3Solution": "SELECT MAX(price) as high, MIN(price) as low FROM price_ticks;"
+        "tier1Concept": "MIN/MAX/AVG collapse a column into one summary value each — and you can compute several aggregates in the same SELECT.",
+        "tier2Scaffold": "SELECT MIN(price) AS low, MAX(price) AS high, ROUND(AVG(price), 2) AS avg_price\nFROM price_ticks\nWHERE symbol = '___';",
+        "tier3Solution": "SELECT MIN(price) AS low, MAX(price) AS high, ROUND(AVG(price), 2) AS avg_price FROM price_ticks WHERE symbol = 'CLDX';"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT MAX(price) as high, MIN(price) as low FROM price_ticks;",
-      "expectedResult": "[{\"high\":416,\"low\":172.1}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT MIN(price) AS low, MAX(price) AS high, ROUND(AVG(price), 2) AS avg_price FROM price_ticks WHERE symbol = 'CLDX';"
+      }
     },
     {
       "stepIndex": 8,
       "phase": "Novice",
-      "conceptFocus": "GROUP_BY_SYMBOL",
-      "narrativeBriefing": "Calculate the average price and total volume traded, grouped by each symbol.",
+      "conceptFocus": "GROUP_BY_SECTOR",
+      "narrativeBriefing": "Sector census: how many assets per sector? Return sector and the count.",
       "hints": {
-        "tier1Concept": "Use GROUP BY with AVG() and SUM() aggregate functions.",
-        "tier2Scaffold": "SELECT symbol, AVG(price) as avg_price, SUM(volume) as total_volume FROM price_ticks GROUP BY symbol;",
-        "tier3Solution": "SELECT symbol, AVG(price) as avg_price, SUM(volume) as total_volume FROM price_ticks GROUP BY symbol;"
+        "tier1Concept": "GROUP BY sector produces one row per sector; COUNT(*) counts the rows that landed in each group.",
+        "tier2Scaffold": "SELECT sector, COUNT(*) AS assets\nFROM assets\nGROUP BY ___;",
+        "tier3Solution": "SELECT sector, COUNT(*) AS assets FROM assets GROUP BY sector;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT symbol FROM price_ticks GROUP BY symbol);",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT sector, COUNT(*) AS assets FROM assets GROUP BY sector;"
+      }
     },
     {
       "stepIndex": 9,
-      "phase": "Operator",
-      "conceptFocus": "CREATE_ORDERS_TABLE",
-      "narrativeBriefing": "Create an `orders` table: `order_id` (INT), `symbol` (TEXT), `order_type` (TEXT), `quantity` (INT), `limit_price` (REAL), `status` (TEXT), `created_at` (TEXT).",
+      "phase": "Novice",
+      "conceptFocus": "GROUP_MULTI_KEY",
+      "narrativeBriefing": "Order-flow breakdown: count orders per (trader, side) pair. Return trader, side and the count — one row per combination.",
       "hints": {
-        "tier1Concept": "order_type will hold BUY or SELL, status will be PENDING/FILLED/CANCELLED.",
-        "tier2Scaffold": "CREATE TABLE orders (\n  order_id INT,\n  symbol TEXT,\n  order_type TEXT,\n  quantity INT,\n  limit_price REAL,\n  status TEXT,\n  created_at TEXT\n);",
-        "tier3Solution": "CREATE TABLE orders (order_id INT, symbol TEXT, order_type TEXT, quantity INT, limit_price REAL, status TEXT, created_at TEXT);"
+        "tier1Concept": "GROUP BY can take several columns; each distinct combination becomes a group. This is how you cross-tabulate raw activity.",
+        "tier2Scaffold": "SELECT trader, side, COUNT(*) AS orders\nFROM orders\nGROUP BY trader, ___;",
+        "tier3Solution": "SELECT trader, side, COUNT(*) AS orders FROM orders GROUP BY trader, side;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='orders';",
-      "expectedResult": "[{\"name\":\"orders\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT trader, side, COUNT(*) AS orders FROM orders GROUP BY trader, side;"
+      }
     },
     {
       "stepIndex": 10,
-      "phase": "Operator",
-      "conceptFocus": "INSERT_ORDERS",
-      "narrativeBriefing": "Place 4 orders: (1,'AAPL','BUY',100,182.00,'PENDING','2024-03-01 09:29'), (2,'MSFT','SELL',50,417.00,'PENDING','2024-03-01 09:29'), (3,'GOOG','BUY',200,171.00,'FILLED','2024-03-01 09:28'), (4,'AAPL','SELL',75,184.00,'CANCELLED','2024-03-01 09:27').",
+      "phase": "Novice",
+      "conceptFocus": "HAVING_THRESHOLD",
+      "narrativeBriefing": "Liquidity screen: which symbols have MORE than 45 orders? Return symbol and order count — filter the groups, not the rows.",
       "hints": {
-        "tier1Concept": "Insert all 4 orders using a single INSERT statement.",
-        "tier2Scaffold": "INSERT INTO orders VALUES\n  (1,'AAPL','BUY',100,182.00,'PENDING','2024-03-01 09:29'),\n  (2,'MSFT','SELL',50,417.00,'PENDING','2024-03-01 09:29'),\n  (3,'GOOG','BUY',200,171.00,'FILLED','2024-03-01 09:28'),\n  (4,'AAPL','SELL',75,184.00,'CANCELLED','2024-03-01 09:27');",
-        "tier3Solution": "INSERT INTO orders VALUES (1,'AAPL','BUY',100,182.00,'PENDING','2024-03-01 09:29'),(2,'MSFT','SELL',50,417.00,'PENDING','2024-03-01 09:29'),(3,'GOOG','BUY',200,171.00,'FILLED','2024-03-01 09:28'),(4,'AAPL','SELL',75,184.00,'CANCELLED','2024-03-01 09:27');"
+        "tier1Concept": "WHERE filters rows before grouping; HAVING filters groups after. A condition on COUNT(*) can only live in HAVING.",
+        "tier2Scaffold": "SELECT symbol, COUNT(*) AS n\nFROM orders\nGROUP BY symbol\nHAVING COUNT(*) ___ 45;",
+        "tier3Solution": "SELECT symbol, COUNT(*) AS n FROM orders GROUP BY symbol HAVING COUNT(*) > 45;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM orders;",
-      "expectedResult": "[{\"count\":4}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT symbol, COUNT(*) AS n FROM orders GROUP BY symbol HAVING COUNT(*) > 45;"
+      }
     },
     {
       "stepIndex": 11,
       "phase": "Operator",
-      "conceptFocus": "UPDATE_ORDER_STATUS",
-      "narrativeBriefing": "Order 1 has been matched. Update its status from 'PENDING' to 'FILLED'.",
+      "conceptFocus": "JOIN_AGGREGATE",
+      "narrativeBriefing": "The risk committee thinks in sectors, not symbols. Join orders to assets and report the TOTAL ordered quantity per sector.",
       "hints": {
-        "tier1Concept": "Use UPDATE ... SET ... WHERE to modify a specific order's status.",
-        "tier2Scaffold": "UPDATE orders SET status = 'FILLED' WHERE order_id = 1;",
-        "tier3Solution": "UPDATE orders SET status = 'FILLED' WHERE order_id = 1;"
+        "tier1Concept": "JOIN connects each order to its asset via the shared symbol; then GROUP BY the asset's sector and SUM the order quantities.",
+        "tier2Scaffold": "SELECT a.sector, SUM(o.qty) AS total_qty\nFROM orders o\nJOIN assets a ON a.symbol = o.___\nGROUP BY a.sector;",
+        "tier3Solution": "SELECT a.sector, SUM(o.qty) AS total_qty FROM orders o JOIN assets a ON a.symbol = o.symbol GROUP BY a.sector;"
       },
-      "validationType": "OUTPUT_MATCH",
-      "verificationQuery": "SELECT status FROM orders WHERE order_id=1;",
-      "expectedResult": "[{\"status\":\"FILLED\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT a.sector, SUM(o.qty) AS total_qty FROM orders o JOIN assets a ON a.symbol = o.symbol GROUP BY a.sector;"
+      }
     },
     {
       "stepIndex": 12,
       "phase": "Operator",
-      "conceptFocus": "FILTER_BY_STATUS",
-      "narrativeBriefing": "List all FILLED orders from the `orders` table.",
+      "conceptFocus": "LEFT_JOIN_UNHELD",
+      "narrativeBriefing": "Which assets does NOBODY hold? LEFT JOIN assets to portfolios and return the symbols where no portfolio row matched.",
       "hints": {
-        "tier1Concept": "Use SELECT with WHERE status = 'FILLED'.",
-        "tier2Scaffold": "SELECT * FROM orders WHERE status = 'FILLED';",
-        "tier3Solution": "SELECT * FROM orders WHERE status = 'FILLED';"
+        "tier1Concept": "LEFT JOIN keeps every asset; missing matches surface as NULLs on the right side. `WHERE p.symbol IS NULL` isolates the unmatched.",
+        "tier2Scaffold": "SELECT a.symbol\nFROM assets a\nLEFT JOIN portfolios p ON p.symbol = a.symbol\nWHERE p.symbol IS ___;",
+        "tier3Solution": "SELECT a.symbol FROM assets a LEFT JOIN portfolios p ON p.symbol = a.symbol WHERE p.symbol IS NULL;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM orders WHERE status='FILLED';",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT a.symbol FROM assets a LEFT JOIN portfolios p ON p.symbol = a.symbol WHERE p.symbol IS NULL;"
+      }
     },
     {
       "stepIndex": 13,
       "phase": "Operator",
-      "conceptFocus": "CREATE_PORTFOLIO",
-      "narrativeBriefing": "Create a `portfolio` table: `position_id` (INT), `symbol` (TEXT), `quantity` (INT), `avg_cost` (REAL).",
+      "conceptFocus": "SELF_JOIN_PAIRS",
+      "narrativeBriefing": "Pairs-trading scout: list every pair of DISTINCT Energy-sector symbols (each pair once — first symbol alphabetically smaller than the second). Return them as col_a, col_b.",
       "hints": {
-        "tier1Concept": "The portfolio tracks what we currently hold.",
-        "tier2Scaffold": "CREATE TABLE portfolio (position_id INT, symbol TEXT, quantity INT, avg_cost REAL);",
-        "tier3Solution": "CREATE TABLE portfolio (position_id INT, symbol TEXT, quantity INT, avg_cost REAL);"
+        "tier1Concept": "A self-join compares a table to itself under two aliases. The `a.symbol < b.symbol` trick emits each unordered pair exactly once.",
+        "tier2Scaffold": "SELECT a.symbol AS col_a, b.symbol AS col_b\nFROM assets a\nJOIN assets b ON a.sector = b.sector AND a.symbol ___ b.symbol\nWHERE a.sector = 'Energy';",
+        "tier3Solution": "SELECT a.symbol AS col_a, b.symbol AS col_b FROM assets a JOIN assets b ON a.sector = b.sector AND a.symbol < b.symbol WHERE a.sector = 'Energy';"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='portfolio';",
-      "expectedResult": "[{\"name\":\"portfolio\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT a.symbol AS col_a, b.symbol AS col_b FROM assets a JOIN assets b ON a.sector = b.sector AND a.symbol < b.symbol WHERE a.sector = 'Energy';"
+      }
     },
     {
       "stepIndex": 14,
       "phase": "Operator",
-      "conceptFocus": "INSERT_PORTFOLIO",
-      "narrativeBriefing": "We hold: (1,'AAPL',100,182.00), (2,'GOOG',200,171.00). Insert these positions.",
+      "conceptFocus": "ANTI_JOIN_EXISTS",
+      "narrativeBriefing": "Clean-flow check: which symbols have NEVER had a cancelled order? Return the symbols from assets using NOT EXISTS against orders.",
       "hints": {
-        "tier1Concept": "Insert the two current portfolio positions.",
-        "tier2Scaffold": "INSERT INTO portfolio VALUES (1,'AAPL',100,182.00), (2,'GOOG',200,171.00);",
-        "tier3Solution": "INSERT INTO portfolio VALUES (1,'AAPL',100,182.00), (2,'GOOG',200,171.00);"
+        "tier1Concept": "NOT EXISTS (correlated subquery) is the anti-join: keep rows with no matching row in the other table. It's NULL-proof, unlike NOT IN.",
+        "tier2Scaffold": "SELECT a.symbol\nFROM assets a\nWHERE NOT EXISTS (\n  SELECT 1 FROM orders o\n  WHERE o.symbol = a.symbol AND o.status = '___'\n);",
+        "tier3Solution": "SELECT a.symbol FROM assets a WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.symbol = a.symbol AND o.status = 'CANCELLED');"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM portfolio;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT a.symbol FROM assets a WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.symbol = a.symbol AND o.status = 'CANCELLED');"
+      }
     },
     {
       "stepIndex": 15,
       "phase": "Operator",
-      "conceptFocus": "JOIN_PORTFOLIO_WITH_TICKS",
-      "narrativeBriefing": "Join `portfolio` with the latest prices from `price_ticks` to compute current market value (quantity * latest price). Use a subquery to get max price per symbol.",
+      "conceptFocus": "NOT_IN_NULL_TRAP",
+      "narrativeBriefing": "An analyst swears this query is right: distinct executed trade prices that never appeared as any order's limit price. It returns ZERO rows — because market orders have NULL limit_price, and one NULL poisons the whole NOT IN. Fix it.",
+      "challengeType": "fix",
+      "starterQuery": "SELECT DISTINCT price\nFROM trades\nWHERE price NOT IN (SELECT limit_price FROM orders);",
       "hints": {
-        "tier1Concept": "Use a subquery in FROM to get the latest price per symbol, then JOIN with portfolio.",
-        "tier2Scaffold": "SELECT p.symbol, p.quantity,\n  latest.price as current_price,\n  p.quantity * latest.price as market_value\nFROM portfolio p\nJOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest\n  ON p.symbol = latest.symbol;",
-        "tier3Solution": "SELECT p.symbol, p.quantity, latest.price as current_price, p.quantity * latest.price as market_value FROM portfolio p JOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest ON p.symbol = latest.symbol;"
+        "tier1Concept": "NOT IN against a list containing NULL can never be true — x <> NULL is unknown for every x. Exclude the NULLs in the subquery, or use NOT EXISTS.",
+        "tier2Scaffold": "SELECT DISTINCT price\nFROM trades\nWHERE price NOT IN (\n  SELECT limit_price FROM orders WHERE limit_price IS NOT ___\n);",
+        "tier3Solution": "SELECT DISTINCT price FROM trades WHERE price NOT IN (SELECT limit_price FROM orders WHERE limit_price IS NOT NULL);"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM portfolio p JOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest ON p.symbol = latest.symbol;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT DISTINCT price FROM trades WHERE price NOT IN (SELECT limit_price FROM orders WHERE limit_price IS NOT NULL);"
+      }
     },
     {
       "stepIndex": 16,
       "phase": "Operator",
-      "conceptFocus": "HAVING_FILTER",
-      "narrativeBriefing": "Find symbols with total traded volume (from price_ticks) exceeding 1500 units.",
+      "conceptFocus": "UNION_DEDUP",
+      "narrativeBriefing": "Build the activity universe: every distinct symbol that appears in orders OR in trades — one combined, deduplicated list via UNION.",
       "hints": {
-        "tier1Concept": "Use GROUP BY symbol with SUM(volume), then filter with HAVING.",
-        "tier2Scaffold": "SELECT symbol, SUM(volume) as total_vol FROM price_ticks GROUP BY symbol HAVING total_vol > 1500;",
-        "tier3Solution": "SELECT symbol, SUM(volume) as total_vol FROM price_ticks GROUP BY symbol HAVING total_vol > 1500;"
+        "tier1Concept": "UNION stacks two result sets and removes duplicates; UNION ALL keeps them. Set operators require the same column count on both sides.",
+        "tier2Scaffold": "SELECT symbol FROM orders\n___\nSELECT symbol FROM trades;",
+        "tier3Solution": "SELECT symbol FROM orders UNION SELECT symbol FROM trades;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT symbol FROM price_ticks GROUP BY symbol HAVING SUM(volume) > 1500);",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT symbol FROM orders UNION SELECT symbol FROM trades;"
+      }
     },
     {
       "stepIndex": 17,
       "phase": "Operator",
-      "conceptFocus": "ORDER_BY_DESC",
-      "narrativeBriefing": "List all orders ordered by limit_price descending to identify the highest-value orders at the top.",
+      "conceptFocus": "EXCEPT_DIFFERENCE",
+      "narrativeBriefing": "Phantom flow: which symbols have orders but no executed trades at all? EXCEPT gives you the set difference directly.",
       "hints": {
-        "tier1Concept": "Use ORDER BY column DESC to sort in descending order.",
-        "tier2Scaffold": "SELECT * FROM orders ORDER BY limit_price DESC;",
-        "tier3Solution": "SELECT * FROM orders ORDER BY limit_price DESC;"
+        "tier1Concept": "A EXCEPT B returns rows in A that are not in B (deduplicated). It's the set-algebra way to ask 'what's missing over there?'.",
+        "tier2Scaffold": "SELECT symbol FROM orders\n___\nSELECT symbol FROM trades;",
+        "tier3Solution": "SELECT symbol FROM orders EXCEPT SELECT symbol FROM trades;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM orders;",
-      "expectedResult": "[{\"count\":4}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT symbol FROM orders EXCEPT SELECT symbol FROM trades;"
+      }
     },
     {
       "stepIndex": 18,
       "phase": "Operator",
-      "conceptFocus": "DELETE_CANCELLED",
-      "narrativeBriefing": "Remove all CANCELLED orders from the `orders` table.",
+      "conceptFocus": "INTERSECT_BOTH",
+      "narrativeBriefing": "Watchlist overlap: which symbols are BOTH held in some portfolio AND have at least one OPEN order? Use INTERSECT.",
       "hints": {
-        "tier1Concept": "Use DELETE FROM with WHERE status = 'CANCELLED'.",
-        "tier2Scaffold": "DELETE FROM orders WHERE status = 'CANCELLED';",
-        "tier3Solution": "DELETE FROM orders WHERE status = 'CANCELLED';"
+        "tier1Concept": "INTERSECT keeps only rows present in both result sets — the set-theoretic AND.",
+        "tier2Scaffold": "SELECT symbol FROM portfolios\n___\nSELECT symbol FROM orders WHERE status = 'OPEN';",
+        "tier3Solution": "SELECT symbol FROM portfolios INTERSECT SELECT symbol FROM orders WHERE status = 'OPEN';"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM orders WHERE status='CANCELLED';",
-      "expectedResult": "[{\"count\":0}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT symbol FROM portfolios INTERSECT SELECT symbol FROM orders WHERE status = 'OPEN';"
+      }
     },
     {
       "stepIndex": 19,
       "phase": "Operator",
-      "conceptFocus": "CREATE_TRADES_TABLE",
-      "narrativeBriefing": "Create a `trades` table to record executed transactions: `trade_id` (INT), `order_id` (INT), `symbol` (TEXT), `price` (REAL), `quantity` (INT), `trade_time` (TEXT).",
+      "conceptFocus": "SCALAR_SUBQUERY",
+      "narrativeBriefing": "How many ticks printed ABOVE the global average price across all symbols? One count, computed against a scalar subquery.",
       "hints": {
-        "tier1Concept": "Trades are the confirmed executions of orders. Create the table accordingly.",
-        "tier2Scaffold": "CREATE TABLE trades (trade_id INT, order_id INT, symbol TEXT, price REAL, quantity INT, trade_time TEXT);",
-        "tier3Solution": "CREATE TABLE trades (trade_id INT, order_id INT, symbol TEXT, price REAL, quantity INT, trade_time TEXT);"
+        "tier1Concept": "A subquery returning exactly one value can sit anywhere a literal could — including the right side of a comparison.",
+        "tier2Scaffold": "SELECT COUNT(*) AS above_avg\nFROM price_ticks\nWHERE price > (SELECT ___(price) FROM price_ticks);",
+        "tier3Solution": "SELECT COUNT(*) AS above_avg FROM price_ticks WHERE price > (SELECT AVG(price) FROM price_ticks);"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='table' AND name='trades';",
-      "expectedResult": "[{\"name\":\"trades\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT COUNT(*) AS above_avg FROM price_ticks WHERE price > (SELECT AVG(price) FROM price_ticks);"
+      }
     },
     {
       "stepIndex": 20,
       "phase": "Operator",
-      "conceptFocus": "INSERT_TRADES",
-      "narrativeBriefing": "Record two trades: (1, 1, 'AAPL', 183.20, 100, '2024-03-01 09:31') and (2, 3, 'GOOG', 172.10, 200, '2024-03-01 09:30').",
+      "conceptFocus": "CORRELATED_SUBQUERY",
+      "narrativeBriefing": "Same question, per symbol: for each symbol, count its ticks that printed above ITS OWN average price. Return symbol and the count — the subquery must reference the outer row.",
       "hints": {
-        "tier1Concept": "Insert the executed trade records referencing order_ids 1 and 3.",
-        "tier2Scaffold": "INSERT INTO trades VALUES\n  (1, 1, 'AAPL', 183.20, 100, '2024-03-01 09:31'),\n  (2, 3, 'GOOG', 172.10, 200, '2024-03-01 09:30');",
-        "tier3Solution": "INSERT INTO trades VALUES (1, 1, 'AAPL', 183.20, 100, '2024-03-01 09:31'), (2, 3, 'GOOG', 172.10, 200, '2024-03-01 09:30');"
+        "tier1Concept": "A correlated subquery mentions the outer query's row (t.symbol) and re-evaluates per row/group — 'compared to its own average', not the global one.",
+        "tier2Scaffold": "SELECT t.symbol, COUNT(*) AS above_own_avg\nFROM price_ticks t\nWHERE t.price > (SELECT AVG(price) FROM price_ticks WHERE symbol = t.___)\nGROUP BY t.symbol;",
+        "tier3Solution": "SELECT t.symbol, COUNT(*) AS above_own_avg FROM price_ticks t WHERE t.price > (SELECT AVG(price) FROM price_ticks WHERE symbol = t.symbol) GROUP BY t.symbol;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM trades;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT t.symbol, COUNT(*) AS above_own_avg FROM price_ticks t WHERE t.price > (SELECT AVG(price) FROM price_ticks WHERE symbol = t.symbol) GROUP BY t.symbol;"
+      }
     },
     {
       "stepIndex": 21,
       "phase": "Operator",
-      "conceptFocus": "COMPUTE_PNL",
-      "narrativeBriefing": "Calculate P&L for each trade: (trade_price - avg_cost) * quantity. Join `trades` with `portfolio` on symbol.",
+      "conceptFocus": "CASE_PIVOT",
+      "narrativeBriefing": "Pivot the order flow: one row per trader with separate columns for total BUY quantity and total SELL quantity. CASE inside SUM does the pivoting.",
       "hints": {
-        "tier1Concept": "Arithmetic expressions in SELECT can compute derived values like profit/loss.",
-        "tier2Scaffold": "SELECT t.symbol, (t.price - p.avg_cost) * t.quantity as pnl\nFROM trades t\nJOIN portfolio p ON t.symbol = p.symbol;",
-        "tier3Solution": "SELECT t.symbol, (t.price - p.avg_cost) * t.quantity as pnl FROM trades t JOIN portfolio p ON t.symbol = p.symbol;"
+        "tier1Concept": "SUM(CASE WHEN cond THEN qty ELSE 0 END) aggregates only the rows matching the condition — running several of these side by side pivots rows into columns.",
+        "tier2Scaffold": "SELECT trader,\n       SUM(CASE WHEN side = 'BUY' THEN qty ELSE 0 END) AS buy_qty,\n       SUM(CASE WHEN side = '___' THEN qty ELSE 0 END) AS sell_qty\nFROM orders\nGROUP BY trader;",
+        "tier3Solution": "SELECT trader, SUM(CASE WHEN side = 'BUY' THEN qty ELSE 0 END) AS buy_qty, SUM(CASE WHEN side = 'SELL' THEN qty ELSE 0 END) AS sell_qty FROM orders GROUP BY trader;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM trades t JOIN portfolio p ON t.symbol = p.symbol;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT trader, SUM(CASE WHEN side = 'BUY' THEN qty ELSE 0 END) AS buy_qty, SUM(CASE WHEN side = 'SELL' THEN qty ELSE 0 END) AS sell_qty FROM orders GROUP BY trader;"
+      }
     },
     {
       "stepIndex": 22,
       "phase": "Operator",
-      "conceptFocus": "CASE_ORDER_TYPE",
-      "narrativeBriefing": "For each order, use CASE to show a 'direction_label': BUY orders get 'Long Entry', SELL orders get 'Short Exit'.",
+      "conceptFocus": "CONDITIONAL_PCT",
+      "narrativeBriefing": "Execution quality: per symbol, what percentage of orders were FILLED? Return symbol and the fill rate rounded to 1 decimal.",
       "hints": {
-        "tier1Concept": "CASE WHEN ... THEN ... END creates conditional column values.",
-        "tier2Scaffold": "SELECT order_id, symbol, order_type,\n  CASE order_type\n    WHEN 'BUY' THEN 'Long Entry'\n    WHEN 'SELL' THEN 'Short Exit'\n  END as direction_label\nFROM orders;",
-        "tier3Solution": "SELECT order_id, symbol, order_type, CASE order_type WHEN 'BUY' THEN 'Long Entry' WHEN 'SELL' THEN 'Short Exit' END as direction_label FROM orders;"
+        "tier1Concept": "AVG of a CASE that yields 100.0 or 0 computes a percentage in one aggregation pass — a pattern worth memorizing.",
+        "tier2Scaffold": "SELECT symbol,\n       ROUND(AVG(CASE WHEN status = 'FILLED' THEN 100.0 ELSE 0 END), 1) AS fill_rate\nFROM orders\nGROUP BY ___;",
+        "tier3Solution": "SELECT symbol, ROUND(AVG(CASE WHEN status = 'FILLED' THEN 100.0 ELSE 0 END), 1) AS fill_rate FROM orders GROUP BY symbol;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM orders;",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT symbol, ROUND(AVG(CASE WHEN status = 'FILLED' THEN 100.0 ELSE 0 END), 1) AS fill_rate FROM orders GROUP BY symbol;"
+      }
     },
     {
       "stepIndex": 23,
-      "phase": "Architect",
-      "conceptFocus": "WINDOW_PRICE_RANK",
-      "narrativeBriefing": "Using window functions, rank each price tick within its symbol by price descending. Use RANK() OVER (PARTITION BY symbol ORDER BY price DESC).",
+      "phase": "Operator",
+      "conceptFocus": "DATE_ACTIVITY",
+      "narrativeBriefing": "Trading calendar: orders per day. Return placed_on and the count, ordered by day — the desk's heartbeat as a time series.",
       "hints": {
-        "tier1Concept": "RANK() assigns a rank within each partition. Ties get the same rank.",
-        "tier2Scaffold": "SELECT symbol, price,\n  RANK() OVER (PARTITION BY symbol ORDER BY price DESC) as price_rank\nFROM price_ticks;",
-        "tier3Solution": "SELECT symbol, price, RANK() OVER (PARTITION BY symbol ORDER BY price DESC) as price_rank FROM price_ticks;"
+        "tier1Concept": "Grouping by a date column gives one row per day. ISO date strings ('YYYY-MM-DD') sort correctly as plain text.",
+        "tier2Scaffold": "SELECT placed_on, COUNT(*) AS orders\nFROM orders\nGROUP BY placed_on\nORDER BY ___;",
+        "tier3Solution": "SELECT placed_on, COUNT(*) AS orders FROM orders GROUP BY placed_on ORDER BY placed_on;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT RANK() OVER (PARTITION BY symbol ORDER BY price DESC) as r FROM price_ticks);",
-      "expectedResult": "[{\"count\":5}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT placed_on, COUNT(*) AS orders FROM orders GROUP BY placed_on ORDER BY placed_on;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 24,
-      "phase": "Architect",
-      "conceptFocus": "WINDOW_LAG",
-      "narrativeBriefing": "For AAPL ticks ordered by time, compute the price change from the previous tick using LAG().",
+      "phase": "Operator",
+      "conceptFocus": "CREATE_VIEW_FILLS",
+      "narrativeBriefing": "Half the desk's queries start with 'filled orders joined to their asset'. Create view `filled_orders` exposing order_id, trader, symbol, qty, and the asset's sector — for orders with status 'FILLED' only.",
       "hints": {
-        "tier1Concept": "LAG(column, 1) OVER (ORDER BY ...) accesses the previous row's value.",
-        "tier2Scaffold": "SELECT tick_time, price,\n  price - LAG(price, 1) OVER (ORDER BY tick_time) as price_change\nFROM price_ticks WHERE symbol = 'AAPL';",
-        "tier3Solution": "SELECT tick_time, price, price - LAG(price, 1) OVER (ORDER BY tick_time) as price_change FROM price_ticks WHERE symbol = 'AAPL';"
+        "tier1Concept": "Views encapsulate a join + filter once; every later query reads like it's hitting a clean table. Analysts ship views the way engineers ship functions.",
+        "tier2Scaffold": "CREATE VIEW filled_orders AS\nSELECT o.order_id, o.trader, o.symbol, o.qty, a.sector\nFROM orders o\nJOIN assets a ON a.symbol = o.symbol\nWHERE o.status = '___';",
+        "tier3Solution": "CREATE VIEW filled_orders AS SELECT o.order_id, o.trader, o.symbol, o.qty, a.sector FROM orders o JOIN assets a ON a.symbol = o.symbol WHERE o.status = 'FILLED';"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT LAG(price,1) OVER (ORDER BY tick_time) FROM price_ticks WHERE symbol='AAPL');",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "SCHEMA_VERIFY",
+        "verificationQuery": "SELECT COUNT(*) AS v FROM sqlite_master WHERE type='view' AND name='filled_orders';",
+        "expectedResult": "[{\"v\":1}]"
+      }
     },
     {
       "stepIndex": 25,
       "phase": "Architect",
-      "conceptFocus": "CTE_VWAP",
-      "narrativeBriefing": "Calculate VWAP (Volume Weighted Average Price) per symbol using a CTE. VWAP = SUM(price*volume)/SUM(volume).",
+      "conceptFocus": "WINDOW_LATEST_TICK",
+      "narrativeBriefing": "Build the live price board: for EVERY symbol, its single most recent tick (latest day, then latest hour). Return symbol, day, hour, price — ordered by symbol. ROW_NUMBER over a partition is the tool.",
       "hints": {
-        "tier1Concept": "Use a CTE to organize the computation. SUM(price*volume)/SUM(volume) is the VWAP formula.",
-        "tier2Scaffold": "WITH vwap_calc AS (\n  SELECT symbol,\n    SUM(price * volume) as total_notional,\n    SUM(volume) as total_vol\n  FROM price_ticks\n  GROUP BY symbol\n)\nSELECT symbol, total_notional / total_vol as vwap FROM vwap_calc;",
-        "tier3Solution": "WITH vwap_calc AS (SELECT symbol, SUM(price * volume) as total_notional, SUM(volume) as total_vol FROM price_ticks GROUP BY symbol) SELECT symbol, total_notional / total_vol as vwap FROM vwap_calc;"
+        "tier1Concept": "ROW_NUMBER() OVER (PARTITION BY symbol ORDER BY day DESC, hour DESC) numbers each symbol's ticks newest-first; rn = 1 is the latest per symbol.",
+        "tier2Scaffold": "WITH ranked AS (\n  SELECT symbol, day, hour, price,\n         ROW_NUMBER() OVER (PARTITION BY symbol ORDER BY day DESC, hour DESC) AS rn\n  FROM price_ticks\n)\nSELECT symbol, day, hour, price FROM ranked WHERE rn = ___ ORDER BY symbol;",
+        "tier3Solution": "WITH ranked AS (SELECT symbol, day, hour, price, ROW_NUMBER() OVER (PARTITION BY symbol ORDER BY day DESC, hour DESC) AS rn FROM price_ticks)\nSELECT symbol, day, hour, price FROM ranked WHERE rn = 1 ORDER BY symbol;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (WITH v AS (SELECT symbol, SUM(price*volume)/SUM(volume) as vwap FROM price_ticks GROUP BY symbol) SELECT * FROM v);",
-      "expectedResult": "[{\"count\":3}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH ranked AS (SELECT symbol, day, hour, price, ROW_NUMBER() OVER (PARTITION BY symbol ORDER BY day DESC, hour DESC) AS rn FROM price_ticks) SELECT symbol, day, hour, price FROM ranked WHERE rn = 1 ORDER BY symbol;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 26,
       "phase": "Architect",
-      "conceptFocus": "CREATE_VIEW_ACTIVE_ORDERS",
-      "narrativeBriefing": "Create a view `active_orders` that contains only orders with status PENDING or FILLED.",
+      "conceptFocus": "RANK_VS_DENSE_RANK",
+      "narrativeBriefing": "League table with honest ties: rank traders by their total order count, using DENSE_RANK so tied traders share a rank with no gaps. Return trader, orders, rank — ordered by rank then trader.",
       "hints": {
-        "tier1Concept": "CREATE VIEW defines a named virtual query. Use IN (...) to check multiple values.",
-        "tier2Scaffold": "CREATE VIEW active_orders AS\n  SELECT * FROM orders WHERE status IN ('PENDING', 'FILLED');",
-        "tier3Solution": "CREATE VIEW active_orders AS SELECT * FROM orders WHERE status IN ('PENDING', 'FILLED');"
+        "tier1Concept": "RANK leaves gaps after ties (1,1,3); DENSE_RANK doesn't (1,1,2). Both differ from ROW_NUMBER, which fabricates an order even for ties.",
+        "tier2Scaffold": "WITH counts AS (\n  SELECT trader, COUNT(*) AS orders FROM orders GROUP BY trader\n)\nSELECT trader, orders, DENSE_RANK() OVER (ORDER BY orders ___) AS rnk\nFROM counts\nORDER BY rnk, trader;",
+        "tier3Solution": "WITH counts AS (SELECT trader, COUNT(*) AS orders FROM orders GROUP BY trader)\nSELECT trader, orders, DENSE_RANK() OVER (ORDER BY orders DESC) AS rnk FROM counts ORDER BY rnk, trader;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='view' AND name='active_orders';",
-      "expectedResult": "[{\"name\":\"active_orders\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH counts AS (SELECT trader, COUNT(*) AS orders FROM orders GROUP BY trader) SELECT trader, orders, DENSE_RANK() OVER (ORDER BY orders DESC) AS rnk FROM counts ORDER BY rnk, trader;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 27,
       "phase": "Architect",
-      "conceptFocus": "SUBQUERY_CORRELATED",
-      "narrativeBriefing": "Find all assets that have at least one FILLED order. Use a subquery with EXISTS.",
+      "conceptFocus": "LAG_DAILY_CHANGE",
+      "narrativeBriefing": "NVAX day-over-day: using the 15:00 tick as each day's close, return day, close, and the change from the previous day's close (NULL for the first day). LAG is built for exactly this. Order by day.",
       "hints": {
-        "tier1Concept": "EXISTS returns TRUE if the subquery returns any rows. Use it as a filter.",
-        "tier2Scaffold": "SELECT symbol FROM assets a\nWHERE EXISTS (\n  SELECT 1 FROM orders o WHERE o.symbol = a.symbol AND o.status = 'FILLED'\n);",
-        "tier3Solution": "SELECT symbol FROM assets a WHERE EXISTS (SELECT 1 FROM orders o WHERE o.symbol = a.symbol AND o.status = 'FILLED');"
+        "tier1Concept": "LAG(col) OVER (ORDER BY day) reaches back one row in the window order. current - LAG(current) is the canonical day-over-day delta.",
+        "tier2Scaffold": "WITH closes AS (\n  SELECT day, price AS close FROM price_ticks WHERE symbol = 'NVAX' AND hour = 15\n)\nSELECT day, close,\n       ROUND(close - LAG(close) OVER (ORDER BY day), 2) AS change\nFROM closes ORDER BY ___;",
+        "tier3Solution": "WITH closes AS (SELECT day, price AS close FROM price_ticks WHERE symbol = 'NVAX' AND hour = 15)\nSELECT day, close, ROUND(close - LAG(close) OVER (ORDER BY day), 2) AS change FROM closes ORDER BY day;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM assets a WHERE EXISTS (SELECT 1 FROM orders o WHERE o.symbol = a.symbol AND o.status = 'FILLED');",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH closes AS (SELECT day, price AS close FROM price_ticks WHERE symbol = 'NVAX' AND hour = 15) SELECT day, close, ROUND(close - LAG(close) OVER (ORDER BY day), 2) AS change FROM closes ORDER BY day;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 28,
       "phase": "Architect",
-      "conceptFocus": "WINDOW_RUNNING_VOLUME",
-      "narrativeBriefing": "Calculate the cumulative volume traded per symbol over time using SUM(volume) OVER (PARTITION BY symbol ORDER BY tick_time).",
+      "conceptFocus": "LEAD_NEXT_DAY",
+      "narrativeBriefing": "Flip the telescope for HELX: for each day show the close AND the NEXT day's close side by side (NULL on the last day). Same close definition (hour 15). Order by day.",
       "hints": {
-        "tier1Concept": "A running total window function accumulates values within each partition as rows are ordered.",
-        "tier2Scaffold": "SELECT symbol, tick_time, volume,\n  SUM(volume) OVER (PARTITION BY symbol ORDER BY tick_time) as cumulative_volume\nFROM price_ticks;",
-        "tier3Solution": "SELECT symbol, tick_time, volume, SUM(volume) OVER (PARTITION BY symbol ORDER BY tick_time) as cumulative_volume FROM price_ticks;"
+        "tier1Concept": "LEAD is LAG's mirror — it reaches forward. Putting today and tomorrow on one row is how you label training data or check momentum.",
+        "tier2Scaffold": "WITH closes AS (\n  SELECT day, price AS close FROM price_ticks WHERE symbol = 'HELX' AND hour = 15\n)\nSELECT day, close, ___(close) OVER (ORDER BY day) AS next_close\nFROM closes ORDER BY day;",
+        "tier3Solution": "WITH closes AS (SELECT day, price AS close FROM price_ticks WHERE symbol = 'HELX' AND hour = 15)\nSELECT day, close, LEAD(close) OVER (ORDER BY day) AS next_close FROM closes ORDER BY day;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (SELECT SUM(volume) OVER (PARTITION BY symbol ORDER BY tick_time) as cv FROM price_ticks);",
-      "expectedResult": "[{\"count\":5}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH closes AS (SELECT day, price AS close FROM price_ticks WHERE symbol = 'HELX' AND hour = 15) SELECT day, close, LEAD(close) OVER (ORDER BY day) AS next_close FROM closes ORDER BY day;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 29,
       "phase": "Architect",
-      "conceptFocus": "INDEX_PERFORMANCE",
-      "narrativeBriefing": "Create an index `idx_ticks_symbol_time` on `price_ticks`(symbol, tick_time) to speed up time-series lookups.",
+      "conceptFocus": "MOVING_AVG_FRAME",
+      "narrativeBriefing": "Smooth the NVAX tape: 3-day moving average of its daily closes (current day + 2 preceding), rounded to 2 decimals. Return day, close, ma3 — ordered by day. The frame clause is the lesson here.",
       "hints": {
-        "tier1Concept": "Composite indexes speed up queries filtering on multiple columns.",
-        "tier2Scaffold": "CREATE INDEX idx_ticks_symbol_time ON price_ticks(symbol, tick_time);",
-        "tier3Solution": "CREATE INDEX idx_ticks_symbol_time ON price_ticks(symbol, tick_time);"
+        "tier1Concept": "ROWS BETWEEN 2 PRECEDING AND CURRENT ROW defines the sliding window — exactly 3 rows. Without an explicit frame you get the (often wrong) default.",
+        "tier2Scaffold": "WITH closes AS (\n  SELECT day, price AS close FROM price_ticks WHERE symbol = 'NVAX' AND hour = 15\n)\nSELECT day, close,\n       ROUND(AVG(close) OVER (ORDER BY day ROWS BETWEEN ___ PRECEDING AND CURRENT ROW), 2) AS ma3\nFROM closes ORDER BY day;",
+        "tier3Solution": "WITH closes AS (SELECT day, price AS close FROM price_ticks WHERE symbol = 'NVAX' AND hour = 15)\nSELECT day, close, ROUND(AVG(close) OVER (ORDER BY day ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS ma3 FROM closes ORDER BY day;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_ticks_symbol_time';",
-      "expectedResult": "[{\"name\":\"idx_ticks_symbol_time\"}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH closes AS (SELECT day, price AS close FROM price_ticks WHERE symbol = 'NVAX' AND hour = 15) SELECT day, close, ROUND(AVG(close) OVER (ORDER BY day ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS ma3 FROM closes ORDER BY day;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 30,
       "phase": "Architect",
-      "conceptFocus": "MULTI_CTE_ANALYSIS",
-      "narrativeBriefing": "Use two CTEs: `trade_stats` for total value traded per symbol, and `portfolio_cost` for total cost basis. Then join them.",
+      "conceptFocus": "RUNNING_TOTAL",
+      "narrativeBriefing": "Accumulation watch on SOLR: per day, its total traded tick volume AND the running cumulative volume across days. Order by day.",
       "hints": {
-        "tier1Concept": "Multiple CTEs are separated by commas after the initial WITH keyword.",
-        "tier2Scaffold": "WITH trade_stats AS (\n  SELECT symbol, SUM(price*quantity) as trade_value FROM trades GROUP BY symbol\n),\nportfolio_cost AS (\n  SELECT symbol, avg_cost*quantity as cost_basis FROM portfolio\n)\nSELECT t.symbol, t.trade_value, p.cost_basis\nFROM trade_stats t\nJOIN portfolio_cost p ON t.symbol = p.symbol;",
-        "tier3Solution": "WITH trade_stats AS (SELECT symbol, SUM(price*quantity) as trade_value FROM trades GROUP BY symbol), portfolio_cost AS (SELECT symbol, avg_cost*quantity as cost_basis FROM portfolio) SELECT t.symbol, t.trade_value, p.cost_basis FROM trade_stats t JOIN portfolio_cost p ON t.symbol = p.symbol;"
+        "tier1Concept": "Aggregate per day first (CTE), then SUM(...) OVER (ORDER BY day) turns daily totals into a cumulative curve — aggregate-then-window layering.",
+        "tier2Scaffold": "WITH daily AS (\n  SELECT day, SUM(volume) AS vol FROM price_ticks WHERE symbol = 'SOLR' GROUP BY day\n)\nSELECT day, vol, SUM(vol) OVER (ORDER BY ___) AS cumulative\nFROM daily ORDER BY day;",
+        "tier3Solution": "WITH daily AS (SELECT day, SUM(volume) AS vol FROM price_ticks WHERE symbol = 'SOLR' GROUP BY day)\nSELECT day, vol, SUM(vol) OVER (ORDER BY day) AS cumulative FROM daily ORDER BY day;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM (WITH ts AS (SELECT symbol FROM trades GROUP BY symbol), pc AS (SELECT symbol FROM portfolio) SELECT ts.symbol FROM ts JOIN pc ON ts.symbol=pc.symbol);",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH daily AS (SELECT day, SUM(volume) AS vol FROM price_ticks WHERE symbol = 'SOLR' GROUP BY day) SELECT day, vol, SUM(vol) OVER (ORDER BY day) AS cumulative FROM daily ORDER BY day;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 31,
       "phase": "Architect",
-      "conceptFocus": "DISTINCT_SYMBOLS",
-      "narrativeBriefing": "Get a DISTINCT list of all symbols that appear in the `trades` table.",
+      "conceptFocus": "NTILE_QUARTILES",
+      "narrativeBriefing": "Bucket the universe: split all symbols into 4 liquidity quartiles by total tick volume (quartile 1 = highest). Return symbol, total volume, quartile — ordered by volume descending, symbol ascending.",
       "hints": {
-        "tier1Concept": "SELECT DISTINCT removes duplicate values from the result.",
-        "tier2Scaffold": "SELECT DISTINCT symbol FROM trades;",
-        "tier3Solution": "SELECT DISTINCT symbol FROM trades;"
+        "tier1Concept": "NTILE(4) OVER (ORDER BY x DESC) deals rows into 4 evenly-sized buckets in that order — instant quartiles/deciles without math.",
+        "tier2Scaffold": "WITH vol AS (\n  SELECT symbol, SUM(volume) AS total_vol FROM price_ticks GROUP BY symbol\n)\nSELECT symbol, total_vol, NTILE(___) OVER (ORDER BY total_vol DESC) AS quartile\nFROM vol ORDER BY total_vol DESC, symbol ASC;",
+        "tier3Solution": "WITH vol AS (SELECT symbol, SUM(volume) AS total_vol FROM price_ticks GROUP BY symbol)\nSELECT symbol, total_vol, NTILE(4) OVER (ORDER BY total_vol DESC) AS quartile FROM vol ORDER BY total_vol DESC, symbol ASC;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(DISTINCT symbol) as count FROM trades;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH vol AS (SELECT symbol, SUM(volume) AS total_vol FROM price_ticks GROUP BY symbol) SELECT symbol, total_vol, NTILE(4) OVER (ORDER BY total_vol DESC) AS quartile FROM vol ORDER BY total_vol DESC, symbol ASC;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 32,
       "phase": "Architect",
-      "conceptFocus": "LIKE_SEARCH",
-      "narrativeBriefing": "Find all assets whose company_name contains 'Inc.' using LIKE.",
+      "conceptFocus": "LAST_VALUE_FRAME_GOTCHA",
+      "narrativeBriefing": "This query SHOULD show each QBIT day's close next to the FINAL close of the whole period — but it just repeats each day's own close. The window frame is the culprit. Fix it.",
+      "challengeType": "fix",
+      "starterQuery": "WITH closes AS (\n  SELECT day, price AS close FROM price_ticks WHERE symbol = 'QBIT' AND hour = 15\n)\nSELECT day, close,\n       LAST_VALUE(close) OVER (ORDER BY day) AS final_close\nFROM closes ORDER BY day;",
       "hints": {
-        "tier1Concept": "Use LIKE with % wildcards on both sides to search for a substring.",
-        "tier2Scaffold": "SELECT * FROM assets WHERE company_name LIKE '%Inc.%';",
-        "tier3Solution": "SELECT * FROM assets WHERE company_name LIKE '%Inc.%';"
+        "tier1Concept": "The default frame stops AT the current row — so LAST_VALUE sees nothing beyond it. Spell out ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING to see the whole partition.",
+        "tier2Scaffold": "...\nLAST_VALUE(close) OVER (\n  ORDER BY day\n  ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED ___\n) AS final_close\n...",
+        "tier3Solution": "WITH closes AS (SELECT day, price AS close FROM price_ticks WHERE symbol = 'QBIT' AND hour = 15)\nSELECT day, close, LAST_VALUE(close) OVER (ORDER BY day ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS final_close FROM closes ORDER BY day;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM assets WHERE company_name LIKE '%Inc.%';",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH closes AS (SELECT day, price AS close FROM price_ticks WHERE symbol = 'QBIT' AND hour = 15) SELECT day, close, LAST_VALUE(close) OVER (ORDER BY day ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS final_close FROM closes ORDER BY day;",
+        "requiresOrder": true
+      }
     },
     {
       "stepIndex": 33,
       "phase": "Architect",
-      "conceptFocus": "PORTFOLIO_RISK_REPORT",
-      "narrativeBriefing": "Final risk report: for each portfolio position, compute market value, unrealized P&L, and classify risk as HIGH if unrealized P&L > 200, else LOW.",
+      "conceptFocus": "PCT_OF_TOTAL",
+      "narrativeBriefing": "Volume concentration: per sector, total tick volume AND its percentage of ALL volume (1 decimal). A window SUM with an empty OVER () gives you the grand total without a second query.",
       "hints": {
-        "tier1Concept": "Combine JOIN, arithmetic, and CASE expressions for a complete analytics report.",
-        "tier2Scaffold": "SELECT p.symbol, p.quantity,\n  latest.price as current_price,\n  p.quantity * latest.price as market_value,\n  (latest.price - p.avg_cost) * p.quantity as unrealized_pnl,\n  CASE WHEN (latest.price - p.avg_cost) * p.quantity > 200 THEN 'HIGH' ELSE 'LOW' END as risk\nFROM portfolio p\nJOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest ON p.symbol = latest.symbol;",
-        "tier3Solution": "SELECT p.symbol, p.quantity, latest.price as current_price, p.quantity * latest.price as market_value, (latest.price - p.avg_cost) * p.quantity as unrealized_pnl, CASE WHEN (latest.price - p.avg_cost) * p.quantity > 200 THEN 'HIGH' ELSE 'LOW' END as risk FROM portfolio p JOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest ON p.symbol = latest.symbol;"
+        "tier1Concept": "SUM(x) OVER () — empty parentheses — is the grand total available on every row. Dividing group totals by it yields shares in a single pass.",
+        "tier2Scaffold": "WITH sec AS (\n  SELECT a.sector, SUM(t.volume) AS vol\n  FROM price_ticks t JOIN assets a ON a.symbol = t.symbol\n  GROUP BY a.sector\n)\nSELECT sector, vol,\n       ROUND(vol * 100.0 / SUM(vol) OVER (), 1) AS pct\nFROM sec;",
+        "tier3Solution": "WITH sec AS (SELECT a.sector, SUM(t.volume) AS vol FROM price_ticks t JOIN assets a ON a.symbol = t.symbol GROUP BY a.sector)\nSELECT sector, vol, ROUND(vol * 100.0 / SUM(vol) OVER (), 1) AS pct FROM sec;"
       },
-      "validationType": "ROW_COUNT_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM portfolio p JOIN (SELECT symbol, MAX(price) as price FROM price_ticks GROUP BY symbol) latest ON p.symbol = latest.symbol;",
-      "expectedResult": "[{\"count\":2}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH sec AS (SELECT a.sector, SUM(t.volume) AS vol FROM price_ticks t JOIN assets a ON a.symbol = t.symbol GROUP BY a.sector) SELECT sector, vol, ROUND(vol * 100.0 / SUM(vol) OVER (), 1) AS pct FROM sec;"
+      }
     },
     {
       "stepIndex": 34,
       "phase": "Architect",
-      "conceptFocus": "DROP_VIEW_CLEANUP",
-      "narrativeBriefing": "Session complete. Drop the `active_orders` view as it is no longer needed.",
+      "conceptFocus": "VWAP",
+      "narrativeBriefing": "The classic: VWAP (volume-weighted average price) per symbol for '2026-01-05' — SUM(price×volume)/SUM(volume), rounded to 2 decimals. Return symbol and vwap, ordered by symbol.",
       "hints": {
-        "tier1Concept": "Use DROP VIEW to remove a view from the database schema.",
-        "tier2Scaffold": "DROP VIEW active_orders;",
-        "tier3Solution": "DROP VIEW active_orders;"
+        "tier1Concept": "A weighted average is two SUMs divided: Σ(price·volume) / Σ(volume). Weighting by size is what separates VWAP from a naive AVG.",
+        "tier2Scaffold": "SELECT symbol,\n       ROUND(SUM(price * volume) / SUM(___), 2) AS vwap\nFROM price_ticks\nWHERE day = '2026-01-05'\nGROUP BY symbol\nORDER BY symbol;",
+        "tier3Solution": "SELECT symbol, ROUND(SUM(price * volume) / SUM(volume), 2) AS vwap FROM price_ticks WHERE day = '2026-01-05' GROUP BY symbol ORDER BY symbol;"
       },
-      "validationType": "SCHEMA_VERIFY",
-      "verificationQuery": "SELECT COUNT(*) as count FROM sqlite_master WHERE type='view' AND name='active_orders';",
-      "expectedResult": "[{\"count\":0}]"
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT symbol, ROUND(SUM(price * volume) / SUM(volume), 2) AS vwap FROM price_ticks WHERE day = '2026-01-05' GROUP BY symbol ORDER BY symbol;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 35,
+      "phase": "Architect",
+      "conceptFocus": "GAPS_AND_ISLANDS",
+      "narrativeBriefing": "Momentum forensics: what is NVAX's LONGEST streak of consecutive up days (close > previous close)? One number. This is the legendary gaps-and-islands problem — flag up-days, then group consecutive runs with the row-number difference trick.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Islands trick: ROW_NUMBER() over all rows minus ROW_NUMBER() within the 'up' rows is constant for each consecutive run — GROUP BY that difference and take the longest.",
+        "tier2Scaffold": "WITH closes AS (\n  SELECT day, price FROM price_ticks WHERE symbol='NVAX' AND hour=15\n), flags AS (\n  SELECT day, CASE WHEN price > LAG(price) OVER (ORDER BY day) THEN 1 ELSE 0 END AS up\n  FROM closes\n), grp AS (\n  SELECT day, up,\n         ROW_NUMBER() OVER (ORDER BY day) - ROW_NUMBER() OVER (PARTITION BY up ORDER BY day) AS g\n  FROM flags\n)\nSELECT MAX(streak) AS longest_up_streak FROM (\n  SELECT COUNT(*) AS streak FROM grp WHERE up = 1 GROUP BY g\n);",
+        "tier3Solution": "WITH closes AS (SELECT day, price FROM price_ticks WHERE symbol='NVAX' AND hour=15), flags AS (SELECT day, CASE WHEN price > LAG(price) OVER (ORDER BY day) THEN 1 ELSE 0 END AS up FROM closes), grp AS (SELECT day, up, ROW_NUMBER() OVER (ORDER BY day) - ROW_NUMBER() OVER (PARTITION BY up ORDER BY day) AS g FROM flags)\nSELECT MAX(streak) AS longest_up_streak FROM (SELECT COUNT(*) AS streak FROM grp WHERE up = 1 GROUP BY g);"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH closes AS (SELECT day, price FROM price_ticks WHERE symbol='NVAX' AND hour=15), flags AS (SELECT day, CASE WHEN price > LAG(price) OVER (ORDER BY day) THEN 1 ELSE 0 END AS up FROM closes), grp AS (SELECT day, up, ROW_NUMBER() OVER (ORDER BY day) - ROW_NUMBER() OVER (PARTITION BY up ORDER BY day) AS g FROM flags) SELECT MAX(streak) AS longest_up_streak FROM (SELECT COUNT(*) AS streak FROM grp WHERE up = 1 GROUP BY g);"
+      }
+    },
+    {
+      "stepIndex": 36,
+      "phase": "Architect",
+      "conceptFocus": "TOP_N_PER_GROUP",
+      "narrativeBriefing": "Sector leaders: the TOP 2 symbols by total tick volume within EACH sector. Return sector, symbol, total volume — ordered by sector, then volume descending.",
+      "hints": {
+        "tier1Concept": "Top-N per group = ROW_NUMBER() OVER (PARTITION BY group ORDER BY metric DESC), keep rn <= N. The single most useful window pattern in analytics.",
+        "tier2Scaffold": "WITH vol AS (\n  SELECT a.sector, t.symbol, SUM(t.volume) AS total_vol\n  FROM price_ticks t JOIN assets a ON a.symbol = t.symbol\n  GROUP BY a.sector, t.symbol\n), ranked AS (\n  SELECT *, ROW_NUMBER() OVER (PARTITION BY sector ORDER BY total_vol DESC) AS rn FROM vol\n)\nSELECT sector, symbol, total_vol FROM ranked WHERE rn <= ___\nORDER BY sector, total_vol DESC;",
+        "tier3Solution": "WITH vol AS (SELECT a.sector, t.symbol, SUM(t.volume) AS total_vol FROM price_ticks t JOIN assets a ON a.symbol = t.symbol GROUP BY a.sector, t.symbol), ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY sector ORDER BY total_vol DESC) AS rn FROM vol)\nSELECT sector, symbol, total_vol FROM ranked WHERE rn <= 2 ORDER BY sector, total_vol DESC;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH vol AS (SELECT a.sector, t.symbol, SUM(t.volume) AS total_vol FROM price_ticks t JOIN assets a ON a.symbol = t.symbol GROUP BY a.sector, t.symbol), ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY sector ORDER BY total_vol DESC) AS rn FROM vol) SELECT sector, symbol, total_vol FROM ranked WHERE rn <= 2 ORDER BY sector, total_vol DESC;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 37,
+      "phase": "Architect",
+      "conceptFocus": "MAX_DRAWDOWN",
+      "narrativeBriefing": "Risk's favorite number: QBIT's maximum drawdown — the worst percentage drop of a daily close below the running peak close, as a negative percentage rounded to 2 decimals. One value.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Running MAX(close) OVER (ORDER BY day) is the peak-so-far; (close/peak - 1)·100 is the drawdown at each day; MIN of that is THE max drawdown.",
+        "tier2Scaffold": "WITH closes AS (\n  SELECT day, price AS close FROM price_ticks WHERE symbol='QBIT' AND hour=15\n), dd AS (\n  SELECT day, close,\n         MAX(close) OVER (ORDER BY day) AS peak\n  FROM closes\n)\nSELECT ROUND(MIN((close / peak - 1) * 100), 2) AS max_drawdown_pct FROM dd;",
+        "tier3Solution": "WITH closes AS (SELECT day, price AS close FROM price_ticks WHERE symbol='QBIT' AND hour=15), dd AS (SELECT day, close, MAX(close) OVER (ORDER BY day) AS peak FROM closes)\nSELECT ROUND(MIN((close / peak - 1) * 100), 2) AS max_drawdown_pct FROM dd;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH closes AS (SELECT day, price AS close FROM price_ticks WHERE symbol='QBIT' AND hour=15), dd AS (SELECT day, close, MAX(close) OVER (ORDER BY day) AS peak FROM closes) SELECT ROUND(MIN((close / peak - 1) * 100), 2) AS max_drawdown_pct FROM dd;"
+      }
+    },
+    {
+      "stepIndex": 38,
+      "phase": "Architect",
+      "conceptFocus": "FIRST_ACTIVITY_COHORT",
+      "narrativeBriefing": "Cohort the desk: for each trader, their FIRST order day and total order count — the seed of every retention analysis. Order by first day, then trader.",
+      "hints": {
+        "tier1Concept": "MIN(date) per entity defines its cohort; pairing it with activity counts is step one of cohort/retention work everywhere.",
+        "tier2Scaffold": "SELECT trader, MIN(placed_on) AS first_day, COUNT(*) AS orders\nFROM orders\nGROUP BY trader\nORDER BY first_day, ___;",
+        "tier3Solution": "SELECT trader, MIN(placed_on) AS first_day, COUNT(*) AS orders FROM orders GROUP BY trader ORDER BY first_day, trader;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT trader, MIN(placed_on) AS first_day, COUNT(*) AS orders FROM orders GROUP BY trader ORDER BY first_day, trader;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 39,
+      "phase": "Architect",
+      "conceptFocus": "DISTINCT_ACTIVE_SERIES",
+      "narrativeBriefing": "Desk engagement curve: per day, how many DISTINCT traders placed at least one order? Return placed_on and the distinct-trader count, ordered by day.",
+      "hints": {
+        "tier1Concept": "COUNT(DISTINCT col) counts unique values per group — the 'daily active users' of any event table.",
+        "tier2Scaffold": "SELECT placed_on, COUNT(DISTINCT ___) AS active_traders\nFROM orders\nGROUP BY placed_on\nORDER BY placed_on;",
+        "tier3Solution": "SELECT placed_on, COUNT(DISTINCT trader) AS active_traders FROM orders GROUP BY placed_on ORDER BY placed_on;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT placed_on, COUNT(DISTINCT trader) AS active_traders FROM orders GROUP BY placed_on ORDER BY placed_on;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 40,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_PNL",
+      "narrativeBriefing": "POST-MORTEM, part 1. Realized cash flow per trader: join trades to their orders, treat SELLs as +qty×price and BUYs as −qty×price (use the trade's own qty and price), SUM per trader, round to 2 decimals. Order by the total descending, trader ascending.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Sign conventions via CASE inside SUM: revenue minus cost in a single aggregation. The order's side belongs to the trade through a join.",
+        "tier2Scaffold": "SELECT o.trader,\n       ROUND(SUM(CASE WHEN o.side = 'SELL' THEN t.qty * t.price ELSE -t.qty * t.price END), 2) AS net_flow\nFROM trades t\nJOIN orders o ON o.order_id = t.order_id\nGROUP BY o.trader\nORDER BY net_flow DESC, o.trader ASC;",
+        "tier3Solution": "SELECT o.trader, ROUND(SUM(CASE WHEN o.side = 'SELL' THEN t.qty * t.price ELSE -t.qty * t.price END), 2) AS net_flow FROM trades t JOIN orders o ON o.order_id = t.order_id GROUP BY o.trader ORDER BY net_flow DESC, o.trader ASC;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT o.trader, ROUND(SUM(CASE WHEN o.side = 'SELL' THEN t.qty * t.price ELSE -t.qty * t.price END), 2) AS net_flow FROM trades t JOIN orders o ON o.order_id = t.order_id GROUP BY o.trader ORDER BY net_flow DESC, o.trader ASC;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 41,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_NOTIONAL",
+      "narrativeBriefing": "Part 2: where did the money actually move? The top 3 symbols by total traded notional (qty × price across all trades), rounded to 2 decimals. Order by notional descending, symbol ascending.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Notional = price × size, summed. Ranking by it shows concentration that raw trade counts hide.",
+        "tier2Scaffold": "SELECT symbol, ROUND(SUM(qty * price), 2) AS notional\nFROM trades\nGROUP BY symbol\nORDER BY notional DESC, symbol ASC\nLIMIT ___;",
+        "tier3Solution": "SELECT symbol, ROUND(SUM(qty * price), 2) AS notional FROM trades GROUP BY symbol ORDER BY notional DESC, symbol ASC LIMIT 3;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT symbol, ROUND(SUM(qty * price), 2) AS notional FROM trades GROUP BY symbol ORDER BY notional DESC, symbol ASC LIMIT 3;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 42,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_CONCENTRATION",
+      "narrativeBriefing": "Part 3: concentration risk. Per trader: the cost value of their portfolio (Σ shares×avg_cost, 2 decimals) and the percentage of it sitting in their single largest position (1 decimal). Order by trader. Windows over an aggregate CTE will get you there.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Compute per-position values in a CTE, then per trader: SUM as the base and MAX share of it. MAX(x)/SUM(x) per group is a one-pass concentration metric.",
+        "tier2Scaffold": "WITH pos AS (\n  SELECT trader, symbol, shares * avg_cost AS value\n  FROM portfolios\n)\nSELECT trader,\n       ROUND(SUM(value), 2) AS book_value,\n       ROUND(MAX(value) * 100.0 / SUM(value), 1) AS top_position_pct\nFROM pos\nGROUP BY trader\nORDER BY ___;",
+        "tier3Solution": "WITH pos AS (SELECT trader, symbol, shares * avg_cost AS value FROM portfolios)\nSELECT trader, ROUND(SUM(value), 2) AS book_value, ROUND(MAX(value) * 100.0 / SUM(value), 1) AS top_position_pct FROM pos GROUP BY trader ORDER BY trader;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH pos AS (SELECT trader, symbol, shares * avg_cost AS value FROM portfolios) SELECT trader, ROUND(SUM(value), 2) AS book_value, ROUND(MAX(value) * 100.0 / SUM(value), 1) AS top_position_pct FROM pos GROUP BY trader ORDER BY trader;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 43,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_ANOMALY",
+      "narrativeBriefing": "Part 4: the anomaly hunt. Find traders with more than 20 CANCELLED orders of 1000+ shares — possible spoofing. Return trader and the count, ordered by count descending, trader ascending.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Anomaly screens are just precise WHERE + GROUP BY + HAVING chains. The skill is encoding the suspicion as conditions.",
+        "tier2Scaffold": "SELECT trader, COUNT(*) AS big_cancels\nFROM orders\nWHERE status = 'CANCELLED' AND qty >= 1000\nGROUP BY trader\nHAVING COUNT(*) > ___\nORDER BY big_cancels DESC, trader ASC;",
+        "tier3Solution": "SELECT trader, COUNT(*) AS big_cancels FROM orders WHERE status = 'CANCELLED' AND qty >= 1000 GROUP BY trader HAVING COUNT(*) > 20 ORDER BY big_cancels DESC, trader ASC;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "SELECT trader, COUNT(*) AS big_cancels FROM orders WHERE status = 'CANCELLED' AND qty >= 1000 GROUP BY trader HAVING COUNT(*) > 20 ORDER BY big_cancels DESC, trader ASC;",
+        "requiresOrder": true
+      }
+    },
+    {
+      "stepIndex": 44,
+      "phase": "Capstone",
+      "conceptFocus": "CAPSTONE_SECTOR_DOSSIER",
+      "narrativeBriefing": "The final dossier, one row per sector: asset count, total ordered quantity, fill rate % (1 decimal), and average executed trade price (2 decimals). Chain CTEs over orders, trades and assets; LEFT JOIN so every sector appears. Order by sector.",
+      "challengeType": "open",
+      "hints": {
+        "tier1Concept": "Big reports = one CTE per fact table aggregated to the report grain, LEFT JOINed onto the dimension. Compose, don't nest.",
+        "tier2Scaffold": "WITH ord AS (\n  SELECT a.sector, SUM(o.qty) AS total_qty,\n         ROUND(AVG(CASE WHEN o.status='FILLED' THEN 100.0 ELSE 0 END), 1) AS fill_rate\n  FROM orders o JOIN assets a ON a.symbol = o.symbol GROUP BY a.sector\n), trd AS (\n  SELECT a.sector, ROUND(AVG(t.price), 2) AS avg_trade_price\n  FROM trades t JOIN assets a ON a.symbol = t.symbol GROUP BY a.sector\n)\nSELECT s.sector, COUNT(*) AS assets, o.total_qty, o.fill_rate, t.avg_trade_price\nFROM assets s\nLEFT JOIN ord o ON o.sector = s.sector\nLEFT JOIN trd t ON t.sector = s.sector\nGROUP BY s.sector\nORDER BY s.sector;",
+        "tier3Solution": "WITH ord AS (SELECT a.sector, SUM(o.qty) AS total_qty, ROUND(AVG(CASE WHEN o.status='FILLED' THEN 100.0 ELSE 0 END), 1) AS fill_rate FROM orders o JOIN assets a ON a.symbol = o.symbol GROUP BY a.sector), trd AS (SELECT a.sector, ROUND(AVG(t.price), 2) AS avg_trade_price FROM trades t JOIN assets a ON a.symbol = t.symbol GROUP BY a.sector)\nSELECT s.sector, COUNT(*) AS assets, o.total_qty, o.fill_rate, t.avg_trade_price FROM assets s LEFT JOIN ord o ON o.sector = s.sector LEFT JOIN trd t ON t.sector = s.sector GROUP BY s.sector ORDER BY s.sector;"
+      },
+      "validation": {
+        "type": "RESULT_MATCH",
+        "solutionQuery": "WITH ord AS (SELECT a.sector, SUM(o.qty) AS total_qty, ROUND(AVG(CASE WHEN o.status='FILLED' THEN 100.0 ELSE 0 END), 1) AS fill_rate FROM orders o JOIN assets a ON a.symbol = o.symbol GROUP BY a.sector), trd AS (SELECT a.sector, ROUND(AVG(t.price), 2) AS avg_trade_price FROM trades t JOIN assets a ON a.symbol = t.symbol GROUP BY a.sector) SELECT s.sector, COUNT(*) AS assets, o.total_qty, o.fill_rate, t.avg_trade_price FROM assets s LEFT JOIN ord o ON o.sector = s.sector LEFT JOIN trd t ON t.sector = s.sector GROUP BY s.sector ORDER BY s.sector;",
+        "requiresOrder": true
+      }
+    }
+  ],
+  "examPool": [
+    {
+      "prompt": "How many assets are there per sector? Return sector and count.",
+      "conceptFocus": "GROUP_BY_SECTOR",
+      "solutionQuery": "SELECT sector, COUNT(*) AS n FROM assets GROUP BY sector;"
+    },
+    {
+      "prompt": "Which symbols have orders but no executed trades? Use a set operation.",
+      "conceptFocus": "EXCEPT_DIFFERENCE",
+      "solutionQuery": "SELECT symbol FROM orders EXCEPT SELECT symbol FROM trades;"
+    },
+    {
+      "prompt": "Per trader, the total BUY quantity and total SELL quantity as two columns (CASE pivot).",
+      "conceptFocus": "CASE_PIVOT",
+      "solutionQuery": "SELECT trader, SUM(CASE WHEN side='BUY' THEN qty ELSE 0 END) AS buy_qty, SUM(CASE WHEN side='SELL' THEN qty ELSE 0 END) AS sell_qty FROM orders GROUP BY trader;"
+    },
+    {
+      "prompt": "VWAP per symbol on '2026-01-07': SUM(price*volume)/SUM(volume) rounded to 2 decimals. Return symbol and vwap ordered by symbol.",
+      "conceptFocus": "VWAP",
+      "solutionQuery": "SELECT symbol, ROUND(SUM(price*volume)/SUM(volume), 2) AS vwap FROM price_ticks WHERE day='2026-01-07' GROUP BY symbol ORDER BY symbol;",
+      "requiresOrder": true
+    },
+    {
+      "prompt": "For symbol 'WIND', using hour-15 ticks as daily closes: each day, the close, and the day-over-day change rounded to 2 decimals, ordered by day.",
+      "conceptFocus": "LAG_DAILY_CHANGE",
+      "solutionQuery": "WITH closes AS (SELECT day, price AS close FROM price_ticks WHERE symbol='WIND' AND hour=15) SELECT day, close, ROUND(close - LAG(close) OVER (ORDER BY day), 2) AS change FROM closes ORDER BY day;",
+      "requiresOrder": true
+    },
+    {
+      "prompt": "The single most recent tick per symbol (latest day, then hour): symbol, day, hour, price — ordered by symbol.",
+      "conceptFocus": "WINDOW_LATEST_TICK",
+      "solutionQuery": "WITH ranked AS (SELECT symbol, day, hour, price, ROW_NUMBER() OVER (PARTITION BY symbol ORDER BY day DESC, hour DESC) AS rn FROM price_ticks) SELECT symbol, day, hour, price FROM ranked WHERE rn = 1 ORDER BY symbol;",
+      "requiresOrder": true
+    },
+    {
+      "prompt": "Which assets are not held in any portfolio? Return their symbols.",
+      "conceptFocus": "LEFT_JOIN_UNHELD",
+      "solutionQuery": "SELECT a.symbol FROM assets a LEFT JOIN portfolios p ON p.symbol = a.symbol WHERE p.symbol IS NULL;"
+    },
+    {
+      "prompt": "Per symbol, the percentage of orders that were FILLED, rounded to 1 decimal. Return symbol and fill rate.",
+      "conceptFocus": "CONDITIONAL_PCT",
+      "solutionQuery": "SELECT symbol, ROUND(AVG(CASE WHEN status='FILLED' THEN 100.0 ELSE 0 END), 1) AS fill_rate FROM orders GROUP BY symbol;"
     }
   ]
 }
