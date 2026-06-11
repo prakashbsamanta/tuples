@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260611T133145Z-c7653bb-27350300070",
+  "runId": "27350300070",
+  "runNumber": 56,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/27350300070",
+  "context": "pr",
+  "pr": {
+   "number": 35,
+   "title": "fix: deploy reports dashboard + untrack stray artifact",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/35"
+  },
+  "branch": "chore/untrack-test-artifacts",
+  "sha": "c7653bb19e105756578a0687cc8bc7d1f67fef42",
+  "shortSha": "c7653bb",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/c7653bb19e105756578a0687cc8bc7d1f67fef42",
+  "timestamp": "2026-06-11T13:31:45.444Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 71.298828125,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11069.756103515625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 13230
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 402.7,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3916,
+   "lcpMs": 7670,
+   "tbtMs": 80,
+   "cls": 0,
+   "speedIndexMs": 3916
+  },
+  "details": {
+   "vitest": "runs/20260611T133145Z-c7653bb-27350300070/vitest.json",
+   "playwright": "runs/20260611T133145Z-c7653bb-27350300070/playwright.json",
+   "lighthouse": "runs/20260611T133145Z-c7653bb-27350300070/lighthouse.json",
+   "size": "runs/20260611T133145Z-c7653bb-27350300070/size.json",
+   "coverage": "runs/20260611T133145Z-c7653bb-27350300070/coverage.json"
+  }
+ },
+ {
   "id": "20260611T132939Z-1f6be5f-27350208794",
   "runId": "27350208794",
   "runNumber": 55,
