@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, Trophy, Zap } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence, animate, useMotionValue, useTransform } from 'framer-motion';
+import { Check, Trophy, Zap } from 'lucide-react';
 
 interface SuccessToastProps {
   stepIndex: number;
@@ -9,6 +9,17 @@ interface SuccessToastProps {
   isLastStep: boolean;
   xpGained?: number;
   explanation?: string;
+}
+
+/** Animated +XP counter that ticks up from 0. */
+function XpCounter({ value }: { value: number }) {
+  const mv = useMotionValue(0);
+  const rounded = useTransform(mv, (v) => `+${Math.round(v)} XP`);
+  useEffect(() => {
+    const controls = animate(mv, value, { duration: 0.7, ease: 'easeOut' });
+    return controls.stop;
+  }, [mv, value]);
+  return <motion.span>{rounded}</motion.span>;
 }
 
 export function SuccessToast({ stepIndex, totalSteps, conceptFocus, isLastStep, xpGained, explanation }: SuccessToastProps) {
@@ -28,39 +39,41 @@ export function SuccessToast({ stepIndex, totalSteps, conceptFocus, isLastStep, 
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+          style={{ borderColor: 'var(--world-border)' }}
           className="fixed bottom-6 right-6 z-50 flex items-start gap-4 px-5 py-4 rounded-2xl
-            bg-[#0F1A2A] border border-emerald-500/30 shadow-2xl shadow-emerald-500/10 max-w-sm"
+            glass-card shadow-2xl max-w-sm"
+          data-testid="success-toast"
         >
-          {/* Glow */}
-          <div className="absolute inset-0 rounded-2xl bg-emerald-500/5 pointer-events-none" />
-
-          <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0">
+          <div
+            className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
+            style={{ background: 'var(--world-soft)', borderColor: 'var(--world-border)' }}
+          >
             {isLastStep ? (
               <Trophy size={20} className="text-amber-400" />
             ) : (
-              <CheckCircle2 size={20} className="text-emerald-400" />
+              <Check size={20} style={{ color: 'var(--world-accent)' }} />
             )}
           </div>
           <div>
             <div className="flex items-center gap-2 mb-0.5">
               <p className="font-semibold text-white text-sm">
-                {isLastStep ? 'Mission Complete! 🎉' : 'Step Passed!'}
+                {isLastStep ? 'Mission Complete!' : 'Verified.'}
               </p>
-              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
-                {xpGained != null ? `+${xpGained} XP` : '+1 ✓'}
+              <span className="text-[10px] font-mono text-volt bg-volt/10 px-1.5 py-0.5 rounded border border-volt/20 tabular-nums">
+                {xpGained != null ? <XpCounter value={xpGained} /> : '+1 ✓'}
               </span>
             </div>
-            <p className="text-gray-400 text-xs">{conceptFocus.replace(/_/g, ' ')}</p>
+            <p className="text-gray-400 text-xs font-mono lowercase">{conceptFocus.replace(/_/g, ' ')}</p>
             {explanation && (
               <p className="text-gray-300 text-[11px] leading-relaxed mt-1.5 pt-1.5 border-t border-white/5">
-                <span className="text-emerald-400 font-semibold">Why it works: </span>{explanation}
+                <span className="font-semibold" style={{ color: 'var(--world-accent)' }}>Why it works: </span>{explanation}
               </p>
             )}
             {!isLastStep && (
               <div className="flex items-center gap-1.5 mt-1.5">
-                <Zap size={11} className="text-indigo-400" />
-                <p className="text-[11px] text-indigo-300">
-                  Step {stepIndex + 2} / {totalSteps} unlocked
+                <Zap size={11} className="text-gray-500" />
+                <p className="text-[11px] text-gray-400 font-mono">
+                  step {stepIndex + 2} / {totalSteps} unlocked
                 </p>
               </div>
             )}

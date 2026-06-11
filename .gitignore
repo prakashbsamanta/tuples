@@ -39,3 +39,11 @@ pnpm-debug.log*
 
 # sql.js wasm is generated from node_modules at build time (scripts/copy-sql-wasm.mjs)
 public/passenger-wasm/
+vite.config.js
+vite.config.d.ts
+
+# Test artifacts
+.lighthouseci/
+test-results/
+playwright-report/
+reports/

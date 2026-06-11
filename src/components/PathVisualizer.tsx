@@ -16,12 +16,16 @@ const phaseColor: Record<string, string> = {
   'Novice': 'text-emerald-400',
   'Operator': 'text-blue-400',
   'Architect': 'text-violet-400',
+  'Principal': 'text-amber-400',
+  'Capstone': 'text-rose-400',
 };
 
 const phaseDot: Record<string, string> = {
   'Novice': 'bg-emerald-400',
   'Operator': 'bg-blue-400',
   'Architect': 'bg-violet-400',
+  'Principal': 'bg-amber-400',
+  'Capstone': 'bg-rose-400',
 };
 
 export function PathVisualizer({ steps, currentStepIndex, reviewStepIndex = null, onSelectStep }: PathVisualizerProps) {
@@ -80,11 +84,12 @@ export function PathVisualizer({ steps, currentStepIndex, reviewStepIndex = null
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.01 }}
+                style={isActive && !isReviewing ? { background: 'var(--world-soft)', borderColor: 'var(--world-border)' } : undefined}
                 className={`group w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${
                   isReviewing
                     ? 'bg-amber-500/15 border border-amber-500/40 ring-1 ring-amber-500/20'
                     : isActive
-                    ? 'bg-indigo-500/15 border border-indigo-500/30'
+                    ? 'border'
                     : isCompleted
                     ? 'border border-transparent hover:bg-white/5 hover:border-white/10 opacity-70 hover:opacity-100'
                     : 'border border-transparent opacity-25'
@@ -97,8 +102,11 @@ export function PathVisualizer({ steps, currentStepIndex, reviewStepIndex = null
                       <Check size={10} className="text-emerald-400" />
                     </div>
                   ) : isActive ? (
-                    <div className="w-5 h-5 rounded-full bg-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/40">
-                      <div className="w-2 h-2 bg-white rounded-full" />
+                    <div
+                      className="w-5 h-5 rounded-full flex items-center justify-center"
+                      style={{ background: 'var(--world-accent)', boxShadow: '0 0 14px var(--world-glow)' }}
+                    >
+                      <div className="w-2 h-2 rounded-full" style={{ background: 'var(--world-ink)' }} />
                     </div>
                   ) : (
                     <div className="w-5 h-5 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
@@ -109,9 +117,12 @@ export function PathVisualizer({ steps, currentStepIndex, reviewStepIndex = null
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <div className={`text-[11px] font-mono font-semibold truncate leading-tight ${
-                    isReviewing ? 'text-amber-300' : isActive ? 'text-indigo-300' : isCompleted ? 'text-gray-300' : 'text-gray-600'
-                  }`}>
+                  <div
+                    style={isActive && !isReviewing ? { color: 'var(--world-accent)' } : undefined}
+                    className={`text-[11px] font-mono font-semibold truncate leading-tight ${
+                      isReviewing ? 'text-amber-300' : isActive ? '' : isCompleted ? 'text-gray-300' : 'text-gray-600'
+                    }`}
+                  >
                     {step.conceptFocus.replace(/_/g, ' ')}
                   </div>
                 </div>
@@ -122,9 +133,10 @@ export function PathVisualizer({ steps, currentStepIndex, reviewStepIndex = null
                 ) : isCompleted && isInteractive ? (
                   <Eye size={12} className="text-gray-700 opacity-0 group-hover:opacity-100 flex-shrink-0" />
                 ) : (
-                  <span className={`text-[10px] font-mono flex-shrink-0 ${
-                    isActive ? 'text-indigo-400' : 'text-gray-700'
-                  }`}>
+                  <span
+                    style={isActive ? { color: 'var(--world-accent)' } : undefined}
+                    className={`text-[10px] font-mono flex-shrink-0 ${isActive ? '' : 'text-gray-700'}`}
+                  >
                     {idx + 1}
                   </span>
                 )}

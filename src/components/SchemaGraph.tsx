@@ -18,7 +18,7 @@ function TableNode({ data }: NodeProps<TableNodeType>) {
       className={`rounded-xl overflow-hidden min-w-[170px] shadow-xl ${
         table.isView
           ? 'border border-amber-500/30 bg-amber-950/30'
-          : 'border border-violet-500/30 bg-[#0F1425]'
+          : 'border border-violet-500/30 bg-panel'
       }`}
     >
       <Handle type="target" position={Position.Left} className="!bg-violet-400" />
@@ -89,7 +89,7 @@ export function SchemaGraph({ tables }: SchemaGraphProps) {
       className="bg-transparent"
     >
       <Background color="#ffffff" gap={20} size={1} style={{ opacity: 0.04 }} />
-      <Controls showInteractive={false} className="!bg-[#0F1425] !border-white/10" />
+      <Controls showInteractive={false} className="!bg-panel !border-white/10" />
     </ReactFlow>
   );
 }

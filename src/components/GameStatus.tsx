@@ -14,7 +14,7 @@ export function GameStatus() {
     <div className="flex items-center gap-3">
       {/* Level + XP */}
       <div className="flex items-center gap-2">
-        <span className="text-[10px] font-mono font-bold px-2 py-1 rounded-lg bg-indigo-500/15 text-indigo-300 border border-indigo-500/25">
+        <span className="text-[10px] font-mono font-bold px-2 py-1 rounded-lg bg-volt/10 text-volt border border-volt/25">
           LV {level}
         </span>
         <div className="hidden sm:flex items-center gap-2" title={`${xpIntoLevel} / ${xpForLevel} XP this level`}>
@@ -22,7 +22,7 @@ export function GameStatus() {
             <motion.div
               animate={{ width: `${Math.round(progress * 100)}%` }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full"
+              className="h-full bg-gradient-to-r from-volt-dim to-volt rounded-full"
             />
           </div>
           <span className="text-[9px] font-mono text-gray-500 leading-none whitespace-nowrap tabular-nums">{xpIntoLevel}/{xpForLevel} XP</span>

@@ -1,14 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Self-hosted variable fonts (latin subsets only — loaded via JS imports in main.tsx
+   would pull every subset; importing the latin files directly keeps it lean). */
+@import '@fontsource-variable/space-grotesk/index.css';
+@import '@fontsource-variable/jetbrains-mono/index.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* ── Design tokens (Tailwind 4 theme) ─────────────────────────────── */
+@theme {
+  --font-sans: 'Space Grotesk Variable', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', monospace;
+
+  /* Canvas + surfaces: near-black, blue-leaning neutrals */
+  --color-canvas: #060709;
+  --color-panel: #0b0d12;
+  --color-panel-2: #10131a;
+
+  /* Signature electric accent */
+  --color-volt: #c8ff3d;
+  --color-volt-dim: #9fd62a;
+
+  /* Brand secondary (in-app indigo heritage, cooled down) */
+  --color-brand: #818cf8;
+}
+
+/* ── Deep Field world identities ───────────────────────────────────────
+   Each curriculum track is a "world" with its own light. Set data-world on
+   any ancestor and everything below picks up the palette. Defaults keep
+   un-scoped surfaces on the neutral indigo heritage. */
+:root {
+  --world-accent: #818cf8;
+  --world-soft: rgba(129, 140, 248, 0.12);
+  --world-border: rgba(129, 140, 248, 0.3);
+  --world-glow: rgba(129, 140, 248, 0.06);
+  --world-ink: #0c0e1d;
+}
+[data-world='lab'] {
+  --world-accent: #5dcaa5;
+  --world-soft: rgba(93, 202, 165, 0.12);
+  --world-border: rgba(93, 202, 165, 0.3);
+  --world-glow: rgba(93, 202, 165, 0.06);
+  --world-ink: #081009;
+}
+[data-world='floor'] {
+  --world-accent: #8fb6ff;
+  --world-soft: rgba(143, 182, 255, 0.12);
+  --world-border: rgba(143, 182, 255, 0.3);
+  --world-glow: rgba(143, 182, 255, 0.06);
+  --world-ink: #0a0d18;
+}
+[data-world='belt'] {
+  --world-accent: #ffb454;
+  --world-soft: rgba(255, 180, 84, 0.12);
+  --world-border: rgba(255, 180, 84, 0.3);
+  --world-glow: rgba(255, 180, 84, 0.06);
+  --world-ink: #120d06;
+}
 
 @layer base {
   *, *::before, *::after {
     box-sizing: border-box;
+    border-color: rgba(255, 255, 255, 0.08);
   }
-  
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -16,13 +69,13 @@
   }
 
   body {
-    @apply bg-[#080C14] text-gray-100;
-    font-family: 'Inter', system-ui, sans-serif;
+    @apply bg-canvas text-gray-100 font-sans;
     overflow-x: hidden;
   }
 
   ::selection {
-    @apply bg-violet-500/30 text-white;
+    background: rgba(200, 255, 61, 0.25);
+    color: #fff;
   }
 
   ::-webkit-scrollbar {
@@ -38,84 +91,106 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-white/20;
   }
+
+  /* Kinetic choreography is opt-out for motion-sensitive users. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
 }
 
 @layer utilities {
   .font-mono-code {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
+  }
+
+  /* Film-grain overlay — pure SVG noise, no asset request. */
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   .glass {
-    background: rgba(255, 255, 255, 0.035);
+    background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .glass-card {
-    background: rgba(13, 18, 30, 0.55);
+    background: rgba(11, 13, 18, 0.6);
     backdrop-filter: blur(24px) saturate(140%);
     -webkit-backdrop-filter: blur(24px) saturate(140%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 8px 30px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04), 0 8px 30px rgba(0, 0, 0, 0.3);
   }
 
   /* Frosted top/bottom bars (header, toolbars, status strips). */
   .glass-bar {
-    background: rgba(10, 14, 26, 0.55);
+    background: rgba(6, 7, 9, 0.6);
     backdrop-filter: blur(22px) saturate(160%);
     -webkit-backdrop-filter: blur(22px) saturate(160%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
   }
   /* Same, but border on the top edge (for bottom bars). */
   .glass-bar-top {
-    background: rgba(10, 14, 26, 0.55);
+    background: rgba(6, 7, 9, 0.6);
     backdrop-filter: blur(22px) saturate(160%);
     -webkit-backdrop-filter: blur(22px) saturate(160%);
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
     box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .glow-volt {
+    box-shadow: 0 0 40px rgba(200, 255, 61, 0.12), 0 0 80px rgba(200, 255, 61, 0.04);
   }
 
   .glow-indigo {
     box-shadow: 0 0 40px rgba(99, 102, 241, 0.15), 0 0 80px rgba(99, 102, 241, 0.05);
   }
 
-  .glow-violet {
-    box-shadow: 0 0 40px rgba(139, 92, 246, 0.15);
+  .glow-world {
+    box-shadow: 0 0 40px var(--world-glow), 0 0 90px var(--world-glow);
   }
 
   .text-gradient-brand {
-    background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+    background: linear-gradient(120deg, #f4f4f5 0%, #c8ff3d 60%, #9fd62a 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .surface-1 {
-    background: rgba(16, 22, 38, 0.55);
+    background: rgba(11, 13, 18, 0.6);
     backdrop-filter: blur(16px) saturate(130%);
     -webkit-backdrop-filter: blur(16px) saturate(130%);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.03);
   }
 
   .surface-2 {
-    background: rgba(22, 30, 48, 0.5);
+    background: rgba(16, 19, 26, 0.55);
     backdrop-filter: blur(16px) saturate(130%);
     -webkit-backdrop-filter: blur(16px) saturate(130%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.07);
   }
 }
 
 /* ── React Flow (schema map) dark theming ── */
 .react-flow__controls-button {
-  background: #0F1425;
+  background: #0b0d12;
   border: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   color: #a5b4fc;
 }
 .react-flow__controls-button:hover {
-  background: #1a2138;
+  background: #161a24;
 }
 .react-flow__controls-button svg {
   fill: #a5b4fc;
@@ -123,10 +198,10 @@
 .react-flow__edge-text {
   fill: #c4b5fd;
   font-size: 9px;
-  font-family: ui-monospace, monospace;
+  font-family: var(--font-mono);
 }
 .react-flow__edge-textbg {
-  fill: #0F1425;
+  fill: #0b0d12;
 }
 .react-flow__handle {
   width: 6px;
@@ -136,11 +211,12 @@
 
 /* ── CodeMirror editor theming (match Tuples) ── */
 .cm-editor { background: transparent !important; }
-.cm-editor .cm-gutters { background: transparent !important; border-right: 1px solid rgba(255,255,255,0.05); color: #4b5563; }
-.cm-editor .cm-activeLine { background: rgba(129,140,248,0.06) !important; }
-.cm-editor .cm-activeLineGutter { background: transparent !important; color: #a5b4fc; }
-.cm-editor .cm-cursor { border-left-color: #c4b5fd !important; }
+.cm-editor .cm-content { font-family: var(--font-mono) !important; }
+.cm-editor .cm-gutters { background: transparent !important; border-right: 1px solid rgba(255,255,255,0.05); color: #4b5563; font-family: var(--font-mono) !important; }
+.cm-editor .cm-activeLine { background: rgba(200,255,61,0.04) !important; }
+.cm-editor .cm-activeLineGutter { background: transparent !important; color: #c8ff3d; }
+.cm-editor .cm-cursor { border-left-color: #c8ff3d !important; }
 .cm-editor .cm-selectionBackground,
-.cm-editor.cm-focused .cm-selectionBackground { background: rgba(139,92,246,0.28) !important; }
-.cm-editor .cm-tooltip-autocomplete { background: #0f1425 !important; border: 1px solid rgba(139,92,246,0.25) !important; border-radius: 8px; }
-.cm-editor .cm-tooltip-autocomplete ul li[aria-selected] { background: rgba(139,92,246,0.25) !important; color: #e0e7ff; }
+.cm-editor.cm-focused .cm-selectionBackground { background: rgba(200,255,61,0.16) !important; }
+.cm-editor .cm-tooltip-autocomplete { background: #0b0d12 !important; border: 1px solid rgba(200,255,61,0.2) !important; border-radius: 8px; }
+.cm-editor .cm-tooltip-autocomplete ul li[aria-selected] { background: rgba(200,255,61,0.15) !important; color: #f0ffd0; }

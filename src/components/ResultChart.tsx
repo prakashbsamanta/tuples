@@ -13,7 +13,7 @@ const axisProps = {
 
 const tooltipStyle = {
   contentStyle: {
-    background: '#0D1220',
+    background: '#0b0d12',
     border: '1px solid rgba(255,255,255,0.1)',
     borderRadius: 8,
     fontSize: 11,

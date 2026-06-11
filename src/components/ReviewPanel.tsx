@@ -22,7 +22,7 @@ export function ReviewPanel({ step, stepIndex, totalSteps, savedQuery, onExit }:
       key={`review-${stepIndex}`}
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex flex-col h-full min-h-0 bg-[#06090F]"
+      className="flex flex-col h-full min-h-0 bg-canvas"
     >
       {/* Review banner */}
       <div className="flex items-center justify-between px-4 py-2.5 border-b border-amber-500/20 bg-amber-500/8 shrink-0">

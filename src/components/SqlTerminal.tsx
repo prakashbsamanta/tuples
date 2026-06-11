@@ -1,6 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { Play, Lightbulb, Copy, Check, Sparkles, FlaskConical } from 'lucide-react';
+import { Play, Lightbulb, Copy, Check, Sparkles, FlaskConical, Route } from 'lucide-react';
 import { coachError } from '../lib/errorCoach';
+import type { ChallengeType } from '../domains';
 
 // Lazy-load CodeMirror so its ~140 kB (gz) bundle stays out of the initial
 // payload; it loads when the terminal first mounts (i.e. inside a mission).
@@ -17,18 +18,41 @@ interface SqlTerminalProps {
   } | null;
   schema: Record<string, string[]>;
   onRevealHint?: () => void;
+  /** 'fix'/'optimize' pre-fill the editor with starterQuery; 'open' = no scaffold. */
+  challengeType?: ChallengeType;
+  starterQuery?: string;
 }
 
-export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onRevealHint }: SqlTerminalProps) {
-  const [query, setQuery] = useState('');
+const challengeBadge: Record<string, { label: string; cls: string; title: string }> = {
+  fix: {
+    label: 'FIX THE BUG',
+    cls: 'text-red-400 bg-red-500/10 border-red-500/25',
+    title: 'This query is broken in a subtle way. Diagnose it and repair it.',
+  },
+  optimize: {
+    label: 'OPTIMIZE',
+    cls: 'text-amber-400 bg-amber-500/10 border-amber-500/25',
+    title: 'This query works but is written poorly. Rewrite it the right way.',
+  },
+  open: {
+    label: 'OPEN CHALLENGE',
+    cls: 'text-violet-400 bg-violet-500/10 border-violet-500/25',
+    title: 'No scaffolding — design the query yourself from the briefing.',
+  },
+};
+
+export function SqlTerminal({
+  onExecute, onRawExecute, error, hints, schema, onRevealHint, challengeType, starterQuery,
+}: SqlTerminalProps) {
+  const [query, setQuery] = useState(starterQuery ?? '');
   const [hintLevel, setHintLevel] = useState<0 | 1 | 2 | 3>(0);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    setQuery('');
+    setQuery(starterQuery ?? '');
     setHintLevel(0);
     setCopied(false);
-  }, [hints]);
+  }, [hints, starterQuery]);
 
   const handleExecute = () => {
     if (query.trim()) onExecute(query);
@@ -46,7 +70,7 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onR
   const nextHintLabel = hintLevel < 3 ? hintLabels[hintLevel] : null;
 
   return (
-    <div className="flex flex-col h-full min-h-0 bg-[#06090F]/80">
+    <div className="flex flex-col h-full min-h-0 bg-canvas/80">
       {/* Toolbar */}
       <div className="glass-bar flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 shrink-0">
         <div className="flex items-center gap-2">
@@ -56,6 +80,14 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onR
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/50" />
           </div>
           <span className="font-mono text-[11px] text-gray-600 sm:ml-1 tracking-widest uppercase">query.sql</span>
+          {challengeType && challengeBadge[challengeType] && (
+            <span
+              title={challengeBadge[challengeType].title}
+              className={`px-2 py-0.5 rounded-md border text-[10px] font-mono font-bold tracking-wider ${challengeBadge[challengeType].cls}`}
+            >
+              {challengeBadge[challengeType].label}
+            </span>
+          )}
         </div>
         <div className="flex items-center gap-2 flex-wrap justify-end">
           {hints && nextHintLabel && (
@@ -79,21 +111,32 @@ export function SqlTerminal({ onExecute, onRawExecute, error, hints, schema, onR
               Test Run
             </button>
           )}
+          {onRawExecute && (
+            <button
+              onClick={() => query.trim() && onRawExecute(`EXPLAIN QUERY PLAN ${query}`)}
+              title="Show how SQLite will execute your query (SCAN vs SEARCH, which indexes). Runs as a preview — never checks the answer or changes your progress."
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-gray-300
+                bg-white/5 hover:bg-white/10 border border-white/8 rounded-lg transition-all"
+            >
+              <Route size={12} className="text-violet-400" />
+              Explain
+            </button>
+          )}
           <button
             onClick={handleExecute}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold text-white
-              bg-indigo-500 hover:bg-indigo-400 rounded-lg transition-all shadow-lg shadow-indigo-500/25"
+            style={{ background: 'var(--world-accent)', color: 'var(--world-ink)', boxShadow: '0 4px 18px var(--world-glow)' }}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold rounded-lg transition-all hover:brightness-110"
           >
             <Play size={11} />
             Submit
-            <span className="text-indigo-200/60 ml-0.5">⌘↵</span>
+            <span className="opacity-50 ml-0.5">⌘↵</span>
           </button>
         </div>
       </div>
 
       {/* Hints Area */}
       {hintLevel > 0 && hints && (
-        <div className="border-b border-white/5 bg-[#0A0F1A] shrink-0">
+        <div className="border-b border-white/5 bg-panel shrink-0">
           {hintLevel >= 1 && (
             <div className="px-4 py-3 border-b border-white/5">
               <div className="flex items-center gap-2 mb-1.5">

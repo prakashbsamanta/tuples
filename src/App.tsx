@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { BentoLayout } from './components/BentoLayout';
 import { SqlTerminal } from './components/SqlTerminal';
 import { LiveDiffTable } from './components/LiveDiffTable';
 import { SchemaVisualizer } from './components/SchemaVisualizer';
-import { MissionSelection } from './components/MissionSelection';
 import { PathVisualizer } from './components/PathVisualizer';
 import { SuccessToast } from './components/SuccessToast';
 import { AchievementToast } from './components/AchievementToast';
@@ -12,27 +11,34 @@ import { JuiceController } from './components/JuiceController';
 import { TypewriterText } from './components/TypewriterText';
 import { Mascot } from './components/Mascot';
 import { ReviewPanel } from './components/ReviewPanel';
+import { ExamPanel } from './components/ExamPanel';
+import { Atmosphere } from './components/Atmosphere';
 import { useSqlEngine } from './hooks/useSqlEngine';
 import { useProgressStore } from './store/useProgressStore';
 import { extractSchema } from './lib/schema';
 import { explainConcept } from './lib/whyItWorks';
 import { domains } from './domains';
+import { worldByDomain } from './lib/worlds';
 import {
-  DatabaseZap, CheckCircle2, LogOut, ChevronRight,
+  CheckCircle2, LogOut, ChevronRight,
   FlaskConical, LineChart, Rocket, RotateCcw
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const Home = lazy(() => import('./components/home/Home'));
+
 const domainIcons: Record<string, React.ReactNode> = {
-  'clinical-trials-research': <FlaskConical size={16} className="text-emerald-400" />,
-  'algorithmic-trading': <LineChart size={16} className="text-indigo-400" />,
-  'space-logistics': <Rocket size={16} className="text-amber-400" />,
+  'clinical-trials-research': <FlaskConical size={16} />,
+  'algorithmic-trading': <LineChart size={16} />,
+  'space-logistics': <Rocket size={16} />,
 };
 
 const phaseColors: Record<string, string> = {
   'Novice': 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
   'Operator': 'text-blue-400 bg-blue-500/10 border-blue-500/20',
   'Architect': 'text-violet-400 bg-violet-500/10 border-violet-500/20',
+  'Principal': 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+  'Capstone': 'text-rose-400 bg-rose-500/10 border-rose-500/20',
 };
 
 function App() {
@@ -97,13 +103,19 @@ function App() {
     }
   };
 
-  if (!activeDomainId) return <MissionSelection />;
+  if (!activeDomainId) {
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-canvas" />}>
+        <Home />
+      </Suspense>
+    );
+  }
 
   if (!isReady) {
     return (
-      <div className="min-h-screen bg-[#080C14] flex flex-col items-center justify-center gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 animate-pulse">
-          <DatabaseZap size={22} className="text-white" />
+      <div className="min-h-screen bg-canvas flex flex-col items-center justify-center gap-4">
+        <div className="w-12 h-12 rounded-2xl glass-card flex items-center justify-center animate-pulse font-mono font-bold text-volt">
+          (,)
         </div>
         <div className="text-center">
           <p className="text-gray-200 font-semibold">Initializing Engine</p>
@@ -113,7 +125,7 @@ function App() {
           {[0, 1, 2].map(i => (
             <div
               key={i}
-              className="w-2 h-2 rounded-full bg-indigo-500 animate-bounce"
+              className="w-2 h-2 rounded-full bg-volt/70 animate-bounce"
               style={{ animationDelay: `${i * 0.15}s` }}
             />
           ))}
@@ -123,7 +135,14 @@ function App() {
   }
 
   const domain = domains[activeDomainId];
-  if (!domain) return <MissionSelection />;
+  if (!domain) {
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-canvas" />}>
+        <Home />
+      </Suspense>
+    );
+  }
+  const world = worldByDomain[activeDomainId];
 
   const progress = progressByDomain[activeDomainId] || { currentStepIndex: 0 };
   const currentStepIndex = progress.currentStepIndex;
@@ -135,24 +154,33 @@ function App() {
   const toastStep = lastSuccessStep !== null ? domain.curriculumMatrix[lastSuccessStep] : null;
 
   return (
-    <>
+    <div data-world={world?.id} className="contents">
       <JuiceController />
       <Mascot hasError={!!error} />
+      {world && (
+        <Atmosphere
+          tint={world.accent}
+          intensity={0.35}
+          density={0.35}
+          className="fixed inset-0 w-full h-full -z-10"
+        />
+      )}
       <BentoLayout
         header={
           <>
             {/* Left: Brand + Mission */}
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                  <DatabaseZap size={15} className="text-white" />
-                </div>
+              <div className="flex items-center gap-2">
+                <span className="font-mono font-bold text-volt text-base leading-none">(,)</span>
                 <span className="font-bold text-white text-sm tracking-tight">Tuples</span>
               </div>
               <div className="h-4 w-px bg-white/10" />
               <div className="flex items-center gap-2 text-sm">
-                {domainIcons[activeDomainId]}
-                <span className="text-gray-200 font-medium">{domain.domainName}</span>
+                <span style={{ color: 'var(--world-accent)' }}>{domainIcons[activeDomainId]}</span>
+                <span className="text-gray-200 font-medium">{world?.name ?? domain.domainName}</span>
+                <span className="hidden lg:inline font-mono text-[10px] uppercase tracking-widest text-gray-600">
+                  {world?.role}
+                </span>
               </div>
             </div>
 
@@ -179,7 +207,8 @@ function App() {
                   <motion.div
                     animate={{ width: `${percent}%` }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
-                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full"
+                    className="h-full rounded-full"
+                    style={{ background: 'var(--world-accent)' }}
                   />
                 </div>
                 <span className="text-xs font-mono text-gray-500 w-8 tabular-nums">{percent}%</span>
@@ -199,7 +228,7 @@ function App() {
                   hover:text-gray-200 bg-white/5 hover:bg-white/10 border border-white/8 hover:border-white/15
                   rounded-lg transition-all"
               >
-                <LogOut size={13} /> <span className="hidden sm:inline">Switch Mission</span>
+                <LogOut size={13} /> <span className="hidden sm:inline">Switch World</span>
               </button>
             </div>
           </>
@@ -226,13 +255,15 @@ function App() {
                 </div>
                 <h2 className="text-xl font-bold text-white mb-1">Mission Complete!</h2>
                 <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
-                  You've built the complete <span className="text-gray-200">{domain.domainName}</span> database architecture from scratch — 35 steps mastered.
+                  All {domain.curriculumMatrix.length} steps of <span className="text-gray-200">{world?.name ?? domain.domainName}</span> mastered.
+                  One thing remains: the certification exam, waiting in the terminal below.
                 </p>
                 <button
                   onClick={() => setActiveDomain(null)}
-                  className="mt-5 px-5 py-2.5 text-sm font-semibold bg-indigo-500 hover:bg-indigo-400 text-white rounded-xl transition-all shadow-lg shadow-indigo-500/25"
+                  className="mt-5 px-5 py-2.5 text-sm font-bold rounded-xl transition-all hover:brightness-110"
+                  style={{ background: 'var(--world-accent)', color: 'var(--world-ink)' }}
                 >
-                  Choose Another Mission
+                  Choose Another World
                 </button>
               </motion.div>
             ) : (
@@ -245,7 +276,10 @@ function App() {
                 className="space-y-3"
               >
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-lg">
+                  <span
+                    className="text-[10px] font-mono font-bold uppercase tracking-widest px-2.5 py-1 rounded-lg border"
+                    style={{ color: 'var(--world-accent)', background: 'var(--world-soft)', borderColor: 'var(--world-border)' }}
+                  >
                     Mission Briefing
                   </span>
                   <span className="text-[10px] font-mono text-gray-500 bg-white/3 border border-white/5 px-2 py-1 rounded-md">
@@ -276,11 +310,11 @@ function App() {
               hints={currentStep?.hints ?? null}
               schema={editorSchema}
               onRevealHint={useProgressStore.getState().revealHint}
+              challengeType={currentStep?.challengeType}
+              starterQuery={currentStep?.starterQuery}
             />
           ) : (
-            <div className="h-full flex items-center justify-center text-gray-700 font-mono text-sm">
-              -- Mission Complete --
-            </div>
+            <ExamPanel domain={domain} db={db} schema={editorSchema} />
           )
         }
         visualizer={<SchemaVisualizer db={db} />}
@@ -305,7 +339,7 @@ function App() {
           triggerKey={lastSuccessStep ?? 0}
         />
       )}
-    </>
+    </div>
   );
 }
 
