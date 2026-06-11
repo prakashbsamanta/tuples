@@ -1,0 +1,297 @@
+{
+  "config": {
+    "configFile": "/home/runner/work/tuples/tuples/playwright.config.ts",
+    "rootDir": "/home/runner/work/tuples/tuples/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/prakashbsamanta/tuples/commit/0d6c8d78cbdf56883ae1a7e35b48e1276e081ce3",
+        "commitHash": "0d6c8d78cbdf56883ae1a7e35b48e1276e081ce3",
+        "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/27350148320"
+      },
+      "gitCommit": {
+        "shortHash": "0d6c8d7",
+        "hash": "0d6c8d78cbdf56883ae1a7e35b48e1276e081ce3",
+        "subject": "feat: kinetic redesign, expert curriculum v2, and Deep Field worlds (#34)",
+        "body": "feat: kinetic redesign, expert curriculum v2, and Deep Field worlds (#34)\n\n## Summary\n\nThree major arcs, reviewed iteratively on localhost:\n\n### 1. Kinetic redesign + stack upgrade\n- React 19, Tailwind 4, latest deps; visual system overhaul (Space\nGrotesk + JetBrains Mono, volt accent)\n- Playwright e2e suite; perf gates kept (420 kB critical-path budget)\n\n### 2. Expert curriculum v2 — 140 steps, 3 distinct tracks\n- **Builder** (clinical trials, 44 steps): schema design, constraints,\ndirty-data cleanup, transactions, triggers, JSON\n- **Analyst** (trading, 45 steps): joins, set ops, subqueries, full\nwindow-function arsenal, capstones\n- **Optimizer** (space logistics, 51 steps): recursive CTEs, EXPLAIN\nQUERY PLAN, index design, trigger caches\n- Validation engine v2: result-set matching vs canonical solutions,\nhidden-variant shadow DB (kills hardcoded answers), PLAN_VERIFY,\ndeterministic seeded data\n- Certification exams (8 questions, no hints, ≥6/8 to pass) with\npersisted certifications\n- Curriculum integrity suite mechanically proves every step solvable,\nevery fix-starter failing, every exam solvable\n\n### 3. Deep Field — unified homepage + per-world theming\n- Single homepage triptych (The Lab / The Floor / The Belt) replaces\nlanding + mission select\n- Real lazy-loaded sql.js playground on the homepage\n- Full in-app re-theme via `[data-world]` CSS tokens\n- three.js background (240 kB) replaced by a 2 kB canvas atmosphere\n\n## Verification\n- lint, tsc clean; 73 unit/integration tests; 3 e2e journeys\n- Bundle 402.7 kB / 420 kB budget; Lighthouse perf 66 / a11y 98 / bp 100\n(TBT 0 ms, CLS 0)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\n---------\n\nCo-authored-by: Claude Fable 5 <noreply@anthropic.com>",
+        "author": {
+          "name": "Prakash Samanta",
+          "email": "prakashbsamanta@gmail.com",
+          "time": 1781184409000
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "time": 1781184409000
+        },
+        "branch": "main"
+      },
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/tuples/tuples/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/prakashbsamanta/tuples/commit/0d6c8d78cbdf56883ae1a7e35b48e1276e081ce3",
+            "commitHash": "0d6c8d78cbdf56883ae1a7e35b48e1276e081ce3",
+            "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/27350148320"
+          },
+          "gitCommit": {
+            "shortHash": "0d6c8d7",
+            "hash": "0d6c8d78cbdf56883ae1a7e35b48e1276e081ce3",
+            "subject": "feat: kinetic redesign, expert curriculum v2, and Deep Field worlds (#34)",
+            "body": "feat: kinetic redesign, expert curriculum v2, and Deep Field worlds (#34)\n\n## Summary\n\nThree major arcs, reviewed iteratively on localhost:\n\n### 1. Kinetic redesign + stack upgrade\n- React 19, Tailwind 4, latest deps; visual system overhaul (Space\nGrotesk + JetBrains Mono, volt accent)\n- Playwright e2e suite; perf gates kept (420 kB critical-path budget)\n\n### 2. Expert curriculum v2 — 140 steps, 3 distinct tracks\n- **Builder** (clinical trials, 44 steps): schema design, constraints,\ndirty-data cleanup, transactions, triggers, JSON\n- **Analyst** (trading, 45 steps): joins, set ops, subqueries, full\nwindow-function arsenal, capstones\n- **Optimizer** (space logistics, 51 steps): recursive CTEs, EXPLAIN\nQUERY PLAN, index design, trigger caches\n- Validation engine v2: result-set matching vs canonical solutions,\nhidden-variant shadow DB (kills hardcoded answers), PLAN_VERIFY,\ndeterministic seeded data\n- Certification exams (8 questions, no hints, ≥6/8 to pass) with\npersisted certifications\n- Curriculum integrity suite mechanically proves every step solvable,\nevery fix-starter failing, every exam solvable\n\n### 3. Deep Field — unified homepage + per-world theming\n- Single homepage triptych (The Lab / The Floor / The Belt) replaces\nlanding + mission select\n- Real lazy-loaded sql.js playground on the homepage\n- Full in-app re-theme via `[data-world]` CSS tokens\n- three.js background (240 kB) replaced by a 2 kB canvas atmosphere\n\n## Verification\n- lint, tsc clean; 73 unit/integration tests; 3 e2e journeys\n- Bundle 402.7 kB / 420 kB budget; Lighthouse perf 66 / a11y 98 / bp 100\n(TBT 0 ms, CLS 0)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\n---------\n\nCo-authored-by: Claude Fable 5 <noreply@anthropic.com>",
+            "author": {
+              "name": "Prakash Samanta",
+              "email": "prakashbsamanta@gmail.com",
+              "time": 1781184409000
+            },
+            "committer": {
+              "name": "GitHub",
+              "email": "noreply@github.com",
+              "time": 1781184409000
+            },
+            "branch": "main"
+          },
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/tuples/tuples/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://localhost:4173/tuples/",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "full journey: homepage → enter world → solve → persist → review",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4086,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-11T13:28:04.157Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-d77cdc6daaf7accde4db",
+          "file": "smoke.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "homepage proof terminal runs real SQL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2227,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-11T13:28:08.512Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-02e22a5cc048fd241d66",
+          "file": "smoke.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "error coaching and test-run preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1979,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-11T13:28:10.751Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-0b239663049f52a1c4aa",
+          "file": "smoke.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "each world themes the workspace with its own accent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1464,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-11T13:28:12.743Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-b20115e63804b48b7ddb",
+          "file": "smoke.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "completed mission offers the certification exam",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 878,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-11T13:28:14.223Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-c95a13d800861ea7fbf2",
+          "file": "smoke.spec.ts",
+          "line": 108,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-11T13:28:02.226Z",
+    "duration": 12967.601999999999,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
