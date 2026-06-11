@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260611T132939Z-1f6be5f-27350208794",
+  "runId": "27350208794",
+  "runNumber": 55,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/27350208794",
+  "context": "pr",
+  "pr": {
+   "number": 35,
+   "title": "chore: untrack stray Playwright artifact",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/35"
+  },
+  "branch": "chore/untrack-test-artifacts",
+  "sha": "1f6be5f533daa626a4098fe339052c9f8e685f6b",
+  "shortSha": "1f6be5f",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/1f6be5f533daa626a4098fe339052c9f8e685f6b",
+  "timestamp": "2026-06-11T13:29:39.193Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 65.3779296875,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11069.74853515625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 12460
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 402.7,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3914,
+   "lcpMs": 7667,
+   "tbtMs": 80,
+   "cls": 0,
+   "speedIndexMs": 3914
+  },
+  "details": {
+   "vitest": "runs/20260611T132939Z-1f6be5f-27350208794/vitest.json",
+   "playwright": "runs/20260611T132939Z-1f6be5f-27350208794/playwright.json",
+   "lighthouse": "runs/20260611T132939Z-1f6be5f-27350208794/lighthouse.json",
+   "size": "runs/20260611T132939Z-1f6be5f-27350208794/size.json",
+   "coverage": "runs/20260611T132939Z-1f6be5f-27350208794/coverage.json"
+  }
+ },
+ {
   "id": "20260611T132834Z-0d6c8d7-27350148320",
   "runId": "27350148320",
   "runNumber": 54,
