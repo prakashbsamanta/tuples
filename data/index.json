@@ -1,1 +1,73 @@
-[]
+[
+ {
+  "id": "20260611T132251Z-fd5918a-27349804056",
+  "runId": "27349804056",
+  "runNumber": 52,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/27349804056",
+  "context": "pr",
+  "pr": {
+   "number": 34,
+   "title": "feat: kinetic redesign, expert curriculum v2, and Deep Field worlds",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/34"
+  },
+  "branch": "feat/kinetic-redesign",
+  "sha": "fd5918a9eed7b62f8aa38bf8cf7c1f839550f86b",
+  "shortSha": "fd5918a",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/fd5918a9eed7b62f8aa38bf8cf7c1f839550f86b",
+  "timestamp": "2026-06-11T13:22:51.314Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 69.25341796875,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11988.964599609375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 12919
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 402.7,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3913,
+   "lcpMs": 7666,
+   "tbtMs": 80,
+   "cls": 0,
+   "speedIndexMs": 3913
+  },
+  "details": {
+   "vitest": "runs/20260611T132251Z-fd5918a-27349804056/vitest.json",
+   "playwright": "runs/20260611T132251Z-fd5918a-27349804056/playwright.json",
+   "lighthouse": "runs/20260611T132251Z-fd5918a-27349804056/lighthouse.json",
+   "size": "runs/20260611T132251Z-fd5918a-27349804056/size.json",
+   "coverage": "runs/20260611T132251Z-fd5918a-27349804056/coverage.json"
+  }
+ }
+]
