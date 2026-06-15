@@ -1,0 +1,305 @@
+{
+  "config": {
+    "configFile": "/home/runner/work/tuples/tuples/playwright.config.ts",
+    "rootDir": "/home/runner/work/tuples/tuples/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/prakashbsamanta/tuples/commit/f813e43a87fb86da963b6306eea8b5887acf638a",
+        "commitHash": "f813e43a87fb86da963b6306eea8b5887acf638a",
+        "prHref": "https://github.com/prakashbsamanta/tuples/pull/37",
+        "prTitle": "ci: bump actions/download-artifact from 7.0.0 to 8.0.1",
+        "prBaseHash": "715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+        "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/27524206581"
+      },
+      "gitCommit": {
+        "shortHash": "f813e43",
+        "hash": "f813e43a87fb86da963b6306eea8b5887acf638a",
+        "subject": "Merge f20845d0b520a18ac918a99af4c044fbc7c06470 into 715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+        "body": "Merge f20845d0b520a18ac918a99af4c044fbc7c06470 into 715848ed5e986e64b5d1f93e10853c71a3cc85cc\n",
+        "author": {
+          "name": "dependabot[bot]",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com",
+          "time": 1781497984000
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "time": 1781497984000
+        },
+        "branch": "HEAD"
+      },
+      "gitDiff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\nindex 5ceb225..17b23ef 100644\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -153,7 +153,7 @@ jobs:\n           path: ci-reports\n \n       - name: Download report data\n-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0\n+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1\n         with:\n           name: report-data\n           path: reports",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/tuples/tuples/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/prakashbsamanta/tuples/commit/f813e43a87fb86da963b6306eea8b5887acf638a",
+            "commitHash": "f813e43a87fb86da963b6306eea8b5887acf638a",
+            "prHref": "https://github.com/prakashbsamanta/tuples/pull/37",
+            "prTitle": "ci: bump actions/download-artifact from 7.0.0 to 8.0.1",
+            "prBaseHash": "715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+            "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/27524206581"
+          },
+          "gitCommit": {
+            "shortHash": "f813e43",
+            "hash": "f813e43a87fb86da963b6306eea8b5887acf638a",
+            "subject": "Merge f20845d0b520a18ac918a99af4c044fbc7c06470 into 715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+            "body": "Merge f20845d0b520a18ac918a99af4c044fbc7c06470 into 715848ed5e986e64b5d1f93e10853c71a3cc85cc\n",
+            "author": {
+              "name": "dependabot[bot]",
+              "email": "49699333+dependabot[bot]@users.noreply.github.com",
+              "time": 1781497984000
+            },
+            "committer": {
+              "name": "GitHub",
+              "email": "noreply@github.com",
+              "time": 1781497984000
+            },
+            "branch": "HEAD"
+          },
+          "gitDiff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\nindex 5ceb225..17b23ef 100644\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -153,7 +153,7 @@ jobs:\n           path: ci-reports\n \n       - name: Download report data\n-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0\n+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1\n         with:\n           name: report-data\n           path: reports",
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/tuples/tuples/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://localhost:4173/tuples/",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "full journey: homepage → enter world → solve → persist → review",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3590,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-15T04:34:27.813Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-d77cdc6daaf7accde4db",
+          "file": "smoke.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "homepage proof terminal runs real SQL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2058,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-15T04:34:32.855Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-02e22a5cc048fd241d66",
+          "file": "smoke.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "error coaching and test-run preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2134,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-15T04:34:34.928Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-0b239663049f52a1c4aa",
+          "file": "smoke.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "each world themes the workspace with its own accent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2375,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-15T04:34:37.076Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-b20115e63804b48b7ddb",
+          "file": "smoke.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "completed mission offers the certification exam",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 774,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-15T04:34:39.465Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-c95a13d800861ea7fbf2",
+          "file": "smoke.spec.ts",
+          "line": 108,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-15T04:34:25.725Z",
+    "duration": 14590.563,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
