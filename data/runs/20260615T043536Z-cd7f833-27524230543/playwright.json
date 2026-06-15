@@ -1,0 +1,305 @@
+{
+  "config": {
+    "configFile": "/home/runner/work/tuples/tuples/playwright.config.ts",
+    "rootDir": "/home/runner/work/tuples/tuples/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/prakashbsamanta/tuples/commit/443713c4d15bd773d1f516583d2f57f70772e451",
+        "commitHash": "443713c4d15bd773d1f516583d2f57f70772e451",
+        "prHref": "https://github.com/prakashbsamanta/tuples/pull/38",
+        "prTitle": "build(deps): bump the dev-minor-patch group with 4 updates",
+        "prBaseHash": "715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+        "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/27524230543"
+      },
+      "gitCommit": {
+        "shortHash": "443713c",
+        "hash": "443713c4d15bd773d1f516583d2f57f70772e451",
+        "subject": "Merge cd7f833306da9e4a7842004910dc990ec6f0618b into 715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+        "body": "Merge cd7f833306da9e4a7842004910dc990ec6f0618b into 715848ed5e986e64b5d1f93e10853c71a3cc85cc\n",
+        "author": {
+          "name": "dependabot[bot]",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com",
+          "time": 1781498026000
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "time": 1781498026000
+        },
+        "branch": "HEAD"
+      },
+      "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex ce175dd..985ea94 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -15,7 +15,7 @@\n         \"@xyflow/react\": \"^12.11.0\",\n         \"framer-motion\": \"^12.40.0\",\n         \"gsap\": \"^3.15.0\",\n-        \"lucide-react\": \"^1.17.0\",\n+        \"lucide-react\": \"^1.18.0\",\n         \"react\": \"^19.2.7\",\n         \"react-dom\": \"^19.2.7\",\n         \"react-resizable-panels\": \"^3.0.6\",\n@@ -26,7 +26,7 @@\n       \"devDependencies\": {\n         \"@eslint/js\": \"^9.13.0\",\n         \"@playwright/test\": \"^1.60.0\",\n-        \"@tailwindcss/vite\": \"^4.3.0\",\n+        \"@tailwindcss/vite\": \"^4.3.1\",\n         \"@types/react\": \"^19.2.17\",\n         \"@types/react-dom\": \"^19.2.3\",\n         \"@types/sql.js\": \"^1.4.9\",\n@@ -34,7 +34,7 @@\n         \"@vitest/coverage-v8\": \"^4.1.8\",\n         \"eslint\": \"^9.13.0\",\n         \"eslint-plugin-react-hooks\": \"^5.2.0\",\n-        \"eslint-plugin-react-refresh\": \"^0.5.2\",\n+        \"eslint-plugin-react-refresh\": \"^0.5.3\",\n         \"globals\": \"^17.6.0\",\n         \"lighthouse\": \"^13.4.0\",\n         \"tailwindcss\": \"^4.3.0\",\n@@ -2073,9 +2073,6 @@\n         \"arm\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2090,9 +2087,6 @@\n         \"arm\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2107,9 +2101,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2124,9 +2115,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2141,9 +2129,6 @@\n         \"loong64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2158,9 +2143,6 @@\n         \"loong64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2175,9 +2157,6 @@\n         \"ppc64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2192,9 +2171,6 @@\n         \"ppc64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2209,9 +2185,6 @@\n         \"riscv64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2226,9 +2199,6 @@\n         \"riscv64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2243,9 +2213,6 @@\n         \"s390x\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2260,9 +2227,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2277,9 +2241,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2510,49 +2471,49 @@\n       \"license\": \"MIT\"\n     },\n     \"node_modules/@tailwindcss/node\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/node/-/node-4.3.0.tgz\",\n-      \"integrity\": \"sha512-aFb4gUhFOgdh9AXo4IzBEOzBkkAxm9VigwDJnMIYv3lcfXCJVesNfbEaBl4BNgVRyid92AmdviqwBUBRKSeY3g==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/node/-/node-4.3.1.tgz\",\n+      \"integrity\": \"sha512-6NDaqRoAMSXD1mr/RXu0HBvNE9a2n5tHPsxu9XHLws8o4Twes5rBM2205SUUiJ9goAtadrN6xTGX0UDEwp/N4A==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n         \"@jridgewell/remapping\": \"^2.3.5\",\n-        \"enhanced-resolve\": \"^5.21.0\",\n-        \"jiti\": \"^2.6.1\",\n+        \"enhanced-resolve\": \"5.21.6\",\n+        \"jiti\": \"^2.7.0\",\n         \"lightningcss\": \"1.32.0\",\n         \"magic-string\": \"^0.30.21\",\n         \"source-map-js\": \"^1.2.1\",\n-        \"tailwindcss\": \"4.3.0\"\n+        \"tailwindcss\": \"4.3.1\"\n       }\n     },\n     \"node_modules/@tailwindcss/oxide\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide/-/oxide-4.3.0.tgz\",\n-      \"integrity\": \"sha512-F7HZGBeN9I0/AuuJS5PwcD8xayx5ri5GhjYUDBEVYUkexyA/giwbDNjRVrxSezE3T250OU2K/wp/ltWx3UOefg==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide/-/oxide-4.3.1.tgz\",\n+      \"integrity\": \"sha512-yVPyo8RNkabVr3O2EhHEE0Rewu7YKzc1DhIqfL46LKveFrmu9XbDazNOJY7/GRuvw1h6u3utWnR29H/p5JPlgA==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"engines\": {\n         \"node\": \">= 20\"\n       },\n       \"optionalDependencies\": {\n-        \"@tailwindcss/oxide-android-arm64\": \"4.3.0\",\n-        \"@tailwindcss/oxide-darwin-arm64\": \"4.3.0\",\n-        \"@tailwindcss/oxide-darwin-x64\": \"4.3.0\",\n-        \"@tailwindcss/oxide-freebsd-x64\": \"4.3.0\",\n-        \"@tailwindcss/oxide-linux-arm-gnueabihf\": \"4.3.0\",\n-        \"@tailwindcss/oxide-linux-arm64-gnu\": \"4.3.0\",\n-        \"@tailwindcss/oxide-linux-arm64-musl\": \"4.3.0\",\n-        \"@tailwindcss/oxide-linux-x64-gnu\": \"4.3.0\",\n-        \"@tailwindcss/oxide-linux-x64-musl\": \"4.3.0\",\n-        \"@tailwindcss/oxide-wasm32-wasi\": \"4.3.0\",\n-        \"@tailwindcss/oxide-win32-arm64-msvc\": \"4.3.0\",\n-        \"@tailwindcss/oxide-win32-x64-msvc\": \"4.3.0\"\n+        \"@tailwindcss/oxide-android-arm64\": \"4.3.1\",\n+        \"@tailwindcss/oxide-darwin-arm64\": \"4.3.1\",\n+        \"@tailwindcss/oxide-darwin-x64\": \"4.3.1\",\n+        \"@tailwindcss/oxide-freebsd-x64\": \"4.3.1\",\n+        \"@tailwindcss/oxide-linux-arm-gnueabihf\": \"4.3.1\",\n+        \"@tailwindcss/oxide-linux-arm64-gnu\": \"4.3.1\",\n+        \"@tailwindcss/oxide-linux-arm64-musl\": \"4.3.1\",\n+        \"@tailwindcss/oxide-linux-x64-gnu\": \"4.3.1\",\n+        \"@tailwindcss/oxide-linux-x64-musl\": \"4.3.1\",\n+        \"@tailwindcss/oxide-wasm32-wasi\": \"4.3.1\",\n+        \"@tailwindcss/oxide-win32-arm64-msvc\": \"4.3.1\",\n+        \"@tailwindcss/oxide-win32-x64-msvc\": \"4.3.1\"\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-android-arm64\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-android-arm64/-/oxide-android-arm64-4.3.0.tgz\",\n-      \"integrity\": \"sha512-TJPiq67tKlLuObP6RkwvVGDoxCMBVtDgKkLfa/uyj7/FyxvQwHS+UOnVrXXgbEsfUaMgiVvC4KbJnRr26ho4Ng==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-android-arm64/-/oxide-android-arm64-4.3.1.tgz\",\n+      \"integrity\": \"sha512-SVlyf61g374l5cHyg8x9kf5xmLcOaxvOTsbsqDnSsDJaKOEFZ7GCvi84VAVGpxojYOs1+3K6M0UjXfqPU8vmOQ==\",\n       \"cpu\": [\n         \"arm64\"\n       ],\n@@ -2567,9 +2528,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-darwin-arm64\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-darwin-arm64/-/oxide-darwin-arm64-4.3.0.tgz\",\n-      \"integrity\": \"sha512-oMN/WZRb+SO37BmUElEgeEWuU8E/HXRkiODxJxLe1UTHVXLrdVSgfaJV7pSlhRGMSOiXLuxTIjfsF3wYvz8cgQ==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-darwin-arm64/-/oxide-darwin-arm64-4.3.1.tgz\",\n+      \"integrity\": \"sha512-hVnWLwv+e/l7c4WKyVtHVrIPvYdqWHjRB3MDIqARynzFtnQg85kmQEFCbV9Ja0VVx4xXTIiDWY60Y7iz/iNoDA==\",\n       \"cpu\": [\n         \"arm64\"\n       ],\n@@ -2584,9 +2545,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-darwin-x64\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-darwin-x64/-/oxide-darwin-x64-4.3.0.tgz\",\n-      \"integrity\": \"sha512-N6CUmu4a6bKVADfw77p+iw6Yd9Q3OBhe0veaDX+QazfuVYlQsHfDgxBrsjQ/IW+zywL8mTrNd0SdJT/zgtvMdA==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-darwin-x64/-/oxide-darwin-x64-4.3.1.tgz\",\n+      \"integrity\": \"sha512-Cf7abu0WVgbhU7ANgPUnSAvm7nCvMweusHb8FnaHlLfv/Caq4GYaEZg7ZImzzmjx4lIAfuS8q+eLIS7A7IzxIg==\",\n       \"cpu\": [\n         \"x64\"\n       ],\n@@ -2601,9 +2562,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-freebsd-x64\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-freebsd-x64/-/oxide-freebsd-x64-4.3.0.tgz\",\n-      \"integrity\": \"sha512-zDL5hBkQdH5C6MpqbK3gQAgP80tsMwSI26vjOzjJtNCMUo0lFgOItzHKBIupOZNQxt3ouPH7RPhvNhiTfCe5CQ==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-freebsd-x64/-/oxide-freebsd-x64-4.3.1.tgz\",\n+      \"integrity\": \"sha512-ZZqzX2Y+GXtXXfqSfpJhDm60OoZfvLHLCgm+J7NVqgHHJjG/m9ugZI77RwTsVd4fnBJuCFP6Ae6kTJb71UdS8g==\",\n       \"cpu\": [\n         \"x64\"\n       ],\n@@ -2618,9 +2579,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-linux-arm-gnueabihf\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm-gnueabihf/-/oxide-linux-arm-gnueabihf-4.3.0.tgz\",\n-      \"integrity\": \"sha512-R06HdNi7A7OEoMsf6d4tjZ71RCWnZQPHj2mnotSFURjNLdBC+cIgXQ7l81CqeoiQftjf6OOblxXMInMgN2VzMA==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm-gnueabihf/-/oxide-linux-arm-gnueabihf-4.3.1.tgz\",\n+      \"integrity\": \"sha512-/Ah/xik0LaMYfv9DZ0S/t4pBlBNYOcqtRwusjgovHkvT8ixueWCLyJjsaF5kQIckjb4IT8Q6K6p/iPmZMixYgg==\",\n       \"cpu\": [\n         \"arm\"\n       ],\n@@ -2635,16 +2596,13 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-linux-arm64-gnu\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm64-gnu/-/oxide-linux-arm64-gnu-4.3.0.tgz\",\n-      \"integrity\": \"sha512-qTJHELX8jetjhRQHCLilkVLmybpzNQAtaI/gaoVoidn/ufbNDbAo8KlK2J+yPoc8wQxvDxCmh/5lr8nC1+lTbg==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm64-gnu/-/oxide-linux-arm64-gnu-4.3.1.tgz\",\n+      \"integrity\": \"sha512-gqdFoVJlw444GvpnheZLHmvTzSxI/cOUUh2KSNejQjTcYkW062SVD+En0rUgD+QV91bz1XGIGtt1HJd48xUGbQ==\",\n       \"cpu\": [\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2655,16 +2613,13 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-linux-arm64-musl\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm64-musl/-/oxide-linux-arm64-musl-4.3.0.tgz\",\n-      \"integrity\": \"sha512-Z6sukiQsngnWO+l39X4pPbiWT81IC+PLKF+PHxIlyZbGNb9MODfYlXEVlFvej5BOZInWX01kVyzeLvHsXhfczQ==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm64-musl/-/oxide-linux-arm64-musl-4.3.1.tgz\",\n+      \"integrity\": \"sha512-Bwv9KwOvE0VKa86xPFif9b9c3Y1NxOV1P0gLti/IYaWEsQYZXDlxfGEtA8mdDZ7SG3wyNXAWYT5SIn3giL57oA==\",\n       \"cpu\": [\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2675,16 +2630,13 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-linux-x64-gnu\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-gnu/-/oxide-linux-x64-gnu-4.3.0.tgz\",\n-      \"integrity\": \"sha512-DRNdQRpSGzRGfARVuVkxvM8Q12nh19l4BF/G7zGA1oe+9wcC6saFBHTISrpIcKzhiXtSrlSrluCfvMuledoCTQ==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-gnu/-/oxide-linux-x64-gnu-4.3.1.tgz\",\n+      \"integrity\": \"sha512-Ymi8O8T15HYQdOUWUtTI6ldN0neHP85FC+Qz32xTcZ7iJXtem/x8ITev0o1e9e5rkqj4lONZfTRLvkmin1+tKg==\",\n       \"cpu\": [\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2695,16 +2647,13 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-linux-x64-musl\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-musl/-/oxide-linux-x64-musl-4.3.0.tgz\",\n-      \"integrity\": \"sha512-Z0IADbDo8bh6I7h2IQMx601AdXBLfFpEdUotft86evd/8ZPflZe9COPO8Q1vw+pfLWIUo9zN/JGZvwuAJqduqg==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-musl/-/oxide-linux-x64-musl-4.3.1.tgz\",\n+      \"integrity\": \"sha512-M+P/91qJ6uILLw4k2G93GMDRAXj61SMvFQYt39AqvUqYgExXpLL5aepfns7sj4HiAQeolirQF9E0lzRvdf4zPQ==\",\n       \"cpu\": [\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2715,9 +2664,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-wasm32-wasi\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-wasm32-wasi/-/oxide-wasm32-wasi-4.3.0.tgz\",\n-      \"integrity\": \"sha512-HNZGOUxEmElksYR7S6sC5jTeNGpobAsy9u7Gu0AskJ8/20FR9GqebUyB+HBcU/ax6BHuiuJi+Oda4B+YX6H1yA==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-wasm32-wasi/-/oxide-wasm32-wasi-4.3.1.tgz\",\n+      \"integrity\": \"sha512-zsM8uOeqvVGHsAXsJxsT28ttosFahLJKCLOTUBqRAtKnVgGSRitds9T432QiT8b77Yga7JIBkulIRRlJPtYhRA==\",\n       \"bundleDependencies\": [\n         \"@napi-rs/wasm-runtime\",\n         \"@emnapi/core\",\n@@ -2737,17 +2686,83 @@\n         \"@emnapi/runtime\": \"^1.10.0\",\n         \"@emnapi/wasi-threads\": \"^1.2.1\",\n         \"@napi-rs/wasm-runtime\": \"^1.1.4\",\n-        \"@tybys/wasm-util\": \"^0.10.1\",\n+        \"@tybys/wasm-util\": \"^0.10.2\",\n         \"tslib\": \"^2.8.1\"\n       },\n       \"engines\": {\n         \"node\": \">=14.0.0\"\n       }\n     },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/core\": {\n+      \"version\": \"1.10.0\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"@emnapi/wasi-threads\": \"1.2.1\",\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/runtime\": {\n+      \"version\": \"1.10.0\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/wasi-threads\": {\n+      \"version\": \"1.2.1\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@napi-rs/wasm-runtime\": {\n+      \"version\": \"1.1.4\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"@tybys/wasm-util\": \"^0.10.1\"\n+      },\n+      \"funding\": {\n+        \"type\": \"github\",\n+        \"url\": \"https://github.com/sponsors/Brooooooklyn\"\n+      },\n+      \"peerDependencies\": {\n+        \"@emnapi/core\": \"^1.7.1\",\n+        \"@emnapi/runtime\": \"^1.7.1\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@tybys/wasm-util\": {\n+      \"version\": \"0.10.2\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/tslib\": {\n+      \"version\": \"2.8.1\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"0BSD\",\n+      \"optional\": true\n+    },\n     \"node_modules/@tailwindcss/oxide-win32-arm64-msvc\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-win32-arm64-msvc/-/oxide-win32-arm64-msvc-4.3.0.tgz\",\n-      \"integrity\": \"sha512-Pe+RPVTi1T+qymuuRpcdvwSVZjnll/f7n8gBxMMh3xLTctMDKqpdfGimbMyioqtLhUYZxdJ9wGNhV7MKHvgZsQ==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-win32-arm64-msvc/-/oxide-win32-arm64-msvc-4.3.1.tgz\",\n+      \"integrity\": \"sha512-aiNvSq9BsVk8V513lDKlrCFAgf8qBMPZTpgEhInL+NwQqs97mYmupVMrPrgBBSL8Pv/0zXu9MrMF9rMun1ZeNg==\",\n       \"cpu\": [\n         \"arm64\"\n       ],\n@@ -2762,9 +2777,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-win32-x64-msvc\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-win32-x64-msvc/-/oxide-win32-x64-msvc-4.3.0.tgz\",\n-      \"integrity\": \"sha512-Mvrf2kXW/yeW/OTezZlCGOirXRcUuLIBx/5Y12BaPM7wJoryG6dfS/NJL8aBPqtTEx/Vm4T4vKzFUcKDT+TKUA==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-win32-x64-msvc/-/oxide-win32-x64-msvc-4.3.1.tgz\",\n+      \"integrity\": \"sha512-xDEyu1rg290472FEGaKHnzyDyh5QH+AlWvsU5hMoMtPpzmKlRI0jaYKCgSHDYtaQWZOYbMaduSyCwFwY4n1HmA==\",\n       \"cpu\": [\n         \"x64\"\n       ],\n@@ -2779,15 +2794,15 @@\n       }\n     },\n     \"node_modules/@tailwindcss/vite\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/vite/-/vite-4.3.0.tgz\",\n-      \"integrity\": \"sha512-t6J3OrB5Fc0ExuhohouH0fWUGMYL6PTLhW+E7zIk/pdbnJARZDCwjBznFnkh5ynRnIRSI4YjtTH0t6USjJISrw==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/vite/-/vite-4.3.1.tgz\",\n+      \"integrity\": \"sha512-hItDHuIIlEV61R+faXu66s1K36aTurO/Qw0e45Vskz57gXl9pWOT6eg3zmcEui6CZXddbN7zd41bwmvag4JGwQ==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@tailwindcss/node\": \"4.3.0\",\n-        \"@tailwindcss/oxide\": \"4.3.0\",\n-        \"tailwindcss\": \"4.3.0\"\n+        \"@tailwindcss/node\": \"4.3.1\",\n+        \"@tailwindcss/oxide\": \"4.3.1\",\n+        \"tailwindcss\": \"4.3.1\"\n       },\n       \"peerDependencies\": {\n         \"vite\": \"^5.2.0 || ^6 || ^7 || ^8\"\n@@ -4388,9 +4403,9 @@\n       \"license\": \"MIT\"\n     },\n     \"node_modules/enhanced-resolve\": {\n-      \"version\": \"5.23.0\",\n-      \"resolved\": \"https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.23.0.tgz\",\n-      \"integrity\": \"sha512-yJN/BOOLxcOW2aQgeif9mSnaUB8KtvmMMp56oA1kx1CRfBKbhZm2pJ+NBY+3eOboHxix8lfjWpHE0Ei5U8RbSA==\",\n+      \"version\": \"5.21.6\",\n+      \"resolved\": \"https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.21.6.tgz\",\n+      \"integrity\": \"sha512-aNnGCvbJ/RIyWo1IuhNdVjnNF+EjH9wpzpNHt+ci/m9He9LJvUN8wrCcXjp9cWsGNAuvSpVFTx/vraAFQ8qGjQ==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n@@ -4581,9 +4596,9 @@\n       }\n     },\n     \"node_modules/eslint-plugin-react-refresh\": {\n-      \"version\": \"0.5.2\",\n-      \"resolved\": \"https://registry.npmjs.org/eslint-plugin-react-refresh/-/eslint-plugin-react-refresh-0.5.2.tgz\",\n-      \"integrity\": \"sha512-hmgTH57GfzoTFjVN0yBwTggnsVUF2tcqi7RJZHqi9lIezSs4eFyAMktA68YD4r5kNw1mxyY4dmkyoFDb3FIqrA==\",\n+      \"version\": \"0.5.3\",\n+      \"resolved\": \"https://registry.npmjs.org/eslint-plugin-react-refresh/-/eslint-plugin-react-refresh-0.5.3.tgz\",\n+      \"integrity\": \"sha512-5EMmLCV98Pi4o/f/3DP/v/tNqLHMIc9I8LKClNDWhZ9JTho89/kQcitCXQBMG7sAfVRK0Ie3T2EDOzp1YXYiVA==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"peerDependencies\": {\n@@ -5510,9 +5525,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5534,9 +5546,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5558,9 +5567,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5582,9 +5588,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5688,9 +5691,9 @@\n       }\n     },\n     \"node_modules/lucide-react\": {\n-      \"version\": \"1.17.0\",\n-      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.17.0.tgz\",\n-      \"integrity\": \"sha512-9FA9evdox/JQL5PT57fdA1x/yg8T7knJ98+zjTL3UfKza6pflQUUh3XtaQIHKvnsJw1lmsEyHVlt5jchYxOQ5w==\",\n+      \"version\": \"1.18.0\",\n+      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.18.0.tgz\",\n+      \"integrity\": \"sha512-LZDb7H/0YfM+RJncD0hDQRCAu+vSGODqpe35TuVI8EuXaRjkczbsx7p8dY4J87F/MUSj6bpYqeI8nw8qXaAdmA==\",\n       \"license\": \"ISC\",\n       \"peerDependencies\": {\n         \"react\": \"^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0\"\n@@ -6641,9 +6644,9 @@\n       }\n     },\n     \"node_modules/tailwindcss\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.3.0.tgz\",\n-      \"integrity\": \"sha512-y6nxMGB1nMW9R6k96e5gdIFzcfL/gTJRNaqGes1YvkLnPVXzWgbqFF2yLC0T8G774n24cx3Pe8XrKoniCOAH+Q==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.3.1.tgz\",\n+      \"integrity\": \"sha512-hk+TB1m+K8CYNrP6rjQaq/Y+4Zylwpa87mLYBKCunwnnQ9p+fHb7kmSfGqyEJoxF/O6CDyABWVFEafNSYKll+Q==\",\n       \"dev\": true,\n       \"license\": \"MIT\"\n     },\ndiff --git a/package.json b/package.json\nindex fa67832..0d92fb6 100644\n--- a/package.json\n+++ b/package.json\n@@ -28,7 +28,7 @@\n     \"@xyflow/react\": \"^12.11.0\",\n     \"framer-motion\": \"^12.40.0\",\n     \"gsap\": \"^3.15.0\",\n-    \"lucide-react\": \"^1.17.0\",\n+    \"lucide-react\": \"^1.18.0\",\n     \"react\": \"^19.2.7\",\n     \"react-dom\": \"^19.2.7\",\n     \"react-resizable-panels\": \"^3.0.6\",\n@@ -39,7 +39,7 @@\n   \"devDependencies\": {\n     \"@eslint/js\": \"^9.13.0\",\n     \"@playwright/test\": \"^1.60.0\",\n-    \"@tailwindcss/vite\": \"^4.3.0\",\n+    \"@tailwindcss/vite\": \"^4.3.1\",\n     \"@types/react\": \"^19.2.17\",\n     \"@types/react-dom\": \"^19.2.3\",\n     \"@types/sql.js\": \"^1.4.9\",\n@@ -47,7 +47,7 @@\n     \"@vitest/coverage-v8\": \"^4.1.8\",\n     \"eslint\": \"^9.13.0\",\n     \"eslint-plugin-react-hooks\": \"^5.2.0\",\n-    \"eslint-plugin-react-refresh\": \"^0.5.2\",\n+    \"eslint-plugin-react-refresh\": \"^0.5.3\",\n     \"globals\": \"^17.6.0\",\n     \"lighthouse\": \"^13.4.0\",\n     \"tailwindcss\": \"^4.3.0\",",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/tuples/tuples/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/prakashbsamanta/tuples/commit/443713c4d15bd773d1f516583d2f57f70772e451",
+            "commitHash": "443713c4d15bd773d1f516583d2f57f70772e451",
+            "prHref": "https://github.com/prakashbsamanta/tuples/pull/38",
+            "prTitle": "build(deps): bump the dev-minor-patch group with 4 updates",
+            "prBaseHash": "715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+            "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/27524230543"
+          },
+          "gitCommit": {
+            "shortHash": "443713c",
+            "hash": "443713c4d15bd773d1f516583d2f57f70772e451",
+            "subject": "Merge cd7f833306da9e4a7842004910dc990ec6f0618b into 715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+            "body": "Merge cd7f833306da9e4a7842004910dc990ec6f0618b into 715848ed5e986e64b5d1f93e10853c71a3cc85cc\n",
+            "author": {
+              "name": "dependabot[bot]",
+              "email": "49699333+dependabot[bot]@users.noreply.github.com",
+              "time": 1781498026000
+            },
+            "committer": {
+              "name": "GitHub",
+              "email": "noreply@github.com",
+              "time": 1781498026000
+            },
+            "branch": "HEAD"
+          },
+          "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex ce175dd..985ea94 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -15,7 +15,7 @@\n         \"@xyflow/react\": \"^12.11.0\",\n         \"framer-motion\": \"^12.40.0\",\n         \"gsap\": \"^3.15.0\",\n-        \"lucide-react\": \"^1.17.0\",\n+        \"lucide-react\": \"^1.18.0\",\n         \"react\": \"^19.2.7\",\n         \"react-dom\": \"^19.2.7\",\n         \"react-resizable-panels\": \"^3.0.6\",\n@@ -26,7 +26,7 @@\n       \"devDependencies\": {\n         \"@eslint/js\": \"^9.13.0\",\n         \"@playwright/test\": \"^1.60.0\",\n-        \"@tailwindcss/vite\": \"^4.3.0\",\n+        \"@tailwindcss/vite\": \"^4.3.1\",\n         \"@types/react\": \"^19.2.17\",\n         \"@types/react-dom\": \"^19.2.3\",\n         \"@types/sql.js\": \"^1.4.9\",\n@@ -34,7 +34,7 @@\n         \"@vitest/coverage-v8\": \"^4.1.8\",\n         \"eslint\": \"^9.13.0\",\n         \"eslint-plugin-react-hooks\": \"^5.2.0\",\n-        \"eslint-plugin-react-refresh\": \"^0.5.2\",\n+        \"eslint-plugin-react-refresh\": \"^0.5.3\",\n         \"globals\": \"^17.6.0\",\n         \"lighthouse\": \"^13.4.0\",\n         \"tailwindcss\": \"^4.3.0\",\n@@ -2073,9 +2073,6 @@\n         \"arm\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2090,9 +2087,6 @@\n         \"arm\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2107,9 +2101,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2124,9 +2115,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2141,9 +2129,6 @@\n         \"loong64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2158,9 +2143,6 @@\n         \"loong64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2175,9 +2157,6 @@\n         \"ppc64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2192,9 +2171,6 @@\n         \"ppc64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2209,9 +2185,6 @@\n         \"riscv64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2226,9 +2199,6 @@\n         \"riscv64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2243,9 +2213,6 @@\n         \"s390x\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2260,9 +2227,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2277,9 +2241,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2510,49 +2471,49 @@\n       \"license\": \"MIT\"\n     },\n     \"node_modules/@tailwindcss/node\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/node/-/node-4.3.0.tgz\",\n-      \"integrity\": \"sha512-aFb4gUhFOgdh9AXo4IzBEOzBkkAxm9VigwDJnMIYv3lcfXCJVesNfbEaBl4BNgVRyid92AmdviqwBUBRKSeY3g==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/node/-/node-4.3.1.tgz\",\n+      \"integrity\": \"sha512-6NDaqRoAMSXD1mr/RXu0HBvNE9a2n5tHPsxu9XHLws8o4Twes5rBM2205SUUiJ9goAtadrN6xTGX0UDEwp/N4A==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n         \"@jridgewell/remapping\": \"^2.3.5\",\n-        \"enhanced-resolve\": \"^5.21.0\",\n-        \"jiti\": \"^2.6.1\",\n+        \"enhanced-resolve\": \"5.21.6\",\n+        \"jiti\": \"^2.7.0\",\n         \"lightningcss\": \"1.32.0\",\n         \"magic-string\": \"^0.30.21\",\n         \"source-map-js\": \"^1.2.1\",\n-        \"tailwindcss\": \"4.3.0\"\n+        \"tailwindcss\": \"4.3.1\"\n       }\n     },\n     \"node_modules/@tailwindcss/oxide\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide/-/oxide-4.3.0.tgz\",\n-      \"integrity\": \"sha512-F7HZGBeN9I0/AuuJS5PwcD8xayx5ri5GhjYUDBEVYUkexyA/giwbDNjRVrxSezE3T250OU2K/wp/ltWx3UOefg==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide/-/oxide-4.3.1.tgz\",\n+      \"integrity\": \"sha512-yVPyo8RNkabVr3O2EhHEE0Rewu7YKzc1DhIqfL46LKveFrmu9XbDazNOJY7/GRuvw1h6u3utWnR29H/p5JPlgA==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"engines\": {\n         \"node\": \">= 20\"\n       },\n       \"optionalDependencies\": {\n-        \"@tailwindcss/oxide-android-arm64\": \"4.3.0\",\n-        \"@tailwindcss/oxide-darwin-arm64\": \"4.3.0\",\n-        \"@tailwindcss/oxide-darwin-x64\": \"4.3.0\",\n-        \"@tailwindcss/oxide-freebsd-x64\": \"4.3.0\",\n-        \"@tailwindcss/oxide-linux-arm-gnueabihf\": \"4.3.0\",\n-        \"@tailwindcss/oxide-linux-arm64-gnu\": \"4.3.0\",\n-        \"@tailwindcss/oxide-linux-arm64-musl\": \"4.3.0\",\n-        \"@tailwindcss/oxide-linux-x64-gnu\": \"4.3.0\",\n-        \"@tailwindcss/oxide-linux-x64-musl\": \"4.3.0\",\n-        \"@tailwindcss/oxide-wasm32-wasi\": \"4.3.0\",\n-        \"@tailwindcss/oxide-win32-arm64-msvc\": \"4.3.0\",\n-        \"@tailwindcss/oxide-win32-x64-msvc\": \"4.3.0\"\n+        \"@tailwindcss/oxide-android-arm64\": \"4.3.1\",\n+        \"@tailwindcss/oxide-darwin-arm64\": \"4.3.1\",\n+        \"@tailwindcss/oxide-darwin-x64\": \"4.3.1\",\n+        \"@tailwindcss/oxide-freebsd-x64\": \"4.3.1\",\n+        \"@tailwindcss/oxide-linux-arm-gnueabihf\": \"4.3.1\",\n+        \"@tailwindcss/oxide-linux-arm64-gnu\": \"4.3.1\",\n+        \"@tailwindcss/oxide-linux-arm64-musl\": \"4.3.1\",\n+        \"@tailwindcss/oxide-linux-x64-gnu\": \"4.3.1\",\n+        \"@tailwindcss/oxide-linux-x64-musl\": \"4.3.1\",\n+        \"@tailwindcss/oxide-wasm32-wasi\": \"4.3.1\",\n+        \"@tailwindcss/oxide-win32-arm64-msvc\": \"4.3.1\",\n+        \"@tailwindcss/oxide-win32-x64-msvc\": \"4.3.1\"\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-android-arm64\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-android-arm64/-/oxide-android-arm64-4.3.0.tgz\",\n-      \"integrity\": \"sha512-TJPiq67tKlLuObP6RkwvVGDoxCMBVtDgKkLfa/uyj7/FyxvQwHS+UOnVrXXgbEsfUaMgiVvC4KbJnRr26ho4Ng==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-android-arm64/-/oxide-android-arm64-4.3.1.tgz\",\n+      \"integrity\": \"sha512-SVlyf61g374l5cHyg8x9kf5xmLcOaxvOTsbsqDnSsDJaKOEFZ7GCvi84VAVGpxojYOs1+3K6M0UjXfqPU8vmOQ==\",\n       \"cpu\": [\n         \"arm64\"\n       ],\n@@ -2567,9 +2528,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-darwin-arm64\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-darwin-arm64/-/oxide-darwin-arm64-4.3.0.tgz\",\n-      \"integrity\": \"sha512-oMN/WZRb+SO37BmUElEgeEWuU8E/HXRkiODxJxLe1UTHVXLrdVSgfaJV7pSlhRGMSOiXLuxTIjfsF3wYvz8cgQ==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-darwin-arm64/-/oxide-darwin-arm64-4.3.1.tgz\",\n+      \"integrity\": \"sha512-hVnWLwv+e/l7c4WKyVtHVrIPvYdqWHjRB3MDIqARynzFtnQg85kmQEFCbV9Ja0VVx4xXTIiDWY60Y7iz/iNoDA==\",\n       \"cpu\": [\n         \"arm64\"\n       ],\n@@ -2584,9 +2545,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-darwin-x64\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-darwin-x64/-/oxide-darwin-x64-4.3.0.tgz\",\n-      \"integrity\": \"sha512-N6CUmu4a6bKVADfw77p+iw6Yd9Q3OBhe0veaDX+QazfuVYlQsHfDgxBrsjQ/IW+zywL8mTrNd0SdJT/zgtvMdA==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-darwin-x64/-/oxide-darwin-x64-4.3.1.tgz\",\n+      \"integrity\": \"sha512-Cf7abu0WVgbhU7ANgPUnSAvm7nCvMweusHb8FnaHlLfv/Caq4GYaEZg7ZImzzmjx4lIAfuS8q+eLIS7A7IzxIg==\",\n       \"cpu\": [\n         \"x64\"\n       ],\n@@ -2601,9 +2562,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-freebsd-x64\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-freebsd-x64/-/oxide-freebsd-x64-4.3.0.tgz\",\n-      \"integrity\": \"sha512-zDL5hBkQdH5C6MpqbK3gQAgP80tsMwSI26vjOzjJtNCMUo0lFgOItzHKBIupOZNQxt3ouPH7RPhvNhiTfCe5CQ==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-freebsd-x64/-/oxide-freebsd-x64-4.3.1.tgz\",\n+      \"integrity\": \"sha512-ZZqzX2Y+GXtXXfqSfpJhDm60OoZfvLHLCgm+J7NVqgHHJjG/m9ugZI77RwTsVd4fnBJuCFP6Ae6kTJb71UdS8g==\",\n       \"cpu\": [\n         \"x64\"\n       ],\n@@ -2618,9 +2579,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-linux-arm-gnueabihf\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm-gnueabihf/-/oxide-linux-arm-gnueabihf-4.3.0.tgz\",\n-      \"integrity\": \"sha512-R06HdNi7A7OEoMsf6d4tjZ71RCWnZQPHj2mnotSFURjNLdBC+cIgXQ7l81CqeoiQftjf6OOblxXMInMgN2VzMA==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm-gnueabihf/-/oxide-linux-arm-gnueabihf-4.3.1.tgz\",\n+      \"integrity\": \"sha512-/Ah/xik0LaMYfv9DZ0S/t4pBlBNYOcqtRwusjgovHkvT8ixueWCLyJjsaF5kQIckjb4IT8Q6K6p/iPmZMixYgg==\",\n       \"cpu\": [\n         \"arm\"\n       ],\n@@ -2635,16 +2596,13 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-linux-arm64-gnu\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm64-gnu/-/oxide-linux-arm64-gnu-4.3.0.tgz\",\n-      \"integrity\": \"sha512-qTJHELX8jetjhRQHCLilkVLmybpzNQAtaI/gaoVoidn/ufbNDbAo8KlK2J+yPoc8wQxvDxCmh/5lr8nC1+lTbg==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm64-gnu/-/oxide-linux-arm64-gnu-4.3.1.tgz\",\n+      \"integrity\": \"sha512-gqdFoVJlw444GvpnheZLHmvTzSxI/cOUUh2KSNejQjTcYkW062SVD+En0rUgD+QV91bz1XGIGtt1HJd48xUGbQ==\",\n       \"cpu\": [\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2655,16 +2613,13 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-linux-arm64-musl\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm64-musl/-/oxide-linux-arm64-musl-4.3.0.tgz\",\n-      \"integrity\": \"sha512-Z6sukiQsngnWO+l39X4pPbiWT81IC+PLKF+PHxIlyZbGNb9MODfYlXEVlFvej5BOZInWX01kVyzeLvHsXhfczQ==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-arm64-musl/-/oxide-linux-arm64-musl-4.3.1.tgz\",\n+      \"integrity\": \"sha512-Bwv9KwOvE0VKa86xPFif9b9c3Y1NxOV1P0gLti/IYaWEsQYZXDlxfGEtA8mdDZ7SG3wyNXAWYT5SIn3giL57oA==\",\n       \"cpu\": [\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2675,16 +2630,13 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-linux-x64-gnu\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-gnu/-/oxide-linux-x64-gnu-4.3.0.tgz\",\n-      \"integrity\": \"sha512-DRNdQRpSGzRGfARVuVkxvM8Q12nh19l4BF/G7zGA1oe+9wcC6saFBHTISrpIcKzhiXtSrlSrluCfvMuledoCTQ==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-gnu/-/oxide-linux-x64-gnu-4.3.1.tgz\",\n+      \"integrity\": \"sha512-Ymi8O8T15HYQdOUWUtTI6ldN0neHP85FC+Qz32xTcZ7iJXtem/x8ITev0o1e9e5rkqj4lONZfTRLvkmin1+tKg==\",\n       \"cpu\": [\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2695,16 +2647,13 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-linux-x64-musl\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-musl/-/oxide-linux-x64-musl-4.3.0.tgz\",\n-      \"integrity\": \"sha512-Z0IADbDo8bh6I7h2IQMx601AdXBLfFpEdUotft86evd/8ZPflZe9COPO8Q1vw+pfLWIUo9zN/JGZvwuAJqduqg==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-musl/-/oxide-linux-x64-musl-4.3.1.tgz\",\n+      \"integrity\": \"sha512-M+P/91qJ6uILLw4k2G93GMDRAXj61SMvFQYt39AqvUqYgExXpLL5aepfns7sj4HiAQeolirQF9E0lzRvdf4zPQ==\",\n       \"cpu\": [\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2715,9 +2664,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-wasm32-wasi\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-wasm32-wasi/-/oxide-wasm32-wasi-4.3.0.tgz\",\n-      \"integrity\": \"sha512-HNZGOUxEmElksYR7S6sC5jTeNGpobAsy9u7Gu0AskJ8/20FR9GqebUyB+HBcU/ax6BHuiuJi+Oda4B+YX6H1yA==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-wasm32-wasi/-/oxide-wasm32-wasi-4.3.1.tgz\",\n+      \"integrity\": \"sha512-zsM8uOeqvVGHsAXsJxsT28ttosFahLJKCLOTUBqRAtKnVgGSRitds9T432QiT8b77Yga7JIBkulIRRlJPtYhRA==\",\n       \"bundleDependencies\": [\n         \"@napi-rs/wasm-runtime\",\n         \"@emnapi/core\",\n@@ -2737,17 +2686,83 @@\n         \"@emnapi/runtime\": \"^1.10.0\",\n         \"@emnapi/wasi-threads\": \"^1.2.1\",\n         \"@napi-rs/wasm-runtime\": \"^1.1.4\",\n-        \"@tybys/wasm-util\": \"^0.10.1\",\n+        \"@tybys/wasm-util\": \"^0.10.2\",\n         \"tslib\": \"^2.8.1\"\n       },\n       \"engines\": {\n         \"node\": \">=14.0.0\"\n       }\n     },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/core\": {\n+      \"version\": \"1.10.0\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"@emnapi/wasi-threads\": \"1.2.1\",\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/runtime\": {\n+      \"version\": \"1.10.0\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/wasi-threads\": {\n+      \"version\": \"1.2.1\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@napi-rs/wasm-runtime\": {\n+      \"version\": \"1.1.4\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"@tybys/wasm-util\": \"^0.10.1\"\n+      },\n+      \"funding\": {\n+        \"type\": \"github\",\n+        \"url\": \"https://github.com/sponsors/Brooooooklyn\"\n+      },\n+      \"peerDependencies\": {\n+        \"@emnapi/core\": \"^1.7.1\",\n+        \"@emnapi/runtime\": \"^1.7.1\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@tybys/wasm-util\": {\n+      \"version\": \"0.10.2\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/tslib\": {\n+      \"version\": \"2.8.1\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"0BSD\",\n+      \"optional\": true\n+    },\n     \"node_modules/@tailwindcss/oxide-win32-arm64-msvc\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-win32-arm64-msvc/-/oxide-win32-arm64-msvc-4.3.0.tgz\",\n-      \"integrity\": \"sha512-Pe+RPVTi1T+qymuuRpcdvwSVZjnll/f7n8gBxMMh3xLTctMDKqpdfGimbMyioqtLhUYZxdJ9wGNhV7MKHvgZsQ==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-win32-arm64-msvc/-/oxide-win32-arm64-msvc-4.3.1.tgz\",\n+      \"integrity\": \"sha512-aiNvSq9BsVk8V513lDKlrCFAgf8qBMPZTpgEhInL+NwQqs97mYmupVMrPrgBBSL8Pv/0zXu9MrMF9rMun1ZeNg==\",\n       \"cpu\": [\n         \"arm64\"\n       ],\n@@ -2762,9 +2777,9 @@\n       }\n     },\n     \"node_modules/@tailwindcss/oxide-win32-x64-msvc\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-win32-x64-msvc/-/oxide-win32-x64-msvc-4.3.0.tgz\",\n-      \"integrity\": \"sha512-Mvrf2kXW/yeW/OTezZlCGOirXRcUuLIBx/5Y12BaPM7wJoryG6dfS/NJL8aBPqtTEx/Vm4T4vKzFUcKDT+TKUA==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-win32-x64-msvc/-/oxide-win32-x64-msvc-4.3.1.tgz\",\n+      \"integrity\": \"sha512-xDEyu1rg290472FEGaKHnzyDyh5QH+AlWvsU5hMoMtPpzmKlRI0jaYKCgSHDYtaQWZOYbMaduSyCwFwY4n1HmA==\",\n       \"cpu\": [\n         \"x64\"\n       ],\n@@ -2779,15 +2794,15 @@\n       }\n     },\n     \"node_modules/@tailwindcss/vite\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/vite/-/vite-4.3.0.tgz\",\n-      \"integrity\": \"sha512-t6J3OrB5Fc0ExuhohouH0fWUGMYL6PTLhW+E7zIk/pdbnJARZDCwjBznFnkh5ynRnIRSI4YjtTH0t6USjJISrw==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@tailwindcss/vite/-/vite-4.3.1.tgz\",\n+      \"integrity\": \"sha512-hItDHuIIlEV61R+faXu66s1K36aTurO/Qw0e45Vskz57gXl9pWOT6eg3zmcEui6CZXddbN7zd41bwmvag4JGwQ==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@tailwindcss/node\": \"4.3.0\",\n-        \"@tailwindcss/oxide\": \"4.3.0\",\n-        \"tailwindcss\": \"4.3.0\"\n+        \"@tailwindcss/node\": \"4.3.1\",\n+        \"@tailwindcss/oxide\": \"4.3.1\",\n+        \"tailwindcss\": \"4.3.1\"\n       },\n       \"peerDependencies\": {\n         \"vite\": \"^5.2.0 || ^6 || ^7 || ^8\"\n@@ -4388,9 +4403,9 @@\n       \"license\": \"MIT\"\n     },\n     \"node_modules/enhanced-resolve\": {\n-      \"version\": \"5.23.0\",\n-      \"resolved\": \"https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.23.0.tgz\",\n-      \"integrity\": \"sha512-yJN/BOOLxcOW2aQgeif9mSnaUB8KtvmMMp56oA1kx1CRfBKbhZm2pJ+NBY+3eOboHxix8lfjWpHE0Ei5U8RbSA==\",\n+      \"version\": \"5.21.6\",\n+      \"resolved\": \"https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.21.6.tgz\",\n+      \"integrity\": \"sha512-aNnGCvbJ/RIyWo1IuhNdVjnNF+EjH9wpzpNHt+ci/m9He9LJvUN8wrCcXjp9cWsGNAuvSpVFTx/vraAFQ8qGjQ==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n@@ -4581,9 +4596,9 @@\n       }\n     },\n     \"node_modules/eslint-plugin-react-refresh\": {\n-      \"version\": \"0.5.2\",\n-      \"resolved\": \"https://registry.npmjs.org/eslint-plugin-react-refresh/-/eslint-plugin-react-refresh-0.5.2.tgz\",\n-      \"integrity\": \"sha512-hmgTH57GfzoTFjVN0yBwTggnsVUF2tcqi7RJZHqi9lIezSs4eFyAMktA68YD4r5kNw1mxyY4dmkyoFDb3FIqrA==\",\n+      \"version\": \"0.5.3\",\n+      \"resolved\": \"https://registry.npmjs.org/eslint-plugin-react-refresh/-/eslint-plugin-react-refresh-0.5.3.tgz\",\n+      \"integrity\": \"sha512-5EMmLCV98Pi4o/f/3DP/v/tNqLHMIc9I8LKClNDWhZ9JTho89/kQcitCXQBMG7sAfVRK0Ie3T2EDOzp1YXYiVA==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"peerDependencies\": {\n@@ -5510,9 +5525,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5534,9 +5546,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5558,9 +5567,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5582,9 +5588,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5688,9 +5691,9 @@\n       }\n     },\n     \"node_modules/lucide-react\": {\n-      \"version\": \"1.17.0\",\n-      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.17.0.tgz\",\n-      \"integrity\": \"sha512-9FA9evdox/JQL5PT57fdA1x/yg8T7knJ98+zjTL3UfKza6pflQUUh3XtaQIHKvnsJw1lmsEyHVlt5jchYxOQ5w==\",\n+      \"version\": \"1.18.0\",\n+      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.18.0.tgz\",\n+      \"integrity\": \"sha512-LZDb7H/0YfM+RJncD0hDQRCAu+vSGODqpe35TuVI8EuXaRjkczbsx7p8dY4J87F/MUSj6bpYqeI8nw8qXaAdmA==\",\n       \"license\": \"ISC\",\n       \"peerDependencies\": {\n         \"react\": \"^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0\"\n@@ -6641,9 +6644,9 @@\n       }\n     },\n     \"node_modules/tailwindcss\": {\n-      \"version\": \"4.3.0\",\n-      \"resolved\": \"https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.3.0.tgz\",\n-      \"integrity\": \"sha512-y6nxMGB1nMW9R6k96e5gdIFzcfL/gTJRNaqGes1YvkLnPVXzWgbqFF2yLC0T8G774n24cx3Pe8XrKoniCOAH+Q==\",\n+      \"version\": \"4.3.1\",\n+      \"resolved\": \"https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.3.1.tgz\",\n+      \"integrity\": \"sha512-hk+TB1m+K8CYNrP6rjQaq/Y+4Zylwpa87mLYBKCunwnnQ9p+fHb7kmSfGqyEJoxF/O6CDyABWVFEafNSYKll+Q==\",\n       \"dev\": true,\n       \"license\": \"MIT\"\n     },\ndiff --git a/package.json b/package.json\nindex fa67832..0d92fb6 100644\n--- a/package.json\n+++ b/package.json\n@@ -28,7 +28,7 @@\n     \"@xyflow/react\": \"^12.11.0\",\n     \"framer-motion\": \"^12.40.0\",\n     \"gsap\": \"^3.15.0\",\n-    \"lucide-react\": \"^1.17.0\",\n+    \"lucide-react\": \"^1.18.0\",\n     \"react\": \"^19.2.7\",\n     \"react-dom\": \"^19.2.7\",\n     \"react-resizable-panels\": \"^3.0.6\",\n@@ -39,7 +39,7 @@\n   \"devDependencies\": {\n     \"@eslint/js\": \"^9.13.0\",\n     \"@playwright/test\": \"^1.60.0\",\n-    \"@tailwindcss/vite\": \"^4.3.0\",\n+    \"@tailwindcss/vite\": \"^4.3.1\",\n     \"@types/react\": \"^19.2.17\",\n     \"@types/react-dom\": \"^19.2.3\",\n     \"@types/sql.js\": \"^1.4.9\",\n@@ -47,7 +47,7 @@\n     \"@vitest/coverage-v8\": \"^4.1.8\",\n     \"eslint\": \"^9.13.0\",\n     \"eslint-plugin-react-hooks\": \"^5.2.0\",\n-    \"eslint-plugin-react-refresh\": \"^0.5.2\",\n+    \"eslint-plugin-react-refresh\": \"^0.5.3\",\n     \"globals\": \"^17.6.0\",\n     \"lighthouse\": \"^13.4.0\",\n     \"tailwindcss\": \"^4.3.0\",",
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/tuples/tuples/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://localhost:4173/tuples/",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "full journey: homepage → enter world → solve → persist → review",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3640,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-15T04:35:06.668Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-d77cdc6daaf7accde4db",
+          "file": "smoke.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "homepage proof terminal runs real SQL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1883,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-15T04:35:10.997Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-02e22a5cc048fd241d66",
+          "file": "smoke.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "error coaching and test-run preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2083,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-15T04:35:12.895Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-0b239663049f52a1c4aa",
+          "file": "smoke.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "each world themes the workspace with its own accent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1413,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-15T04:35:14.994Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-b20115e63804b48b7ddb",
+          "file": "smoke.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "completed mission offers the certification exam",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 754,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-15T04:35:16.418Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-c95a13d800861ea7fbf2",
+          "file": "smoke.spec.ts",
+          "line": 108,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-15T04:35:04.559Z",
+    "duration": 12696.967999999999,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
