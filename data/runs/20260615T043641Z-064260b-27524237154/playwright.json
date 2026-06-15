@@ -1,0 +1,129 @@
+{
+  "config": {
+    "configFile": "/home/runner/work/tuples/tuples/playwright.config.ts",
+    "rootDir": "/home/runner/work/tuples/tuples/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/prakashbsamanta/tuples/commit/f75bcc71b6a36a15534f5572122914ef7cb7d162",
+        "commitHash": "f75bcc71b6a36a15534f5572122914ef7cb7d162",
+        "prHref": "https://github.com/prakashbsamanta/tuples/pull/39",
+        "prTitle": "build(deps): bump react-resizable-panels from 3.0.6 to 4.11.2",
+        "prBaseHash": "715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+        "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/27524237154"
+      },
+      "gitCommit": {
+        "shortHash": "f75bcc7",
+        "hash": "f75bcc71b6a36a15534f5572122914ef7cb7d162",
+        "subject": "Merge 064260bf981c1a876865c2bcc9d5af439b99daf3 into 715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+        "body": "Merge 064260bf981c1a876865c2bcc9d5af439b99daf3 into 715848ed5e986e64b5d1f93e10853c71a3cc85cc\n",
+        "author": {
+          "name": "dependabot[bot]",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com",
+          "time": 1781498038000
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "time": 1781498038000
+        },
+        "branch": "HEAD"
+      },
+      "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex ce175dd..1cd3281 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -18,7 +18,7 @@\n         \"lucide-react\": \"^1.17.0\",\n         \"react\": \"^19.2.7\",\n         \"react-dom\": \"^19.2.7\",\n-        \"react-resizable-panels\": \"^3.0.6\",\n+        \"react-resizable-panels\": \"^4.11.2\",\n         \"recharts\": \"^3.8.1\",\n         \"sql.js\": \"1.14.1\",\n         \"zustand\": \"^5.0.0\"\n@@ -2073,9 +2073,6 @@\n         \"arm\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2090,9 +2087,6 @@\n         \"arm\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2107,9 +2101,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2124,9 +2115,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2141,9 +2129,6 @@\n         \"loong64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2158,9 +2143,6 @@\n         \"loong64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2175,9 +2157,6 @@\n         \"ppc64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2192,9 +2171,6 @@\n         \"ppc64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2209,9 +2185,6 @@\n         \"riscv64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2226,9 +2199,6 @@\n         \"riscv64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2243,9 +2213,6 @@\n         \"s390x\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2260,9 +2227,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2277,9 +2241,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2642,9 +2603,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2662,9 +2620,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2682,9 +2637,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2702,9 +2654,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2744,6 +2693,72 @@\n         \"node\": \">=14.0.0\"\n       }\n     },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/core\": {\n+      \"version\": \"1.10.0\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"@emnapi/wasi-threads\": \"1.2.1\",\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/runtime\": {\n+      \"version\": \"1.10.0\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/wasi-threads\": {\n+      \"version\": \"1.2.1\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@napi-rs/wasm-runtime\": {\n+      \"version\": \"1.1.4\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"@tybys/wasm-util\": \"^0.10.1\"\n+      },\n+      \"funding\": {\n+        \"type\": \"github\",\n+        \"url\": \"https://github.com/sponsors/Brooooooklyn\"\n+      },\n+      \"peerDependencies\": {\n+        \"@emnapi/core\": \"^1.7.1\",\n+        \"@emnapi/runtime\": \"^1.7.1\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@tybys/wasm-util\": {\n+      \"version\": \"0.10.1\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/tslib\": {\n+      \"version\": \"2.8.1\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"0BSD\",\n+      \"optional\": true\n+    },\n     \"node_modules/@tailwindcss/oxide-win32-arm64-msvc\": {\n       \"version\": \"4.3.0\",\n       \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-win32-arm64-msvc/-/oxide-win32-arm64-msvc-4.3.0.tgz\",\n@@ -5510,9 +5525,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5534,9 +5546,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5558,9 +5567,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5582,9 +5588,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -6280,13 +6283,13 @@\n       }\n     },\n     \"node_modules/react-resizable-panels\": {\n-      \"version\": \"3.0.6\",\n-      \"resolved\": \"https://registry.npmjs.org/react-resizable-panels/-/react-resizable-panels-3.0.6.tgz\",\n-      \"integrity\": \"sha512-b3qKHQ3MLqOgSS+FRYKapNkJZf5EQzuf6+RLiq1/IlTHw99YrZ2NJZLk4hQIzTnnIkRg2LUqyVinu6YWWpUYew==\",\n+      \"version\": \"4.11.2\",\n+      \"resolved\": \"https://registry.npmjs.org/react-resizable-panels/-/react-resizable-panels-4.11.2.tgz\",\n+      \"integrity\": \"sha512-+kfFbDZ8mygc7g0vxOcDzCVGuwiIUOnILqPoUHo6/uP+Mmyx6HzZU+kj1aOPDlktXuobYbr6BtQekvJwHRX4Eg==\",\n       \"license\": \"MIT\",\n       \"peerDependencies\": {\n-        \"react\": \"^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc\",\n-        \"react-dom\": \"^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc\"\n+        \"react\": \"^18.0.0 || ^19.0.0\",\n+        \"react-dom\": \"^18.0.0 || ^19.0.0\"\n       }\n     },\n     \"node_modules/recharts\": {\ndiff --git a/package.json b/package.json\nindex fa67832..a5c9c38 100644\n--- a/package.json\n+++ b/package.json\n@@ -31,7 +31,7 @@\n     \"lucide-react\": \"^1.17.0\",\n     \"react\": \"^19.2.7\",\n     \"react-dom\": \"^19.2.7\",\n-    \"react-resizable-panels\": \"^3.0.6\",\n+    \"react-resizable-panels\": \"^4.11.2\",\n     \"recharts\": \"^3.8.1\",\n     \"sql.js\": \"1.14.1\",\n     \"zustand\": \"^5.0.0\""
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/tuples/tuples/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/prakashbsamanta/tuples/commit/f75bcc71b6a36a15534f5572122914ef7cb7d162",
+            "commitHash": "f75bcc71b6a36a15534f5572122914ef7cb7d162",
+            "prHref": "https://github.com/prakashbsamanta/tuples/pull/39",
+            "prTitle": "build(deps): bump react-resizable-panels from 3.0.6 to 4.11.2",
+            "prBaseHash": "715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+            "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/27524237154"
+          },
+          "gitCommit": {
+            "shortHash": "f75bcc7",
+            "hash": "f75bcc71b6a36a15534f5572122914ef7cb7d162",
+            "subject": "Merge 064260bf981c1a876865c2bcc9d5af439b99daf3 into 715848ed5e986e64b5d1f93e10853c71a3cc85cc",
+            "body": "Merge 064260bf981c1a876865c2bcc9d5af439b99daf3 into 715848ed5e986e64b5d1f93e10853c71a3cc85cc\n",
+            "author": {
+              "name": "dependabot[bot]",
+              "email": "49699333+dependabot[bot]@users.noreply.github.com",
+              "time": 1781498038000
+            },
+            "committer": {
+              "name": "GitHub",
+              "email": "noreply@github.com",
+              "time": 1781498038000
+            },
+            "branch": "HEAD"
+          },
+          "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex ce175dd..1cd3281 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -18,7 +18,7 @@\n         \"lucide-react\": \"^1.17.0\",\n         \"react\": \"^19.2.7\",\n         \"react-dom\": \"^19.2.7\",\n-        \"react-resizable-panels\": \"^3.0.6\",\n+        \"react-resizable-panels\": \"^4.11.2\",\n         \"recharts\": \"^3.8.1\",\n         \"sql.js\": \"1.14.1\",\n         \"zustand\": \"^5.0.0\"\n@@ -2073,9 +2073,6 @@\n         \"arm\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2090,9 +2087,6 @@\n         \"arm\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2107,9 +2101,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2124,9 +2115,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2141,9 +2129,6 @@\n         \"loong64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2158,9 +2143,6 @@\n         \"loong64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2175,9 +2157,6 @@\n         \"ppc64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2192,9 +2171,6 @@\n         \"ppc64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2209,9 +2185,6 @@\n         \"riscv64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2226,9 +2199,6 @@\n         \"riscv64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2243,9 +2213,6 @@\n         \"s390x\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2260,9 +2227,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2277,9 +2241,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2642,9 +2603,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2662,9 +2620,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2682,9 +2637,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2702,9 +2654,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MIT\",\n       \"optional\": true,\n       \"os\": [\n@@ -2744,6 +2693,72 @@\n         \"node\": \">=14.0.0\"\n       }\n     },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/core\": {\n+      \"version\": \"1.10.0\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"@emnapi/wasi-threads\": \"1.2.1\",\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/runtime\": {\n+      \"version\": \"1.10.0\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@emnapi/wasi-threads\": {\n+      \"version\": \"1.2.1\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@napi-rs/wasm-runtime\": {\n+      \"version\": \"1.1.4\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"@tybys/wasm-util\": \"^0.10.1\"\n+      },\n+      \"funding\": {\n+        \"type\": \"github\",\n+        \"url\": \"https://github.com/sponsors/Brooooooklyn\"\n+      },\n+      \"peerDependencies\": {\n+        \"@emnapi/core\": \"^1.7.1\",\n+        \"@emnapi/runtime\": \"^1.7.1\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/@tybys/wasm-util\": {\n+      \"version\": \"0.10.1\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"MIT\",\n+      \"optional\": true,\n+      \"dependencies\": {\n+        \"tslib\": \"^2.4.0\"\n+      }\n+    },\n+    \"node_modules/@tailwindcss/oxide-wasm32-wasi/node_modules/tslib\": {\n+      \"version\": \"2.8.1\",\n+      \"dev\": true,\n+      \"inBundle\": true,\n+      \"license\": \"0BSD\",\n+      \"optional\": true\n+    },\n     \"node_modules/@tailwindcss/oxide-win32-arm64-msvc\": {\n       \"version\": \"4.3.0\",\n       \"resolved\": \"https://registry.npmjs.org/@tailwindcss/oxide-win32-arm64-msvc/-/oxide-win32-arm64-msvc-4.3.0.tgz\",\n@@ -5510,9 +5525,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5534,9 +5546,6 @@\n         \"arm64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5558,9 +5567,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"glibc\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -5582,9 +5588,6 @@\n         \"x64\"\n       ],\n       \"dev\": true,\n-      \"libc\": [\n-        \"musl\"\n-      ],\n       \"license\": \"MPL-2.0\",\n       \"optional\": true,\n       \"os\": [\n@@ -6280,13 +6283,13 @@\n       }\n     },\n     \"node_modules/react-resizable-panels\": {\n-      \"version\": \"3.0.6\",\n-      \"resolved\": \"https://registry.npmjs.org/react-resizable-panels/-/react-resizable-panels-3.0.6.tgz\",\n-      \"integrity\": \"sha512-b3qKHQ3MLqOgSS+FRYKapNkJZf5EQzuf6+RLiq1/IlTHw99YrZ2NJZLk4hQIzTnnIkRg2LUqyVinu6YWWpUYew==\",\n+      \"version\": \"4.11.2\",\n+      \"resolved\": \"https://registry.npmjs.org/react-resizable-panels/-/react-resizable-panels-4.11.2.tgz\",\n+      \"integrity\": \"sha512-+kfFbDZ8mygc7g0vxOcDzCVGuwiIUOnILqPoUHo6/uP+Mmyx6HzZU+kj1aOPDlktXuobYbr6BtQekvJwHRX4Eg==\",\n       \"license\": \"MIT\",\n       \"peerDependencies\": {\n-        \"react\": \"^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc\",\n-        \"react-dom\": \"^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc\"\n+        \"react\": \"^18.0.0 || ^19.0.0\",\n+        \"react-dom\": \"^18.0.0 || ^19.0.0\"\n       }\n     },\n     \"node_modules/recharts\": {\ndiff --git a/package.json b/package.json\nindex fa67832..a5c9c38 100644\n--- a/package.json\n+++ b/package.json\n@@ -31,7 +31,7 @@\n     \"lucide-react\": \"^1.17.0\",\n     \"react\": \"^19.2.7\",\n     \"react-dom\": \"^19.2.7\",\n-    \"react-resizable-panels\": \"^3.0.6\",\n+    \"react-resizable-panels\": \"^4.11.2\",\n     \"recharts\": \"^3.8.1\",\n     \"sql.js\": \"1.14.1\",\n     \"zustand\": \"^5.0.0\""
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/tuples/tuples/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://localhost:4173/tuples/",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [],
+  "errors": [
+    {
+      "message": "Error: Timed out waiting 60000ms from config.webServer.",
+      "stack": "Error: Timed out waiting 60000ms from config.webServer."
+    }
+  ],
+  "stats": {
+    "startTime": "2026-06-15T04:34:59.524Z",
+    "duration": 60881.695,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
