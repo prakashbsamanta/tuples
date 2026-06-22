@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260622T043711Z-9717486-27929867580",
+  "runId": "27929867580",
+  "runNumber": 65,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/27929867580",
+  "context": "pr",
+  "pr": {
+   "number": 42,
+   "title": "build(deps-dev): bump vite from 7.3.5 to 8.0.16",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/42"
+  },
+  "branch": "dependabot/npm_and_yarn/vite-8.0.16",
+  "sha": "9717486f56df942e135a29f815b61da2e714999d",
+  "shortSha": "9717486",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/9717486f56df942e135a29f815b61da2e714999d",
+  "timestamp": "2026-06-22T04:37:11.958Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 64.650146484375,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11102.030517578125,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 14060
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 526,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 63,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 4669,
+   "lcpMs": 8423,
+   "tbtMs": 74,
+   "cls": 0,
+   "speedIndexMs": 4669
+  },
+  "details": {
+   "vitest": "runs/20260622T043711Z-9717486-27929867580/vitest.json",
+   "playwright": "runs/20260622T043711Z-9717486-27929867580/playwright.json",
+   "lighthouse": "runs/20260622T043711Z-9717486-27929867580/lighthouse.json",
+   "size": "runs/20260622T043711Z-9717486-27929867580/size.json",
+   "coverage": "runs/20260622T043711Z-9717486-27929867580/coverage.json"
+  }
+ },
+ {
   "id": "20260622T043311Z-db97209-27929726330",
   "runId": "27929726330",
   "runNumber": 63,
