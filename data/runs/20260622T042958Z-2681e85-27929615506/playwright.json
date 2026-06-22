@@ -1,0 +1,305 @@
+{
+  "config": {
+    "configFile": "/home/runner/work/tuples/tuples/playwright.config.ts",
+    "rootDir": "/home/runner/work/tuples/tuples/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/prakashbsamanta/tuples/commit/653dc522510e03b246098a3dbd805396a2d0f0a2",
+        "commitHash": "653dc522510e03b246098a3dbd805396a2d0f0a2",
+        "prHref": "https://github.com/prakashbsamanta/tuples/pull/40",
+        "prTitle": "ci: bump actions/checkout from 6.0.3 to 7.0.0",
+        "prBaseHash": "836d9705aadb90ffa393ec1c2cf6cc8f3d15c932",
+        "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/27929615506"
+      },
+      "gitCommit": {
+        "shortHash": "653dc52",
+        "hash": "653dc522510e03b246098a3dbd805396a2d0f0a2",
+        "subject": "Merge 2681e851e9879072a79cffd63c8c566b8f32a1b9 into 836d9705aadb90ffa393ec1c2cf6cc8f3d15c932",
+        "body": "Merge 2681e851e9879072a79cffd63c8c566b8f32a1b9 into 836d9705aadb90ffa393ec1c2cf6cc8f3d15c932\n",
+        "author": {
+          "name": "dependabot[bot]",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com",
+          "time": 1782102500000
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "time": 1782102500000
+        },
+        "branch": "HEAD"
+      },
+      "gitDiff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\nindex 17b23ef..8762b22 100644\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -34,7 +34,7 @@ jobs:\n     timeout-minutes: 20\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\n@@ -144,10 +144,10 @@ jobs:\n       cancel-in-progress: false\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Checkout ci-reports branch\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n         with:\n           ref: ci-reports\n           path: ci-reports\ndiff --git a/.github/workflows/codeql.yml b/.github/workflows/codeql.yml\nindex f434231..8c8d583 100644\n--- a/.github/workflows/codeql.yml\n+++ b/.github/workflows/codeql.yml\n@@ -30,7 +30,7 @@ jobs:\n         language: [javascript-typescript]\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Initialize CodeQL\n         uses: github/codeql-action/init@8aad20d150bbac5944a9f9d289da16a4b0d87c1e # v4.36.2\ndiff --git a/.github/workflows/dependency-review.yml b/.github/workflows/dependency-review.yml\nindex d560cba..1818553 100644\n--- a/.github/workflows/dependency-review.yml\n+++ b/.github/workflows/dependency-review.yml\n@@ -18,7 +18,7 @@ jobs:\n     timeout-minutes: 10\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Dependency Review\n         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0\ndiff --git a/.github/workflows/deploy.yml b/.github/workflows/deploy.yml\nindex c7f2895..3c78e9e 100644\n--- a/.github/workflows/deploy.yml\n+++ b/.github/workflows/deploy.yml\n@@ -32,7 +32,7 @@ jobs:\n     timeout-minutes: 15\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\ndiff --git a/.github/workflows/lighthouse.yml b/.github/workflows/lighthouse.yml\nindex 0e0c505..2465a15 100644\n--- a/.github/workflows/lighthouse.yml\n+++ b/.github/workflows/lighthouse.yml\n@@ -25,7 +25,7 @@ jobs:\n     timeout-minutes: 15\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\ndiff --git a/.github/workflows/scorecard.yml b/.github/workflows/scorecard.yml\nindex 375478f..c60edfb 100644\n--- a/.github/workflows/scorecard.yml\n+++ b/.github/workflows/scorecard.yml\n@@ -26,7 +26,7 @@ jobs:\n       id-token: write        # publish results to the public Scorecard API\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n         with:\n           persist-credentials: false",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/tuples/tuples/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/prakashbsamanta/tuples/commit/653dc522510e03b246098a3dbd805396a2d0f0a2",
+            "commitHash": "653dc522510e03b246098a3dbd805396a2d0f0a2",
+            "prHref": "https://github.com/prakashbsamanta/tuples/pull/40",
+            "prTitle": "ci: bump actions/checkout from 6.0.3 to 7.0.0",
+            "prBaseHash": "836d9705aadb90ffa393ec1c2cf6cc8f3d15c932",
+            "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/27929615506"
+          },
+          "gitCommit": {
+            "shortHash": "653dc52",
+            "hash": "653dc522510e03b246098a3dbd805396a2d0f0a2",
+            "subject": "Merge 2681e851e9879072a79cffd63c8c566b8f32a1b9 into 836d9705aadb90ffa393ec1c2cf6cc8f3d15c932",
+            "body": "Merge 2681e851e9879072a79cffd63c8c566b8f32a1b9 into 836d9705aadb90ffa393ec1c2cf6cc8f3d15c932\n",
+            "author": {
+              "name": "dependabot[bot]",
+              "email": "49699333+dependabot[bot]@users.noreply.github.com",
+              "time": 1782102500000
+            },
+            "committer": {
+              "name": "GitHub",
+              "email": "noreply@github.com",
+              "time": 1782102500000
+            },
+            "branch": "HEAD"
+          },
+          "gitDiff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\nindex 17b23ef..8762b22 100644\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -34,7 +34,7 @@ jobs:\n     timeout-minutes: 20\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\n@@ -144,10 +144,10 @@ jobs:\n       cancel-in-progress: false\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Checkout ci-reports branch\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n         with:\n           ref: ci-reports\n           path: ci-reports\ndiff --git a/.github/workflows/codeql.yml b/.github/workflows/codeql.yml\nindex f434231..8c8d583 100644\n--- a/.github/workflows/codeql.yml\n+++ b/.github/workflows/codeql.yml\n@@ -30,7 +30,7 @@ jobs:\n         language: [javascript-typescript]\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Initialize CodeQL\n         uses: github/codeql-action/init@8aad20d150bbac5944a9f9d289da16a4b0d87c1e # v4.36.2\ndiff --git a/.github/workflows/dependency-review.yml b/.github/workflows/dependency-review.yml\nindex d560cba..1818553 100644\n--- a/.github/workflows/dependency-review.yml\n+++ b/.github/workflows/dependency-review.yml\n@@ -18,7 +18,7 @@ jobs:\n     timeout-minutes: 10\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Dependency Review\n         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0\ndiff --git a/.github/workflows/deploy.yml b/.github/workflows/deploy.yml\nindex c7f2895..3c78e9e 100644\n--- a/.github/workflows/deploy.yml\n+++ b/.github/workflows/deploy.yml\n@@ -32,7 +32,7 @@ jobs:\n     timeout-minutes: 15\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\ndiff --git a/.github/workflows/lighthouse.yml b/.github/workflows/lighthouse.yml\nindex 0e0c505..2465a15 100644\n--- a/.github/workflows/lighthouse.yml\n+++ b/.github/workflows/lighthouse.yml\n@@ -25,7 +25,7 @@ jobs:\n     timeout-minutes: 15\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\ndiff --git a/.github/workflows/scorecard.yml b/.github/workflows/scorecard.yml\nindex 375478f..c60edfb 100644\n--- a/.github/workflows/scorecard.yml\n+++ b/.github/workflows/scorecard.yml\n@@ -26,7 +26,7 @@ jobs:\n       id-token: write        # publish results to the public Scorecard API\n     steps:\n       - name: Checkout\n-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3\n+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n         with:\n           persist-credentials: false",
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/tuples/tuples/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://localhost:4173/tuples/",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "full journey: homepage → enter world → solve → persist → review",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3864,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-22T04:29:28.765Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-d77cdc6daaf7accde4db",
+          "file": "smoke.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "homepage proof terminal runs real SQL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2183,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-22T04:29:32.856Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-02e22a5cc048fd241d66",
+          "file": "smoke.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "error coaching and test-run preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1803,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-22T04:29:35.049Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-0b239663049f52a1c4aa",
+          "file": "smoke.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "each world themes the workspace with its own accent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1265,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-22T04:29:36.864Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-b20115e63804b48b7ddb",
+          "file": "smoke.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "completed mission offers the certification exam",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 781,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-22T04:29:38.140Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-c95a13d800861ea7fbf2",
+          "file": "smoke.spec.ts",
+          "line": 108,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-22T04:29:26.678Z",
+    "duration": 12329.119,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
