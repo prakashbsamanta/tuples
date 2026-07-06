@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260706T043327Z-3272ddb-28767956508",
+  "runId": "28767956508",
+  "runNumber": 75,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/28767956508",
+  "context": "pr",
+  "pr": {
+   "number": 45,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.36.3",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/45"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.36.3",
+  "sha": "3272ddb70af683c968655e3ce4ea6ff8e2f4ef51",
+  "shortSha": "3272ddb",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/3272ddb70af683c968655e3ce4ea6ff8e2f4ef51",
+  "timestamp": "2026-07-06T04:33:27.769Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 77.76708984375,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11290.02197265625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 13147
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 406.1,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3913,
+   "lcpMs": 7665,
+   "tbtMs": 80,
+   "cls": 0,
+   "speedIndexMs": 3913
+  },
+  "details": {
+   "vitest": "runs/20260706T043327Z-3272ddb-28767956508/vitest.json",
+   "playwright": "runs/20260706T043327Z-3272ddb-28767956508/playwright.json",
+   "lighthouse": "runs/20260706T043327Z-3272ddb-28767956508/lighthouse.json",
+   "size": "runs/20260706T043327Z-3272ddb-28767956508/size.json",
+   "coverage": "runs/20260706T043327Z-3272ddb-28767956508/coverage.json"
+  }
+ },
+ {
   "id": "20260706T043102Z-47f1843-28767830821",
   "runId": "28767830821",
   "runNumber": 73,
