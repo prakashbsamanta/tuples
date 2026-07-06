@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260706T042917Z-2663e8e-28767809599",
+  "runId": "28767809599",
+  "runNumber": 70,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/28767809599",
+  "context": "pr",
+  "pr": {
+   "number": 46,
+   "title": "ci: bump github/codeql-action/init from 4.36.2 to 4.36.3",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/46"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/init-4.36.3",
+  "sha": "2663e8e8773918151c96203212e44aaec29adf02",
+  "shortSha": "2663e8e",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/2663e8e8773918151c96203212e44aaec29adf02",
+  "timestamp": "2026-07-06T04:29:17.944Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 74.997802734375,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11213.251220703125,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 13281
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 406.1,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3914,
+   "lcpMs": 7667,
+   "tbtMs": 86,
+   "cls": 0,
+   "speedIndexMs": 3914
+  },
+  "details": {
+   "vitest": "runs/20260706T042917Z-2663e8e-28767809599/vitest.json",
+   "playwright": "runs/20260706T042917Z-2663e8e-28767809599/playwright.json",
+   "lighthouse": "runs/20260706T042917Z-2663e8e-28767809599/lighthouse.json",
+   "size": "runs/20260706T042917Z-2663e8e-28767809599/size.json",
+   "coverage": "runs/20260706T042917Z-2663e8e-28767809599/coverage.json"
+  }
+ },
+ {
   "id": "20260706T042912Z-91c44a2-28767802671",
   "runId": "28767802671",
   "runNumber": 69,
