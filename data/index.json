@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260706T043340Z-78a22d5-28767954356",
+  "runId": "28767954356",
+  "runNumber": 74,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/28767954356",
+  "context": "pr",
+  "pr": {
+   "number": 46,
+   "title": "ci: bump github/codeql-action/init from 4.36.2 to 4.36.3",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/46"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/init-4.36.3",
+  "sha": "78a22d595bc6ec8bd7e4527c5462746f971a36ed",
+  "shortSha": "78a22d5",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/78a22d595bc6ec8bd7e4527c5462746f971a36ed",
+  "timestamp": "2026-07-06T04:33:40.031Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 78.106689453125,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11331.814697265625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 13753
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 406.1,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3916,
+   "lcpMs": 7670,
+   "tbtMs": 86,
+   "cls": 0,
+   "speedIndexMs": 3916
+  },
+  "details": {
+   "vitest": "runs/20260706T043340Z-78a22d5-28767954356/vitest.json",
+   "playwright": "runs/20260706T043340Z-78a22d5-28767954356/playwright.json",
+   "lighthouse": "runs/20260706T043340Z-78a22d5-28767954356/lighthouse.json",
+   "size": "runs/20260706T043340Z-78a22d5-28767954356/size.json",
+   "coverage": "runs/20260706T043340Z-78a22d5-28767954356/coverage.json"
+  }
+ },
+ {
   "id": "20260706T043327Z-3272ddb-28767956508",
   "runId": "28767956508",
   "runNumber": 75,
