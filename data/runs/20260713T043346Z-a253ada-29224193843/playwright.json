@@ -1,0 +1,311 @@
+{
+  "config": {
+    "argv": [
+      "/opt/hostedtoolcache/node/22.23.1/x64/bin/node",
+      "/home/runner/work/tuples/tuples/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/home/runner/work/tuples/tuples/playwright.config.ts",
+    "rootDir": "/home/runner/work/tuples/tuples/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/prakashbsamanta/tuples/commit/68a14f1a8f24f4ebcc639dbc013889109549bb3b",
+        "commitHash": "68a14f1a8f24f4ebcc639dbc013889109549bb3b",
+        "prHref": "https://github.com/prakashbsamanta/tuples/pull/51",
+        "prTitle": "ci: bump github/codeql-action/upload-sarif from 4.36.3 to 4.37.0",
+        "prBaseHash": "7bfccdaa02886bac33eefd3c7d895beeb7775f7f",
+        "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/29224193843"
+      },
+      "gitCommit": {
+        "shortHash": "68a14f1",
+        "hash": "68a14f1a8f24f4ebcc639dbc013889109549bb3b",
+        "subject": "Merge a253ada799e9dcfbfcd9c6338095c806d9c9e273 into 7bfccdaa02886bac33eefd3c7d895beeb7775f7f",
+        "body": "Merge a253ada799e9dcfbfcd9c6338095c806d9c9e273 into 7bfccdaa02886bac33eefd3c7d895beeb7775f7f\n",
+        "author": {
+          "name": "dependabot[bot]",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com",
+          "time": 1783917120000
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "time": 1783917120000
+        },
+        "branch": "HEAD"
+      },
+      "gitDiff": "diff --git a/.github/workflows/scorecard.yml b/.github/workflows/scorecard.yml\nindex 5109d4e..d7e44d8 100644\n--- a/.github/workflows/scorecard.yml\n+++ b/.github/workflows/scorecard.yml\n@@ -38,6 +38,6 @@ jobs:\n           publish_results: true\n \n       - name: Upload to code-scanning\n-        uses: github/codeql-action/upload-sarif@54f647b7e1bb85c95cddabcd46b0c578ec92bc1a # v4.36.3\n+        uses: github/codeql-action/upload-sarif@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0\n         with:\n           sarif_file: results.sarif",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/tuples/tuples/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/prakashbsamanta/tuples/commit/68a14f1a8f24f4ebcc639dbc013889109549bb3b",
+            "commitHash": "68a14f1a8f24f4ebcc639dbc013889109549bb3b",
+            "prHref": "https://github.com/prakashbsamanta/tuples/pull/51",
+            "prTitle": "ci: bump github/codeql-action/upload-sarif from 4.36.3 to 4.37.0",
+            "prBaseHash": "7bfccdaa02886bac33eefd3c7d895beeb7775f7f",
+            "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/29224193843"
+          },
+          "gitCommit": {
+            "shortHash": "68a14f1",
+            "hash": "68a14f1a8f24f4ebcc639dbc013889109549bb3b",
+            "subject": "Merge a253ada799e9dcfbfcd9c6338095c806d9c9e273 into 7bfccdaa02886bac33eefd3c7d895beeb7775f7f",
+            "body": "Merge a253ada799e9dcfbfcd9c6338095c806d9c9e273 into 7bfccdaa02886bac33eefd3c7d895beeb7775f7f\n",
+            "author": {
+              "name": "dependabot[bot]",
+              "email": "49699333+dependabot[bot]@users.noreply.github.com",
+              "time": 1783917120000
+            },
+            "committer": {
+              "name": "GitHub",
+              "email": "noreply@github.com",
+              "time": 1783917120000
+            },
+            "branch": "HEAD"
+          },
+          "gitDiff": "diff --git a/.github/workflows/scorecard.yml b/.github/workflows/scorecard.yml\nindex 5109d4e..d7e44d8 100644\n--- a/.github/workflows/scorecard.yml\n+++ b/.github/workflows/scorecard.yml\n@@ -38,6 +38,6 @@ jobs:\n           publish_results: true\n \n       - name: Upload to code-scanning\n-        uses: github/codeql-action/upload-sarif@54f647b7e1bb85c95cddabcd46b0c578ec92bc1a # v4.36.3\n+        uses: github/codeql-action/upload-sarif@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0\n         with:\n           sarif_file: results.sarif",
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/tuples/tuples/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://localhost:4173/tuples/",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "full journey: homepage → enter world → solve → persist → review",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3795,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-13T04:33:16.070Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-d77cdc6daaf7accde4db",
+          "file": "smoke.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "homepage proof terminal runs real SQL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2055,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-13T04:33:20.111Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-02e22a5cc048fd241d66",
+          "file": "smoke.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "error coaching and test-run preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2191,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-13T04:33:22.179Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-0b239663049f52a1c4aa",
+          "file": "smoke.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "each world themes the workspace with its own accent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1562,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-13T04:33:24.386Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-b20115e63804b48b7ddb",
+          "file": "smoke.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "completed mission offers the certification exam",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 970,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-13T04:33:25.963Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-c95a13d800861ea7fbf2",
+          "file": "smoke.spec.ts",
+          "line": 108,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-13T04:33:13.530Z",
+    "duration": 13481.810000000001,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
