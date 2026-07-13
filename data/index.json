@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260713T043746Z-90fdba0-29224350616",
+  "runId": "29224350616",
+  "runNumber": 80,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/29224350616",
+  "context": "pr",
+  "pr": {
+   "number": 52,
+   "title": "ci: bump github/codeql-action/init from 4.36.2 to 4.37.0",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/52"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/init-4.37.0",
+  "sha": "90fdba0b47a390f8efcab7f81cf9119507ff0c36",
+  "shortSha": "90fdba0",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/90fdba0b47a390f8efcab7f81cf9119507ff0c36",
+  "timestamp": "2026-07-13T04:37:46.666Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 66.875244140625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 8951.97509765625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 13893
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 406.1,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3911,
+   "lcpMs": 7663,
+   "tbtMs": 51,
+   "cls": 0,
+   "speedIndexMs": 3911
+  },
+  "details": {
+   "vitest": "runs/20260713T043746Z-90fdba0-29224350616/vitest.json",
+   "playwright": "runs/20260713T043746Z-90fdba0-29224350616/playwright.json",
+   "lighthouse": "runs/20260713T043746Z-90fdba0-29224350616/lighthouse.json",
+   "size": "runs/20260713T043746Z-90fdba0-29224350616/size.json",
+   "coverage": "runs/20260713T043746Z-90fdba0-29224350616/coverage.json"
+  }
+ },
+ {
   "id": "20260713T043728Z-7577559-29224334995",
   "runId": "29224334995",
   "runNumber": 79,
