@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260720T044147Z-c0387a6-29717426161",
+  "runId": "29717426161",
+  "runNumber": 89,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/29717426161",
+  "context": "pr",
+  "pr": {
+   "number": 54,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.37.1",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/54"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.37.1",
+  "sha": "c0387a67760a1e1d0dfd1ae762827d68189b3b10",
+  "shortSha": "c0387a6",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/c0387a67760a1e1d0dfd1ae762827d68189b3b10",
+  "timestamp": "2026-07-20T04:41:47.676Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 70.81689453125,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11453.01708984375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 13956
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 406.1,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3918,
+   "lcpMs": 7672,
+   "tbtMs": 78,
+   "cls": 0,
+   "speedIndexMs": 3918
+  },
+  "details": {
+   "vitest": "runs/20260720T044147Z-c0387a6-29717426161/vitest.json",
+   "playwright": "runs/20260720T044147Z-c0387a6-29717426161/playwright.json",
+   "lighthouse": "runs/20260720T044147Z-c0387a6-29717426161/lighthouse.json",
+   "size": "runs/20260720T044147Z-c0387a6-29717426161/size.json",
+   "coverage": "runs/20260720T044147Z-c0387a6-29717426161/coverage.json"
+  }
+ },
+ {
   "id": "20260720T043859Z-834b75e-29717305105",
   "runId": "29717305105",
   "runNumber": 87,
