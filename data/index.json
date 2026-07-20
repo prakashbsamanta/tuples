@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260720T043811Z-be3c03e-29717300439",
+  "runId": "29717300439",
+  "runNumber": 86,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/29717300439",
+  "context": "pr",
+  "pr": {
+   "number": 55,
+   "title": "ci: bump actions/setup-node from 6.4.0 to 7.0.0",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/55"
+  },
+  "branch": "dependabot/github_actions/actions/setup-node-7.0.0",
+  "sha": "be3c03ea1e5e40b9154a7f2909189f9955f908f8",
+  "shortSha": "be3c03e",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/be3c03ea1e5e40b9154a7f2909189f9955f908f8",
+  "timestamp": "2026-07-20T04:38:11.199Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 90.902587890625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11076.56884765625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 13983
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 406.1,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3917,
+   "lcpMs": 7670,
+   "tbtMs": 74,
+   "cls": 0,
+   "speedIndexMs": 3917
+  },
+  "details": {
+   "vitest": "runs/20260720T043811Z-be3c03e-29717300439/vitest.json",
+   "playwright": "runs/20260720T043811Z-be3c03e-29717300439/playwright.json",
+   "lighthouse": "runs/20260720T043811Z-be3c03e-29717300439/lighthouse.json",
+   "size": "runs/20260720T043811Z-be3c03e-29717300439/size.json",
+   "coverage": "runs/20260720T043811Z-be3c03e-29717300439/coverage.json"
+  }
+ },
+ {
   "id": "20260720T043614Z-c96c261-29717220923",
   "runId": "29717220923",
   "runNumber": 85,

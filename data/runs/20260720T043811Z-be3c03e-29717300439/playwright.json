@@ -1,0 +1,311 @@
+{
+  "config": {
+    "argv": [
+      "/opt/hostedtoolcache/node/22.23.1/x64/bin/node",
+      "/home/runner/work/tuples/tuples/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/home/runner/work/tuples/tuples/playwright.config.ts",
+    "rootDir": "/home/runner/work/tuples/tuples/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/prakashbsamanta/tuples/commit/4d32b911564def612034518af8ec6c2346295de1",
+        "commitHash": "4d32b911564def612034518af8ec6c2346295de1",
+        "prHref": "https://github.com/prakashbsamanta/tuples/pull/55",
+        "prTitle": "ci: bump actions/setup-node from 6.4.0 to 7.0.0",
+        "prBaseHash": "a2fe8515d549961a6d37e1dd7048435d4b8f1a37",
+        "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/29717300439"
+      },
+      "gitCommit": {
+        "shortHash": "4d32b91",
+        "hash": "4d32b911564def612034518af8ec6c2346295de1",
+        "subject": "Merge be3c03ea1e5e40b9154a7f2909189f9955f908f8 into a2fe8515d549961a6d37e1dd7048435d4b8f1a37",
+        "body": "Merge be3c03ea1e5e40b9154a7f2909189f9955f908f8 into a2fe8515d549961a6d37e1dd7048435d4b8f1a37\n",
+        "author": {
+          "name": "dependabot[bot]",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com",
+          "time": 1784522189000
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "time": 1784522189000
+        },
+        "branch": "HEAD"
+      },
+      "gitDiff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\nindex 8762b22..d723536 100644\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -37,7 +37,7 @@ jobs:\n         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\n+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0\n         with:\n           node-version-file: .nvmrc\n           cache: npm\ndiff --git a/.github/workflows/deploy.yml b/.github/workflows/deploy.yml\nindex 3c78e9e..d8e5d9d 100644\n--- a/.github/workflows/deploy.yml\n+++ b/.github/workflows/deploy.yml\n@@ -35,7 +35,7 @@ jobs:\n         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\n+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0\n         with:\n           node-version-file: .nvmrc\n           cache: npm\ndiff --git a/.github/workflows/lighthouse.yml b/.github/workflows/lighthouse.yml\nindex 2465a15..8e2add0 100644\n--- a/.github/workflows/lighthouse.yml\n+++ b/.github/workflows/lighthouse.yml\n@@ -28,7 +28,7 @@ jobs:\n         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\n+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0\n         with:\n           node-version-file: .nvmrc\n           cache: npm",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/tuples/tuples/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/prakashbsamanta/tuples/commit/4d32b911564def612034518af8ec6c2346295de1",
+            "commitHash": "4d32b911564def612034518af8ec6c2346295de1",
+            "prHref": "https://github.com/prakashbsamanta/tuples/pull/55",
+            "prTitle": "ci: bump actions/setup-node from 6.4.0 to 7.0.0",
+            "prBaseHash": "a2fe8515d549961a6d37e1dd7048435d4b8f1a37",
+            "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/29717300439"
+          },
+          "gitCommit": {
+            "shortHash": "4d32b91",
+            "hash": "4d32b911564def612034518af8ec6c2346295de1",
+            "subject": "Merge be3c03ea1e5e40b9154a7f2909189f9955f908f8 into a2fe8515d549961a6d37e1dd7048435d4b8f1a37",
+            "body": "Merge be3c03ea1e5e40b9154a7f2909189f9955f908f8 into a2fe8515d549961a6d37e1dd7048435d4b8f1a37\n",
+            "author": {
+              "name": "dependabot[bot]",
+              "email": "49699333+dependabot[bot]@users.noreply.github.com",
+              "time": 1784522189000
+            },
+            "committer": {
+              "name": "GitHub",
+              "email": "noreply@github.com",
+              "time": 1784522189000
+            },
+            "branch": "HEAD"
+          },
+          "gitDiff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\nindex 8762b22..d723536 100644\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -37,7 +37,7 @@ jobs:\n         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\n+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0\n         with:\n           node-version-file: .nvmrc\n           cache: npm\ndiff --git a/.github/workflows/deploy.yml b/.github/workflows/deploy.yml\nindex 3c78e9e..d8e5d9d 100644\n--- a/.github/workflows/deploy.yml\n+++ b/.github/workflows/deploy.yml\n@@ -35,7 +35,7 @@ jobs:\n         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\n+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0\n         with:\n           node-version-file: .nvmrc\n           cache: npm\ndiff --git a/.github/workflows/lighthouse.yml b/.github/workflows/lighthouse.yml\nindex 2465a15..8e2add0 100644\n--- a/.github/workflows/lighthouse.yml\n+++ b/.github/workflows/lighthouse.yml\n@@ -28,7 +28,7 @@ jobs:\n         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0\n \n       - name: Setup Node\n-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0\n+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0\n         with:\n           node-version-file: .nvmrc\n           cache: npm",
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/tuples/tuples/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://localhost:4173/tuples/",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "full journey: homepage → enter world → solve → persist → review",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3717,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-20T04:37:39.988Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-d77cdc6daaf7accde4db",
+          "file": "smoke.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "homepage proof terminal runs real SQL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1963,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-20T04:37:43.955Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-02e22a5cc048fd241d66",
+          "file": "smoke.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "error coaching and test-run preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2148,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-20T04:37:45.931Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-0b239663049f52a1c4aa",
+          "file": "smoke.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "each world themes the workspace with its own accent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2638,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-20T04:37:48.095Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-b20115e63804b48b7ddb",
+          "file": "smoke.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "completed mission offers the certification exam",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1125,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-20T04:37:50.752Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-c95a13d800861ea7fbf2",
+          "file": "smoke.spec.ts",
+          "line": 108,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-20T04:37:37.984Z",
+    "duration": 13982.734,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
