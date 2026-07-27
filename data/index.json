@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260727T043807Z-6df2a41-30237556024",
+  "runId": "30237556024",
+  "runNumber": 101,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/30237556024",
+  "context": "pr",
+  "pr": {
+   "number": 60,
+   "title": "ci: bump github/codeql-action/upload-sarif from 4.37.1 to 4.37.3",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/60"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/upload-sarif-4.37.3",
+  "sha": "6df2a41bd6f5b31079eb05d7b2ed7106a1dbe85f",
+  "shortSha": "6df2a41",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/6df2a41bd6f5b31079eb05d7b2ed7106a1dbe85f",
+  "timestamp": "2026-07-27T04:38:07.696Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 78.835205078125,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11151.525634765625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 14230
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 406.1,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3915,
+   "lcpMs": 7668,
+   "tbtMs": 40,
+   "cls": 0,
+   "speedIndexMs": 3915
+  },
+  "details": {
+   "vitest": "runs/20260727T043807Z-6df2a41-30237556024/vitest.json",
+   "playwright": "runs/20260727T043807Z-6df2a41-30237556024/playwright.json",
+   "lighthouse": "runs/20260727T043807Z-6df2a41-30237556024/lighthouse.json",
+   "size": "runs/20260727T043807Z-6df2a41-30237556024/size.json",
+   "coverage": "runs/20260727T043807Z-6df2a41-30237556024/coverage.json"
+  }
+ },
+ {
   "id": "20260727T043757Z-bdd40e0-30237553946",
   "runId": "30237553946",
   "runNumber": 99,
