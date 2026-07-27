@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260727T043810Z-e858611-30237555447",
+  "runId": "30237555447",
+  "runNumber": 100,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/30237555447",
+  "context": "pr",
+  "pr": {
+   "number": 66,
+   "title": "build(deps): bump the dev-minor-patch group across 1 directory with 19 updates",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/66"
+  },
+  "branch": "dependabot/npm_and_yarn/dev-minor-patch-287ec0271a",
+  "sha": "e858611e799c3e711e2b89587aac9ffa0d8fb64a",
+  "shortSha": "e858611",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/e858611e799c3e711e2b89587aac9ffa0d8fb64a",
+  "timestamp": "2026-07-27T04:38:10.410Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 79.228515625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11277.873779296875,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 16107
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 408,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3914,
+   "lcpMs": 7667,
+   "tbtMs": 42,
+   "cls": 0,
+   "speedIndexMs": 3914
+  },
+  "details": {
+   "vitest": "runs/20260727T043810Z-e858611-30237555447/vitest.json",
+   "playwright": "runs/20260727T043810Z-e858611-30237555447/playwright.json",
+   "lighthouse": "runs/20260727T043810Z-e858611-30237555447/lighthouse.json",
+   "size": "runs/20260727T043810Z-e858611-30237555447/size.json",
+   "coverage": "runs/20260727T043810Z-e858611-30237555447/coverage.json"
+  }
+ },
+ {
   "id": "20260727T043807Z-6df2a41-30237556024",
   "runId": "30237556024",
   "runNumber": 101,
