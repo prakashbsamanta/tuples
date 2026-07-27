@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260727T043721Z-c335a06-30237528498",
+  "runId": "30237528498",
+  "runNumber": 97,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/30237528498",
+  "context": "pr",
+  "pr": {
+   "number": 64,
+   "title": "build(deps-dev): bump js-yaml from 4.2.0 to 4.3.0",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/64"
+  },
+  "branch": "dependabot/npm_and_yarn/js-yaml-4.3.0",
+  "sha": "c335a062ac2968337ac52444067ef81677933049",
+  "shortSha": "c335a06",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/c335a062ac2968337ac52444067ef81677933049",
+  "timestamp": "2026-07-27T04:37:21.489Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 78.546875,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11614.86962890625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 14797
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 406.1,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3986,
+   "lcpMs": 7570,
+   "tbtMs": 95,
+   "cls": 0,
+   "speedIndexMs": 3986
+  },
+  "details": {
+   "vitest": "runs/20260727T043721Z-c335a06-30237528498/vitest.json",
+   "playwright": "runs/20260727T043721Z-c335a06-30237528498/playwright.json",
+   "lighthouse": "runs/20260727T043721Z-c335a06-30237528498/lighthouse.json",
+   "size": "runs/20260727T043721Z-c335a06-30237528498/size.json",
+   "coverage": "runs/20260727T043721Z-c335a06-30237528498/coverage.json"
+  }
+ },
+ {
   "id": "20260727T043708Z-28fb2bd-30237542776",
   "runId": "30237542776",
   "runNumber": 98,
