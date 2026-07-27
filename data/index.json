@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260727T043836Z-ba703d2-30237557836",
+  "runId": "30237557836",
+  "runNumber": 102,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/30237557836",
+  "context": "pr",
+  "pr": {
+   "number": 59,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.37.3",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/59"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.37.3",
+  "sha": "ba703d2617b62c3dd12a34e25d65148d89d7136e",
+  "shortSha": "ba703d2",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/ba703d2617b62c3dd12a34e25d65148d89d7136e",
+  "timestamp": "2026-07-27T04:38:36.007Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 76.004150390625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 10989.203857421875,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 15117
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 406.1,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3916,
+   "lcpMs": 7669,
+   "tbtMs": 77,
+   "cls": 0,
+   "speedIndexMs": 3916
+  },
+  "details": {
+   "vitest": "runs/20260727T043836Z-ba703d2-30237557836/vitest.json",
+   "playwright": "runs/20260727T043836Z-ba703d2-30237557836/playwright.json",
+   "lighthouse": "runs/20260727T043836Z-ba703d2-30237557836/lighthouse.json",
+   "size": "runs/20260727T043836Z-ba703d2-30237557836/size.json",
+   "coverage": "runs/20260727T043836Z-ba703d2-30237557836/coverage.json"
+  }
+ },
+ {
   "id": "20260727T043810Z-e858611-30237555447",
   "runId": "30237555447",
   "runNumber": 100,
