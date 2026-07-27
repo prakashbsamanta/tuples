@@ -1,0 +1,11 @@
+{
+  "fetchTime": "2026-07-27T04:34:26.552Z",
+  "performance": 66,
+  "accessibility": 98,
+  "bestPractices": 100,
+  "fcpMs": 3914,
+  "lcpMs": 7666,
+  "tbtMs": 81,
+  "cls": 0,
+  "speedIndexMs": 3914
+}
