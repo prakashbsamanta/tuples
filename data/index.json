@@ -1,5 +1,64 @@
 [
  {
+  "id": "20260727T043708Z-28fb2bd-30237542776",
+  "runId": "30237542776",
+  "runNumber": 98,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/30237542776",
+  "context": "pr",
+  "pr": {
+   "number": 65,
+   "title": "build(deps): bump brace-expansion, eslint and lighthouse",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/65"
+  },
+  "branch": "dependabot/npm_and_yarn/multi-907b39ff43",
+  "sha": "28fb2bdddef8958bb73fec17520015bbb1a853a6",
+  "shortSha": "28fb2bd",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/28fb2bdddef8958bb73fec17520015bbb1a853a6",
+  "timestamp": "2026-07-27T04:37:08.707Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 0,
+    "files": 0
+   },
+   "integration": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 0,
+    "files": 0
+   },
+   "e2e": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 0
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": null,
+  "lighthouse": null,
+  "details": {
+   "vitest": "runs/20260727T043708Z-28fb2bd-30237542776/vitest.json",
+   "playwright": "runs/20260727T043708Z-28fb2bd-30237542776/playwright.json",
+   "lighthouse": null,
+   "size": null,
+   "coverage": "runs/20260727T043708Z-28fb2bd-30237542776/coverage.json"
+  }
+ },
+ {
   "id": "20260727T043704Z-bab195c-30237524190",
   "runId": "30237524190",
   "runNumber": 96,
