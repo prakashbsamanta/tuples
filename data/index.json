@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260727T043426Z-8478635-30237387575",
+  "runId": "30237387575",
+  "runNumber": 92,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/30237387575",
+  "context": "pr",
+  "pr": {
+   "number": 59,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.37.3",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/59"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.37.3",
+  "sha": "8478635ab61217982636194b8a32964b2f58fc13",
+  "shortSha": "8478635",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/8478635ab61217982636194b8a32964b2f58fc13",
+  "timestamp": "2026-07-27T04:34:26.166Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 49.166259765625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 5759.652099609375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 13596
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 406.1,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3912,
+   "lcpMs": 7665,
+   "tbtMs": 41,
+   "cls": 0,
+   "speedIndexMs": 3912
+  },
+  "details": {
+   "vitest": "runs/20260727T043426Z-8478635-30237387575/vitest.json",
+   "playwright": "runs/20260727T043426Z-8478635-30237387575/playwright.json",
+   "lighthouse": "runs/20260727T043426Z-8478635-30237387575/lighthouse.json",
+   "size": "runs/20260727T043426Z-8478635-30237387575/size.json",
+   "coverage": "runs/20260727T043426Z-8478635-30237387575/coverage.json"
+  }
+ },
+ {
   "id": "20260727T043409Z-42fad6b-30237380122",
   "runId": "30237380122",
   "runNumber": 91,
