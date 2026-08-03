@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260803T043459Z-001308c-30784751828",
+  "runId": "30784751828",
+  "runNumber": 117,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/30784751828",
+  "context": "pr",
+  "pr": {
+   "number": 72,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.37.4",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/72"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.37.4",
+  "sha": "001308c6b5106ddddf1a7d7944272b457cbef5fc",
+  "shortSha": "001308c",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/001308c6b5106ddddf1a7d7944272b457cbef5fc",
+  "timestamp": "2026-08-03T04:34:59.168Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 49.140625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 8838.60888671875,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 15803
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 408.2,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3913,
+   "lcpMs": 7666,
+   "tbtMs": 50,
+   "cls": 0,
+   "speedIndexMs": 3913
+  },
+  "details": {
+   "vitest": "runs/20260803T043459Z-001308c-30784751828/vitest.json",
+   "playwright": "runs/20260803T043459Z-001308c-30784751828/playwright.json",
+   "lighthouse": "runs/20260803T043459Z-001308c-30784751828/lighthouse.json",
+   "size": "runs/20260803T043459Z-001308c-30784751828/size.json",
+   "coverage": "runs/20260803T043459Z-001308c-30784751828/coverage.json"
+  }
+ },
+ {
   "id": "20260803T043320Z-c1318f9-30784677377",
   "runId": "30784677377",
   "runNumber": 116,
