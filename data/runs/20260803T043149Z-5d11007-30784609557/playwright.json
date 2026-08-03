@@ -1,0 +1,311 @@
+{
+  "config": {
+    "argv": [
+      "/opt/hostedtoolcache/node/22.23.1/x64/bin/node",
+      "/home/runner/work/tuples/tuples/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/home/runner/work/tuples/tuples/playwright.config.ts",
+    "rootDir": "/home/runner/work/tuples/tuples/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/prakashbsamanta/tuples/commit/773f7c3e6f30fe6f6b64fd4ce1c850c93b653926",
+        "commitHash": "773f7c3e6f30fe6f6b64fd4ce1c850c93b653926",
+        "prHref": "https://github.com/prakashbsamanta/tuples/pull/68",
+        "prTitle": "build(deps): bump the dev-minor-patch group with 5 updates",
+        "prBaseHash": "f5d980f8bd6cc4ef404a6f434f6922a13647fd80",
+        "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/30784609557"
+      },
+      "gitCommit": {
+        "shortHash": "773f7c3",
+        "hash": "773f7c3e6f30fe6f6b64fd4ce1c850c93b653926",
+        "subject": "Merge 5d1100770a71b1e3ea86842d57c8fd10e2700f3a into f5d980f8bd6cc4ef404a6f434f6922a13647fd80",
+        "body": "Merge 5d1100770a71b1e3ea86842d57c8fd10e2700f3a into f5d980f8bd6cc4ef404a6f434f6922a13647fd80\n",
+        "author": {
+          "name": "dependabot[bot]",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com",
+          "time": 1785731404000
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "time": 1785731404000
+        },
+        "branch": "HEAD"
+      },
+      "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex 41db60b..f0be903 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -13,9 +13,9 @@\n         \"@fontsource-variable/space-grotesk\": \"^5.3.0\",\n         \"@uiw/react-codemirror\": \"^4.25.11\",\n         \"@xyflow/react\": \"^12.11.2\",\n-        \"framer-motion\": \"^12.42.2\",\n+        \"framer-motion\": \"^12.43.0\",\n         \"gsap\": \"^3.15.0\",\n-        \"lucide-react\": \"^1.27.0\",\n+        \"lucide-react\": \"^1.28.0\",\n         \"react\": \"^19.2.8\",\n         \"react-dom\": \"^19.2.8\",\n         \"react-resizable-panels\": \"^3.0.6\",\n@@ -25,10 +25,10 @@\n       },\n       \"devDependencies\": {\n         \"@eslint/js\": \"^9.39.5\",\n-        \"@playwright/test\": \"^1.62.0\",\n+        \"@playwright/test\": \"^1.62.1\",\n         \"@tailwindcss/vite\": \"^4.3.3\",\n-        \"@types/react\": \"^19.2.17\",\n-        \"@types/react-dom\": \"^19.2.3\",\n+        \"@types/react\": \"^19.2.18\",\n+        \"@types/react-dom\": \"^19.2.4\",\n         \"@types/sql.js\": \"^1.4.9\",\n         \"@vitejs/plugin-react\": \"^5.2.0\",\n         \"@vitest/coverage-v8\": \"^4.1.10\",\n@@ -1453,13 +1453,13 @@\n       }\n     },\n     \"node_modules/@playwright/test\": {\n-      \"version\": \"1.62.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@playwright/test/-/test-1.62.0.tgz\",\n-      \"integrity\": \"sha512-9zOJ6ZQRAena31MpOH9VSzIz8Ou3YJ/wtY/eQm5T2uhfhG7/U3COrMS8xOtUrZrp9OgdmzEnIYODye3nY1VqzA==\",\n+      \"version\": \"1.62.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@playwright/test/-/test-1.62.1.tgz\",\n+      \"integrity\": \"sha512-DTcUc8qii+cpHvtOwggMtBRMjKZHXYWdw8syRYu2vtzuq4Wxphqq4NfCs5Zt44L6mA8rfDfj+PHnxFc/FeK6mQ==\",\n       \"dev\": true,\n       \"license\": \"Apache-2.0\",\n       \"dependencies\": {\n-        \"playwright\": \"1.62.0\"\n+        \"playwright\": \"1.62.1\"\n       },\n       \"bin\": {\n         \"playwright\": \"cli.js\"\n@@ -2756,9 +2756,9 @@\n       }\n     },\n     \"node_modules/@types/react\": {\n-      \"version\": \"19.2.17\",\n-      \"resolved\": \"https://registry.npmjs.org/@types/react/-/react-19.2.17.tgz\",\n-      \"integrity\": \"sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==\",\n+      \"version\": \"19.2.18\",\n+      \"resolved\": \"https://registry.npmjs.org/@types/react/-/react-19.2.18.tgz\",\n+      \"integrity\": \"sha512-AnzbBERsrLKtk2XSfTbYRLjQPdy116Sty4q+T+Bp3IC4l6jNBvreVPAHmpq9qhXQM7CXZPjLVmGMw9sy+hxQ3w==\",\n       \"devOptional\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n@@ -2766,9 +2766,9 @@\n       }\n     },\n     \"node_modules/@types/react-dom\": {\n-      \"version\": \"19.2.3\",\n-      \"resolved\": \"https://registry.npmjs.org/@types/react-dom/-/react-dom-19.2.3.tgz\",\n-      \"integrity\": \"sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==\",\n+      \"version\": \"19.2.4\",\n+      \"resolved\": \"https://registry.npmjs.org/@types/react-dom/-/react-dom-19.2.4.tgz\",\n+      \"integrity\": \"sha512-Bsc+QHgp+P/F02XDzNCY9jnZNCUuLki36KT7VKrTXXLdHf+vHMNZnW1rVu5DNW/rCK+fya3DATySbLM4yhtKUw==\",\n       \"devOptional\": true,\n       \"license\": \"MIT\",\n       \"peerDependencies\": {\n@@ -4503,12 +4503,12 @@\n       \"license\": \"ISC\"\n     },\n     \"node_modules/framer-motion\": {\n-      \"version\": \"12.42.2\",\n-      \"resolved\": \"https://registry.npmjs.org/framer-motion/-/framer-motion-12.42.2.tgz\",\n-      \"integrity\": \"sha512-5XY9luDiu0oHfHBjpDthFMh0ES+122w6p/papSJBweMkO8Sn+PW2QaEgRblQBpWFnuvZS5qvarpt/hO2pjGmnw==\",\n+      \"version\": \"12.43.0\",\n+      \"resolved\": \"https://registry.npmjs.org/framer-motion/-/framer-motion-12.43.0.tgz\",\n+      \"integrity\": \"sha512-1eaL3RvR/kAlbG7UYcpMptEyzPoENO0c6w7ZnB3/hh2vSAz/6uGAFn6fdoqTBguNstf3MsFhJHsD/0DHiclG+g==\",\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"motion-dom\": \"^12.42.2\",\n+        \"motion-dom\": \"^12.43.0\",\n         \"motion-utils\": \"^12.39.0\",\n         \"tslib\": \"^2.4.0\"\n       },\n@@ -5359,9 +5359,9 @@\n       }\n     },\n     \"node_modules/lucide-react\": {\n-      \"version\": \"1.27.0\",\n-      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.27.0.tgz\",\n-      \"integrity\": \"sha512-rJicGl/3Fly/E0rOH1YmPZ6e49JCnKknh1ox1vpHnkfjujAkKA6sqUZvH3MTAaXXjgexyUwgNwTJzTtYuAFYJw==\",\n+      \"version\": \"1.28.0\",\n+      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.28.0.tgz\",\n+      \"integrity\": \"sha512-fARAFJULsGuDDydjp6+6blekG/sBIM29TerzLjc9bQUKAcEfrSc4ZQKb25KRz4OMKd87cZTb5dgq0w/T6KufVg==\",\n       \"license\": \"ISC\",\n       \"peerDependencies\": {\n         \"react\": \"^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0\"\n@@ -5473,9 +5473,9 @@\n       \"license\": \"MIT\"\n     },\n     \"node_modules/motion-dom\": {\n-      \"version\": \"12.42.2\",\n-      \"resolved\": \"https://registry.npmjs.org/motion-dom/-/motion-dom-12.42.2.tgz\",\n-      \"integrity\": \"sha512-5gIMWLp/PycBtJRJWRgjxke5n8dlvkSn2DrYW+tr3XcqAZY1xZh6BJyooJXCM8wdfM7wfMjkBJNLge1CKPUIRA==\",\n+      \"version\": \"12.43.0\",\n+      \"resolved\": \"https://registry.npmjs.org/motion-dom/-/motion-dom-12.43.0.tgz\",\n+      \"integrity\": \"sha512-azKON4d9S65PEoFUiQTMTgPheEmzf2QngdRc50AKfJp9Q9mmcBVw22c8eMq9k8kxOFHdL7+WZY7N/5F/lwiDag==\",\n       \"license\": \"MIT\",\n       \"dependencies\": {\n         \"motion-utils\": \"^12.39.0\"\n@@ -5673,13 +5673,13 @@\n       }\n     },\n     \"node_modules/playwright\": {\n-      \"version\": \"1.62.0\",\n-      \"resolved\": \"https://registry.npmjs.org/playwright/-/playwright-1.62.0.tgz\",\n-      \"integrity\": \"sha512-Z14dG305dgaLu6foB1TXQagFiW8JfSUIUaUuPaKQ6NtBPKF1P/qXcqfh6c6K/icPqdy37JmjbiBXf6JNg6Sylw==\",\n+      \"version\": \"1.62.1\",\n+      \"resolved\": \"https://registry.npmjs.org/playwright/-/playwright-1.62.1.tgz\",\n+      \"integrity\": \"sha512-0M+L3LAD8/nm554LOla9Ayx0j0tmFZ0FBcoQ7F1VuVHpM/XpiC8RcDzBQB8W5+hA8L22THxELzeF+2WcUzvcLg==\",\n       \"dev\": true,\n       \"license\": \"Apache-2.0\",\n       \"dependencies\": {\n-        \"playwright-core\": \"1.62.0\"\n+        \"playwright-core\": \"1.62.1\"\n       },\n       \"bin\": {\n         \"playwright\": \"cli.js\"\n@@ -5692,9 +5692,9 @@\n       }\n     },\n     \"node_modules/playwright-core\": {\n-      \"version\": \"1.62.0\",\n-      \"resolved\": \"https://registry.npmjs.org/playwright-core/-/playwright-core-1.62.0.tgz\",\n-      \"integrity\": \"sha512-nsNRyq0r2zsG8AcRHWknc9QRA5XCueC7gWMrs+Gx2tlZn9hcl8zudfh00lhJPY1DE7NmZ6bDsT9g2yey8mXljA==\",\n+      \"version\": \"1.62.1\",\n+      \"resolved\": \"https://registry.npmjs.org/playwright-core/-/playwright-core-1.62.1.tgz\",\n+      \"integrity\": \"sha512-wPYSwEBJY9GHraISXqyqtx0na0LpO3XEX7jNDhntbex7tzUS7kLnZsOlFruFJB4Hi/rhDMjXGqHewDZ68nYZVw==\",\n       \"dev\": true,\n       \"license\": \"Apache-2.0\",\n       \"bin\": {\ndiff --git a/package.json b/package.json\nindex 184e199..6507bda 100644\n--- a/package.json\n+++ b/package.json\n@@ -26,9 +26,9 @@\n     \"@fontsource-variable/space-grotesk\": \"^5.3.0\",\n     \"@uiw/react-codemirror\": \"^4.25.11\",\n     \"@xyflow/react\": \"^12.11.2\",\n-    \"framer-motion\": \"^12.42.2\",\n+    \"framer-motion\": \"^12.43.0\",\n     \"gsap\": \"^3.15.0\",\n-    \"lucide-react\": \"^1.27.0\",\n+    \"lucide-react\": \"^1.28.0\",\n     \"react\": \"^19.2.8\",\n     \"react-dom\": \"^19.2.8\",\n     \"react-resizable-panels\": \"^3.0.6\",\n@@ -38,10 +38,10 @@\n   },\n   \"devDependencies\": {\n     \"@eslint/js\": \"^9.39.5\",\n-    \"@playwright/test\": \"^1.62.0\",\n+    \"@playwright/test\": \"^1.62.1\",\n     \"@tailwindcss/vite\": \"^4.3.3\",\n-    \"@types/react\": \"^19.2.17\",\n-    \"@types/react-dom\": \"^19.2.3\",\n+    \"@types/react\": \"^19.2.18\",\n+    \"@types/react-dom\": \"^19.2.4\",\n     \"@types/sql.js\": \"^1.4.9\",\n     \"@vitejs/plugin-react\": \"^5.2.0\",\n     \"@vitest/coverage-v8\": \"^4.1.10\",",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/tuples/tuples/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/prakashbsamanta/tuples/commit/773f7c3e6f30fe6f6b64fd4ce1c850c93b653926",
+            "commitHash": "773f7c3e6f30fe6f6b64fd4ce1c850c93b653926",
+            "prHref": "https://github.com/prakashbsamanta/tuples/pull/68",
+            "prTitle": "build(deps): bump the dev-minor-patch group with 5 updates",
+            "prBaseHash": "f5d980f8bd6cc4ef404a6f434f6922a13647fd80",
+            "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/30784609557"
+          },
+          "gitCommit": {
+            "shortHash": "773f7c3",
+            "hash": "773f7c3e6f30fe6f6b64fd4ce1c850c93b653926",
+            "subject": "Merge 5d1100770a71b1e3ea86842d57c8fd10e2700f3a into f5d980f8bd6cc4ef404a6f434f6922a13647fd80",
+            "body": "Merge 5d1100770a71b1e3ea86842d57c8fd10e2700f3a into f5d980f8bd6cc4ef404a6f434f6922a13647fd80\n",
+            "author": {
+              "name": "dependabot[bot]",
+              "email": "49699333+dependabot[bot]@users.noreply.github.com",
+              "time": 1785731404000
+            },
+            "committer": {
+              "name": "GitHub",
+              "email": "noreply@github.com",
+              "time": 1785731404000
+            },
+            "branch": "HEAD"
+          },
+          "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex 41db60b..f0be903 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -13,9 +13,9 @@\n         \"@fontsource-variable/space-grotesk\": \"^5.3.0\",\n         \"@uiw/react-codemirror\": \"^4.25.11\",\n         \"@xyflow/react\": \"^12.11.2\",\n-        \"framer-motion\": \"^12.42.2\",\n+        \"framer-motion\": \"^12.43.0\",\n         \"gsap\": \"^3.15.0\",\n-        \"lucide-react\": \"^1.27.0\",\n+        \"lucide-react\": \"^1.28.0\",\n         \"react\": \"^19.2.8\",\n         \"react-dom\": \"^19.2.8\",\n         \"react-resizable-panels\": \"^3.0.6\",\n@@ -25,10 +25,10 @@\n       },\n       \"devDependencies\": {\n         \"@eslint/js\": \"^9.39.5\",\n-        \"@playwright/test\": \"^1.62.0\",\n+        \"@playwright/test\": \"^1.62.1\",\n         \"@tailwindcss/vite\": \"^4.3.3\",\n-        \"@types/react\": \"^19.2.17\",\n-        \"@types/react-dom\": \"^19.2.3\",\n+        \"@types/react\": \"^19.2.18\",\n+        \"@types/react-dom\": \"^19.2.4\",\n         \"@types/sql.js\": \"^1.4.9\",\n         \"@vitejs/plugin-react\": \"^5.2.0\",\n         \"@vitest/coverage-v8\": \"^4.1.10\",\n@@ -1453,13 +1453,13 @@\n       }\n     },\n     \"node_modules/@playwright/test\": {\n-      \"version\": \"1.62.0\",\n-      \"resolved\": \"https://registry.npmjs.org/@playwright/test/-/test-1.62.0.tgz\",\n-      \"integrity\": \"sha512-9zOJ6ZQRAena31MpOH9VSzIz8Ou3YJ/wtY/eQm5T2uhfhG7/U3COrMS8xOtUrZrp9OgdmzEnIYODye3nY1VqzA==\",\n+      \"version\": \"1.62.1\",\n+      \"resolved\": \"https://registry.npmjs.org/@playwright/test/-/test-1.62.1.tgz\",\n+      \"integrity\": \"sha512-DTcUc8qii+cpHvtOwggMtBRMjKZHXYWdw8syRYu2vtzuq4Wxphqq4NfCs5Zt44L6mA8rfDfj+PHnxFc/FeK6mQ==\",\n       \"dev\": true,\n       \"license\": \"Apache-2.0\",\n       \"dependencies\": {\n-        \"playwright\": \"1.62.0\"\n+        \"playwright\": \"1.62.1\"\n       },\n       \"bin\": {\n         \"playwright\": \"cli.js\"\n@@ -2756,9 +2756,9 @@\n       }\n     },\n     \"node_modules/@types/react\": {\n-      \"version\": \"19.2.17\",\n-      \"resolved\": \"https://registry.npmjs.org/@types/react/-/react-19.2.17.tgz\",\n-      \"integrity\": \"sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==\",\n+      \"version\": \"19.2.18\",\n+      \"resolved\": \"https://registry.npmjs.org/@types/react/-/react-19.2.18.tgz\",\n+      \"integrity\": \"sha512-AnzbBERsrLKtk2XSfTbYRLjQPdy116Sty4q+T+Bp3IC4l6jNBvreVPAHmpq9qhXQM7CXZPjLVmGMw9sy+hxQ3w==\",\n       \"devOptional\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n@@ -2766,9 +2766,9 @@\n       }\n     },\n     \"node_modules/@types/react-dom\": {\n-      \"version\": \"19.2.3\",\n-      \"resolved\": \"https://registry.npmjs.org/@types/react-dom/-/react-dom-19.2.3.tgz\",\n-      \"integrity\": \"sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==\",\n+      \"version\": \"19.2.4\",\n+      \"resolved\": \"https://registry.npmjs.org/@types/react-dom/-/react-dom-19.2.4.tgz\",\n+      \"integrity\": \"sha512-Bsc+QHgp+P/F02XDzNCY9jnZNCUuLki36KT7VKrTXXLdHf+vHMNZnW1rVu5DNW/rCK+fya3DATySbLM4yhtKUw==\",\n       \"devOptional\": true,\n       \"license\": \"MIT\",\n       \"peerDependencies\": {\n@@ -4503,12 +4503,12 @@\n       \"license\": \"ISC\"\n     },\n     \"node_modules/framer-motion\": {\n-      \"version\": \"12.42.2\",\n-      \"resolved\": \"https://registry.npmjs.org/framer-motion/-/framer-motion-12.42.2.tgz\",\n-      \"integrity\": \"sha512-5XY9luDiu0oHfHBjpDthFMh0ES+122w6p/papSJBweMkO8Sn+PW2QaEgRblQBpWFnuvZS5qvarpt/hO2pjGmnw==\",\n+      \"version\": \"12.43.0\",\n+      \"resolved\": \"https://registry.npmjs.org/framer-motion/-/framer-motion-12.43.0.tgz\",\n+      \"integrity\": \"sha512-1eaL3RvR/kAlbG7UYcpMptEyzPoENO0c6w7ZnB3/hh2vSAz/6uGAFn6fdoqTBguNstf3MsFhJHsD/0DHiclG+g==\",\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"motion-dom\": \"^12.42.2\",\n+        \"motion-dom\": \"^12.43.0\",\n         \"motion-utils\": \"^12.39.0\",\n         \"tslib\": \"^2.4.0\"\n       },\n@@ -5359,9 +5359,9 @@\n       }\n     },\n     \"node_modules/lucide-react\": {\n-      \"version\": \"1.27.0\",\n-      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.27.0.tgz\",\n-      \"integrity\": \"sha512-rJicGl/3Fly/E0rOH1YmPZ6e49JCnKknh1ox1vpHnkfjujAkKA6sqUZvH3MTAaXXjgexyUwgNwTJzTtYuAFYJw==\",\n+      \"version\": \"1.28.0\",\n+      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.28.0.tgz\",\n+      \"integrity\": \"sha512-fARAFJULsGuDDydjp6+6blekG/sBIM29TerzLjc9bQUKAcEfrSc4ZQKb25KRz4OMKd87cZTb5dgq0w/T6KufVg==\",\n       \"license\": \"ISC\",\n       \"peerDependencies\": {\n         \"react\": \"^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0\"\n@@ -5473,9 +5473,9 @@\n       \"license\": \"MIT\"\n     },\n     \"node_modules/motion-dom\": {\n-      \"version\": \"12.42.2\",\n-      \"resolved\": \"https://registry.npmjs.org/motion-dom/-/motion-dom-12.42.2.tgz\",\n-      \"integrity\": \"sha512-5gIMWLp/PycBtJRJWRgjxke5n8dlvkSn2DrYW+tr3XcqAZY1xZh6BJyooJXCM8wdfM7wfMjkBJNLge1CKPUIRA==\",\n+      \"version\": \"12.43.0\",\n+      \"resolved\": \"https://registry.npmjs.org/motion-dom/-/motion-dom-12.43.0.tgz\",\n+      \"integrity\": \"sha512-azKON4d9S65PEoFUiQTMTgPheEmzf2QngdRc50AKfJp9Q9mmcBVw22c8eMq9k8kxOFHdL7+WZY7N/5F/lwiDag==\",\n       \"license\": \"MIT\",\n       \"dependencies\": {\n         \"motion-utils\": \"^12.39.0\"\n@@ -5673,13 +5673,13 @@\n       }\n     },\n     \"node_modules/playwright\": {\n-      \"version\": \"1.62.0\",\n-      \"resolved\": \"https://registry.npmjs.org/playwright/-/playwright-1.62.0.tgz\",\n-      \"integrity\": \"sha512-Z14dG305dgaLu6foB1TXQagFiW8JfSUIUaUuPaKQ6NtBPKF1P/qXcqfh6c6K/icPqdy37JmjbiBXf6JNg6Sylw==\",\n+      \"version\": \"1.62.1\",\n+      \"resolved\": \"https://registry.npmjs.org/playwright/-/playwright-1.62.1.tgz\",\n+      \"integrity\": \"sha512-0M+L3LAD8/nm554LOla9Ayx0j0tmFZ0FBcoQ7F1VuVHpM/XpiC8RcDzBQB8W5+hA8L22THxELzeF+2WcUzvcLg==\",\n       \"dev\": true,\n       \"license\": \"Apache-2.0\",\n       \"dependencies\": {\n-        \"playwright-core\": \"1.62.0\"\n+        \"playwright-core\": \"1.62.1\"\n       },\n       \"bin\": {\n         \"playwright\": \"cli.js\"\n@@ -5692,9 +5692,9 @@\n       }\n     },\n     \"node_modules/playwright-core\": {\n-      \"version\": \"1.62.0\",\n-      \"resolved\": \"https://registry.npmjs.org/playwright-core/-/playwright-core-1.62.0.tgz\",\n-      \"integrity\": \"sha512-nsNRyq0r2zsG8AcRHWknc9QRA5XCueC7gWMrs+Gx2tlZn9hcl8zudfh00lhJPY1DE7NmZ6bDsT9g2yey8mXljA==\",\n+      \"version\": \"1.62.1\",\n+      \"resolved\": \"https://registry.npmjs.org/playwright-core/-/playwright-core-1.62.1.tgz\",\n+      \"integrity\": \"sha512-wPYSwEBJY9GHraISXqyqtx0na0LpO3XEX7jNDhntbex7tzUS7kLnZsOlFruFJB4Hi/rhDMjXGqHewDZ68nYZVw==\",\n       \"dev\": true,\n       \"license\": \"Apache-2.0\",\n       \"bin\": {\ndiff --git a/package.json b/package.json\nindex 184e199..6507bda 100644\n--- a/package.json\n+++ b/package.json\n@@ -26,9 +26,9 @@\n     \"@fontsource-variable/space-grotesk\": \"^5.3.0\",\n     \"@uiw/react-codemirror\": \"^4.25.11\",\n     \"@xyflow/react\": \"^12.11.2\",\n-    \"framer-motion\": \"^12.42.2\",\n+    \"framer-motion\": \"^12.43.0\",\n     \"gsap\": \"^3.15.0\",\n-    \"lucide-react\": \"^1.27.0\",\n+    \"lucide-react\": \"^1.28.0\",\n     \"react\": \"^19.2.8\",\n     \"react-dom\": \"^19.2.8\",\n     \"react-resizable-panels\": \"^3.0.6\",\n@@ -38,10 +38,10 @@\n   },\n   \"devDependencies\": {\n     \"@eslint/js\": \"^9.39.5\",\n-    \"@playwright/test\": \"^1.62.0\",\n+    \"@playwright/test\": \"^1.62.1\",\n     \"@tailwindcss/vite\": \"^4.3.3\",\n-    \"@types/react\": \"^19.2.17\",\n-    \"@types/react-dom\": \"^19.2.3\",\n+    \"@types/react\": \"^19.2.18\",\n+    \"@types/react-dom\": \"^19.2.4\",\n     \"@types/sql.js\": \"^1.4.9\",\n     \"@vitejs/plugin-react\": \"^5.2.0\",\n     \"@vitest/coverage-v8\": \"^4.1.10\",",
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/tuples/tuples/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://localhost:4173/tuples/",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "full journey: homepage → enter world → solve → persist → review",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4053,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T04:31:16.858Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-d77cdc6daaf7accde4db",
+          "file": "smoke.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "homepage proof terminal runs real SQL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2031,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T04:31:21.156Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-02e22a5cc048fd241d66",
+          "file": "smoke.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "error coaching and test-run preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2625,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T04:31:23.198Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-0b239663049f52a1c4aa",
+          "file": "smoke.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "each world themes the workspace with its own accent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2306,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T04:31:25.836Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-b20115e63804b48b7ddb",
+          "file": "smoke.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "completed mission offers the certification exam",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1808,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-03T04:31:28.152Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-c95a13d800861ea7fbf2",
+          "file": "smoke.spec.ts",
+          "line": 108,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-03T04:31:14.710Z",
+    "duration": 15330.405,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
