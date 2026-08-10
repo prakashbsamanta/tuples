@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260810T044147Z-5f4085b-31356205682",
+  "runId": "31356205682",
+  "runNumber": 122,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/31356205682",
+  "context": "pr",
+  "pr": {
+   "number": 76,
+   "title": "ci: bump github/codeql-action/init from 4.36.2 to 4.37.6",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/76"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/init-4.37.6",
+  "sha": "5f4085b6ee7f4feff400d96578faaf58752a177f",
+  "shortSha": "5f4085b",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/5f4085b6ee7f4feff400d96578faaf58752a177f",
+  "timestamp": "2026-08-10T04:41:47.406Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 87.62255859375,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11326.166748046875,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 16122
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 408.2,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3991,
+   "lcpMs": 7666,
+   "tbtMs": 79,
+   "cls": 0,
+   "speedIndexMs": 3991
+  },
+  "details": {
+   "vitest": "runs/20260810T044147Z-5f4085b-31356205682/vitest.json",
+   "playwright": "runs/20260810T044147Z-5f4085b-31356205682/playwright.json",
+   "lighthouse": "runs/20260810T044147Z-5f4085b-31356205682/lighthouse.json",
+   "size": "runs/20260810T044147Z-5f4085b-31356205682/size.json",
+   "coverage": "runs/20260810T044147Z-5f4085b-31356205682/coverage.json"
+  }
+ },
+ {
   "id": "20260810T044016Z-8950045-31356119939",
   "runId": "31356119939",
   "runNumber": 120,
