@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260810T044016Z-8950045-31356119939",
+  "runId": "31356119939",
+  "runNumber": 120,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/31356119939",
+  "context": "pr",
+  "pr": {
+   "number": 74,
+   "title": "build(deps): bump framer-motion from 12.43.0 to 13.0.0",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/74"
+  },
+  "branch": "dependabot/npm_and_yarn/framer-motion-13.0.0",
+  "sha": "8950045f8bf22a9ce2ab317595e0473ebad40d05",
+  "shortSha": "8950045",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/8950045f8bf22a9ce2ab317595e0473ebad40d05",
+  "timestamp": "2026-08-10T04:40:16.257Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 81.91064453125,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11216.271240234375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 15964
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 408.2,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3918,
+   "lcpMs": 7671,
+   "tbtMs": 83,
+   "cls": 0,
+   "speedIndexMs": 3918
+  },
+  "details": {
+   "vitest": "runs/20260810T044016Z-8950045-31356119939/vitest.json",
+   "playwright": "runs/20260810T044016Z-8950045-31356119939/playwright.json",
+   "lighthouse": "runs/20260810T044016Z-8950045-31356119939/lighthouse.json",
+   "size": "runs/20260810T044016Z-8950045-31356119939/size.json",
+   "coverage": "runs/20260810T044016Z-8950045-31356119939/coverage.json"
+  }
+ },
+ {
   "id": "20260810T044004Z-65f4331-31356111100",
   "runId": "31356111100",
   "runNumber": 119,
