@@ -1,0 +1,135 @@
+{
+  "config": {
+    "argv": [
+      "/opt/hostedtoolcache/node/22.23.1/x64/bin/node",
+      "/home/runner/work/tuples/tuples/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/home/runner/work/tuples/tuples/playwright.config.ts",
+    "rootDir": "/home/runner/work/tuples/tuples/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/prakashbsamanta/tuples/commit/981a455e2e6440f1dee34774dd022fa28ef2ca08",
+        "commitHash": "981a455e2e6440f1dee34774dd022fa28ef2ca08",
+        "prHref": "https://github.com/prakashbsamanta/tuples/pull/69",
+        "prTitle": "build(deps): bump react-resizable-panels from 3.0.6 to 4.12.2",
+        "prBaseHash": "af7eb56ff01632a0e6d4a9c0e74781b6bc46a258",
+        "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/31356335263"
+      },
+      "gitCommit": {
+        "shortHash": "981a455",
+        "hash": "981a455e2e6440f1dee34774dd022fa28ef2ca08",
+        "subject": "Merge a75e57482a0e9c8be8ccc4e3805b866eb0a6a491 into af7eb56ff01632a0e6d4a9c0e74781b6bc46a258",
+        "body": "Merge a75e57482a0e9c8be8ccc4e3805b866eb0a6a491 into af7eb56ff01632a0e6d4a9c0e74781b6bc46a258\n",
+        "author": {
+          "name": "dependabot[bot]",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com",
+          "time": 1786336946000
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "time": 1786336946000
+        },
+        "branch": "HEAD"
+      },
+      "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex 9f45667..bffdf51 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -18,7 +18,7 @@\n         \"lucide-react\": \"^1.29.0\",\n         \"react\": \"^19.2.8\",\n         \"react-dom\": \"^19.2.8\",\n-        \"react-resizable-panels\": \"^3.0.6\",\n+        \"react-resizable-panels\": \"^4.12.2\",\n         \"recharts\": \"^3.10.1\",\n         \"sql.js\": \"1.14.1\",\n         \"zustand\": \"^5.0.0\"\n@@ -5877,13 +5877,13 @@\n       }\n     },\n     \"node_modules/react-resizable-panels\": {\n-      \"version\": \"3.0.6\",\n-      \"resolved\": \"https://registry.npmjs.org/react-resizable-panels/-/react-resizable-panels-3.0.6.tgz\",\n-      \"integrity\": \"sha512-b3qKHQ3MLqOgSS+FRYKapNkJZf5EQzuf6+RLiq1/IlTHw99YrZ2NJZLk4hQIzTnnIkRg2LUqyVinu6YWWpUYew==\",\n+      \"version\": \"4.12.2\",\n+      \"resolved\": \"https://registry.npmjs.org/react-resizable-panels/-/react-resizable-panels-4.12.2.tgz\",\n+      \"integrity\": \"sha512-NwY5LCo4WrxVvDh0xoMML6EMLPONP/8ckKcIdpnojxexoatZdjLiRqLJQjQK5CPkd4SYiB/2M5BVrjZBQtOO7Q==\",\n       \"license\": \"MIT\",\n       \"peerDependencies\": {\n-        \"react\": \"^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc\",\n-        \"react-dom\": \"^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc\"\n+        \"react\": \"^18.0.0 || ^19.0.0\",\n+        \"react-dom\": \"^18.0.0 || ^19.0.0\"\n       }\n     },\n     \"node_modules/recharts\": {\ndiff --git a/package.json b/package.json\nindex f723e2b..11c1c19 100644\n--- a/package.json\n+++ b/package.json\n@@ -31,7 +31,7 @@\n     \"lucide-react\": \"^1.29.0\",\n     \"react\": \"^19.2.8\",\n     \"react-dom\": \"^19.2.8\",\n-    \"react-resizable-panels\": \"^3.0.6\",\n+    \"react-resizable-panels\": \"^4.12.2\",\n     \"recharts\": \"^3.10.1\",\n     \"sql.js\": \"1.14.1\",\n     \"zustand\": \"^5.0.0\""
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/tuples/tuples/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/prakashbsamanta/tuples/commit/981a455e2e6440f1dee34774dd022fa28ef2ca08",
+            "commitHash": "981a455e2e6440f1dee34774dd022fa28ef2ca08",
+            "prHref": "https://github.com/prakashbsamanta/tuples/pull/69",
+            "prTitle": "build(deps): bump react-resizable-panels from 3.0.6 to 4.12.2",
+            "prBaseHash": "af7eb56ff01632a0e6d4a9c0e74781b6bc46a258",
+            "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/31356335263"
+          },
+          "gitCommit": {
+            "shortHash": "981a455",
+            "hash": "981a455e2e6440f1dee34774dd022fa28ef2ca08",
+            "subject": "Merge a75e57482a0e9c8be8ccc4e3805b866eb0a6a491 into af7eb56ff01632a0e6d4a9c0e74781b6bc46a258",
+            "body": "Merge a75e57482a0e9c8be8ccc4e3805b866eb0a6a491 into af7eb56ff01632a0e6d4a9c0e74781b6bc46a258\n",
+            "author": {
+              "name": "dependabot[bot]",
+              "email": "49699333+dependabot[bot]@users.noreply.github.com",
+              "time": 1786336946000
+            },
+            "committer": {
+              "name": "GitHub",
+              "email": "noreply@github.com",
+              "time": 1786336946000
+            },
+            "branch": "HEAD"
+          },
+          "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex 9f45667..bffdf51 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -18,7 +18,7 @@\n         \"lucide-react\": \"^1.29.0\",\n         \"react\": \"^19.2.8\",\n         \"react-dom\": \"^19.2.8\",\n-        \"react-resizable-panels\": \"^3.0.6\",\n+        \"react-resizable-panels\": \"^4.12.2\",\n         \"recharts\": \"^3.10.1\",\n         \"sql.js\": \"1.14.1\",\n         \"zustand\": \"^5.0.0\"\n@@ -5877,13 +5877,13 @@\n       }\n     },\n     \"node_modules/react-resizable-panels\": {\n-      \"version\": \"3.0.6\",\n-      \"resolved\": \"https://registry.npmjs.org/react-resizable-panels/-/react-resizable-panels-3.0.6.tgz\",\n-      \"integrity\": \"sha512-b3qKHQ3MLqOgSS+FRYKapNkJZf5EQzuf6+RLiq1/IlTHw99YrZ2NJZLk4hQIzTnnIkRg2LUqyVinu6YWWpUYew==\",\n+      \"version\": \"4.12.2\",\n+      \"resolved\": \"https://registry.npmjs.org/react-resizable-panels/-/react-resizable-panels-4.12.2.tgz\",\n+      \"integrity\": \"sha512-NwY5LCo4WrxVvDh0xoMML6EMLPONP/8ckKcIdpnojxexoatZdjLiRqLJQjQK5CPkd4SYiB/2M5BVrjZBQtOO7Q==\",\n       \"license\": \"MIT\",\n       \"peerDependencies\": {\n-        \"react\": \"^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc\",\n-        \"react-dom\": \"^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc\"\n+        \"react\": \"^18.0.0 || ^19.0.0\",\n+        \"react-dom\": \"^18.0.0 || ^19.0.0\"\n       }\n     },\n     \"node_modules/recharts\": {\ndiff --git a/package.json b/package.json\nindex f723e2b..11c1c19 100644\n--- a/package.json\n+++ b/package.json\n@@ -31,7 +31,7 @@\n     \"lucide-react\": \"^1.29.0\",\n     \"react\": \"^19.2.8\",\n     \"react-dom\": \"^19.2.8\",\n-    \"react-resizable-panels\": \"^3.0.6\",\n+    \"react-resizable-panels\": \"^4.12.2\",\n     \"recharts\": \"^3.10.1\",\n     \"sql.js\": \"1.14.1\",\n     \"zustand\": \"^5.0.0\""
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/tuples/tuples/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://localhost:4173/tuples/",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [],
+  "errors": [
+    {
+      "message": "Error: Timed out waiting 60000ms from config.webServer.",
+      "stack": "Error: Timed out waiting 60000ms from config.webServer."
+    }
+  ],
+  "stats": {
+    "startTime": "2026-08-10T04:43:38.396Z",
+    "duration": 61056.712,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
