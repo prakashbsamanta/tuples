@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260817T043936Z-cd3098e-31995149427",
+  "runId": "31995149427",
+  "runNumber": 132,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/31995149427",
+  "context": "pr",
+  "pr": {
+   "number": 82,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.37.7",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/82"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.37.7",
+  "sha": "cd3098e8cc1a605bc64a90011ddf3be3ed1f3449",
+  "shortSha": "cd3098e",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/cd3098e8cc1a605bc64a90011ddf3be3ed1f3449",
+  "timestamp": "2026-08-17T04:39:36.674Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 72.569091796875,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11280.16015625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 15684
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 409.7,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3915,
+   "lcpMs": 7668,
+   "tbtMs": 74,
+   "cls": 0,
+   "speedIndexMs": 3915
+  },
+  "details": {
+   "vitest": "runs/20260817T043936Z-cd3098e-31995149427/vitest.json",
+   "playwright": "runs/20260817T043936Z-cd3098e-31995149427/playwright.json",
+   "lighthouse": "runs/20260817T043936Z-cd3098e-31995149427/lighthouse.json",
+   "size": "runs/20260817T043936Z-cd3098e-31995149427/size.json",
+   "coverage": "runs/20260817T043936Z-cd3098e-31995149427/coverage.json"
+  }
+ },
+ {
   "id": "20260817T043813Z-be3e3fe-31995069866",
   "runId": "31995069866",
   "runNumber": 131,
