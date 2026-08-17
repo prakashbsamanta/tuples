@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260817T044110Z-8561683-31995242739",
+  "runId": "31995242739",
+  "runNumber": 133,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/31995242739",
+  "context": "pr",
+  "pr": {
+   "number": 83,
+   "title": "ci: bump github/codeql-action/init from 4.36.2 to 4.37.7",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/83"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/init-4.37.7",
+  "sha": "8561683f14a864d4ade7d98de2b8051f5e5a6672",
+  "shortSha": "8561683",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/8561683f14a864d4ade7d98de2b8051f5e5a6672",
+  "timestamp": "2026-08-17T04:41:10.431Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 59.66162109375,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 8780.719970703125,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 14873
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 409.7,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3910,
+   "lcpMs": 7662,
+   "tbtMs": 52,
+   "cls": 0,
+   "speedIndexMs": 3910
+  },
+  "details": {
+   "vitest": "runs/20260817T044110Z-8561683-31995242739/vitest.json",
+   "playwright": "runs/20260817T044110Z-8561683-31995242739/playwright.json",
+   "lighthouse": "runs/20260817T044110Z-8561683-31995242739/lighthouse.json",
+   "size": "runs/20260817T044110Z-8561683-31995242739/size.json",
+   "coverage": "runs/20260817T044110Z-8561683-31995242739/coverage.json"
+  }
+ },
+ {
   "id": "20260817T043936Z-cd3098e-31995149427",
   "runId": "31995149427",
   "runNumber": 132,
