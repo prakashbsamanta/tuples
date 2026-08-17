@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260817T043743Z-cd1060e-31995052234",
+  "runId": "31995052234",
+  "runNumber": 129,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/31995052234",
+  "context": "pr",
+  "pr": {
+   "number": 79,
+   "title": "build(deps): bump the dev-minor-patch group with 6 updates",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/79"
+  },
+  "branch": "dependabot/npm_and_yarn/dev-minor-patch-7e238f655a",
+  "sha": "cd1060e1da6f792d045f4b267f005e9e444c6469",
+  "shortSha": "cd1060e",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/cd1060e1da6f792d045f4b267f005e9e444c6469",
+  "timestamp": "2026-08-17T04:37:43.076Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 74.53076171875,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 7077.51708984375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 15805
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 409.7,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3912,
+   "lcpMs": 7665,
+   "tbtMs": 55,
+   "cls": 0,
+   "speedIndexMs": 3912
+  },
+  "details": {
+   "vitest": "runs/20260817T043743Z-cd1060e-31995052234/vitest.json",
+   "playwright": "runs/20260817T043743Z-cd1060e-31995052234/playwright.json",
+   "lighthouse": "runs/20260817T043743Z-cd1060e-31995052234/lighthouse.json",
+   "size": "runs/20260817T043743Z-cd1060e-31995052234/size.json",
+   "coverage": "runs/20260817T043743Z-cd1060e-31995052234/coverage.json"
+  }
+ },
+ {
   "id": "20260810T044826Z-c7a8d50-31356488713",
   "runId": "31356488713",
   "runNumber": 127,
