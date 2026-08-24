@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260824T044330Z-cbd565f-32690971504",
+  "runId": "32690971504",
+  "runNumber": 141,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/32690971504",
+  "context": "pr",
+  "pr": {
+   "number": 89,
+   "title": "ci: bump github/codeql-action/upload-sarif from 4.37.1 to 4.37.8",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/89"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/upload-sarif-4.37.8",
+  "sha": "cbd565f2429cbdfbdbf4a4ecf7ac92da1f6cdedc",
+  "shortSha": "cbd565f",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/cbd565f2429cbdfbdbf4a4ecf7ac92da1f6cdedc",
+  "timestamp": "2026-08-24T04:43:30.030Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 65.325439453125,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11374.539794921875,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 16516
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 410.5,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3917,
+   "lcpMs": 7671,
+   "tbtMs": 37,
+   "cls": 0,
+   "speedIndexMs": 3917
+  },
+  "details": {
+   "vitest": "runs/20260824T044330Z-cbd565f-32690971504/vitest.json",
+   "playwright": "runs/20260824T044330Z-cbd565f-32690971504/playwright.json",
+   "lighthouse": "runs/20260824T044330Z-cbd565f-32690971504/lighthouse.json",
+   "size": "runs/20260824T044330Z-cbd565f-32690971504/size.json",
+   "coverage": "runs/20260824T044330Z-cbd565f-32690971504/coverage.json"
+  }
+ },
+ {
   "id": "20260824T044239Z-ca19a76-32690902073",
   "runId": "32690902073",
   "runNumber": 140,
