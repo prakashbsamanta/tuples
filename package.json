@@ -28,12 +28,12 @@
     "@xyflow/react": "^12.11.3",
     "framer-motion": "^12.43.0",
     "gsap": "^3.15.0",
-    "lucide-react": "^1.31.0",
+    "lucide-react": "^1.33.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-resizable-panels": "^3.0.6",
     "recharts": "^3.10.1",
-    "sql.js": "1.14.1",
+    "sql.js": "1.14.2",
     "zustand": "^5.0.15"
   },
   "devDependencies": {
@@ -44,7 +44,7 @@
     "@types/react-dom": "^19.2.4",
     "@types/sql.js": "^1.4.9",
     "@vitejs/plugin-react": "^5.2.0",
-    "@vitest/coverage-v8": "^4.1.10",
+    "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9.39.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.5.4",
