@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260824T044122Z-a0082af-32690813722",
+  "runId": "32690813722",
+  "runNumber": 139,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/32690813722",
+  "context": "pr",
+  "pr": {
+   "number": 87,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.37.8",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/87"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.37.8",
+  "sha": "a0082af6f0bc3d7876b225d69dfa23ddeb7ca318",
+  "shortSha": "a0082af",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/a0082af6f0bc3d7876b225d69dfa23ddeb7ca318",
+  "timestamp": "2026-08-24T04:41:22.300Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 76.659912109375,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 8220.743896484375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 17368
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 409.7,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3914,
+   "lcpMs": 7667,
+   "tbtMs": 73,
+   "cls": 0,
+   "speedIndexMs": 3914
+  },
+  "details": {
+   "vitest": "runs/20260824T044122Z-a0082af-32690813722/vitest.json",
+   "playwright": "runs/20260824T044122Z-a0082af-32690813722/playwright.json",
+   "lighthouse": "runs/20260824T044122Z-a0082af-32690813722/lighthouse.json",
+   "size": "runs/20260824T044122Z-a0082af-32690813722/size.json",
+   "coverage": "runs/20260824T044122Z-a0082af-32690813722/coverage.json"
+  }
+ },
+ {
   "id": "20260824T044031Z-b85349b-32690783514",
   "runId": "32690783514",
   "runNumber": 137,
