@@ -1,5 +1,73 @@
 [
  {
+  "id": "20260824T044153Z-ae6372c-32690793303",
+  "runId": "32690793303",
+  "runNumber": 138,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/32690793303",
+  "context": "pr",
+  "pr": {
+   "number": 86,
+   "title": "build(deps): bump react-resizable-panels from 3.0.6 to 4.12.3",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/86"
+  },
+  "branch": "dependabot/npm_and_yarn/react-resizable-panels-4.12.3",
+  "sha": "ae6372c9d19877c4bf4340189eadf19e7c7fc650",
+  "shortSha": "ae6372c",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/ae6372c9d19877c4bf4340189eadf19e7c7fc650",
+  "timestamp": "2026-08-24T04:41:53.252Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 72.77197265625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11494.214599609375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 60879
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": null,
+  "lighthouse": {
+   "performance": 0,
+   "accessibility": 0,
+   "bestPractices": 0,
+   "fcpMs": 0,
+   "lcpMs": 0,
+   "tbtMs": 0,
+   "cls": 0,
+   "speedIndexMs": 0
+  },
+  "details": {
+   "vitest": "runs/20260824T044153Z-ae6372c-32690793303/vitest.json",
+   "playwright": "runs/20260824T044153Z-ae6372c-32690793303/playwright.json",
+   "lighthouse": "runs/20260824T044153Z-ae6372c-32690793303/lighthouse.json",
+   "size": null,
+   "coverage": "runs/20260824T044153Z-ae6372c-32690793303/coverage.json"
+  }
+ },
+ {
   "id": "20260824T044122Z-a0082af-32690813722",
   "runId": "32690813722",
   "runNumber": 139,
