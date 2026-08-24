@@ -1,0 +1,311 @@
+{
+  "config": {
+    "argv": [
+      "/opt/hostedtoolcache/node/22.23.2/x64/bin/node",
+      "/home/runner/work/tuples/tuples/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/home/runner/work/tuples/tuples/playwright.config.ts",
+    "rootDir": "/home/runner/work/tuples/tuples/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/prakashbsamanta/tuples/commit/619057225100fc5bed61a04cd44920c70209b0ef",
+        "commitHash": "619057225100fc5bed61a04cd44920c70209b0ef",
+        "prHref": "https://github.com/prakashbsamanta/tuples/pull/84",
+        "prTitle": "build(deps): bump the dev-minor-patch group with 4 updates",
+        "prBaseHash": "a0e253ceef022565ca6fbcf434ba857a03b67051",
+        "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/32690771806"
+      },
+      "gitCommit": {
+        "shortHash": "6190572",
+        "hash": "619057225100fc5bed61a04cd44920c70209b0ef",
+        "subject": "Merge bac4f25ec07a2a4eae4da37fae46ec6927dc27b7 into a0e253ceef022565ca6fbcf434ba857a03b67051",
+        "body": "Merge bac4f25ec07a2a4eae4da37fae46ec6927dc27b7 into a0e253ceef022565ca6fbcf434ba857a03b67051\n",
+        "author": {
+          "name": "dependabot[bot]",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com",
+          "time": 1787546315000
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "time": 1787546315000
+        },
+        "branch": "HEAD"
+      },
+      "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex 8290505..79ec9a9 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -15,12 +15,12 @@\n         \"@xyflow/react\": \"^12.11.3\",\n         \"framer-motion\": \"^12.43.0\",\n         \"gsap\": \"^3.15.0\",\n-        \"lucide-react\": \"^1.31.0\",\n+        \"lucide-react\": \"^1.33.0\",\n         \"react\": \"^19.2.8\",\n         \"react-dom\": \"^19.2.8\",\n         \"react-resizable-panels\": \"^3.0.6\",\n         \"recharts\": \"^3.10.1\",\n-        \"sql.js\": \"1.14.1\",\n+        \"sql.js\": \"1.14.2\",\n         \"zustand\": \"^5.0.15\"\n       },\n       \"devDependencies\": {\n@@ -31,7 +31,7 @@\n         \"@types/react-dom\": \"^19.2.4\",\n         \"@types/sql.js\": \"^1.4.9\",\n         \"@vitejs/plugin-react\": \"^5.2.0\",\n-        \"@vitest/coverage-v8\": \"^4.1.10\",\n+        \"@vitest/coverage-v8\": \"^4.1.11\",\n         \"eslint\": \"^9.39.5\",\n         \"eslint-plugin-react-hooks\": \"^5.2.0\",\n         \"eslint-plugin-react-refresh\": \"^0.5.4\",\n@@ -3162,14 +3162,14 @@\n       }\n     },\n     \"node_modules/@vitest/coverage-v8\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/coverage-v8/-/coverage-v8-4.1.10.tgz\",\n-      \"integrity\": \"sha512-IM49HmthevbgAO4anp1hwtoT9wYe59w0LR00gr+eagHE+ZJ5lK4sLPeO0ubgoJcwLk6dehU3R24N+FbEEKDc8g==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/coverage-v8/-/coverage-v8-4.1.11.tgz\",\n+      \"integrity\": \"sha512-8MVGEFnJIcdGjcbfKmeq8z0pZHH0JlVtoVZH9Q/qwUp6wyFnEJUBMrw9DCaj+ra3vShGmhavjalMIhPNxZAUcw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n         \"@bcoe/v8-coverage\": \"^1.0.2\",\n-        \"@vitest/utils\": \"4.1.10\",\n+        \"@vitest/utils\": \"4.1.11\",\n         \"ast-v8-to-istanbul\": \"^1.0.0\",\n         \"istanbul-lib-coverage\": \"^3.2.2\",\n         \"istanbul-lib-report\": \"^3.0.1\",\n@@ -3183,8 +3183,8 @@\n         \"url\": \"https://opencollective.com/vitest\"\n       },\n       \"peerDependencies\": {\n-        \"@vitest/browser\": \"4.1.10\",\n-        \"vitest\": \"4.1.10\"\n+        \"@vitest/browser\": \"4.1.11\",\n+        \"vitest\": \"4.1.11\"\n       },\n       \"peerDependenciesMeta\": {\n         \"@vitest/browser\": {\n@@ -3193,16 +3193,16 @@\n       }\n     },\n     \"node_modules/@vitest/expect\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/expect/-/expect-4.1.10.tgz\",\n-      \"integrity\": \"sha512-YsCn+qAk1GWjQOWFEsEcL2gNQ0zmVmQu3T03qP6UyjhtmdtwtbuI+DASn/7iQB3HGTXkdBwGddzxPlmiql5vlA==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/expect/-/expect-4.1.11.tgz\",\n+      \"integrity\": \"sha512-VX2x5vNJXET47KAFzwERI+KRMtTTCSWTfSMKsW7JsUsXV4psq++e3DvZpuTDOpHcxytiDs6p2nhVb2tVDiiUYw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n         \"@standard-schema/spec\": \"^1.1.0\",\n         \"@types/chai\": \"^5.2.2\",\n-        \"@vitest/spy\": \"4.1.10\",\n-        \"@vitest/utils\": \"4.1.10\",\n+        \"@vitest/spy\": \"4.1.11\",\n+        \"@vitest/utils\": \"4.1.11\",\n         \"chai\": \"^6.2.2\",\n         \"tinyrainbow\": \"^3.1.0\"\n       },\n@@ -3211,13 +3211,13 @@\n       }\n     },\n     \"node_modules/@vitest/mocker\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/mocker/-/mocker-4.1.10.tgz\",\n-      \"integrity\": \"sha512-v0xaezt+DKEmKfaxg133ldzADrwLGd7Ze1MfQQTYfvs8OqZIwbxyxaYURivwV7sWy5fqn3rH5uOrSp07bp44Ow==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/mocker/-/mocker-4.1.11.tgz\",\n+      \"integrity\": \"sha512-2XJVD55d1o5AZous5CCGKS74g/riOj9odEt2bQpCVZeblHyHdnMeFl4jl0XjU21stf4mbjUkew2eXQZt65g5CQ==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@vitest/spy\": \"4.1.10\",\n+        \"@vitest/spy\": \"4.1.11\",\n         \"estree-walker\": \"^3.0.3\",\n         \"magic-string\": \"^0.30.21\"\n       },\n@@ -3238,9 +3238,9 @@\n       }\n     },\n     \"node_modules/@vitest/pretty-format\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-4.1.10.tgz\",\n-      \"integrity\": \"sha512-W1HsjSH4MXQ9YfmmhLAoIYf1HRfekQCGngeIgcei6MP5QQGWUe0gkopdZQaVCFO+JDJMrAJGwa5pRpNpvy4P8Q==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-4.1.11.tgz\",\n+      \"integrity\": \"sha512-yiZzPbGTS9Sr/JpFl8zHrcIkAofNbFV6k21vIgQN/cY/oxZeXhJv5sc/MBJ5jFKWmWs+oJHw0UXLZjmf931+Vw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n@@ -3251,13 +3251,13 @@\n       }\n     },\n     \"node_modules/@vitest/runner\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/runner/-/runner-4.1.10.tgz\",\n-      \"integrity\": \"sha512-IKI6kpIH+LmpROplyLwBBaCfMgOZOMsygVa6BARD6ahA04VRuJSa6OaVG7kRvSEMD870Vd91rSSw0eegtWyLGg==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/runner/-/runner-4.1.11.tgz\",\n+      \"integrity\": \"sha512-LztvUgdwMNJMIkj3hQnnxiC2Xy1zNxq928W/xhjCLaNCzqTZOudjwbQf6v9IntZGPw132i2Lq2rgTRZHD3JHNw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@vitest/utils\": \"4.1.10\",\n+        \"@vitest/utils\": \"4.1.11\",\n         \"pathe\": \"^2.0.3\"\n       },\n       \"funding\": {\n@@ -3265,14 +3265,14 @@\n       }\n     },\n     \"node_modules/@vitest/snapshot\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/snapshot/-/snapshot-4.1.10.tgz\",\n-      \"integrity\": \"sha512-xRkfOT1qpTAi/Ti4Y1LtfRc3kEuqxGw59eN2jN9pRWMtS/XDevekhcFSqvQqjUNGksfjMJu3Y+oJ+4Ypn2OaJw==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/snapshot/-/snapshot-4.1.11.tgz\",\n+      \"integrity\": \"sha512-pN7ikn1ON7h8ee4gIAp4AzyK+zBtJPzVbqOgu5LCEh4VaJVbPQcgYQYJIMGQPXVeJJq1fnfazis7a5pFNPahog==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@vitest/pretty-format\": \"4.1.10\",\n-        \"@vitest/utils\": \"4.1.10\",\n+        \"@vitest/pretty-format\": \"4.1.11\",\n+        \"@vitest/utils\": \"4.1.11\",\n         \"magic-string\": \"^0.30.21\",\n         \"pathe\": \"^2.0.3\"\n       },\n@@ -3281,9 +3281,9 @@\n       }\n     },\n     \"node_modules/@vitest/spy\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/spy/-/spy-4.1.10.tgz\",\n-      \"integrity\": \"sha512-PLf/Ugvoq5wO/b4rwYCR1h2PSIdXz7wnkQFMiUpLdtM7l6pqVFcQIBEHyT1+l+cj7mNwAfZHzqXqDyjvOuwbDw==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/spy/-/spy-4.1.11.tgz\",\n+      \"integrity\": \"sha512-apNa/prQy2qCeywhnixOHPRCgGNhvg7T4Dapfl1GahLp/R+uhBm5cPyFoNVyqsNd2h1nJxL6BqqdIjiABL60YA==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"funding\": {\n@@ -3291,13 +3291,13 @@\n       }\n     },\n     \"node_modules/@vitest/utils\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/utils/-/utils-4.1.10.tgz\",\n-      \"integrity\": \"sha512-fy9am/HWxbaGt/Sawrp90vt6Y6jQwf1RX77cz3uwoJwJVMli/e1IEwRPnMNJ7vKfPTwo0diXifkpPvwH9v7nGA==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/utils/-/utils-4.1.11.tgz\",\n+      \"integrity\": \"sha512-zTCVGpyFsGWBhllOyKlTw/vnr6D9qxsfSDyfbyZmTyjHw5N/VuvzHpHoQjm2ZJzn4RJgx5w4r7V0er69CmLgPQ==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@vitest/pretty-format\": \"4.1.10\",\n+        \"@vitest/pretty-format\": \"4.1.11\",\n         \"convert-source-map\": \"^2.0.0\",\n         \"tinyrainbow\": \"^3.1.0\"\n       },\n@@ -5359,9 +5359,9 @@\n       }\n     },\n     \"node_modules/lucide-react\": {\n-      \"version\": \"1.31.0\",\n-      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.31.0.tgz\",\n-      \"integrity\": \"sha512-G8u2eEtoHUnUa9f8lbvqDhCiORMnYLdUEo06EEG9MQvHQrInKcX3Pa2TH39MM5qyzRcWETxB0+aOwAPI1g1kEg==\",\n+      \"version\": \"1.33.0\",\n+      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.33.0.tgz\",\n+      \"integrity\": \"sha512-MTRwMy0ZlL8Ur/vOAiJ9XGHE+kFPC7brq6MxAm0GiGXEBj0qy0jA/pG4N675oSzciO/UCdX8T+5yUQdmDeTLxg==\",\n       \"license\": \"ISC\",\n       \"peerDependencies\": {\n         \"react\": \"^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0\"\n@@ -6115,9 +6115,9 @@\n       }\n     },\n     \"node_modules/sql.js\": {\n-      \"version\": \"1.14.1\",\n-      \"resolved\": \"https://registry.npmjs.org/sql.js/-/sql.js-1.14.1.tgz\",\n-      \"integrity\": \"sha512-gcj8zBWU5cFsi9WUP+4bFNXAyF1iRpA3LLyS/DP5xlrNzGmPIizUeBggKa8DbDwdqaKwUcTEnChtd2grWo/x/A==\",\n+      \"version\": \"1.14.2\",\n+      \"resolved\": \"https://registry.npmjs.org/sql.js/-/sql.js-1.14.2.tgz\",\n+      \"integrity\": \"sha512-3ZGPovObMFrdw79zrUHbfdE/DLIsy8jdNdssmMSQuRAymedU6q84asPt0kgiqrdMYlPegDItiIMfmIXzZnYFcw==\",\n       \"license\": \"MIT\"\n     },\n     \"node_modules/stackback\": {\n@@ -6551,19 +6551,19 @@\n       }\n     },\n     \"node_modules/vitest\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/vitest/-/vitest-4.1.10.tgz\",\n-      \"integrity\": \"sha512-R9jUTe5S4Qb0HCd4TNqpC7oGcrMssMRGXLW80ubjWsW9VH5GF8y1Y0SFLY9AbqSk6nt0PnOx4H4WNJYZ13GUPw==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/vitest/-/vitest-4.1.11.tgz\",\n+      \"integrity\": \"sha512-fhACrNXUidIbGSBr5FlbuBkO7VWC1ZyLl0DO4CU2DrQoAPxX84Ysxs+HeGQpii5lZWV1Q4gBZTTu49mF+A6Edw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@vitest/expect\": \"4.1.10\",\n-        \"@vitest/mocker\": \"4.1.10\",\n-        \"@vitest/pretty-format\": \"4.1.10\",\n-        \"@vitest/runner\": \"4.1.10\",\n-        \"@vitest/snapshot\": \"4.1.10\",\n-        \"@vitest/spy\": \"4.1.10\",\n-        \"@vitest/utils\": \"4.1.10\",\n+        \"@vitest/expect\": \"4.1.11\",\n+        \"@vitest/mocker\": \"4.1.11\",\n+        \"@vitest/pretty-format\": \"4.1.11\",\n+        \"@vitest/runner\": \"4.1.11\",\n+        \"@vitest/snapshot\": \"4.1.11\",\n+        \"@vitest/spy\": \"4.1.11\",\n+        \"@vitest/utils\": \"4.1.11\",\n         \"es-module-lexer\": \"^2.0.0\",\n         \"expect-type\": \"^1.3.0\",\n         \"magic-string\": \"^0.30.21\",\n@@ -6591,12 +6591,12 @@\n         \"@edge-runtime/vm\": \"*\",\n         \"@opentelemetry/api\": \"^1.9.0\",\n         \"@types/node\": \"^20.0.0 || ^22.0.0 || >=24.0.0\",\n-        \"@vitest/browser-playwright\": \"4.1.10\",\n-        \"@vitest/browser-preview\": \"4.1.10\",\n-        \"@vitest/browser-webdriverio\": \"4.1.10\",\n-        \"@vitest/coverage-istanbul\": \"4.1.10\",\n-        \"@vitest/coverage-v8\": \"4.1.10\",\n-        \"@vitest/ui\": \"4.1.10\",\n+        \"@vitest/browser-playwright\": \"4.1.11\",\n+        \"@vitest/browser-preview\": \"4.1.11\",\n+        \"@vitest/browser-webdriverio\": \"4.1.11\",\n+        \"@vitest/coverage-istanbul\": \"4.1.11\",\n+        \"@vitest/coverage-v8\": \"4.1.11\",\n+        \"@vitest/ui\": \"4.1.11\",\n         \"happy-dom\": \"*\",\n         \"jsdom\": \"*\",\n         \"vite\": \"^6.0.0 || ^7.0.0 || ^8.0.0\"\ndiff --git a/package.json b/package.json\nindex 5ea6898..40ce069 100644\n--- a/package.json\n+++ b/package.json\n@@ -28,12 +28,12 @@\n     \"@xyflow/react\": \"^12.11.3\",\n     \"framer-motion\": \"^12.43.0\",\n     \"gsap\": \"^3.15.0\",\n-    \"lucide-react\": \"^1.31.0\",\n+    \"lucide-react\": \"^1.33.0\",\n     \"react\": \"^19.2.8\",\n     \"react-dom\": \"^19.2.8\",\n     \"react-resizable-panels\": \"^3.0.6\",\n     \"recharts\": \"^3.10.1\",\n-    \"sql.js\": \"1.14.1\",\n+    \"sql.js\": \"1.14.2\",\n     \"zustand\": \"^5.0.15\"\n   },\n   \"devDependencies\": {\n@@ -44,7 +44,7 @@\n     \"@types/react-dom\": \"^19.2.4\",\n     \"@types/sql.js\": \"^1.4.9\",\n     \"@vitejs/plugin-react\": \"^5.2.0\",\n-    \"@vitest/coverage-v8\": \"^4.1.10\",\n+    \"@vitest/coverage-v8\": \"^4.1.11\",\n     \"eslint\": \"^9.39.5\",\n     \"eslint-plugin-react-hooks\": \"^5.2.0\",\n     \"eslint-plugin-react-refresh\": \"^0.5.4\",",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/tuples/tuples/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/prakashbsamanta/tuples/commit/619057225100fc5bed61a04cd44920c70209b0ef",
+            "commitHash": "619057225100fc5bed61a04cd44920c70209b0ef",
+            "prHref": "https://github.com/prakashbsamanta/tuples/pull/84",
+            "prTitle": "build(deps): bump the dev-minor-patch group with 4 updates",
+            "prBaseHash": "a0e253ceef022565ca6fbcf434ba857a03b67051",
+            "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/32690771806"
+          },
+          "gitCommit": {
+            "shortHash": "6190572",
+            "hash": "619057225100fc5bed61a04cd44920c70209b0ef",
+            "subject": "Merge bac4f25ec07a2a4eae4da37fae46ec6927dc27b7 into a0e253ceef022565ca6fbcf434ba857a03b67051",
+            "body": "Merge bac4f25ec07a2a4eae4da37fae46ec6927dc27b7 into a0e253ceef022565ca6fbcf434ba857a03b67051\n",
+            "author": {
+              "name": "dependabot[bot]",
+              "email": "49699333+dependabot[bot]@users.noreply.github.com",
+              "time": 1787546315000
+            },
+            "committer": {
+              "name": "GitHub",
+              "email": "noreply@github.com",
+              "time": 1787546315000
+            },
+            "branch": "HEAD"
+          },
+          "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex 8290505..79ec9a9 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -15,12 +15,12 @@\n         \"@xyflow/react\": \"^12.11.3\",\n         \"framer-motion\": \"^12.43.0\",\n         \"gsap\": \"^3.15.0\",\n-        \"lucide-react\": \"^1.31.0\",\n+        \"lucide-react\": \"^1.33.0\",\n         \"react\": \"^19.2.8\",\n         \"react-dom\": \"^19.2.8\",\n         \"react-resizable-panels\": \"^3.0.6\",\n         \"recharts\": \"^3.10.1\",\n-        \"sql.js\": \"1.14.1\",\n+        \"sql.js\": \"1.14.2\",\n         \"zustand\": \"^5.0.15\"\n       },\n       \"devDependencies\": {\n@@ -31,7 +31,7 @@\n         \"@types/react-dom\": \"^19.2.4\",\n         \"@types/sql.js\": \"^1.4.9\",\n         \"@vitejs/plugin-react\": \"^5.2.0\",\n-        \"@vitest/coverage-v8\": \"^4.1.10\",\n+        \"@vitest/coverage-v8\": \"^4.1.11\",\n         \"eslint\": \"^9.39.5\",\n         \"eslint-plugin-react-hooks\": \"^5.2.0\",\n         \"eslint-plugin-react-refresh\": \"^0.5.4\",\n@@ -3162,14 +3162,14 @@\n       }\n     },\n     \"node_modules/@vitest/coverage-v8\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/coverage-v8/-/coverage-v8-4.1.10.tgz\",\n-      \"integrity\": \"sha512-IM49HmthevbgAO4anp1hwtoT9wYe59w0LR00gr+eagHE+ZJ5lK4sLPeO0ubgoJcwLk6dehU3R24N+FbEEKDc8g==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/coverage-v8/-/coverage-v8-4.1.11.tgz\",\n+      \"integrity\": \"sha512-8MVGEFnJIcdGjcbfKmeq8z0pZHH0JlVtoVZH9Q/qwUp6wyFnEJUBMrw9DCaj+ra3vShGmhavjalMIhPNxZAUcw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n         \"@bcoe/v8-coverage\": \"^1.0.2\",\n-        \"@vitest/utils\": \"4.1.10\",\n+        \"@vitest/utils\": \"4.1.11\",\n         \"ast-v8-to-istanbul\": \"^1.0.0\",\n         \"istanbul-lib-coverage\": \"^3.2.2\",\n         \"istanbul-lib-report\": \"^3.0.1\",\n@@ -3183,8 +3183,8 @@\n         \"url\": \"https://opencollective.com/vitest\"\n       },\n       \"peerDependencies\": {\n-        \"@vitest/browser\": \"4.1.10\",\n-        \"vitest\": \"4.1.10\"\n+        \"@vitest/browser\": \"4.1.11\",\n+        \"vitest\": \"4.1.11\"\n       },\n       \"peerDependenciesMeta\": {\n         \"@vitest/browser\": {\n@@ -3193,16 +3193,16 @@\n       }\n     },\n     \"node_modules/@vitest/expect\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/expect/-/expect-4.1.10.tgz\",\n-      \"integrity\": \"sha512-YsCn+qAk1GWjQOWFEsEcL2gNQ0zmVmQu3T03qP6UyjhtmdtwtbuI+DASn/7iQB3HGTXkdBwGddzxPlmiql5vlA==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/expect/-/expect-4.1.11.tgz\",\n+      \"integrity\": \"sha512-VX2x5vNJXET47KAFzwERI+KRMtTTCSWTfSMKsW7JsUsXV4psq++e3DvZpuTDOpHcxytiDs6p2nhVb2tVDiiUYw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n         \"@standard-schema/spec\": \"^1.1.0\",\n         \"@types/chai\": \"^5.2.2\",\n-        \"@vitest/spy\": \"4.1.10\",\n-        \"@vitest/utils\": \"4.1.10\",\n+        \"@vitest/spy\": \"4.1.11\",\n+        \"@vitest/utils\": \"4.1.11\",\n         \"chai\": \"^6.2.2\",\n         \"tinyrainbow\": \"^3.1.0\"\n       },\n@@ -3211,13 +3211,13 @@\n       }\n     },\n     \"node_modules/@vitest/mocker\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/mocker/-/mocker-4.1.10.tgz\",\n-      \"integrity\": \"sha512-v0xaezt+DKEmKfaxg133ldzADrwLGd7Ze1MfQQTYfvs8OqZIwbxyxaYURivwV7sWy5fqn3rH5uOrSp07bp44Ow==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/mocker/-/mocker-4.1.11.tgz\",\n+      \"integrity\": \"sha512-2XJVD55d1o5AZous5CCGKS74g/riOj9odEt2bQpCVZeblHyHdnMeFl4jl0XjU21stf4mbjUkew2eXQZt65g5CQ==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@vitest/spy\": \"4.1.10\",\n+        \"@vitest/spy\": \"4.1.11\",\n         \"estree-walker\": \"^3.0.3\",\n         \"magic-string\": \"^0.30.21\"\n       },\n@@ -3238,9 +3238,9 @@\n       }\n     },\n     \"node_modules/@vitest/pretty-format\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-4.1.10.tgz\",\n-      \"integrity\": \"sha512-W1HsjSH4MXQ9YfmmhLAoIYf1HRfekQCGngeIgcei6MP5QQGWUe0gkopdZQaVCFO+JDJMrAJGwa5pRpNpvy4P8Q==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-4.1.11.tgz\",\n+      \"integrity\": \"sha512-yiZzPbGTS9Sr/JpFl8zHrcIkAofNbFV6k21vIgQN/cY/oxZeXhJv5sc/MBJ5jFKWmWs+oJHw0UXLZjmf931+Vw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n@@ -3251,13 +3251,13 @@\n       }\n     },\n     \"node_modules/@vitest/runner\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/runner/-/runner-4.1.10.tgz\",\n-      \"integrity\": \"sha512-IKI6kpIH+LmpROplyLwBBaCfMgOZOMsygVa6BARD6ahA04VRuJSa6OaVG7kRvSEMD870Vd91rSSw0eegtWyLGg==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/runner/-/runner-4.1.11.tgz\",\n+      \"integrity\": \"sha512-LztvUgdwMNJMIkj3hQnnxiC2Xy1zNxq928W/xhjCLaNCzqTZOudjwbQf6v9IntZGPw132i2Lq2rgTRZHD3JHNw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@vitest/utils\": \"4.1.10\",\n+        \"@vitest/utils\": \"4.1.11\",\n         \"pathe\": \"^2.0.3\"\n       },\n       \"funding\": {\n@@ -3265,14 +3265,14 @@\n       }\n     },\n     \"node_modules/@vitest/snapshot\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/snapshot/-/snapshot-4.1.10.tgz\",\n-      \"integrity\": \"sha512-xRkfOT1qpTAi/Ti4Y1LtfRc3kEuqxGw59eN2jN9pRWMtS/XDevekhcFSqvQqjUNGksfjMJu3Y+oJ+4Ypn2OaJw==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/snapshot/-/snapshot-4.1.11.tgz\",\n+      \"integrity\": \"sha512-pN7ikn1ON7h8ee4gIAp4AzyK+zBtJPzVbqOgu5LCEh4VaJVbPQcgYQYJIMGQPXVeJJq1fnfazis7a5pFNPahog==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@vitest/pretty-format\": \"4.1.10\",\n-        \"@vitest/utils\": \"4.1.10\",\n+        \"@vitest/pretty-format\": \"4.1.11\",\n+        \"@vitest/utils\": \"4.1.11\",\n         \"magic-string\": \"^0.30.21\",\n         \"pathe\": \"^2.0.3\"\n       },\n@@ -3281,9 +3281,9 @@\n       }\n     },\n     \"node_modules/@vitest/spy\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/spy/-/spy-4.1.10.tgz\",\n-      \"integrity\": \"sha512-PLf/Ugvoq5wO/b4rwYCR1h2PSIdXz7wnkQFMiUpLdtM7l6pqVFcQIBEHyT1+l+cj7mNwAfZHzqXqDyjvOuwbDw==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/spy/-/spy-4.1.11.tgz\",\n+      \"integrity\": \"sha512-apNa/prQy2qCeywhnixOHPRCgGNhvg7T4Dapfl1GahLp/R+uhBm5cPyFoNVyqsNd2h1nJxL6BqqdIjiABL60YA==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"funding\": {\n@@ -3291,13 +3291,13 @@\n       }\n     },\n     \"node_modules/@vitest/utils\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/@vitest/utils/-/utils-4.1.10.tgz\",\n-      \"integrity\": \"sha512-fy9am/HWxbaGt/Sawrp90vt6Y6jQwf1RX77cz3uwoJwJVMli/e1IEwRPnMNJ7vKfPTwo0diXifkpPvwH9v7nGA==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/@vitest/utils/-/utils-4.1.11.tgz\",\n+      \"integrity\": \"sha512-zTCVGpyFsGWBhllOyKlTw/vnr6D9qxsfSDyfbyZmTyjHw5N/VuvzHpHoQjm2ZJzn4RJgx5w4r7V0er69CmLgPQ==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@vitest/pretty-format\": \"4.1.10\",\n+        \"@vitest/pretty-format\": \"4.1.11\",\n         \"convert-source-map\": \"^2.0.0\",\n         \"tinyrainbow\": \"^3.1.0\"\n       },\n@@ -5359,9 +5359,9 @@\n       }\n     },\n     \"node_modules/lucide-react\": {\n-      \"version\": \"1.31.0\",\n-      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.31.0.tgz\",\n-      \"integrity\": \"sha512-G8u2eEtoHUnUa9f8lbvqDhCiORMnYLdUEo06EEG9MQvHQrInKcX3Pa2TH39MM5qyzRcWETxB0+aOwAPI1g1kEg==\",\n+      \"version\": \"1.33.0\",\n+      \"resolved\": \"https://registry.npmjs.org/lucide-react/-/lucide-react-1.33.0.tgz\",\n+      \"integrity\": \"sha512-MTRwMy0ZlL8Ur/vOAiJ9XGHE+kFPC7brq6MxAm0GiGXEBj0qy0jA/pG4N675oSzciO/UCdX8T+5yUQdmDeTLxg==\",\n       \"license\": \"ISC\",\n       \"peerDependencies\": {\n         \"react\": \"^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0\"\n@@ -6115,9 +6115,9 @@\n       }\n     },\n     \"node_modules/sql.js\": {\n-      \"version\": \"1.14.1\",\n-      \"resolved\": \"https://registry.npmjs.org/sql.js/-/sql.js-1.14.1.tgz\",\n-      \"integrity\": \"sha512-gcj8zBWU5cFsi9WUP+4bFNXAyF1iRpA3LLyS/DP5xlrNzGmPIizUeBggKa8DbDwdqaKwUcTEnChtd2grWo/x/A==\",\n+      \"version\": \"1.14.2\",\n+      \"resolved\": \"https://registry.npmjs.org/sql.js/-/sql.js-1.14.2.tgz\",\n+      \"integrity\": \"sha512-3ZGPovObMFrdw79zrUHbfdE/DLIsy8jdNdssmMSQuRAymedU6q84asPt0kgiqrdMYlPegDItiIMfmIXzZnYFcw==\",\n       \"license\": \"MIT\"\n     },\n     \"node_modules/stackback\": {\n@@ -6551,19 +6551,19 @@\n       }\n     },\n     \"node_modules/vitest\": {\n-      \"version\": \"4.1.10\",\n-      \"resolved\": \"https://registry.npmjs.org/vitest/-/vitest-4.1.10.tgz\",\n-      \"integrity\": \"sha512-R9jUTe5S4Qb0HCd4TNqpC7oGcrMssMRGXLW80ubjWsW9VH5GF8y1Y0SFLY9AbqSk6nt0PnOx4H4WNJYZ13GUPw==\",\n+      \"version\": \"4.1.11\",\n+      \"resolved\": \"https://registry.npmjs.org/vitest/-/vitest-4.1.11.tgz\",\n+      \"integrity\": \"sha512-fhACrNXUidIbGSBr5FlbuBkO7VWC1ZyLl0DO4CU2DrQoAPxX84Ysxs+HeGQpii5lZWV1Q4gBZTTu49mF+A6Edw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n-        \"@vitest/expect\": \"4.1.10\",\n-        \"@vitest/mocker\": \"4.1.10\",\n-        \"@vitest/pretty-format\": \"4.1.10\",\n-        \"@vitest/runner\": \"4.1.10\",\n-        \"@vitest/snapshot\": \"4.1.10\",\n-        \"@vitest/spy\": \"4.1.10\",\n-        \"@vitest/utils\": \"4.1.10\",\n+        \"@vitest/expect\": \"4.1.11\",\n+        \"@vitest/mocker\": \"4.1.11\",\n+        \"@vitest/pretty-format\": \"4.1.11\",\n+        \"@vitest/runner\": \"4.1.11\",\n+        \"@vitest/snapshot\": \"4.1.11\",\n+        \"@vitest/spy\": \"4.1.11\",\n+        \"@vitest/utils\": \"4.1.11\",\n         \"es-module-lexer\": \"^2.0.0\",\n         \"expect-type\": \"^1.3.0\",\n         \"magic-string\": \"^0.30.21\",\n@@ -6591,12 +6591,12 @@\n         \"@edge-runtime/vm\": \"*\",\n         \"@opentelemetry/api\": \"^1.9.0\",\n         \"@types/node\": \"^20.0.0 || ^22.0.0 || >=24.0.0\",\n-        \"@vitest/browser-playwright\": \"4.1.10\",\n-        \"@vitest/browser-preview\": \"4.1.10\",\n-        \"@vitest/browser-webdriverio\": \"4.1.10\",\n-        \"@vitest/coverage-istanbul\": \"4.1.10\",\n-        \"@vitest/coverage-v8\": \"4.1.10\",\n-        \"@vitest/ui\": \"4.1.10\",\n+        \"@vitest/browser-playwright\": \"4.1.11\",\n+        \"@vitest/browser-preview\": \"4.1.11\",\n+        \"@vitest/browser-webdriverio\": \"4.1.11\",\n+        \"@vitest/coverage-istanbul\": \"4.1.11\",\n+        \"@vitest/coverage-v8\": \"4.1.11\",\n+        \"@vitest/ui\": \"4.1.11\",\n         \"happy-dom\": \"*\",\n         \"jsdom\": \"*\",\n         \"vite\": \"^6.0.0 || ^7.0.0 || ^8.0.0\"\ndiff --git a/package.json b/package.json\nindex 5ea6898..40ce069 100644\n--- a/package.json\n+++ b/package.json\n@@ -28,12 +28,12 @@\n     \"@xyflow/react\": \"^12.11.3\",\n     \"framer-motion\": \"^12.43.0\",\n     \"gsap\": \"^3.15.0\",\n-    \"lucide-react\": \"^1.31.0\",\n+    \"lucide-react\": \"^1.33.0\",\n     \"react\": \"^19.2.8\",\n     \"react-dom\": \"^19.2.8\",\n     \"react-resizable-panels\": \"^3.0.6\",\n     \"recharts\": \"^3.10.1\",\n-    \"sql.js\": \"1.14.1\",\n+    \"sql.js\": \"1.14.2\",\n     \"zustand\": \"^5.0.15\"\n   },\n   \"devDependencies\": {\n@@ -44,7 +44,7 @@\n     \"@types/react-dom\": \"^19.2.4\",\n     \"@types/sql.js\": \"^1.4.9\",\n     \"@vitejs/plugin-react\": \"^5.2.0\",\n-    \"@vitest/coverage-v8\": \"^4.1.10\",\n+    \"@vitest/coverage-v8\": \"^4.1.11\",\n     \"eslint\": \"^9.39.5\",\n     \"eslint-plugin-react-hooks\": \"^5.2.0\",\n     \"eslint-plugin-react-refresh\": \"^0.5.4\",",
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/tuples/tuples/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://localhost:4173/tuples/",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "full journey: homepage → enter world → solve → persist → review",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3930,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-24T04:39:36.998Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-d77cdc6daaf7accde4db",
+          "file": "smoke.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "homepage proof terminal runs real SQL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1982,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-24T04:39:41.126Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-02e22a5cc048fd241d66",
+          "file": "smoke.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "error coaching and test-run preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2704,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-24T04:39:43.120Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-0b239663049f52a1c4aa",
+          "file": "smoke.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "each world themes the workspace with its own accent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2197,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-24T04:39:45.839Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-b20115e63804b48b7ddb",
+          "file": "smoke.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "completed mission offers the certification exam",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1689,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-24T04:39:48.045Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-c95a13d800861ea7fbf2",
+          "file": "smoke.spec.ts",
+          "line": 108,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-24T04:39:35.016Z",
+    "duration": 14784.012,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
