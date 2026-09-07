@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260907T044305Z-c0124bf-34084016141",
+  "runId": "34084016141",
+  "runNumber": 156,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/34084016141",
+  "context": "pr",
+  "pr": {
+   "number": 91,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.37.9",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/91"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.37.9",
+  "sha": "c0124bfea6122cf6bbb83980c37faa9fe6ddf3a7",
+  "shortSha": "c0124bf",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/c0124bfea6122cf6bbb83980c37faa9fe6ddf3a7",
+  "timestamp": "2026-09-07T04:43:05.503Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 69.93896484375,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11380.984375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 16505
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 410.7,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3955,
+   "lcpMs": 7558,
+   "tbtMs": 79,
+   "cls": 0,
+   "speedIndexMs": 3955
+  },
+  "details": {
+   "vitest": "runs/20260907T044305Z-c0124bf-34084016141/vitest.json",
+   "playwright": "runs/20260907T044305Z-c0124bf-34084016141/playwright.json",
+   "lighthouse": "runs/20260907T044305Z-c0124bf-34084016141/lighthouse.json",
+   "size": "runs/20260907T044305Z-c0124bf-34084016141/size.json",
+   "coverage": "runs/20260907T044305Z-c0124bf-34084016141/coverage.json"
+  }
+ },
+ {
   "id": "20260907T044234Z-0070465-34084014250",
   "runId": "34084014250",
   "runNumber": 155,
