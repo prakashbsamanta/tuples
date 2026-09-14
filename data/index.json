@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260914T044148Z-a3a072c-34806896500",
+  "runId": "34806896500",
+  "runNumber": 177,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/34806896500",
+  "context": "pr",
+  "pr": {
+   "number": 103,
+   "title": "ci: bump github/codeql-action/init from 4.36.2 to 4.38.0",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/103"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/init-4.38.0",
+  "sha": "a3a072ccabea63582c6c93241cea51528f046bc2",
+  "shortSha": "a3a072c",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/a3a072ccabea63582c6c93241cea51528f046bc2",
+  "timestamp": "2026-09-14T04:41:48.474Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 75.278564453125,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11343.533935546875,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 14802
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 413.3,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3914,
+   "lcpMs": 7667,
+   "tbtMs": 41,
+   "cls": 0,
+   "speedIndexMs": 3914
+  },
+  "details": {
+   "vitest": "runs/20260914T044148Z-a3a072c-34806896500/vitest.json",
+   "playwright": "runs/20260914T044148Z-a3a072c-34806896500/playwright.json",
+   "lighthouse": "runs/20260914T044148Z-a3a072c-34806896500/lighthouse.json",
+   "size": "runs/20260914T044148Z-a3a072c-34806896500/size.json",
+   "coverage": "runs/20260914T044148Z-a3a072c-34806896500/coverage.json"
+  }
+ },
+ {
   "id": "20260914T043920Z-36d9a3f-34806753281",
   "runId": "34806753281",
   "runNumber": 176,
