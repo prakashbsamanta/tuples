@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260921T043609Z-b3c601e-35561501470",
+  "runId": "35561501470",
+  "runNumber": 178,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/35561501470",
+  "context": "pr",
+  "pr": {
+   "number": 105,
+   "title": "ci: bump github/codeql-action/init from 4.36.2 to 4.38.1",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/105"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/init-4.38.1",
+  "sha": "b3c601ec518def85a19dd13f586dd0d094f7f00a",
+  "shortSha": "b3c601e",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/b3c601ec518def85a19dd13f586dd0d094f7f00a",
+  "timestamp": "2026-09-21T04:36:09.876Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 86.045166015625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11066.632568359375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 16215
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 413.3,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3918,
+   "lcpMs": 7671,
+   "tbtMs": 80,
+   "cls": 0,
+   "speedIndexMs": 3918
+  },
+  "details": {
+   "vitest": "runs/20260921T043609Z-b3c601e-35561501470/vitest.json",
+   "playwright": "runs/20260921T043609Z-b3c601e-35561501470/playwright.json",
+   "lighthouse": "runs/20260921T043609Z-b3c601e-35561501470/lighthouse.json",
+   "size": "runs/20260921T043609Z-b3c601e-35561501470/size.json",
+   "coverage": "runs/20260921T043609Z-b3c601e-35561501470/coverage.json"
+  }
+ },
+ {
   "id": "20260914T044148Z-a3a072c-34806896500",
   "runId": "34806896500",
   "runNumber": 177,
