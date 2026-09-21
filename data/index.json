@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260921T043805Z-4a8ad22-35561636055",
+  "runId": "35561636055",
+  "runNumber": 181,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/35561636055",
+  "context": "pr",
+  "pr": {
+   "number": 108,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.38.1",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/108"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.38.1",
+  "sha": "4a8ad223e7209abcd04f270e7cdeee1ce0d5a8cb",
+  "shortSha": "4a8ad22",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/4a8ad223e7209abcd04f270e7cdeee1ce0d5a8cb",
+  "timestamp": "2026-09-21T04:38:05.609Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 96.97509765625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11451.778564453125,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 15855
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 413.3,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3919,
+   "lcpMs": 7672,
+   "tbtMs": 87,
+   "cls": 0,
+   "speedIndexMs": 3919
+  },
+  "details": {
+   "vitest": "runs/20260921T043805Z-4a8ad22-35561636055/vitest.json",
+   "playwright": "runs/20260921T043805Z-4a8ad22-35561636055/playwright.json",
+   "lighthouse": "runs/20260921T043805Z-4a8ad22-35561636055/lighthouse.json",
+   "size": "runs/20260921T043805Z-4a8ad22-35561636055/size.json",
+   "coverage": "runs/20260921T043805Z-4a8ad22-35561636055/coverage.json"
+  }
+ },
+ {
   "id": "20260921T043703Z-fd14994-35561563162",
   "runId": "35561563162",
   "runNumber": 179,
