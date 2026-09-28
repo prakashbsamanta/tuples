@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260928T043854Z-0a80adf-36378442700",
+  "runId": "36378442700",
+  "runNumber": 185,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/36378442700",
+  "context": "pr",
+  "pr": {
+   "number": 110,
+   "title": "ci: bump github/codeql-action/init from 4.36.2 to 4.38.2",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/110"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/init-4.38.2",
+  "sha": "0a80adf637736cd48f7665178d46b4a3c276d4e1",
+  "shortSha": "0a80adf",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/0a80adf637736cd48f7665178d46b4a3c276d4e1",
+  "timestamp": "2026-09-28T04:38:54.562Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 78.0185546875,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11040.058349609375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 17105
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 413.3,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3922,
+   "lcpMs": 7676,
+   "tbtMs": 77,
+   "cls": 0,
+   "speedIndexMs": 3922
+  },
+  "details": {
+   "vitest": "runs/20260928T043854Z-0a80adf-36378442700/vitest.json",
+   "playwright": "runs/20260928T043854Z-0a80adf-36378442700/playwright.json",
+   "lighthouse": "runs/20260928T043854Z-0a80adf-36378442700/lighthouse.json",
+   "size": "runs/20260928T043854Z-0a80adf-36378442700/size.json",
+   "coverage": "runs/20260928T043854Z-0a80adf-36378442700/coverage.json"
+  }
+ },
+ {
   "id": "20260928T043658Z-bf32bd2-36378375190",
   "runId": "36378375190",
   "runNumber": 184,
