@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260928T043658Z-bf32bd2-36378375190",
+  "runId": "36378375190",
+  "runNumber": 184,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/36378375190",
+  "context": "pr",
+  "pr": {
+   "number": 109,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.38.2",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/109"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.38.2",
+  "sha": "bf32bd24b35adc2b45bf4e28019004e7e8de62cd",
+  "shortSha": "bf32bd2",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/bf32bd24b35adc2b45bf4e28019004e7e8de62cd",
+  "timestamp": "2026-09-28T04:36:58.914Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 53.328369140625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 5928.8515625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 14336
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 413.3,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3914,
+   "lcpMs": 7666,
+   "tbtMs": 30,
+   "cls": 0,
+   "speedIndexMs": 3914
+  },
+  "details": {
+   "vitest": "runs/20260928T043658Z-bf32bd2-36378375190/vitest.json",
+   "playwright": "runs/20260928T043658Z-bf32bd2-36378375190/playwright.json",
+   "lighthouse": "runs/20260928T043658Z-bf32bd2-36378375190/lighthouse.json",
+   "size": "runs/20260928T043658Z-bf32bd2-36378375190/size.json",
+   "coverage": "runs/20260928T043658Z-bf32bd2-36378375190/coverage.json"
+  }
+ },
+ {
   "id": "20260921T044230Z-97306ea-35561890479",
   "runId": "35561890479",
   "runNumber": 182,
