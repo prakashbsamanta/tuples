@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260928T044104Z-ec99132-36378637140",
+  "runId": "36378637140",
+  "runNumber": 187,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/36378637140",
+  "context": "pr",
+  "pr": {
+   "number": 112,
+   "title": "build(deps): bump the dev-minor-patch group across 1 directory with 11 updates",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/112"
+  },
+  "branch": "dependabot/npm_and_yarn/dev-minor-patch-2d21c596fd",
+  "sha": "ec9913298f528fc31fa6ec471fd58fff57fe890e",
+  "shortSha": "ec99132",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/ec9913298f528fc31fa6ec471fd58fff57fe890e",
+  "timestamp": "2026-09-28T04:41:04.281Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 81.378662109375,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11561.06689453125,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 11163
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 439.4,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 65,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3967,
+   "lcpMs": 7571,
+   "tbtMs": 139,
+   "cls": 0,
+   "speedIndexMs": 3967
+  },
+  "details": {
+   "vitest": "runs/20260928T044104Z-ec99132-36378637140/vitest.json",
+   "playwright": "runs/20260928T044104Z-ec99132-36378637140/playwright.json",
+   "lighthouse": "runs/20260928T044104Z-ec99132-36378637140/lighthouse.json",
+   "size": "runs/20260928T044104Z-ec99132-36378637140/size.json",
+   "coverage": "runs/20260928T044104Z-ec99132-36378637140/coverage.json"
+  }
+ },
+ {
   "id": "20260928T043920Z-eecbe5f-36378515576",
   "runId": "36378515576",
   "runNumber": 186,

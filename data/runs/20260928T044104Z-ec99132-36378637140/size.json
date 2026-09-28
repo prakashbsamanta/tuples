@@ -1,0 +1,52 @@
+{
+  "budgetKb": 420,
+  "criticalKb": 439.4,
+  "critical": [
+    {
+      "name": "index-CEDeoszO.js",
+      "kb": 255.3
+    },
+    {
+      "name": "react-vendor-QKbhDRs2.js",
+      "kb": 93
+    },
+    {
+      "name": "motion-D8sncBVF.js",
+      "kb": 43.5
+    },
+    {
+      "name": "flow-CXvYgOo2.js",
+      "kb": 33.5
+    },
+    {
+      "name": "sqljs-BYGSx8Vf.js",
+      "kb": 14.1
+    }
+  ],
+  "lazy": [
+    {
+      "name": "editor-CtLj7cP6.js",
+      "kb": 139.6
+    },
+    {
+      "name": "ResultChart-Dwa4yJkV.js",
+      "kb": 110.6
+    },
+    {
+      "name": "Home-AH-YlUpG.js",
+      "kb": 47.9
+    },
+    {
+      "name": "ProofTerminal-B3hrp38h.js",
+      "kb": 2.1
+    },
+    {
+      "name": "juice-D3D7DpM5.js",
+      "kb": 0.7
+    },
+    {
+      "name": "SqlEditor-CHs4Kdqj.js",
+      "kb": 0.4
+    }
+  ]
+}
