@@ -1,5 +1,76 @@
 [
  {
+  "id": "20260928T043920Z-eecbe5f-36378515576",
+  "runId": "36378515576",
+  "runNumber": 186,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/36378515576",
+  "context": "pr",
+  "pr": {
+   "number": 111,
+   "title": "ci: bump github/codeql-action/upload-sarif from 4.38.1 to 4.38.2",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/111"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/upload-sarif-4.38.2",
+  "sha": "eecbe5fd3d4f2d275b772288c711ba5add4a592f",
+  "shortSha": "eecbe5f",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/eecbe5fd3d4f2d275b772288c711ba5add4a592f",
+  "timestamp": "2026-09-28T04:39:20.183Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 72.427978515625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 9859.346923828125,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 16441
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 413.3,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3915,
+   "lcpMs": 7668,
+   "tbtMs": 83,
+   "cls": 0,
+   "speedIndexMs": 3915
+  },
+  "details": {
+   "vitest": "runs/20260928T043920Z-eecbe5f-36378515576/vitest.json",
+   "playwright": "runs/20260928T043920Z-eecbe5f-36378515576/playwright.json",
+   "lighthouse": "runs/20260928T043920Z-eecbe5f-36378515576/lighthouse.json",
+   "size": "runs/20260928T043920Z-eecbe5f-36378515576/size.json",
+   "coverage": "runs/20260928T043920Z-eecbe5f-36378515576/coverage.json"
+  }
+ },
+ {
   "id": "20260928T043854Z-0a80adf-36378442700",
   "runId": "36378442700",
   "runNumber": 185,
