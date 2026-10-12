@@ -1,5 +1,76 @@
 [
  {
+  "id": "20261012T135140Z-a039f4d-38258456731",
+  "runId": "38258456731",
+  "runNumber": 197,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/38258456731",
+  "context": "pr",
+  "pr": {
+   "number": 116,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.38.3",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/116"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.38.3",
+  "sha": "a039f4de5ccefe5339062ebcf2d220924a8c46d7",
+  "shortSha": "a039f4d",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/a039f4de5ccefe5339062ebcf2d220924a8c46d7",
+  "timestamp": "2026-10-12T13:51:40.872Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 96.005126953125,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 12362.08251953125,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 14962
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 413.3,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3916,
+   "lcpMs": 7670,
+   "tbtMs": 75,
+   "cls": 0,
+   "speedIndexMs": 3916
+  },
+  "details": {
+   "vitest": "runs/20261012T135140Z-a039f4d-38258456731/vitest.json",
+   "playwright": "runs/20261012T135140Z-a039f4d-38258456731/playwright.json",
+   "lighthouse": "runs/20261012T135140Z-a039f4d-38258456731/lighthouse.json",
+   "size": "runs/20261012T135140Z-a039f4d-38258456731/size.json",
+   "coverage": "runs/20261012T135140Z-a039f4d-38258456731/coverage.json"
+  }
+ },
+ {
   "id": "20261012T134939Z-bd5f413-38258195666",
   "runId": "38258195666",
   "runNumber": 196,
