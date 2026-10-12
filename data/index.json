@@ -1,5 +1,76 @@
 [
  {
+  "id": "20261012T135148Z-393db3e-38258494484",
+  "runId": "38258494484",
+  "runNumber": 198,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/38258494484",
+  "context": "pr",
+  "pr": {
+   "number": 117,
+   "title": "ci: bump github/codeql-action/init from 4.36.2 to 4.38.3",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/117"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/init-4.38.3",
+  "sha": "393db3ead4785d78506564f6761356d024541077",
+  "shortSha": "393db3e",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/393db3ead4785d78506564f6761356d024541077",
+  "timestamp": "2026-10-12T13:51:48.243Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 73.033203125,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 8084.20751953125,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 17199
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 413.3,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3917,
+   "lcpMs": 7670,
+   "tbtMs": 36,
+   "cls": 0,
+   "speedIndexMs": 3917
+  },
+  "details": {
+   "vitest": "runs/20261012T135148Z-393db3e-38258494484/vitest.json",
+   "playwright": "runs/20261012T135148Z-393db3e-38258494484/playwright.json",
+   "lighthouse": "runs/20261012T135148Z-393db3e-38258494484/lighthouse.json",
+   "size": "runs/20261012T135148Z-393db3e-38258494484/size.json",
+   "coverage": "runs/20261012T135148Z-393db3e-38258494484/coverage.json"
+  }
+ },
+ {
   "id": "20261012T135140Z-a039f4d-38258456731",
   "runId": "38258456731",
   "runNumber": 197,
