@@ -1,5 +1,76 @@
 [
  {
+  "id": "20261012T144019Z-74809ae-38264389830",
+  "runId": "38264389830",
+  "runNumber": 199,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/38264389830",
+  "context": "pr",
+  "pr": {
+   "number": 120,
+   "title": "build(deps): bump brace-expansion",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/120"
+  },
+  "branch": "dependabot/npm_and_yarn/multi-05c505ab13",
+  "sha": "74809ae3450c6c807ee64bc37fc3c9fa45a77fff",
+  "shortSha": "74809ae",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/74809ae3450c6c807ee64bc37fc3c9fa45a77fff",
+  "timestamp": "2026-10-12T14:40:19.144Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 71.951416015625,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11095.914306640625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 17206
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 413.3,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3915,
+   "lcpMs": 7668,
+   "tbtMs": 83,
+   "cls": 0,
+   "speedIndexMs": 3915
+  },
+  "details": {
+   "vitest": "runs/20261012T144019Z-74809ae-38264389830/vitest.json",
+   "playwright": "runs/20261012T144019Z-74809ae-38264389830/playwright.json",
+   "lighthouse": "runs/20261012T144019Z-74809ae-38264389830/lighthouse.json",
+   "size": "runs/20261012T144019Z-74809ae-38264389830/size.json",
+   "coverage": "runs/20261012T144019Z-74809ae-38264389830/coverage.json"
+  }
+ },
+ {
   "id": "20261012T144008Z-4baa269-38264412269",
   "runId": "38264412269",
   "runNumber": 200,
