@@ -1,0 +1,311 @@
+{
+  "config": {
+    "argv": [
+      "/opt/hostedtoolcache/node/22.23.3/x64/bin/node",
+      "/home/runner/work/tuples/tuples/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/home/runner/work/tuples/tuples/playwright.config.ts",
+    "rootDir": "/home/runner/work/tuples/tuples/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/prakashbsamanta/tuples/commit/a4fe4cd300dc5b40252fed3f163388ffde0045ad",
+        "commitHash": "a4fe4cd300dc5b40252fed3f163388ffde0045ad",
+        "prHref": "https://github.com/prakashbsamanta/tuples/pull/122",
+        "prTitle": "build(deps-dev): bump brace-expansion from 1.1.16 to 1.1.21",
+        "prBaseHash": "8cc9cfcf8487a53827c30483f6715fa6c8ed4503",
+        "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/38264962527"
+      },
+      "gitCommit": {
+        "shortHash": "a4fe4cd",
+        "hash": "a4fe4cd300dc5b40252fed3f163388ffde0045ad",
+        "subject": "Merge 4298e0a4d96e2028ad57c6d0f6e70ebb2ee2ce17 into 8cc9cfcf8487a53827c30483f6715fa6c8ed4503",
+        "body": "Merge 4298e0a4d96e2028ad57c6d0f6e70ebb2ee2ce17 into 8cc9cfcf8487a53827c30483f6715fa6c8ed4503\n",
+        "author": {
+          "name": "dependabot[bot]",
+          "email": "49699333+dependabot[bot]@users.noreply.github.com",
+          "time": 1791816190000
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "time": 1791816190000
+        },
+        "branch": "HEAD"
+      },
+      "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex 607d2e8..beaf2a9 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -2991,9 +2991,9 @@\n       }\n     },\n     \"node_modules/@typescript-eslint/typescript-estree/node_modules/brace-expansion\": {\n-      \"version\": \"5.0.9\",\n-      \"resolved\": \"https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.9.tgz\",\n-      \"integrity\": \"sha512-ScQ4IuvIEF1TMlP7Zt+vjJ//9zlPb2SDcxWxM3bk8s6t6GGdJ7KO1dCcTidOPJKePW30LE/2cT7wCyPho9/Wxg==\",\n+      \"version\": \"5.0.12\",\n+      \"resolved\": \"https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.12.tgz\",\n+      \"integrity\": \"sha512-YovQ3rzhaLMIrDjNDMkNS01tea93qhEhG5xy8f6+R0l+dw3Ki+5sCoIoI942iuLZTHWogWktgwVDhU09iNEimQ==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n@@ -3539,9 +3539,9 @@\n       }\n     },\n     \"node_modules/brace-expansion\": {\n-      \"version\": \"1.1.16\",\n-      \"resolved\": \"https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.16.tgz\",\n-      \"integrity\": \"sha512-IDw48K2/2kRkg9LdJxurvq3lV3aBgq0REY89duEqFRthjlPdXHKMj7EnQOXVckxzgisinf3nHfrcE2FufFLXMw==\",\n+      \"version\": \"1.1.21\",\n+      \"resolved\": \"https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.21.tgz\",\n+      \"integrity\": \"sha512-9zeA+KLZNNzglF2TPKRQEDyx6Yby7daAkuy8MiPzpXPsYDWi/DRM8jmwUDxokQjYqBpv5DgPiwD4h4ZZSy1Ujw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/tuples/tuples/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/prakashbsamanta/tuples/commit/a4fe4cd300dc5b40252fed3f163388ffde0045ad",
+            "commitHash": "a4fe4cd300dc5b40252fed3f163388ffde0045ad",
+            "prHref": "https://github.com/prakashbsamanta/tuples/pull/122",
+            "prTitle": "build(deps-dev): bump brace-expansion from 1.1.16 to 1.1.21",
+            "prBaseHash": "8cc9cfcf8487a53827c30483f6715fa6c8ed4503",
+            "buildHref": "https://github.com/prakashbsamanta/tuples/actions/runs/38264962527"
+          },
+          "gitCommit": {
+            "shortHash": "a4fe4cd",
+            "hash": "a4fe4cd300dc5b40252fed3f163388ffde0045ad",
+            "subject": "Merge 4298e0a4d96e2028ad57c6d0f6e70ebb2ee2ce17 into 8cc9cfcf8487a53827c30483f6715fa6c8ed4503",
+            "body": "Merge 4298e0a4d96e2028ad57c6d0f6e70ebb2ee2ce17 into 8cc9cfcf8487a53827c30483f6715fa6c8ed4503\n",
+            "author": {
+              "name": "dependabot[bot]",
+              "email": "49699333+dependabot[bot]@users.noreply.github.com",
+              "time": 1791816190000
+            },
+            "committer": {
+              "name": "GitHub",
+              "email": "noreply@github.com",
+              "time": 1791816190000
+            },
+            "branch": "HEAD"
+          },
+          "gitDiff": "diff --git a/package-lock.json b/package-lock.json\nindex 607d2e8..beaf2a9 100644\n--- a/package-lock.json\n+++ b/package-lock.json\n@@ -2991,9 +2991,9 @@\n       }\n     },\n     \"node_modules/@typescript-eslint/typescript-estree/node_modules/brace-expansion\": {\n-      \"version\": \"5.0.9\",\n-      \"resolved\": \"https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.9.tgz\",\n-      \"integrity\": \"sha512-ScQ4IuvIEF1TMlP7Zt+vjJ//9zlPb2SDcxWxM3bk8s6t6GGdJ7KO1dCcTidOPJKePW30LE/2cT7wCyPho9/Wxg==\",\n+      \"version\": \"5.0.12\",\n+      \"resolved\": \"https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.12.tgz\",\n+      \"integrity\": \"sha512-YovQ3rzhaLMIrDjNDMkNS01tea93qhEhG5xy8f6+R0l+dw3Ki+5sCoIoI942iuLZTHWogWktgwVDhU09iNEimQ==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {\n@@ -3539,9 +3539,9 @@\n       }\n     },\n     \"node_modules/brace-expansion\": {\n-      \"version\": \"1.1.16\",\n-      \"resolved\": \"https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.16.tgz\",\n-      \"integrity\": \"sha512-IDw48K2/2kRkg9LdJxurvq3lV3aBgq0REY89duEqFRthjlPdXHKMj7EnQOXVckxzgisinf3nHfrcE2FufFLXMw==\",\n+      \"version\": \"1.1.21\",\n+      \"resolved\": \"https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.21.tgz\",\n+      \"integrity\": \"sha512-9zeA+KLZNNzglF2TPKRQEDyx6Yby7daAkuy8MiPzpXPsYDWi/DRM8jmwUDxokQjYqBpv5DgPiwD4h4ZZSy1Ujw==\",\n       \"dev\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {",
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/tuples/tuples/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npm run preview -- --port 4173 --strictPort",
+      "url": "http://localhost:4173/tuples/",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "full journey: homepage → enter world → solve → persist → review",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4275,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:44:30.403Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-d77cdc6daaf7accde4db",
+          "file": "smoke.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "homepage proof terminal runs real SQL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2166,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:44:35.660Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-02e22a5cc048fd241d66",
+          "file": "smoke.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "error coaching and test-run preview",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2871,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:44:37.845Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-0b239663049f52a1c4aa",
+          "file": "smoke.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "each world themes the workspace with its own accent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2490,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:44:40.731Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-b20115e63804b48b7ddb",
+          "file": "smoke.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "completed mission offers the certification exam",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1854,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:44:43.232Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-c95a13d800861ea7fbf2",
+          "file": "smoke.spec.ts",
+          "line": 108,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T14:44:28.376Z",
+    "duration": 16794.089,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
