@@ -1,5 +1,76 @@
 [
  {
+  "id": "20261012T144554Z-ce3c0ad-38265076419",
+  "runId": "38265076419",
+  "runNumber": 203,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/38265076419",
+  "context": "pr",
+  "pr": {
+   "number": 114,
+   "title": "build(deps): bump the dev-minor-patch group across 1 directory with 13 updates",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/114"
+  },
+  "branch": "dependabot/npm_and_yarn/dev-minor-patch-ebece874fd",
+  "sha": "ce3c0ad5ef2ce4d3b301311fbb609f872277e11e",
+  "shortSha": "ce3c0ad",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/ce3c0ad5ef2ce4d3b301311fbb609f872277e11e",
+  "timestamp": "2026-10-12T14:45:54.951Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 79.462646484375,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 10902.34814453125,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 12270
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 441,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 65,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 4094,
+   "lcpMs": 7820,
+   "tbtMs": 130,
+   "cls": 0,
+   "speedIndexMs": 4094
+  },
+  "details": {
+   "vitest": "runs/20261012T144554Z-ce3c0ad-38265076419/vitest.json",
+   "playwright": "runs/20261012T144554Z-ce3c0ad-38265076419/playwright.json",
+   "lighthouse": "runs/20261012T144554Z-ce3c0ad-38265076419/lighthouse.json",
+   "size": "runs/20261012T144554Z-ce3c0ad-38265076419/size.json",
+   "coverage": "runs/20261012T144554Z-ce3c0ad-38265076419/coverage.json"
+  }
+ },
+ {
   "id": "20261012T144531Z-8f08da8-38264937409",
   "runId": "38264937409",
   "runNumber": 201,
