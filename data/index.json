@@ -1,5 +1,76 @@
 [
  {
+  "id": "20261012T134939Z-bd5f413-38258195666",
+  "runId": "38258195666",
+  "runNumber": 196,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/38258195666",
+  "context": "pr",
+  "pr": {
+   "number": 119,
+   "title": "ci: bump actions/download-artifact from 8.0.1 to 8.0.2",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/119"
+  },
+  "branch": "dependabot/github_actions/actions/download-artifact-8.0.2",
+  "sha": "bd5f4137adc93b9393ca7be277e6792268c86d12",
+  "shortSha": "bd5f413",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/bd5f4137adc93b9393ca7be277e6792268c86d12",
+  "timestamp": "2026-10-12T13:49:39.279Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 91.719970703125,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11399.66943359375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 17014
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 413.3,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3915,
+   "lcpMs": 7668,
+   "tbtMs": 84,
+   "cls": 0,
+   "speedIndexMs": 3915
+  },
+  "details": {
+   "vitest": "runs/20261012T134939Z-bd5f413-38258195666/vitest.json",
+   "playwright": "runs/20261012T134939Z-bd5f413-38258195666/playwright.json",
+   "lighthouse": "runs/20261012T134939Z-bd5f413-38258195666/lighthouse.json",
+   "size": "runs/20261012T134939Z-bd5f413-38258195666/size.json",
+   "coverage": "runs/20261012T134939Z-bd5f413-38258195666/coverage.json"
+  }
+ },
+ {
   "id": "20261012T134856Z-c2dbed9-38258142131",
   "runId": "38258142131",
   "runNumber": 195,
