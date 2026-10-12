@@ -1,5 +1,76 @@
 [
  {
+  "id": "20261012T134727Z-9c2e8dd-38257956410",
+  "runId": "38257956410",
+  "runNumber": 193,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/38257956410",
+  "context": "pr",
+  "pr": {
+   "number": 116,
+   "title": "ci: bump github/codeql-action/analyze from 4.36.2 to 4.38.3",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/116"
+  },
+  "branch": "dependabot/github_actions/github/codeql-action/analyze-4.38.3",
+  "sha": "9c2e8dddb19194d70371de75aa5a346f7443e630",
+  "shortSha": "9c2e8dd",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/9c2e8dddb19194d70371de75aa5a346f7443e630",
+  "timestamp": "2026-10-12T13:47:27.306Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 75.4453125,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11268.070068359375,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 16634
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 413.3,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 66,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 3919,
+   "lcpMs": 7673,
+   "tbtMs": 80,
+   "cls": 0,
+   "speedIndexMs": 3919
+  },
+  "details": {
+   "vitest": "runs/20261012T134727Z-9c2e8dd-38257956410/vitest.json",
+   "playwright": "runs/20261012T134727Z-9c2e8dd-38257956410/playwright.json",
+   "lighthouse": "runs/20261012T134727Z-9c2e8dd-38257956410/lighthouse.json",
+   "size": "runs/20261012T134727Z-9c2e8dd-38257956410/size.json",
+   "coverage": "runs/20261012T134727Z-9c2e8dd-38257956410/coverage.json"
+  }
+ },
+ {
   "id": "20261012T134642Z-b06a3dc-38257865733",
   "runId": "38257865733",
   "runNumber": 192,
