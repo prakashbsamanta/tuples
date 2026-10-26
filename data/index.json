@@ -1,5 +1,76 @@
 [
  {
+  "id": "20261026T043232Z-d9bd1af-40269475456",
+  "runId": "40269475456",
+  "runNumber": 210,
+  "runUrl": "https://github.com/prakashbsamanta/tuples/actions/runs/40269475456",
+  "context": "pr",
+  "pr": {
+   "number": 127,
+   "title": "build(deps): bump the dev-minor-patch group with 15 updates",
+   "url": "https://github.com/prakashbsamanta/tuples/pull/127"
+  },
+  "branch": "dependabot/npm_and_yarn/dev-minor-patch-386ea49220",
+  "sha": "d9bd1af95cd3d0e122dfa153551d5c593e58fcc3",
+  "shortSha": "d9bd1af",
+  "commitUrl": "https://github.com/prakashbsamanta/tuples/commit/d9bd1af95cd3d0e122dfa153551d5c593e58fcc3",
+  "timestamp": "2026-10-26T04:32:32.154Z",
+  "status": "passed",
+  "suites": {
+   "unit": {
+    "total": 67,
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 76.794921875,
+    "files": 10
+   },
+   "integration": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 10069.93603515625,
+    "files": 2
+   },
+   "e2e": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 11174
+   }
+  },
+  "coverage": {
+   "lines": 41.41,
+   "statements": 39.79,
+   "functions": 30.27,
+   "branches": 31.85
+  },
+  "bundle": {
+   "criticalKb": 445.4,
+   "budgetKb": 420
+  },
+  "lighthouse": {
+   "performance": 64,
+   "accessibility": 98,
+   "bestPractices": 100,
+   "fcpMs": 4093,
+   "lcpMs": 7968,
+   "tbtMs": 141,
+   "cls": 0,
+   "speedIndexMs": 4093
+  },
+  "details": {
+   "vitest": "runs/20261026T043232Z-d9bd1af-40269475456/vitest.json",
+   "playwright": "runs/20261026T043232Z-d9bd1af-40269475456/playwright.json",
+   "lighthouse": "runs/20261026T043232Z-d9bd1af-40269475456/lighthouse.json",
+   "size": "runs/20261026T043232Z-d9bd1af-40269475456/size.json",
+   "coverage": "runs/20261026T043232Z-d9bd1af-40269475456/coverage.json"
+  }
+ },
+ {
   "id": "20261026T043148Z-48443b4-40269433308",
   "runId": "40269433308",
   "runNumber": 209,
